@@ -1,29 +1,7 @@
+## Base Project
 
-# Base Android Project with Kotlin
-MVVM Base Android Kotlin Project
+https://github.com/pratamawijaya/BaseKotlinAndroid
 
-[![build](https://github.com/pratamawijaya/BaseKotlinAndroid/actions/workflows/build.yaml/badge.svg)](https://github.com/pratamawijaya/BaseKotlinAndroid/actions/workflows/build.yaml)
+## Figma
 
-[![codecov](https://codecov.io/gh/pratamawijaya/BaseKotlinAndroid/branch/master/graph/badge.svg)](https://codecov.io/gh/pratamawijaya/BaseKotlinAndroid)
-
-![](ss/ss1.png)
-
-## Tech Stack
-- Kotlin
-- AndroidX
-- Coroutine
-- Retrofit / OkHttp
-- Gson
-- Groupie as Recyclerview lib
-- sdp ssp
-- Hilt as Dependency Injection lib
-- Picasso as Image loader
-
-## Extra
-- `./gradlew detekt` static analysis with detekt
-- `./gradlew testDebugUnitTestCoverage` for codeCoverage
-- `./gradlew check` for running all
-
-## How to use
-- Register and create your api key here https://newsapi.org/register
-- Copy secrets.properties.example to secrets.properties and put ur API KEY
+https://www.figma.com/file/skO8Dj2qkDG7AirQ77VAKr/YURU?node-id=6%3A2
