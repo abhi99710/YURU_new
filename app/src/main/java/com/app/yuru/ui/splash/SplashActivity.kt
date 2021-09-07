@@ -1,16 +1,34 @@
 package com.app.yuru.ui.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
-import com.app.yuru.ui.homepage.HomePageActivity
+import com.app.yuru.ui.login.LoginActivity
+import java.util.concurrent.TimeUnit
 
 class SplashActivity : AppCompatActivity() {
+    private val handler = Handler(Looper.getMainLooper())
+
+    private val runnable = Runnable {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+    }
 
-        startActivity(Intent(this, HomePageActivity::class.java))
+    override fun onResume() {
+        super.onResume()
+        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(2))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable)
     }
 }

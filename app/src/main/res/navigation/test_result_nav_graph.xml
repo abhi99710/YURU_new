@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/give_test_graph"
+    app:startDestination="@id/testResult">
+    <fragment
+        android:id="@+id/testResult"
+        android:name="com.app.yuru.ui.testResult.TestResultFragment"
+        android:label="Test Result"
+        tools:layout="@layout/fragment_test_results">
+        <action
+            android:id="@+id/action_testResult_to_testResultClosureLook"
+            app:destination="@id/testResultClosureLook" />
+    </fragment>
+    <fragment
+        android:id="@+id/testResultClosureLook"
+        android:name="com.app.yuru.ui.testResult.TestResultClosureLookFragment"
+        android:label="Test Result Close Look"
+        tools:layout="@layout/fragment_test_results_closure_look">
+        <action
+            android:id="@+id/action_testResultClosureLook_to_discountDialog"
+            app:destination="@id/discountDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/discountDialog"
+        android:name="com.app.yuru.ui.testResult.DiscountDialogFragment"
+        android:label="Discount Dialog"
+        tools:layout="@layout/dialog_fragment_discount" />
+</navigation>

@@ -1,5 +1,33 @@
 <resources>
-    <string name="app_name">Base Android</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">YURU</string>
+    <string name="sign_in">Sign in</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="proceed">Proceed</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="dont_have_account_sign_up">Don\'t have account? <u>Sign Up</u></string>
+    <string name="by_signing_in_you_agree_to_our">By signing in, you agree to our</string>
+    <string name="privacy_policy"><u>Privacy Policy</u></string>
+    <string name="before_we_get_started">Before we get started</string>
+    <string name="what_s_your_name">What’s your name?</string>
+    <string name="what_s_your_email">What’s your Email?</string>
+    <string name="create_you_password">Create you password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="by_signing_up_you_agree_to_our_privacy_policy">By signing up, you agree to our <u>Privacy Policy</u></string>
+    <string name="hi_s">Hi %s</string>
+    <string name="get_started_desc">In the next screen, we’ll be asking some of the questions to measure your five key personality traits you just need to rate yourself on the basis of below faces. Where;</string>
+    <string name="let_s_get_started">Let’s get started</string>
+    <string name="big_5_traits_test">Big 5 Traits Test</string>
+    <string name="your_personality_test_result">Your Personality Test Result</string>
+    <string name="test_result_desc">You are now one step away from getting the unlimited access to video sessions on sleep, stress, wakeup, affirmations and entire library of content.</string>
+    <string name="closure_look">Closure Look</string>
+    <string name="strongly_disagree">Strongly disagree</string>
+    <string name="disagree">Disagree</string>
+    <string name="neither_agree_nor_disagree">Neither agree nor disagree</string>
+    <string name="agree">Agree</string>
+    <string name="strongly_agree">Strongly Agree</string>
+    <string name="offer_description">Let us help you in improving just click the claim offer button and then check your email so we can offer you the best offers for you.\n\n\nGo fast! You have 30 minutes to react</string>
+    <string name="claim_offer">Claim Offer</string>
+    <string name="skip_discounts">Skip Discounts</string>
+    <string name="next_step">Next Step</string>
 </resources>

@@ -17,14 +17,15 @@ object Versions {
     const val retrofit = "2.9.0"
     const val retrofit_moshi = "2.6.2"
     const val logging_interceptor = "4.8.0"
-    const val hilt = "2.33-beta"
+    const val hilt = "2.38"
     const val groupie = "2.9.0"
     const val room = "2.2.5"
     const val android_lifecycle = "2.3.0-alpha05"
     const val timber = "1.5.1"
-    const val android_navigation = "2.3.2"
+    const val android_navigation = "2.3.5"
     const val detekt = "1.15.0"
     const val mockk = "1.10.5"
+    const val latestFastAdapterRelease = "5.4.1"
 }
 
 

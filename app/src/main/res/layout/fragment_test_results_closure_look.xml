@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_arrow"
+        app:title="@string/big_5_traits_test"
+        app:titleTextColor="@color/black" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSteps"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/blue_sky"
+        app:cardCornerRadius="@dimen/_5sdp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_step_openness"
+                app:layout_constraintEnd_toStartOf="@id/view2"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_step_conscientiousness"
+                android:translationX="-6dp"
+                app:layout_constraintEnd_toStartOf="@id/view3"
+                app:layout_constraintStart_toEndOf="@id/view1" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_step_extraversion"
+                android:translationX="-12dp"
+                app:layout_constraintEnd_toStartOf="@id/view4"
+                app:layout_constraintStart_toEndOf="@id/view2" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_step_agreeableness"
+                android:translationX="-18dp"
+                app:layout_constraintEnd_toStartOf="@id/view5"
+                app:layout_constraintStart_toEndOf="@id/view3" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_step_neuroticism"
+                android:translationX="-24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/view4" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/page1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/bg_step_close_look_openness"
+        android:button="@null"
+        android:checked="true"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@id/page2"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardSteps" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/page2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/bg_step_close_look_conscientiousness"
+        android:button="@null"
+        android:checked="false"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@id/page3"
+        app:layout_constraintStart_toEndOf="@id/page1"
+        app:layout_constraintTop_toTopOf="@id/page1"
+        tools:checked="true" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/page3"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/bg_step_close_look_extraversion"
+        android:button="@null"
+        android:checked="false"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@id/page4"
+        app:layout_constraintStart_toEndOf="@id/page2"
+        app:layout_constraintTop_toTopOf="@id/page1"
+        tools:checked="true" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/page4"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/bg_step_close_look_agreeableness"
+        android:button="@null"
+        android:checked="false"
+        android:enabled="false"
+        app:layout_constraintEnd_toStartOf="@id/page5"
+        app:layout_constraintStart_toEndOf="@id/page3"
+        app:layout_constraintTop_toTopOf="@id/page1"
+        tools:checked="true" />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/page5"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:background="@drawable/bg_step_close_look_neuroticism"
+        android:button="@null"
+        android:checked="false"
+        android:enabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/page4"
+        app:layout_constraintTop_toTopOf="@id/page1"
+        tools:checked="true" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pagerResult"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/page1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

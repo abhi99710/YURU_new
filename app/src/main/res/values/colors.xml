@@ -4,4 +4,18 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="textColorHint">#483C3C43</color>
+    <color name="textColor">@color/black</color>
+    <color name="black_75">#BF000000</color>
+    <color name="grey">#79787E</color>
+    <color name="blue_sky">#E7F7FE</color>
+    <color name="orange">#E9793B</color>
+
+    <color name="color_openness">#008000</color>
+    <color name="color_conscientiousness">#0000FF</color>
+    <color name="color_extraversion">#FF0000</color>
+    <color name="color_agreeableness">#FFFF00</color>
+    <color name="color_neuroticism">#000000</color>
 </resources>

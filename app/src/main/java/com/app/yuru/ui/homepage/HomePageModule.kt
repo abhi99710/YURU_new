@@ -1,5 +1,6 @@
 package com.app.yuru.ui.homepage
 
+import androidx.lifecycle.ViewModelProvider
 import com.app.yuru.data.repository.NewsRepository
 import com.app.yuru.domain.usecase.GetTopHeadlineUseCase
 import dagger.Module

@@ -6,7 +6,7 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: "$project.rootDir/config/jacoco.gradle"
 
-kapt { 
+kapt {
     useBuildCache = true
 }
 
@@ -63,7 +63,7 @@ dependencies {
 
     implementation AndroidLib.retrofit_android
     implementation(AndroidLib.gson_converter)
-    implementation AndroidLib.okhttp_logging
+    implementation(AndroidLib.okhttp_logging)
 
     implementation(AndroidLib.groupie)
     implementation(AndroidLib.groupie_viewbinding)
@@ -71,7 +71,10 @@ dependencies {
     implementation(AndroidLib.room)
     implementation(AndroidLib.room_coroutine)
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$Versions.kotlin"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "androidx.appcompat:appcompat:1.3.1"
+    implementation "com.google.android.material:material:1.4.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.0"
     kapt(AndroidLib.room_compiler)
 
     // Kotlin
@@ -84,15 +87,15 @@ dependencies {
 
     kapt(AndroidLib.viewmodel_compiler)
 
-    implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+    implementation "com.intuit.sdp:sdp-android:1.0.6"
+    implementation "com.intuit.ssp:ssp-android:1.0.6"
 
     implementation(AndroidLib.timber)
 
     implementation AndroidLib.hilt
     kapt AndroidLib.hilt_processor_compiler
 
-    def fragment_version = "1.2.5"
+    def fragment_version = "1.3.6"
 
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
 
@@ -101,4 +104,5 @@ dependencies {
     testImplementation("androidx.arch.core:core-testing:2.1.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$Versions.coroutines")
 
+    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
 }

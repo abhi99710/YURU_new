@@ -39,7 +39,7 @@ class NewsRepositoryImplTest {
     fun setUp() {
         MockKAnnotations.init(this)
         newsRepository =
-            NewsRepositoryImpl(newsRemoteDatasource, newsLocalDatasource, networkChecker)
+            NewsRepositoryImpl(newsRemoteDatasource, networkChecker)
     }
 
     @Test
