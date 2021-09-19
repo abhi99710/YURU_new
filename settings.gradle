@@ -2,3 +2,4 @@ include ':routing'
 include ':core-android'
 include ':app'
 rootProject.name = "YURU"
+include ':core-scheduler'
