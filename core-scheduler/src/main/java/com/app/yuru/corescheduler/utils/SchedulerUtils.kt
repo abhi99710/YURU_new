@@ -32,6 +32,10 @@ object SchedulerUtils {
                 val manager: AlarmManager =
                     context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, PlayerNotificationService::class.java)
+                intent.putExtra(
+                    Constants.URL,
+                    "https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_5MG.mp3"
+                )
                 val pendingIntent =
                     when {
                         Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.app.yuru.R
 import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentSignupBinding
 import com.app.yuru.ui.getStarted.GetStartedActivity
@@ -27,13 +28,13 @@ class SignUpFragment : BaseFragmentBinding<FragmentSignupBinding>() {
             val password = binding.edtPassword.trimString()
             when {
                 fullName.isBlank() -> {
-                    baseActivity.showToast("Please enter name")
+                    baseActivity.showToast(getString(R.string.validation_enter_name))
                 }
                 email.isBlank() -> {
-                    baseActivity.showToast("Please enter email")
+                    baseActivity.showToast(getString(R.string.validation_enter_email))
                 }
                 password.isBlank() -> {
-                    baseActivity.showToast("Please enter password")
+                    baseActivity.showToast(getString(R.string.validation_enter_password))
                 }
                 else -> {
                     signUpViewModel.register(fullName, email, password)

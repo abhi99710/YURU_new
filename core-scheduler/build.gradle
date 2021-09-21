@@ -47,6 +47,8 @@ android {
 
 dependencies {
 
+    implementation project(":core-android")
+
     implementation AndroidLib.kotlin_stdlib
     implementation AndroidLib.androidx_core
     implementation AndroidLib.androidx_appcompat

@@ -1,11 +1,16 @@
 package com.app.yuru.corescheduler.player.audio
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.IBinder
-import com.app.yuru.corescheduler.player.video.ui.VideoActivity
+import androidx.core.app.NotificationCompat
+import com.app.yuru.corescheduler.R
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
@@ -16,7 +21,7 @@ class PlayerNotificationService : Service() {
     private lateinit var simpleExoPlayer: SimpleExoPlayer
     private lateinit var playerNotificationManager: PlayerNotificationManager
 
-    private var notificationId = 123;
+    private var notificationId = 100001
     private var channelId = "channelId"
 
 
@@ -27,16 +32,13 @@ class PlayerNotificationService : Service() {
         simpleExoPlayer.setMediaItem(MediaItem.fromUri(""))
         simpleExoPlayer.prepare()
         simpleExoPlayer.play()
+        makeForeGround()
         val builder = PlayerNotificationManager.Builder(this, notificationId, channelId)
         builder.setMediaDescriptionAdapter(object :
             PlayerNotificationManager.MediaDescriptionAdapter {
             override fun createCurrentContentIntent(player: Player): PendingIntent? {
                 // return pending intent
-                val intent = Intent(context, VideoActivity::class.java);
-                return PendingIntent.getActivity(
-                    context, 0, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
+                return null
             }
 
             //pass description here
@@ -62,6 +64,20 @@ class PlayerNotificationService : Service() {
             builder.build()
         //attach player to playerNotificationManager
         playerNotificationManager.setPlayer(simpleExoPlayer)
+    }
+
+    private fun makeForeGround() {
+        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel =
+                NotificationChannel(channelId, "Audio", NotificationManager.IMPORTANCE_HIGH)
+            manager.createNotificationChannel(channel)
+        }
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(getString(R.string.scheduler))
+            .build()
+        startForeground(notificationId, notification)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
