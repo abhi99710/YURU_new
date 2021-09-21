@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.app.yuru.data.datasource.remote.model.NewsResponse
 import com.app.yuru.data.datasource.remote.model.SourceResponse
 import com.app.yuru.data.datasource.remote.model.TopHeadlineResponse
-import com.app.yuru.data.datasource.remote.service.NewsApiServices
+import com.app.yuru.data.datasource.remote.service.YuruApiService
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -24,15 +24,15 @@ class NewsRemoteDatasourceImplTest {
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var newsRemoteDatasourceImpl: NewsRemoteDatasourceImpl
+    lateinit var newsRemoteDatasourceImpl: YuruRemoteDatasourceImpl
 
     @MockK
-    lateinit var service: NewsApiServices
+    lateinit var service: YuruApiService
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        newsRemoteDatasourceImpl = NewsRemoteDatasourceImpl(service)
+        newsRemoteDatasourceImpl = YuruRemoteDatasourceImpl(service)
     }
 
     @Test

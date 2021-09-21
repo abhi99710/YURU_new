@@ -2,7 +2,7 @@ package com.app.yuru.di.module
 
 import com.app.yuru.BuildConfig
 import com.app.yuru.data.datasource.remote.interceptor.HeaderInterceptor
-import com.app.yuru.data.datasource.remote.service.NewsApiServices
+import com.app.yuru.data.datasource.remote.service.YuruApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,14 +40,14 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("https://newsapi.org/v2/")
+        .baseUrl("https://promask.com.co/yuru/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
 
     @Provides
     @Singleton
-    fun provideNewsApiServices(retrofit: Retrofit): NewsApiServices =
-        retrofit.create(NewsApiServices::class.java)
+    fun provideYuruApiServices(retrofit: Retrofit): YuruApiService =
+        retrofit.create(YuruApiService::class.java)
 
 }

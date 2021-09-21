@@ -1,7 +1,6 @@
 package com.app.yuru.ui.homepage
 
-import androidx.lifecycle.ViewModelProvider
-import com.app.yuru.data.repository.NewsRepository
+import com.app.yuru.data.repository.YuruRepository
 import com.app.yuru.domain.usecase.GetTopHeadlineUseCase
 import dagger.Module
 import dagger.Provides
@@ -13,7 +12,7 @@ import dagger.hilt.android.components.ActivityComponent
 class HomePageModule {
 
     @Provides
-    fun provideTopHeadLineUseCase(repository: NewsRepository): GetTopHeadlineUseCase {
+    fun provideTopHeadLineUseCase(repository: YuruRepository): GetTopHeadlineUseCase {
         return GetTopHeadlineUseCase(repository)
     }
 

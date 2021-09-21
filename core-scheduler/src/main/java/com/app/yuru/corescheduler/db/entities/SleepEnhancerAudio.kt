@@ -15,8 +15,6 @@ data class SleepEnhancerAudio(
     val time1: Int,
     @ColumnInfo(name = "time_2")
     val time2: Int,
-    @ColumnInfo(name = "next_scheduled_time")
-    val nextScheduledTime: Long,
     @ColumnInfo(name = "audio_url")
     val audioUrl: String,
     @ColumnInfo(name = "volume")

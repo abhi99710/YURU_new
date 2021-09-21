@@ -7,13 +7,15 @@ import androidx.room.RoomDatabase
 import com.app.yuru.corescheduler.db.dao.SleepEnhancerAudioDao
 import com.app.yuru.corescheduler.db.dao.SleepEnhancerVideoDao
 import com.app.yuru.corescheduler.db.dao.TransitionSleepDao
+import com.app.yuru.corescheduler.db.entities.ScheduledActions
 import com.app.yuru.corescheduler.db.entities.SleepEnhancerAudio
 import com.app.yuru.corescheduler.db.entities.SleepEnhancerVideo
 import com.app.yuru.corescheduler.db.entities.TransitionSleep
 
 @Database(
-    entities = [TransitionSleep::class, SleepEnhancerAudio::class, SleepEnhancerVideo::class],
-    version = 1
+    entities = [TransitionSleep::class, SleepEnhancerAudio::class, SleepEnhancerVideo::class, ScheduledActions::class],
+    version = 1,
+    exportSchema = true
 )
 abstract class SchedulerDatabase : RoomDatabase() {
 

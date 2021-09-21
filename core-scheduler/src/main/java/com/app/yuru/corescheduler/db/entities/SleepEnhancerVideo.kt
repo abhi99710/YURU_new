@@ -15,8 +15,6 @@ data class SleepEnhancerVideo(
     val time1: Int,
     @ColumnInfo(name = "time_2")
     val time2: Int,
-    @ColumnInfo(name = "next_scheduled_time")
-    val nextScheduledTime: Long,
     @ColumnInfo(name = "video_type_1")
     val videoType1: Char,
     @ColumnInfo(name = "video_type_2")

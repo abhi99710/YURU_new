@@ -1,6 +1,6 @@
 package com.app.yuru.domain.usecase
 
-import com.app.yuru.data.repository.NewsRepository
+import com.app.yuru.data.repository.YuruRepository
 import com.app.yuru.domain.entity.News
 import com.app.yuru.domain.entity.NewsSource
 import com.app.yuru.coreandroid.exception.Failure
@@ -28,7 +28,7 @@ class GetTopHeadlineUseCaseTest {
     private val testScope = TestCoroutineScope(testDispatcher)
 
     @MockK
-    lateinit var newsRepo: NewsRepository
+    lateinit var newsRepo: YuruRepository
 
     lateinit var useCase: GetTopHeadlineUseCase
 

@@ -2,7 +2,7 @@ package com.app.yuru.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.app.yuru.data.datasource.local.NewsLocalDatasource
-import com.app.yuru.data.datasource.remote.NewsRemoteDatasource
+import com.app.yuru.data.datasource.remote.YuruRemoteDatasource
 import com.app.yuru.domain.entity.News
 import com.app.yuru.domain.entity.NewsSource
 import com.app.yuru.coreandroid.network.NetworkChecker
@@ -24,10 +24,10 @@ class NewsRepositoryImplTest {
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var newsRepository: NewsRepository
+    lateinit var newsRepository: YuruRepository
 
     @MockK
-    lateinit var newsRemoteDatasource: NewsRemoteDatasource
+    lateinit var newsRemoteDatasource: YuruRemoteDatasource
 
     @MockK
     lateinit var newsLocalDatasource: NewsLocalDatasource
@@ -39,7 +39,7 @@ class NewsRepositoryImplTest {
     fun setUp() {
         MockKAnnotations.init(this)
         newsRepository =
-            NewsRepositoryImpl(newsRemoteDatasource, networkChecker)
+            YuruRepositoryImpl(newsRemoteDatasource, networkChecker)
     }
 
     @Test

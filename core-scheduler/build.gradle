@@ -54,6 +54,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-service:2.3.1'
 
     testImplementation(AndroidTestLib.junit_lib)
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -71,5 +72,6 @@ dependencies {
     api "com.google.android.exoplayer:exoplayer:$exoPlayer"
     api "com.google.android.exoplayer:exoplayer-core:$exoPlayer"
     api "com.google.android.exoplayer:exoplayer-ui:$exoPlayer"
-
+    api "com.google.android.exoplayer:extension-mediasession:$exoPlayer"
+    implementation(AndroidLib.timber)
 }

@@ -4,14 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "transition_sleep")
-data class TransitionSleep(
+@Entity(tableName = "scheduled_actions")
+data class ScheduledActions(
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "scheduled_time")
     val scheduledTime: Long,
-    @ColumnInfo(name = "video_url")
-    val videoUrl: String,
-    @ColumnInfo(name = "volume")
-    val volume: Int
+    @ColumnInfo(name = "status")
+    val status: Int
 )

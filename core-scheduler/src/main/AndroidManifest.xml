@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.app.yuru.corescheduler">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,13 +10,21 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application>
         <activity
-            android:name=".ui.VideoActivity"
+            android:name=".player.video.ui.VideoActivity"
             android:configChanges="screenSize|keyboard|orientation|density|locale"
-            android:exported="true"
-            android:screenOrientation="sensorLandscape" />
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            tools:ignore="UnusedAttribute" />
+
+        <service
+            android:name=".player.audio.PlayerNotificationService"
+            android:exported="false" />
     </application>
 
 </manifest>

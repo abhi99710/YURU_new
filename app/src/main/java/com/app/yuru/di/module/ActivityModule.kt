@@ -3,11 +3,11 @@ package com.app.yuru.di.module
 import android.content.Context
 import com.app.yuru.coreandroid.network.NetworkChecker
 import com.app.yuru.coreandroid.network.NetworkCheckerImpl
-import com.app.yuru.data.datasource.remote.NewsRemoteDatasource
-import com.app.yuru.data.datasource.remote.NewsRemoteDatasourceImpl
-import com.app.yuru.data.datasource.remote.service.NewsApiServices
-import com.app.yuru.data.repository.NewsRepository
-import com.app.yuru.data.repository.NewsRepositoryImpl
+import com.app.yuru.data.datasource.remote.YuruRemoteDatasource
+import com.app.yuru.data.datasource.remote.YuruRemoteDatasourceImpl
+import com.app.yuru.data.datasource.remote.service.YuruApiService
+import com.app.yuru.data.repository.YuruRepository
+import com.app.yuru.data.repository.YuruRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,8 +21,8 @@ class ActivityModule {
 
     @Provides
     @ActivityScoped
-    fun provideNewsRemoteDatasource(services: NewsApiServices): NewsRemoteDatasource {
-        return NewsRemoteDatasourceImpl(services)
+    fun provideYuruRemoteDatasource(services: YuruApiService): YuruRemoteDatasource {
+        return YuruRemoteDatasourceImpl(services)
     }
 
 
@@ -35,9 +35,9 @@ class ActivityModule {
     @Provides
     @ActivityScoped
     fun provideNewsRepository(
-        remote: NewsRemoteDatasource,
+        remote: YuruRemoteDatasource,
         networkCheck: NetworkChecker
-    ): NewsRepository {
-        return NewsRepositoryImpl(remote = remote, networkChecker = networkCheck)
+    ): YuruRepository {
+        return YuruRepositoryImpl(remote = remote, networkChecker = networkCheck)
     }
 }
