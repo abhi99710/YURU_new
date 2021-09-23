@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/home_nv"
+    android:title="Home"
+    android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item android:id="@+id/journal_nv"
+        android:title="Journal"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item android:id="@+id/wakeup_nv"
+        android:title="Wake Up"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item android:id="@+id/sleep_nv"
+        android:title="Sleep"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item android:id="@+id/english_nv"
+        android:title="English"
+        android:icon="@drawable/ic_baseline_home_24"/>
+</menu>

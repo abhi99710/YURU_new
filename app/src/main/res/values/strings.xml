@@ -32,4 +32,11 @@
     <string name="validation_enter_name">Please enter name</string>
     <string name="validation_enter_email">Please enter email</string>
     <string name="validation_enter_password">Please enter password</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="transition_to_sleep">Transition To Sleep</string>
+    <string name="skip_to_sleep_enhancer">Skip to Sleep Enhancer</string>
+    <string name="skip_to_wake_program">Skip to Wake Program</string>
+    <string name="sleep_enhancer">Sleep Enhancer</string>
+    <string name="save">Save</string>
 </resources>
