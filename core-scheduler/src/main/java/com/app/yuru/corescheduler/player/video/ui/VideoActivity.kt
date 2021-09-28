@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.corescheduler.databinding.ActivityVideoBinding
+import com.app.yuru.corescheduler.utils.Constants
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 
@@ -24,10 +25,13 @@ class VideoActivity : AppCompatActivity() {
                     WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
-
-        val videoUri = ""
+        val url = intent.getStringExtra(Constants.URL)
+        if (url.isNullOrBlank()) {
+            finish()
+            return
+        }
         // Build the media item.
-        val mediaItem: MediaItem = MediaItem.fromUri(videoUri)
+        val mediaItem: MediaItem = MediaItem.fromUri(url)
 
         player = SimpleExoPlayer.Builder(this).build().also {
             binding.playerView.player = it

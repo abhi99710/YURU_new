@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import com.app.yuru.corescheduler.db.SchedulerDatabase
 import com.app.yuru.corescheduler.player.audio.PlayerNotificationService
+import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import java.util.*
 
 object SchedulerUtils {
@@ -29,7 +30,7 @@ object SchedulerUtils {
             scheduledCalendar.set(Calendar.DAY_OF_MONTH, todayCalendar.get(Calendar.DAY_OF_MONTH))
 
             if (scheduledCalendar.after(todayCalendar)) {
-                scheduleAudio(
+                scheduleVideo(
                     context,
                     scheduledTime,
                     "https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_5MG.mp3"
@@ -77,6 +78,33 @@ object SchedulerUtils {
                 }
                 else -> {
                     PendingIntent.getService(
+                        context,
+                        System.currentTimeMillis().toInt(),
+                        intent,
+                        PendingIntent.FLAG_CANCEL_CURRENT
+                    )
+                }
+            }
+        manager.set(AlarmManager.RTC_WAKEUP, scheduledTime, pendingIntent)
+    }
+
+    private fun scheduleVideo(context: Context, scheduledTime: Long, url: String) {
+        val manager: AlarmManager =
+            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, VideoActivity::class.java)
+        intent.putExtra(Constants.URL, url)
+        val pendingIntent =
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+                    PendingIntent.getActivity(
+                        context,
+                        System.currentTimeMillis().toInt(),
+                        intent,
+                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
+                    )
+                }
+                else -> {
+                    PendingIntent.getActivity(
                         context,
                         System.currentTimeMillis().toInt(),
                         intent,

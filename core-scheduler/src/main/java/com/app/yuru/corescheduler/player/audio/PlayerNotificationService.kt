@@ -2,17 +2,15 @@ package com.app.yuru.corescheduler.player.audio
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.app.yuru.corescheduler.R
+import com.app.yuru.corescheduler.utils.Constants
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 
@@ -27,43 +25,8 @@ class PlayerNotificationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        val context = this
         simpleExoPlayer = SimpleExoPlayer.Builder(this).build()
-        simpleExoPlayer.setMediaItem(MediaItem.fromUri(""))
-        simpleExoPlayer.prepare()
-        simpleExoPlayer.play()
         makeForeGround()
-        val builder = PlayerNotificationManager.Builder(this, notificationId, channelId)
-        builder.setMediaDescriptionAdapter(object :
-            PlayerNotificationManager.MediaDescriptionAdapter {
-            override fun createCurrentContentIntent(player: Player): PendingIntent? {
-                // return pending intent
-                return null
-            }
-
-            //pass description here
-            override fun getCurrentContentText(player: Player): String? {
-                return "Description"
-            }
-
-            //pass title (mostly playing audio name)
-            override fun getCurrentContentTitle(player: Player): String {
-                return "Title"
-            }
-
-            // pass image as bitmap
-            override fun getCurrentLargeIcon(
-                player: Player,
-                callback: PlayerNotificationManager.BitmapCallback
-            ): Bitmap? {
-                return null
-            }
-
-        })
-        playerNotificationManager =
-            builder.build()
-        //attach player to playerNotificationManager
-        playerNotificationManager.setPlayer(simpleExoPlayer)
     }
 
     private fun makeForeGround() {
@@ -85,6 +48,18 @@ class PlayerNotificationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (intent == null || !intent.hasExtra(Constants.URL)) {
+            stopForeground(true)
+            stopSelf()
+        } else {
+            simpleExoPlayer.setMediaItem(
+                MediaItem.fromUri(
+                    intent.getStringExtra(Constants.URL)!!
+                )
+            )
+            simpleExoPlayer.prepare()
+            simpleExoPlayer.play()
+        }
         return START_STICKY
     }
 
@@ -94,10 +69,4 @@ class PlayerNotificationService : Service() {
         simpleExoPlayer.release()
         super.onDestroy()
     }
-
-//    //removing service when user swipe out our app
-//    override fun onTaskRemoved(rootIntent: Intent?) {
-//        super.onTaskRemoved(rootIntent)
-//        stopSelf()
-//    }
 }
