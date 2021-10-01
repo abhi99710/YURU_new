@@ -7,7 +7,7 @@
         android:id="@+id/notification"
         app:showAsAction="always"/>
 
-    <item android:id="profile_option"
+    <item android:id="@+id/profile_option"
         android:title="Profile"
         android:icon="@drawable/clock"
         app:showAsAction="always"/>

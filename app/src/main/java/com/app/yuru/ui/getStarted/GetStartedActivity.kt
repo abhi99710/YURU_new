@@ -16,6 +16,8 @@ class GetStartedActivity : BaseActivityBinding<ActivityGetStartedBinding>() {
         binding.btnGetStarted.setOnClickListener {
             startActivity(Intent(this, TestActivity::class.java))
             finish()
+
+
         }
     }
 }

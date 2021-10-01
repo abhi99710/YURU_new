@@ -4,9 +4,7 @@ import com.app.yuru.coreandroid.exception.Failure
 import com.app.yuru.coreandroid.functional.Either
 import com.app.yuru.coreandroid.network.NetworkChecker
 import com.app.yuru.data.datasource.remote.YuruRemoteDatasource
-import com.app.yuru.domain.entity.ErrorResponse
-import com.app.yuru.domain.entity.News
-import com.app.yuru.domain.entity.SignUpResponse
+import com.app.yuru.domain.entity.*
 import com.app.yuru.utility.ThreadInfoLogger
 import com.github.ajalt.timberkt.d
 import com.google.gson.Gson
@@ -62,4 +60,53 @@ class YuruRepositoryImpl @Inject constructor(
             }
         }
     }
+
+
+    override suspend fun getQuestions(category: String): Either<Failure, Json4Kotlin_Base> {
+
+        return try {
+            if (networkChecker.isNetworkConnected()) {
+                val response = remote.questions(category)
+                Either.Right(response)
+            } else {
+                Either.Left(Failure.NetworkException)
+            }
+        } catch (ex: Exception) {
+            if (ex is HttpException) {
+                val error = Gson().fromJson(
+                    ex.response()?.errorBody()?.string(),
+                    ErrorResponse::class.java
+                )
+                Either.Left(Failure.NOKError(error.result.message))
+            } else {
+                Either.Left(Failure.ServerError(ex.localizedMessage))
+            }
+        }
+    }
+
+    override suspend fun submitrating(
+        user_id: String,
+        answer: String
+    ): Either<Failure, QuestionResponseSubmit> {
+
+        return try {
+            if (networkChecker.isNetworkConnected()) {
+                val response = remote.submitrating(user_id, answer)
+                Either.Right(response)
+            } else {
+                Either.Left(Failure.NetworkException)
+            }
+        } catch (ex: Exception) {
+            if (ex is HttpException) {
+                val error = Gson().fromJson(
+                    ex.response()?.errorBody()?.string(),
+                    ErrorResponse::class.java
+                )
+                Either.Left(Failure.NOKError(error.result.message))
+            } else {
+                Either.Left(Failure.ServerError(ex.localizedMessage))
+            }
+        }
+    }
+
 }

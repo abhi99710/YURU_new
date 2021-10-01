@@ -11,15 +11,18 @@ abstract class TestQuestionsFragment : BaseFragmentBinding<FragmentTestQuestions
     lateinit var viewModel: TestViewModel
     lateinit var adapter: TestQuestionsAdapter
 
+    @Inject
+    lateinit var viewModelSubmit: SubmitResponseModel
+
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTestQuestionsBinding
         get() = FragmentTestQuestionsBinding::inflate
 
     override fun setupView(binding: FragmentTestQuestionsBinding) {
-        binding.tvTitle.text = getPageTitle()
-        if (!::adapter.isInitialized) {
-            adapter = TestQuestionsAdapter(baseActivity, getTestQuestionsListener())
-        }
-        binding.rvQuestions.adapter = adapter
+//        binding.tvTitle.text = getPageTitle()
+//        if (!::adapter.isInitialized) {
+////            adapter = TestQuestionsAdapter(baseActivity, getTestQuestionsListener(), )
+//        }
+//        binding.rvQuestions.adapter = adapter
     }
 
     abstract fun getPageTitle(): String
