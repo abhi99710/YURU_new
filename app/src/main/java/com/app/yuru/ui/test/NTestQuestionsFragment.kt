@@ -1,7 +1,6 @@
 package com.app.yuru.ui.test
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.yuru.databinding.FragmentTestQuestionsBinding
 import com.app.yuru.ui.testResult.TestResultActivity
@@ -19,15 +18,19 @@ class NTestQuestionsFragment : TestQuestionsFragment() {
 
         viewModel.uiState().observe(this, {
 
-            when(it){
-                is TestViewModel.QuestionState.Loading->{
+            when (it) {
+                is TestViewModel.QuestionState.Loading -> {
                     baseActivity.showToast("Loading...")
                 }
-                is TestViewModel.QuestionState.Error ->{
+                is TestViewModel.QuestionState.Error -> {
                     baseActivity.showToast(it.message)
                 }
-                is  TestViewModel.QuestionState.Success ->{
-                    val testQuestionsAdapter : TestQuestionsAdapter = TestQuestionsAdapter(requireActivity(), getTestQuestionsListener(), it.questionResponse,"n")
+                is TestViewModel.QuestionState.Success -> {
+                    val testQuestionsAdapter = TestQuestionsAdapter(
+                        requireActivity(),
+                        getTestQuestionsListener(),
+                        it.questionResponse
+                    )
                     binding.rvQuestions.layoutManager = LinearLayoutManager(context)
                     binding.rvQuestions.setHasFixedSize(true)
                     binding.rvQuestions.adapter = testQuestionsAdapter
@@ -52,15 +55,15 @@ class NTestQuestionsFragment : TestQuestionsFragment() {
 
                 viewModelSubmit.uiState().observe(this@NTestQuestionsFragment, {
 
-                    when(it){
-                        is SubmitResponseModel.SubmitReaponaeSealed.Loading->{
+                    when (it) {
+                        is SubmitResponseModel.SubmitReaponaeSealed.Loading -> {
                             baseActivity.showToast("Loading...")
                         }
-                        is  SubmitResponseModel.SubmitReaponaeSealed.Error ->{
+                        is SubmitResponseModel.SubmitReaponaeSealed.Error -> {
                             baseActivity.showToast(it.message)
 
                         }
-                        is   SubmitResponseModel.SubmitReaponaeSealed.Success ->{
+                        is SubmitResponseModel.SubmitReaponaeSealed.Success -> {
                             baseActivity.showToast(it.questionResponse.result.message)
 
                         }

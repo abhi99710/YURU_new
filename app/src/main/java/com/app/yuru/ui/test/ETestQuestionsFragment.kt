@@ -18,15 +18,19 @@ class ETestQuestionsFragment : TestQuestionsFragment() {
 
         viewModel.uiState().observe(this, {
 
-            when(it){
-                is TestViewModel.QuestionState.Loading->{
+            when (it) {
+                is TestViewModel.QuestionState.Loading -> {
                     baseActivity.showToast("Loading...")
                 }
-                is TestViewModel.QuestionState.Error ->{
+                is TestViewModel.QuestionState.Error -> {
                     baseActivity.showToast(it.message)
                 }
-                is  TestViewModel.QuestionState.Success ->{
-                    val testQuestionsAdapter : TestQuestionsAdapter = TestQuestionsAdapter(requireActivity(), getTestQuestionsListener(), it.questionResponse,"e")
+                is TestViewModel.QuestionState.Success -> {
+                    val testQuestionsAdapter = TestQuestionsAdapter(
+                        requireActivity(),
+                        getTestQuestionsListener(),
+                        it.questionResponse
+                    )
                     binding.rvQuestions.layoutManager = LinearLayoutManager(context)
                     binding.rvQuestions.setHasFixedSize(true)
                     binding.rvQuestions.adapter = testQuestionsAdapter
