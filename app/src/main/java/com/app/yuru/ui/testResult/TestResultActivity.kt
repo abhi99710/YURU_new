@@ -12,5 +12,6 @@ class TestResultActivity : BaseActivityBinding<ActivityTestResultBinding>() {
 
     override fun setupView(binding: ActivityTestResultBinding) {
 
+
     }
 }

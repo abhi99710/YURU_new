@@ -16,7 +16,7 @@ https://chetangupta.net/viewbinding/
 abstract class BaseFragmentBinding<T : ViewBinding> : Fragment() {
 
     private var _binding: T? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> T
 

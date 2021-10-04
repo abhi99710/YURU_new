@@ -37,6 +37,9 @@
     <string name="transition_to_sleep">Transition To Sleep</string>
     <string name="skip_to_sleep_enhancer">Skip to Sleep Enhancer</string>
     <string name="skip_to_wake_program">Skip to Wake Program</string>
-    <string name="sleep_enhancer">Sleep Enhancer</string>
+    <string name="openness">Openness</string>
     <string name="save">Save</string>
+    <string name="wake_up_program">Wake Up Program</string>
+    <string name="sleep_enhancer">Sleep Enhancer</string>
+    <string name="view_all">View all</string>
 </resources>

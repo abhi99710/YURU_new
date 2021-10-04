@@ -22,8 +22,8 @@ class TestModule {
         return QuestionUseCase(repository)
     }
 
-    @Provides
-    fun provideTestViewModel(useCase: QuestionUseCase): TestViewModel {
-        return TestViewModel(useCase)
-    }
+//    @Provides
+//    fun provideTestViewModel(useCase: QuestionUseCase): TestViewModel {
+//        return TestViewModel(useCase)
+//    }
 }
