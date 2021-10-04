@@ -2,8 +2,6 @@ package com.app.yuru.ui.test
 
 import com.app.yuru.data.repository.YuruRepository
 import com.app.yuru.domain.usecase.QuestionUseCase
-import com.app.yuru.domain.usecase.SignUpUseCase
-import com.app.yuru.ui.login.SignUpViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,11 +11,11 @@ import dagger.hilt.android.scopes.ActivityScoped
 @Module
 @InstallIn(ActivityComponent::class)
 class TestModule {
-//    @Provides
-//    @ActivityScoped
-//    fun provideTestViewModel(repository: YuruRepository): TestViewModel {
-//        return TestViewModel(repository )
-//    }
+    @Provides
+    @ActivityScoped
+    fun provideTestViewModel(): TestStepViewModel {
+        return TestStepViewModel()
+    }
 
     @Provides
     fun provideQuestionUseCase(repository: YuruRepository): QuestionUseCase {

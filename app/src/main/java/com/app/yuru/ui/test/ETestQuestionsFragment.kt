@@ -12,7 +12,7 @@ import org.json.JSONArray
 class ETestQuestionsFragment : TestQuestionsFragment() {
     override fun setupView(binding: FragmentTestQuestionsBinding) {
         super.setupView(binding)
-        viewModel.pageLiveData.postValue("E")
+        stepViewModel.pageLiveData.postValue("E")
 
         viewModel.getQuestions("3")
 

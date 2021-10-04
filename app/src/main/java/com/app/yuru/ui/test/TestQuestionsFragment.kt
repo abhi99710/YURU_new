@@ -9,6 +9,10 @@ import javax.inject.Inject
 abstract class TestQuestionsFragment : BaseFragmentBinding<FragmentTestQuestionsBinding>() {
     @Inject
     lateinit var viewModel: TestViewModel
+
+    @Inject
+    lateinit var stepViewModel: TestStepViewModel
+
     lateinit var adapter: TestQuestionsAdapter
 
     @Inject
@@ -18,11 +22,7 @@ abstract class TestQuestionsFragment : BaseFragmentBinding<FragmentTestQuestions
         get() = FragmentTestQuestionsBinding::inflate
 
     override fun setupView(binding: FragmentTestQuestionsBinding) {
-//        binding.tvTitle.text = getPageTitle()
-//        if (!::adapter.isInitialized) {
-////            adapter = TestQuestionsAdapter(baseActivity, getTestQuestionsListener(), )
-//        }
-//        binding.rvQuestions.adapter = adapter
+
     }
 
     abstract fun getPageTitle(): String

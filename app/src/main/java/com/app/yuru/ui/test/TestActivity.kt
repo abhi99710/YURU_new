@@ -10,7 +10,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
     @Inject
-    lateinit var viewModel: TestViewModel
+    lateinit var viewModel: TestStepViewModel
 
     override val bindingInflater: (LayoutInflater) -> ActivityTestBinding
         get() = ActivityTestBinding::inflate
@@ -22,7 +22,7 @@ class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
         resetStep()
         viewModel.pageLiveData.observe(this, {
             resetStep()
-            when (it.toUpperCase()) {
+            when (it.uppercase()) {
                 "O" -> {
                     binding.stepO.visibility = View.VISIBLE
                 }
