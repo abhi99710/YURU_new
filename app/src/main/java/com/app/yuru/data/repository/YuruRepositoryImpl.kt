@@ -62,7 +62,7 @@ class YuruRepositoryImpl @Inject constructor(
     }
 
 
-    override suspend fun getQuestions(category: String): Either<Failure, Json4Kotlin_Base> {
+    override suspend fun getQuestions(category: String): Either<Failure, QuestionsResponse> {
 
         return try {
             if (networkChecker.isNetworkConnected()) {

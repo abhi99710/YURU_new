@@ -1,6 +1,6 @@
 package com.app.yuru.data.datasource.remote
 
-import com.app.yuru.domain.entity.Json4Kotlin_Base
+import com.app.yuru.domain.entity.QuestionsResponse
 import com.app.yuru.data.datasource.remote.model.toNewsList
 import com.app.yuru.data.datasource.remote.service.YuruApiService
 import com.app.yuru.domain.entity.News
@@ -19,7 +19,7 @@ class YuruRemoteDatasourceImpl @Inject constructor(private val services: YuruApi
         return services.registration(fullName, email, password)
     }
 
-    override suspend fun questions(category_id: String): Json4Kotlin_Base {
+    override suspend fun questions(category_id: String): QuestionsResponse {
         return services.getQuestions(category_id)
     }
 

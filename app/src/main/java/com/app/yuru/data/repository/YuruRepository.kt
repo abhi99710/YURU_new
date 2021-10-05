@@ -1,6 +1,6 @@
 package com.app.yuru.data.repository
 
-import com.app.yuru.domain.entity.Json4Kotlin_Base
+import com.app.yuru.domain.entity.QuestionsResponse
 import com.app.yuru.coreandroid.exception.Failure
 import com.app.yuru.coreandroid.functional.Either
 import com.app.yuru.domain.entity.News
@@ -17,7 +17,7 @@ interface YuruRepository {
 
     suspend fun getQuestions(
        category: String
-    ): Either<Failure, Json4Kotlin_Base>
+    ): Either<Failure, QuestionsResponse>
 
     suspend fun submitrating(
         user_id : String,

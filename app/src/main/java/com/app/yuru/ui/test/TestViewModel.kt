@@ -1,6 +1,6 @@
 package com.app.yuru.ui.test
 
-import com.app.yuru.domain.entity.Json4Kotlin_Base
+import com.app.yuru.domain.entity.QuestionsResponse
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +17,7 @@ class TestViewModel @Inject constructor(val questionUseCase: QuestionUseCase) : 
 
     sealed class QuestionState {
         object Loading : TestViewModel.QuestionState()
-        data class Success(val questionResponse: Json4Kotlin_Base) : TestViewModel.QuestionState()
+        data class Success(val questionResponse: QuestionsResponse) : TestViewModel.QuestionState()
         data class Error(val message: String) : TestViewModel.QuestionState()
     }
 
