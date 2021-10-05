@@ -1,8 +1,6 @@
 package com.app.yuru.ui.transition
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.AuthFailureError
-import com.android.volley.Request.Method.POST
+
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -34,6 +35,14 @@ class TransitionToSleep : Fragment() {
     lateinit var skipToProgram : TextView
     lateinit var skipSleep : TextView
 
+    private var id_45: MutableList<String> = ArrayList()
+    private var language_slug: MutableList<String> = ArrayList()
+    private var traint: MutableList<String> = ArrayList()
+    private var gender: MutableList<String> = ArrayList()
+    private var duration: MutableList<String> = ArrayList()
+    private var id: MutableList<String> = ArrayList()
+    private var filename: MutableList<String> = ArrayList()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +56,11 @@ class TransitionToSleep : Fragment() {
         skipToProgram = view.findViewById(R.id.skipToProgram)
 
         skipSleep.setOnClickListener {
-            findNavController().navigate(R.id.sleepEnhancer)
+//           findNavController().navigate(R.id.sleepEnhancer)
         }
 
         skipToProgram.setOnClickListener {
-            findNavController().navigate(R.id.wakeUpProgram)
+//          findNavController().navigate(R.id.wakeUpProgram)
         }
 
 
@@ -67,7 +76,7 @@ class TransitionToSleep : Fragment() {
     }
 
     private fun apiVideos() {
-        val url  = "https://promask.com.co/yuru/api/videos"
+        val url  = "https://promask.com.co/yuru/api/sleep"
 
         val stringRequest = object : StringRequest(
             Method.GET, url,
@@ -75,22 +84,13 @@ class TransitionToSleep : Fragment() {
                 try {
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
+                    val jsonArray = jsonObject.getJSONArray("data")
+                    for(i in 0 until jsonArray.length()){
+                        val jsonObject2 = jsonArray.getJSONObject(i)
 
 
+                    }
 
-
-                   /* if(obj.getString("msg").equals("Logged Successfully")) {
-
-//                        val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-//                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-//
-//                        editor.putString("email",jsonObject.getString("email"))
-//                        editor.apply()
-//                        editor.commit()
-
-//                        intent = Intent(applicationContext, Dashboard::class.java)
-//                        startActivity(intent)
-                    }*/
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -100,13 +100,13 @@ class TransitionToSleep : Fragment() {
                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
                 }
             }) {
-            @Throws(AuthFailureError::class)
-            override fun getParams(): Map<String, String> {
-                val params = HashMap<String, String>()
-                params.put("roleType", "admin")
-
-                return params
-            }
+//            @Throws(AuthFailureError::class)
+//            override fun getParams(): Map<String, String> {
+//                val params = HashMap<String, String>()
+//                params.put("roleType", "admin")
+//
+//                return params
+//            }
         }
         requestQueue = Volley.newRequestQueue(context)
         requestQueue?.add(stringRequest)

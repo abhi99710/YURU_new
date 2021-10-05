@@ -59,7 +59,8 @@ class NTestQuestionsFragment : TestQuestionsFragment() {
                             baseActivity.showToast("Loading...")
                         }
                         is SubmitResponseModel.SubmitResponseSealed.Error -> {
-                            baseActivity.showToast(it.message)
+//                            baseActivity.showToast(it.message)
+                            startActivity(Intent(baseActivity, TestResultActivity::class.java))
 
                         }
                         is SubmitResponseModel.SubmitResponseSealed.Success -> {

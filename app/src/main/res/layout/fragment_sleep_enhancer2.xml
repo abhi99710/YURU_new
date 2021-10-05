@@ -95,7 +95,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView8"
+                    android:id="@+id/a1Option"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:background="@drawable/asys"
@@ -104,7 +104,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/o_option" />
 
                 <ImageView
-                    android:id="@+id/imageView9"
+                    android:id="@+id/n1option"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:background="@drawable/nsys"
@@ -120,7 +120,7 @@
                     android:background="@drawable/vector1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+                    app:layout_constraintTop_toBottomOf="@+id/a1Option" />
 
                 <ImageView
                     android:id="@+id/bottom_1_sl2"

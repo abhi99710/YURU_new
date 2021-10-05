@@ -19,6 +19,7 @@ import com.app.yuru.databinding.FragmentLoginBinding
 import com.app.yuru.ui.getStarted.GetStartedActivity
 import com.app.yuru.ui.test.TestActivity
 import com.app.yuru.ui.transition.AdapterMain
+import com.app.yuru.ui.transition.TransitionActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
 import org.json.JSONObject
@@ -44,6 +45,9 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
 
         }
         binding.btnProceed.setOnClickListener{
+
+//            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(context, TransitionActivity::class.java))
 
             if(binding.edtEmail.text.toString().isNullOrEmpty()){
                 Toast.makeText(context, "please enter your email", Toast.LENGTH_SHORT).show()

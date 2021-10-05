@@ -15,10 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.transition.TransitionActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity android:name=".ui.transition.VideoPlay"></activity>
+        <activity
+            android:name=".ui.transition.TransitionActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -45,7 +45,6 @@
         <receiver
             android:name=".ui.transition.MyReceiver"
             android:exported="false" />
-
     </application>
 
 </manifest>

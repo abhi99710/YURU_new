@@ -71,23 +71,23 @@ public class AdapterMain extends BaseAdapter {
         ConstraintLayout cardsub = convertView.findViewById(R.id.cardsub);
         VideoView videoView = convertView.findViewById(R.id.gridIMageView);
 
-        videoView.setVideoURI(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"));
-        videoView.requestFocus();
-        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                Toast.makeText(context, "can't play this video", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
+//        videoView.setVideoURI(Uri.parse("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"));
+//        videoView.requestFocus();
+//        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//            @Override
+//            public boolean onError(MediaPlayer mp, int what, int extra) {
+//                Toast.makeText(context, "can't play this video", Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        });
 
-        MediaController mediaController = new MediaController(context);
-        mediaController.setAnchorView(videoView);
-        videoView.setMediaController(mediaController);
+//        MediaController mediaController = new MediaController(context);
+//        mediaController.setAnchorView(videoView);
+//        videoView.setMediaController(mediaController);
 //        videoView.setBackgroundDrawable(R.drawable.videoback);
 
 //        videoView.seekTo(0);
-        videoView.setOnPreparedListener(mp -> videoView.start());
+//        videoView.setOnPreparedListener(mp -> videoView.start());
 
         return convertView;
     }

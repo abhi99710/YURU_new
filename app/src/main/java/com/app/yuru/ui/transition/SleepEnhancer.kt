@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 //import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.app.yuru.R
 
@@ -52,6 +53,7 @@ class SleepEnhancer : Fragment() {
 
         save_sleep_enhancer.setOnClickListener {
 
+//            it.findNavController().navigate(R.id.sleepEnhancer2)
 
         }
 

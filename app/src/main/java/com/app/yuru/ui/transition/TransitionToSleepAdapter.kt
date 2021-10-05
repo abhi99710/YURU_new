@@ -25,16 +25,16 @@ class TransitionToSleepAdapter(context : Context) : RecyclerView.Adapter<Transit
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.tts_videoview.setOnClickListener {
-
-                val fragmentManager = fragment.parentFragmentManager
-                fragmentManager.beginTransaction().replace(R.id.frame1, SleepEnhancer())
-
-            }
+//            holder.tts_videoview.setOnClickListener {
+//
+//                val fragmentManager = fragment.parentFragmentManager
+//                fragmentManager.beginTransaction().replace(R.id.frame1, SleepEnhancer())
+//
+//            }
     }
 
     override fun getItemCount(): Int {
-        return 2
+        return 3
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
