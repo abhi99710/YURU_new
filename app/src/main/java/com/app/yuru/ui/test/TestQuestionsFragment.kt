@@ -11,7 +11,7 @@ abstract class TestQuestionsFragment : BaseFragmentBinding<FragmentTestQuestions
     lateinit var viewModel: TestViewModel
 
     @Inject
-    lateinit var stepViewModel: TestStepViewModel
+    lateinit var activityViewModel: TestActivityViewModel
 
     lateinit var adapter: TestQuestionsAdapter
 
