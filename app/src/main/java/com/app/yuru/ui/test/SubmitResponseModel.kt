@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SubmitResponseModel @Inject constructor(val submit: SubmitResponseUseCase) : ViewModel() {
-    val submitLiveData = MutableLiveData<String>()
     fun uiState(): LiveData<SubmitResponseSealed> = uiState
     protected val uiState: MutableLiveData<SubmitResponseSealed> = MutableLiveData()
 

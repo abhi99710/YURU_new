@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.yuru.databinding.FragmentTestQuestionsBinding
 import com.app.yuru.ui.testResult.TestResultActivity
+import com.app.yuru.utility.concatArray
 import com.app.yuru.utility.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONArray
@@ -45,9 +46,11 @@ class NTestQuestionsFragment : TestQuestionsFragment() {
     override fun getTestQuestionsListener(): TestQuestionsListener {
         return object : TestQuestionsListener {
             override fun onNextClicked(jsonArray: JSONArray) {
-
-                viewModelSubmit.submitLiveData.postValue("N")
-                viewModelSubmit.submitResponse("1", "[]") // userid needed
+                activityViewModel.questions.concatArray(jsonArray)
+                viewModelSubmit.submitResponse(
+                    "1",
+                    activityViewModel.questions.toString()
+                ) // userid needed
 
                 viewModelSubmit.uiState().observe(this@NTestQuestionsFragment, {
 

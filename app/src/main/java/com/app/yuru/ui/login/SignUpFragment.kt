@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.app.yuru.R
 import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentSignupBinding
+import com.app.yuru.ui.getStarted.ARG_NAME
 import com.app.yuru.ui.getStarted.GetStartedActivity
 import com.app.yuru.utility.showToast
 import com.app.yuru.utility.trimString
@@ -53,7 +54,10 @@ class SignUpFragment : BaseFragmentBinding<FragmentSignupBinding>() {
                     baseActivity.showToast(it.message)
                 }
                 is SignUpViewModel.SignUpState.Success -> {
-                    startActivity(Intent(baseActivity, GetStartedActivity::class.java))
+                    Intent(baseActivity, GetStartedActivity::class.java).apply {
+                        putExtra(ARG_NAME, binding.edtName.trimString())
+                        startActivity(this)
+                    }
                     baseActivity.finish()
                 }
             }

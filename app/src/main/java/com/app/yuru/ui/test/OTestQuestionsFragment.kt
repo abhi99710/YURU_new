@@ -4,6 +4,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.yuru.R
 import com.app.yuru.databinding.FragmentTestQuestionsBinding
+import com.app.yuru.utility.concatArray
 import com.app.yuru.utility.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONArray
@@ -45,6 +46,8 @@ class OTestQuestionsFragment : TestQuestionsFragment() {
     override fun getTestQuestionsListener(): TestQuestionsListener {
         return object : TestQuestionsListener {
             override fun onNextClicked(jsonArray: JSONArray) {
+                activityViewModel.questions = JSONArray()
+                activityViewModel.questions.concatArray(jsonArray)
                 findNavController().navigate(R.id.actionOC)
             }
         }

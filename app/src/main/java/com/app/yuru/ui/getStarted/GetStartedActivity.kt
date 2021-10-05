@@ -6,19 +6,19 @@ import com.app.yuru.R
 import com.app.yuru.coreandroid.base.BaseActivityBinding
 import com.app.yuru.databinding.ActivityGetStartedBinding
 import com.app.yuru.ui.test.TestActivity
-import com.app.yuru.ui.transition.TransitionActivity
+
+const val ARG_NAME = "name"
 
 class GetStartedActivity : BaseActivityBinding<ActivityGetStartedBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityGetStartedBinding
         get() = ActivityGetStartedBinding::inflate
 
     override fun setupView(binding: ActivityGetStartedBinding) {
-        binding.tvName.text = getString(R.string.hi_s, "Ashok")
+        val name = intent.getStringExtra(ARG_NAME)
+        binding.tvName.text = getString(R.string.hi_s, name)
         binding.btnGetStarted.setOnClickListener {
-            startActivity(Intent(this, TransitionActivity::class.java))
+            startActivity(Intent(this, TestActivity::class.java))
             finish()
-
-
         }
     }
 }

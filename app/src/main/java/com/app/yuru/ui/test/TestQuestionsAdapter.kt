@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.yuru.R
 import com.app.yuru.databinding.ItemTestNextStepBinding
 import com.app.yuru.databinding.ItemTestQuestionsBinding
-import com.app.yuru.domain.entity.Json4Kotlin_Base
+import com.app.yuru.domain.entity.QuestionsResponse
 import org.json.JSONArray
 import org.json.JSONObject
 
 class TestQuestionsAdapter(
     val context: Context,
     private val listener: TestQuestionsListener? = null,
-    private val response: Json4Kotlin_Base
+    private val response: QuestionsResponse
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)

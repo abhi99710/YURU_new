@@ -1,6 +1,6 @@
 package com.app.yuru.data.datasource.remote.service
 
-import com.app.yuru.domain.entity.Json4Kotlin_Base
+import com.app.yuru.domain.entity.QuestionsResponse
 import com.app.yuru.data.datasource.remote.model.TopHeadlineResponse
 import com.app.yuru.domain.entity.QuestionResponseSubmit
 import com.app.yuru.domain.entity.SignUpResponse
@@ -25,14 +25,12 @@ interface YuruApiService {
     @GET("getquestions")
     suspend fun getQuestions(
         @Query("category_id") category_id: String
-    ) : Json4Kotlin_Base
+    ) : QuestionsResponse
 
     @FormUrlEncoded
     @POST("submitrating")
     suspend fun submitrating(
         @Field("user_id") user_id: String,
         @Field("answer") answer: String,
-
     ): QuestionResponseSubmit
-
 }

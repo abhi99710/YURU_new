@@ -1,7 +1,7 @@
 package com.app.yuru.domain.usecase
 
 
-import com.app.yuru.domain.entity.Json4Kotlin_Base
+import com.app.yuru.domain.entity.QuestionsResponse
 import com.app.yuru.coreandroid.exception.Failure
 import com.app.yuru.coreandroid.functional.Either
 
@@ -12,9 +12,9 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class QuestionUseCase @Inject constructor(private val repository: YuruRepository) :
-    UseCase<Json4Kotlin_Base, QuestionUseCase.QuestionSParams>() {
+    UseCase<QuestionsResponse, QuestionUseCase.QuestionSParams>() {
 
-    override suspend fun run(params: QuestionSParams): Either<Failure, Json4Kotlin_Base> =
+    override suspend fun run(params: QuestionSParams): Either<Failure, QuestionsResponse> =
         withContext(Dispatchers.IO) {
             repository.getQuestions(params.category_id)
         }
