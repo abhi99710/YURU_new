@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 //import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.app.yuru.R
@@ -25,6 +26,7 @@ class SleepEnhancer : Fragment() {
     lateinit var arrowRight2 : ImageView
     lateinit var center1 : ImageView
     lateinit var center2 : ImageView
+    lateinit var save_sleep_enhancer : TextView
 
 
 
@@ -45,7 +47,12 @@ class SleepEnhancer : Fragment() {
         arrowRight2  = view.findViewById(R.id.arrowRight2)
         center1  = view.findViewById(R.id.center1)
         center2  = view.findViewById(R.id.center2)
+        save_sleep_enhancer = view.findViewById(R.id.save_sleep_enhancer)
 
+        save_sleep_enhancer.setOnClickListener {
+
+
+        }
 
 
         arrowRight1.setOnClickListener{

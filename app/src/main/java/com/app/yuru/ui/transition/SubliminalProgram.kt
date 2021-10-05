@@ -21,10 +21,10 @@ class SubliminalProgram : Fragment() {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_subliminal_program, container, false)
 
-        cl_subliminal = view.findViewById(R.id.cl_subliminal)
-        cl_subliminal.setOnClickListener {
-            startActivity(Intent(context, WakeUpProgram::class.java))
-        }
+//        cl_subliminal = view.findViewById(R.id.cl_subliminal)
+//        cl_subliminal.setOnClickListener {
+//            startActivity(Intent(context, WakeUpProgram::class.java))
+//        }
 
         return view
     }

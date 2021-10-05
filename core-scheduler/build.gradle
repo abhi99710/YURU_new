@@ -71,9 +71,9 @@ dependencies {
 
     def exoPlayer = "2.15.0"
 
-    api "com.google.android.exoplayer:exoplayer:$exoPlayer"
-    api "com.google.android.exoplayer:exoplayer-core:$exoPlayer"
-    api "com.google.android.exoplayer:exoplayer-ui:$exoPlayer"
-    api "com.google.android.exoplayer:extension-mediasession:$exoPlayer"
+//    api "com.google.android.exoplayer:exoplayer:$exoPlayer"
+//    api "com.google.android.exoplayer:exoplayer-core:$exoPlayer"
+//    api "com.google.android.exoplayer:exoplayer-ui:$exoPlayer"
+//    api "com.google.android.exoplayer:extension-mediasession:$exoPlayer"
     implementation(AndroidLib.timber)
 }

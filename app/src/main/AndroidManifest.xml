@@ -42,6 +42,10 @@
             android:name=".ui.testResult.TestResultActivity"
             android:screenOrientation="portrait" />
 
+        <receiver
+            android:name=".ui.transition.MyReceiver"
+            android:exported="false" />
+
     </application>
 
 </manifest>

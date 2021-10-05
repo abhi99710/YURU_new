@@ -72,7 +72,7 @@
                             app:layout_scrollFlags="scroll" />
 
                         <ImageView
-                            android:id="@+id/imageView5"
+                            android:id="@+id/n_option"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:layout_marginTop="16dp"
@@ -90,9 +90,9 @@
                             android:text="Openness"
                             android:textColor="#025906"
                             android:textSize="30sp"
-                            app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                            app:layout_constraintStart_toStartOf="@+id/imageView5"
-                            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                            app:layout_constraintEnd_toEndOf="@+id/n_option"
+                            app:layout_constraintStart_toStartOf="@+id/n_option"
+                            app:layout_constraintTop_toBottomOf="@+id/n_option" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/constraintLayout2"
@@ -178,7 +178,7 @@
 
 
                                 <GridLayout
-                                    android:id="@+id/mainGrid"
+                                    android:id="@+id/wakeuprecy"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="170dp"
