@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.Time
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,7 @@ class WakeUpProgram : Fragment() {
     var wakeuprecy: GridView? = null
     private var requestQueue: RequestQueue? = null
     val _mcurrentTime = Calendar.getInstance()
-    val hour: Int = _mcurrentTime.get(Calendar.HOUR_OF_DAY)
+    var hour: Int = _mcurrentTime.get(Calendar.HOUR_OF_DAY)
     val minute: Int = _mcurrentTime.get(Calendar.MINUTE)
 
     private lateinit var o_option: TextView
@@ -95,6 +96,12 @@ class WakeUpProgram : Fragment() {
         cal_alarm[Calendar.HOUR_OF_DAY] = hour
         cal_alarm[Calendar.MINUTE] = minute
         cal_alarm[Calendar.SECOND] = 0
+
+//        if(hour > 11){
+//            hour = hour
+//        }
+
+//       val  milhours : Long = dat.time
 
 
 

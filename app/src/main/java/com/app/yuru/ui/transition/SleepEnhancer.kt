@@ -10,6 +10,7 @@ import android.view.animation.TranslateAnimation
 
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 //import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.app.yuru.R
@@ -62,6 +63,7 @@ class SleepEnhancer : Fragment() {
             animation.setDuration(1000)
             animation.setFillAfter(true)
             bottom_1.startAnimation(animation)
+            Toast.makeText(context, "+5", Toast.LENGTH_SHORT).show()
 
 
         }
@@ -74,7 +76,7 @@ class SleepEnhancer : Fragment() {
             animation.setDuration(1000)
             animation.setFillAfter(true)
             bottom_1.startAnimation(animation)
-
+            Toast.makeText(context, "-5", Toast.LENGTH_SHORT).show()
 
         }
 
@@ -86,7 +88,7 @@ class SleepEnhancer : Fragment() {
             animation.setFillAfter(true)
             bottom2.startAnimation(animation)
 
-
+            Toast.makeText(context, "-5", Toast.LENGTH_SHORT).show()
         }
 
         arrowRight2.setOnClickListener{
@@ -96,7 +98,7 @@ class SleepEnhancer : Fragment() {
             animation.setDuration(1000)
             animation.setFillAfter(true)
             bottom2.startAnimation(animation)
-
+            Toast.makeText(context, "+5", Toast.LENGTH_SHORT).show()
 
         }
 
@@ -105,6 +107,7 @@ class SleepEnhancer : Fragment() {
             animation.setDuration(1000)
             animation.setFillAfter(true)
             bottom_1.startAnimation(animation)
+            Toast.makeText(context, "45", Toast.LENGTH_SHORT).show()
         }
 
         center2.setOnClickListener{
@@ -112,6 +115,7 @@ class SleepEnhancer : Fragment() {
             animation.setDuration(1000)
             animation.setFillAfter(true)
             bottom2.startAnimation(animation)
+            Toast.makeText(context, "135", Toast.LENGTH_SHORT).show()
         }
 
         return view

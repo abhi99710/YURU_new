@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
@@ -45,12 +46,12 @@ class TransitionToSleep : Fragment() {
         skipSleep = view.findViewById(R.id.skipSleep)
         skipToProgram = view.findViewById(R.id.skipToProgram)
 
-        skipToProgram.setOnClickListener {
-
+        skipSleep.setOnClickListener {
+            findNavController().navigate(R.id.sleepEnhancer)
         }
 
         skipToProgram.setOnClickListener {
-
+            findNavController().navigate(R.id.wakeUpProgram)
         }
 
 
