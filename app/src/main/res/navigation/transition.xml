@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transition"
+    app:startDestination="@id/transitionToSleep">
+    <fragment
+        android:id="@+id/transitionToSleep"
+        android:name="com.app.yuru.ui.transition.TransitionToSleep"
+        android:label="fragment_transition_to_sleep"
+        tools:layout="@layout/fragment_transition_to_sleep" >
+        <action
+            android:id="@+id/action_transitionToSleep_to_sleepEnhancer"
+            app:destination="@id/sleepEnhancer" />
+    </fragment>
+    <fragment
+        android:id="@+id/sleepEnhancer"
+        android:name="com.app.yuru.ui.transition.SleepEnhancer"
+        android:label="fragment_sleep_enhancer"
+        tools:layout="@layout/fragment_sleep_enhancer" >
+        <action
+            android:id="@+id/action_sleepEnhancer_to_sleepEnhancer2"
+            app:destination="@id/sleepEnhancer2" />
+    </fragment>
+    <fragment
+        android:id="@+id/sleepEnhancer2"
+        android:name="com.app.yuru.ui.transition.SleepEnhancer2"
+        android:label="fragment_sleep_enhancer2"
+        tools:layout="@layout/fragment_sleep_enhancer2" >
+        <action
+            android:id="@+id/action_sleepEnhancer2_to_wakeUpProgram"
+            app:destination="@id/wakeUpProgram" />
+    </fragment>
+    <fragment
+        android:id="@+id/wakeUpProgram"
+        android:name="com.app.yuru.ui.transition.WakeUpProgram"
+        android:label="fragment_wake_up_program"
+        tools:layout="@layout/fragment_wake_up_program" />
+</navigation>

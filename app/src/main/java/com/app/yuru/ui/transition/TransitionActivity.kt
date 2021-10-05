@@ -13,6 +13,8 @@ class TransitionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transition)
 
+
+
         val firstFragment= TransitionToSleep()
         val secondFragment=SleepEnhancer()
         val thirdFragment=SleepEnhancer2()

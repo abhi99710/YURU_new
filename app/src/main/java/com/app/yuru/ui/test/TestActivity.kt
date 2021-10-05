@@ -22,7 +22,7 @@ class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
         resetStep()
         viewModel.pageLiveData.observe(this, {
             resetStep()
-            when (it.uppercase()) {
+            when (it.toUpperCase()) {
                 "O" -> {
                     binding.stepO.visibility = View.VISIBLE
                 }
