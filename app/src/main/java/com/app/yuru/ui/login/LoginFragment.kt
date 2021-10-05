@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.android.volley.AuthFailureError
@@ -16,9 +15,7 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentLoginBinding
-import com.app.yuru.ui.getStarted.GetStartedActivity
-import com.app.yuru.ui.test.TestActivity
-import com.app.yuru.ui.transition.AdapterMain
+import com.app.yuru.ui.transition.TransitionActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
 import org.json.JSONObject
@@ -75,7 +72,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                      if(jsonObject.getString("message").equals("Registration has been done successfully")) {
 
                          Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
-                         startActivity(Intent(context, GetStartedActivity::class.java))
+                         startActivity(Intent(context, TransitionActivity::class.java))
 //                         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
 //                         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
 
