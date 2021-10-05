@@ -13,7 +13,7 @@ class OTestQuestionsFragment : TestQuestionsFragment() {
 
     override fun setupView(binding: FragmentTestQuestionsBinding) {
         super.setupView(binding)
-        stepViewModel.pageLiveData.postValue("O")
+        activityViewModel.pageLiveData.postValue("O")
 
         viewModel.getQuestions("1")
 

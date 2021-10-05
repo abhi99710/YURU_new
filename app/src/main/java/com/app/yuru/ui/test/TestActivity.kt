@@ -10,7 +10,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
     @Inject
-    lateinit var viewModel: TestStepViewModel
+    lateinit var viewModel: TestActivityViewModel
 
     override val bindingInflater: (LayoutInflater) -> ActivityTestBinding
         get() = ActivityTestBinding::inflate
