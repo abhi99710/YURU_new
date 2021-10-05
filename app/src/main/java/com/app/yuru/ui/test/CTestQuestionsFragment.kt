@@ -34,17 +34,13 @@ class CTestQuestionsFragment : TestQuestionsFragment() {
                     binding.rvQuestions.layoutManager = LinearLayoutManager(context)
                     binding.rvQuestions.setHasFixedSize(true)
                     binding.rvQuestions.adapter = testQuestionsAdapter
-
+                    submitPageTitle(it.questionResponse.result.data.title)
                 }
             }
 
 
         })
 
-    }
-
-    override fun getPageTitle(): String {
-        return "Let’s see where do you stand;"
     }
 
     override fun getTestQuestionsListener(): TestQuestionsListener {

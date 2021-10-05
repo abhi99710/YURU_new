@@ -25,6 +25,9 @@ abstract class TestQuestionsFragment : BaseFragmentBinding<FragmentTestQuestions
 
     }
 
-    abstract fun getPageTitle(): String
+    fun submitPageTitle(title: String) {
+        binding.tvTitle.text = title
+    }
+
     abstract fun getTestQuestionsListener(): TestQuestionsListener
 }
