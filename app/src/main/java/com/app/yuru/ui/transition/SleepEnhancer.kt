@@ -29,6 +29,10 @@ class SleepEnhancer : Fragment() {
     lateinit var center1 : ImageView
     lateinit var center2 : ImageView
     lateinit var save_sleep_enhancer : TextView
+    var left_1_count = 0
+    var right_1_count = 0
+    var left_2_count = 0
+    var right_2_count = 0
 
 
 
@@ -61,11 +65,13 @@ class SleepEnhancer : Fragment() {
         arrowRight1.setOnClickListener{
 //            val animation =
 //                AnimationUtils.loadAnimation(context, R.anim.slide)
+            right_1_count ++
                 val animation = TranslateAnimation(0f,100f,0f,0f )
             animation.setDuration(1000)
             animation.setFillAfter(true)
             bottom_1.startAnimation(animation)
-            Toast.makeText(context, "+5", Toast.LENGTH_SHORT).show()
+
+            Toast.makeText(context, "+ {$right_1_count}", Toast.LENGTH_SHORT).show()
 
 
         }
@@ -124,7 +130,4 @@ class SleepEnhancer : Fragment() {
 
     }
 
-
-
-    
 }
