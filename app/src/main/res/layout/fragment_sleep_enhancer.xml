@@ -84,7 +84,7 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginStart="60dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/bottom_1"
+                        android:background="@drawable/sleep_bell"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/vector1" />
 
@@ -129,7 +129,7 @@
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="64dp"
-                        android:background="@drawable/bottom_2"
+                        android:background="@drawable/sleep_bell"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/vector1" />
 
@@ -156,6 +156,16 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintGuide_percent=".1" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/sleep_i"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

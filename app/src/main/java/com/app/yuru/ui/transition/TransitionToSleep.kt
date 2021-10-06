@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 
 
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,7 +55,7 @@ class TransitionToSleep : Fragment() {
         skipToProgram = view.findViewById(R.id.skipToProgram)
 
         skipSleep.setOnClickListener {
-//           findNavController().navigate(R.id.sleepEnhancer)
+           findNavController().navigate(R.id.sleepEnhancer)
         }
 
         skipToProgram.setOnClickListener {

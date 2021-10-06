@@ -71,7 +71,7 @@
                     android:layout_height="@dimen/_50sdp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/osys"
+                    android:background="@drawable/setting_o"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -79,7 +79,7 @@
                     android:id="@+id/e_option"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:background="@drawable/csys"
+                    android:background="@drawable/setting_c"
                     app:layout_constraintEnd_toStartOf="@+id/c_option"
                     app:layout_constraintStart_toEndOf="@+id/o_option"
                     app:layout_constraintTop_toTopOf="@+id/o_option" />
@@ -90,7 +90,7 @@
                     android:layout_height="@dimen/_50sdp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/esys"
+                    android:background="@drawable/setting_e"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +98,7 @@
                     android:id="@+id/a1Option"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:background="@drawable/asys"
+                    android:background="@drawable/setting_a"
                     app:layout_constraintEnd_toStartOf="@+id/e_option"
                     app:layout_constraintStart_toEndOf="@+id/o_option"
                     app:layout_constraintTop_toBottomOf="@+id/o_option" />
@@ -107,7 +107,7 @@
                     android:id="@+id/n1option"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
-                    android:background="@drawable/nsys"
+                    android:background="@drawable/setting_n"
                     app:layout_constraintEnd_toStartOf="@+id/c_option"
                     app:layout_constraintStart_toEndOf="@+id/e_option"
                     app:layout_constraintTop_toBottomOf="@+id/c_option" />

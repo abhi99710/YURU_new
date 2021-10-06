@@ -69,26 +69,26 @@ class SleepEnhancer2 : Fragment() {
 
         o_option.setOnClickListener {
             isChecked_O = true
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.o_icon))
+            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
         }
 
 
         e_option.setOnClickListener {
-            bottom2.setImageDrawable(resources.getDrawable(R.drawable.e_icon))
+            bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
 //            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.e))
         }
 
         c_option.setOnClickListener {
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.c_icon))
+            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
         }
 
 
         a1Option.setOnClickListener {
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.a_icon))
+            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
         }
 
         n1option.setOnClickListener {
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.n_icon))
+            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
         }
 
 

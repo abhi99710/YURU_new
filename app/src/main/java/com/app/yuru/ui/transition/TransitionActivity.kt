@@ -39,7 +39,7 @@ class TransitionActivity : AppCompatActivity() {
 
    private fun setCurrentFragment(fragment: Fragment)=
         supportFragmentManager.beginTransaction().apply {
-           replace(R.id.baseFrame,fragment)
+           replace(R.id.nav_host_homepage,fragment)
            commit()
         }
 }
