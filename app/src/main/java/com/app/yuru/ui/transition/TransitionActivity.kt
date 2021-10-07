@@ -3,15 +3,26 @@ package com.app.yuru.ui.transition
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.app.yuru.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TransitionActivity : AppCompatActivity() {
     lateinit var bottomNavigationView : BottomNavigationView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transition)
+
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_homepage) as NavHostFragment
+        val navController = navHostFragment.navController
+
+
+
 
 
         val firstFragment= TransitionToSleep()
