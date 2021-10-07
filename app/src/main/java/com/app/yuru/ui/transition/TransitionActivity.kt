@@ -18,12 +18,6 @@ class TransitionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_transition)
 
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_homepage) as NavHostFragment
-        val navController = navHostFragment.navController
-
-
-
-
 
         val firstFragment= TransitionToSleep()
         val secondFragment=SleepEnhancer()

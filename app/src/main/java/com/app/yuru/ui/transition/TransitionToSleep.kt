@@ -51,7 +51,10 @@ class TransitionToSleep : Fragment() {
         // Inflate the layout for this fragment
         val view : View = inflater.inflate(R.layout.fragment_transition_to_sleep, container, false)
 
-        Navigation.createNavigateOnClickListener(R.id.nav_host_homepage, null);
+//        Navigation.createNavigateOnClickListener(R.id.nav_host_homepage, null);
+
+
+
 
 
         transition_to_sleep_recy = view.findViewById(R.id.transition_to_sleep_recy)
@@ -59,12 +62,11 @@ class TransitionToSleep : Fragment() {
         skipToProgram = view.findViewById(R.id.skipToProgram)
 
         skipSleep.setOnClickListener {
-//           Navigation.findNavController(view).navigate(R.id.action_transitionToSleep_to_sleepEnhancer)
-           findNavController().navigate(R.id.action_transitionToSleep_to_sleepEnhancer);
+
         }
 
         skipToProgram.setOnClickListener {
-            findNavController().navigate(R.id.action_transitionToSleep_to_wakeUpProgram)
+
         }
 
 
