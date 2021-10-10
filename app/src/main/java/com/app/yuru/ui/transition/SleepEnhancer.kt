@@ -247,6 +247,8 @@ class SleepEnhancer : Fragment() {
             val requestCode = (calendar.timeInMillis/1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
             intent.putExtra("REQUEST_CODE",requestCode)
+            intent.putExtra("fragment","sleep1")
+
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 
