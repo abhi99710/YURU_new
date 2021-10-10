@@ -175,6 +175,15 @@ class WakeUpProgram : Fragment() {
             fragment.addToBackStack(null)
             fragment.commit()
         }
+
+        viewall.setOnClickListener {
+            val intent = Intent(context, BasicActivity::class.java)
+            context?.startActivity(intent)
+        }
+
+        optionAlarm_tv.setOnClickListener {
+
+        }
     }
 
     private fun findIds(view: View) {

@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,7 +16,11 @@ import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import com.app.yuru.R
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SleepEnhancer2 : Fragment() {
@@ -47,6 +52,7 @@ class SleepEnhancer2 : Fragment() {
     private var toXdelta2 = 0.0f  // saves the position to which the second imageview slides right side
     private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
     private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
+    private var countClicked = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,27 +92,55 @@ class SleepEnhancer2 : Fragment() {
 
     private fun methodForUpperImageClicks() {
         o_option.setOnClickListener {
-
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
+            if(countClicked == 0) {
+                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
+                countClicked = 1
+            }else{
+                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
+                countClicked = 0
+            }
         }
 
 
         e_option.setOnClickListener {
-            bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
-            //            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.e))
+            if(countClicked == 0) {
+                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
+                countClicked = 1
+            }else{
+                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
+                countClicked = 0
+            }
         }
 
         c_option.setOnClickListener {
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
+            if(countClicked == 0) {
+                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
+                countClicked = 1
+            }else{
+                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
+                countClicked = 0
+            }
         }
 
 
         a1Option.setOnClickListener {
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
+            if(countClicked == 0) {
+                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
+                countClicked = 1
+            }else{
+                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
+                countClicked = 0
+            }
         }
 
         n1option.setOnClickListener {
-            bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
+            if(countClicked == 0) {
+                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
+                countClicked = 1
+            }else{
+                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
+                countClicked = 0
+            }
         }
     }
 
@@ -269,6 +303,33 @@ class SleepEnhancer2 : Fragment() {
             dialog.setContentView(R.layout.dialogtransition)
             dialog.show()
 
+            val cv1 : CardView = dialog.findViewById(R.id.cv1)
+            val cv2 : CardView = dialog.findViewById(R.id.cv2)
+            val cv3 : CardView = dialog.findViewById(R.id.cv3)
+            val cv4 : CardView = dialog.findViewById(R.id.cv4)
+            cv1.setOnClickListener{
+                val intent = Intent(context, VideoPlay::class.java)
+                intent.putExtra("videoLink", "")
+                context?.startActivity(intent)
+            }
+
+            cv2.setOnClickListener{
+                val intent = Intent(context, VideoPlay::class.java)
+                intent.putExtra("videoLink", "")
+                context?.startActivity(intent)
+            }
+
+            cv3.setOnClickListener{
+                val intent = Intent(context, VideoPlay::class.java)
+                intent.putExtra("videoLink", "")
+                context?.startActivity(intent)
+            }
+
+            cv4.setOnClickListener{
+                val intent = Intent(context, VideoPlay::class.java)
+                intent.putExtra("videoLink", "")
+                context?.startActivity(intent)
+            }
             val closebtndialog = dialog.findViewById<ImageView>(R.id.closebtndialog)
             closebtndialog.setOnClickListener {
                 dialog.dismiss()
@@ -279,41 +340,43 @@ class SleepEnhancer2 : Fragment() {
     }
 
 
-    private fun go(ans : Int) {
-        //GET TIME IN SECONDS AND INITIALIZE INTENT
-//        val time: Long =
-        val i = Intent(context, MyReceiver::class.java)
+    private fun go(hike : Int) {
 
-//        val calendar = Calendar.getInstance()
-//        if (alarmTimePicker != null) {
-//            calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour())
-//        }
-//        if (alarmTimePicker != null) {
-//            calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute())
-//        }
-//        val dat = Date()
-//        val cal_alarm = Calendar.getInstance()
-//        val cal_now = Calendar.getInstance()
-//        cal_now.time = dat
-//        cal_alarm.time = dat
-////        cal_alarm[Calendar.HOUR_OF_DAY] = hours
-////        cal_alarm[Calendar.MINUTE] = minutes
-//        cal_alarm[Calendar.SECOND] = 0
-//
-//        val p1 = Calendar.HOUR_OF_DAY
-//        val p2 = Calendar.MINUTE
+        val  SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
 
-
-        //PASS CONTEXT,YOUR PRIVATE REQUEST CODE,INTENT OBJECT AND FLAG
-        val pi = PendingIntent.getBroadcast(context, 0, i, 0)
-
-        //INITIALIZE ALARM MANAGER
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+        val calendar = Calendar.getInstance()
+        val calList : MutableList<Calendar> = ArrayList()
 
-        //SET THE ALARM
-        alarmManager!![AlarmManager.RTC_WAKEUP, /*System.currentTimeMillis() + time * 1000*/  (  System.currentTimeMillis() + ans)] =
-            pi
-//        Toast.makeText(context, "Alarm set in $time seconds", Toast.LENGTH_SHORT).show()
+        for(i in 0..4 ){
+            calList.add(calendar)
+        }
+
+        val stringBuilder = ""
+
+        for( calItem in calList){
+            calItem.add(Calendar.SECOND,hike)
+
+            val requestCode = (calendar.timeInMillis/1000).toInt()
+            val intent = Intent(context, MyReceiver::class.java)
+            intent.putExtra("REQUEST_CODE",requestCode)
+            intent.putExtra("fragment","sleep_enhancer_2")
+            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+
+            val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+            }else{
+                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+            }
+
+
+
+            Toast.makeText(context, "Alarm has been set : \n "+stringBuilder , Toast.LENGTH_SHORT).show()
+
+        }
     }
 
 }
