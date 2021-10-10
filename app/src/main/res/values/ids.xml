@@ -2,4 +2,5 @@
 <resources>
     <item name="questionItemId" type="id" />
     <item name="questionNextStep" type="id" />
+    <item name="transition_to_sleep_recy" type="id" />
 </resources>

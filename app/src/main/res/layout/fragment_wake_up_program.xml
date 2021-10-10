@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="Save"
+            android:text="@string/save"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/_18sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +67,7 @@
                         android:id="@+id/o_option"
                         android:layout_width="@dimen/_57sdp"
                         android:layout_height="match_parent"
-                        android:textColor="#fff"
+                        android:textColor="#FFFFFF"
                         android:text="O"
                         android:gravity="center"
                         android:textSize="@dimen/_18sdp"
@@ -150,7 +150,7 @@
 
                     <TextView
                         android:id="@+id/n_option"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/_58sdp"
                         android:layout_height="match_parent"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="16dp"
@@ -418,7 +418,7 @@
                         android:layout_marginBottom="8dp"
                         android:text="Time"
                         android:textColor="#fff"
-                        android:textSize="@dimen/_18sdp"
+                        android:textSize="@dimen/_17sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:name=".MyApp"
@@ -15,10 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.transition.VideoPlay"></activity>
+        <activity android:name=".ui.transition.VideoPlay" />
         <activity
             android:name=".ui.transition.TransitionActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -44,7 +45,12 @@
 
         <receiver
             android:name=".ui.transition.MyReceiver"
-            android:exported="false" />
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

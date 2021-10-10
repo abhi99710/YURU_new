@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
 
-                <VideoView
+                <ImageView
                     android:id="@+id/gridIMageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -50,7 +50,6 @@
                     android:contentDescription="TODO"
                     android:elevation="100dp"
                     android:background="@drawable/videoback"
-
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
