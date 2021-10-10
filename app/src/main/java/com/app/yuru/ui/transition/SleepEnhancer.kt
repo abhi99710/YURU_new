@@ -242,7 +242,7 @@ class SleepEnhancer : Fragment() {
         val stringBuilder = ""
 
         for( calItem in calList){
-            calItem.add(Calendar.SECOND,ans)
+            calItem.add(Calendar.MINUTE,ans)
 
             val requestCode = (calendar.timeInMillis/1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
