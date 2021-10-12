@@ -36,14 +36,14 @@ class SleepEnhancer : Fragment() {
     private var right_1_count = 0  //count for right click for image 1
     private var left_2_count = 0  //count for left click for image 2
     private var right_2_count = 0  //count for right click for image 2
-    private var answerForLeft = 1  // real time answer for image 1 button clicks
-    private var annserForRight = 2  // real time answer for image 1 button clicks
+    private var answerForLeft = 45  // real time answer for image 1 button clicks
+    private var annserForRight = 135  // real time answer for image 1 button clicks
     private var toXdelta1 = 0.0f  // saves the position to which the first imageview slides right side
     private var toXdelta2 = 0.0f  // saves the position to which the second imageview slides right side
     private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
     private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
 
-    private var alarmAnser = 0
+    private var alarmAnser = 45
 
 
     override fun onCreateView(
@@ -82,7 +82,7 @@ class SleepEnhancer : Fragment() {
             if (right_1_count < 5) {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
-                alarmAnser = answerForLeft +1
+                alarmAnser += answerForLeft
                 Toast.makeText(context, "+$right_1_count:$alarmAnser", Toast.LENGTH_SHORT)
                     .show()
 
@@ -110,7 +110,7 @@ class SleepEnhancer : Fragment() {
             if (left_1_count > -5) {
                 left_1_count--
                 answerForLeft = answerForLeft - 1
-                alarmAnser = answerForLeft
+                alarmAnser += answerForLeft
                 Toast.makeText(context, "" + left_1_count, Toast.LENGTH_SHORT)
                     .show()
                 negXdelta1 = negXdelta1 - 20
@@ -262,7 +262,7 @@ class SleepEnhancer : Fragment() {
 
 
 
-            Toast.makeText(context, "Alarm has been set : \n "+stringBuilder , Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Alarm has been set :  $stringBuilder" , Toast.LENGTH_SHORT).show()
 
         }
     }

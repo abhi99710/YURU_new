@@ -16,7 +16,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.transition.BasicActivity"></activity>
+        <activity
+            android:name=".ui.discounts.DailyJournals"
+            android:exported="true" />
+        <activity
+            android:name=".ui.discounts.MoreInformation"
+            android:exported="true" />
+        <activity
+            android:name=".ui.discounts.CouponApplied"
+            android:exported="true" />
+        <activity
+            android:name=".ui.discounts.DiscountCoupons"
+            android:exported="true" />
+        <activity android:name=".ui.transition.BasicActivity" />
         <activity android:name=".ui.transition.VideoPlay" />
         <activity
             android:name=".ui.transition.TransitionActivity"
