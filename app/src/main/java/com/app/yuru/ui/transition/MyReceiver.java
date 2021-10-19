@@ -31,6 +31,7 @@ public class MyReceiver extends BroadcastReceiver {
         if (intent.getStringExtra("fragment").equalsIgnoreCase("sleep_enhancer_2")) {
 
             Intent i = new Intent(context, VideoActivity.class);
+            //TODO pass URL
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            i.putExtra("ques", "")
             context.startActivity(i);
@@ -53,8 +54,10 @@ public class MyReceiver extends BroadcastReceiver {
         } else {
             try {
 //                MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.whatsapp);
-                MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.whatsapp);
-                mediaPlayer.isLooping();
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                //TODO set URL
+                mediaPlayer.setDataSource("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4");
+                mediaPlayer.prepare();
                 mediaPlayer.start();
             } catch (Exception e) {
                 e.printStackTrace();
