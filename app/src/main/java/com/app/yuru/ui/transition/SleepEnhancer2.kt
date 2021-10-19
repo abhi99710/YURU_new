@@ -18,6 +18,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.app.yuru.R
+import com.app.yuru.corescheduler.player.video.ui.VideoActivity
+import com.app.yuru.corescheduler.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -317,26 +319,26 @@ class SleepEnhancer2 : Fragment() {
             val cv3: CardView = dialog.findViewById(R.id.cv3)
             val cv4: CardView = dialog.findViewById(R.id.cv4)
             cv1.setOnClickListener {
-                val intent = Intent(context, VideoPlay::class.java)
-                intent.putExtra("videoLink", "")
+                val intent = Intent(context, VideoActivity::class.java)
+                intent.putExtra(Constants.VIDEO_LINK, "")
                 context?.startActivity(intent)
             }
 
             cv2.setOnClickListener {
-                val intent = Intent(context, VideoPlay::class.java)
-                intent.putExtra("videoLink", "")
+                val intent = Intent(context, VideoActivity::class.java)
+                intent.putExtra(Constants.VIDEO_LINK, "")
                 context?.startActivity(intent)
             }
 
             cv3.setOnClickListener {
-                val intent = Intent(context, VideoPlay::class.java)
-                intent.putExtra("videoLink", "")
+                val intent = Intent(context, VideoActivity::class.java)
+                intent.putExtra(Constants.VIDEO_LINK, "")
                 context?.startActivity(intent)
             }
 
             cv4.setOnClickListener {
-                val intent = Intent(context, VideoPlay::class.java)
-                intent.putExtra("videoLink", "")
+                val intent = Intent(context, VideoActivity::class.java)
+                intent.putExtra(Constants.VIDEO_LINK, "")
                 context?.startActivity(intent)
             }
             val closebtndialog = dialog.findViewById<ImageView>(R.id.closebtndialog)

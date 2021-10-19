@@ -60,6 +60,7 @@ dependencies {
 
     implementation project(":core-android")
     implementation project(":routing")
+    implementation project(":core-scheduler")
 
     implementation AndroidLib.kotlin_stdlib
     implementation AndroidLib.androidx_core

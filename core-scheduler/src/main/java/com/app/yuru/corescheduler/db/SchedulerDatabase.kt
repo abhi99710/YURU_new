@@ -12,11 +12,11 @@ import com.app.yuru.corescheduler.db.entities.SleepEnhancerAudio
 import com.app.yuru.corescheduler.db.entities.SleepEnhancerVideo
 import com.app.yuru.corescheduler.db.entities.TransitionSleep
 
-@Database(
-    entities = [TransitionSleep::class, SleepEnhancerAudio::class, SleepEnhancerVideo::class, ScheduledActions::class],
-    version = 1,
-    exportSchema = true
-)
+//@Database(
+//    entities = [TransitionSleep::class, SleepEnhancerAudio::class, SleepEnhancerVideo::class, ScheduledActions::class],
+//    version = 1,
+//    exportSchema = true
+//)
 abstract class SchedulerDatabase : RoomDatabase() {
 
     abstract fun getTransitionSleepDao(): TransitionSleepDao

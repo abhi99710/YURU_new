@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.app.yuru.R;
+import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
 
 import static androidx.legacy.content.WakefulBroadcastReceiver.startWakefulService;
 
@@ -29,14 +30,14 @@ public class MyReceiver extends BroadcastReceiver {
 
         if (intent.getStringExtra("fragment").equalsIgnoreCase("sleep_enhancer_2")) {
 
-            Intent i = new Intent(context, VideoPlay.class);
+            Intent i = new Intent(context, VideoActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            i.putExtra("ques", "")
             context.startActivity(i);
 
-            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.lop);
-            mediaPlayer.isLooping();
-            mediaPlayer.start();
+//            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.lop);
+//            mediaPlayer.isLooping();
+//            mediaPlayer.start();
 
 //            VideoView videoView = new VideoView(context);
 //            ctlr = new MediaController(context);
@@ -51,6 +52,7 @@ public class MyReceiver extends BroadcastReceiver {
 //            videoView.start();
         } else {
             try {
+//                MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.whatsapp);
                 MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.whatsapp);
                 mediaPlayer.isLooping();
                 mediaPlayer.start();
@@ -66,12 +68,12 @@ public class MyReceiver extends BroadcastReceiver {
         //this will sound the alarm tone
         //this will sound the alarm once, if you wish to
         //raise alarm in loop continuously then use MediaPlayer and setLooping(true)
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null) {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        ringtone.play();
+//        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+//        if (alarmUri == null) {
+//            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        }
+//        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
+//        ringtone.play();
 
         //this will send a notification message
         ComponentName comp = new ComponentName(context.getPackageName(),

@@ -49,13 +49,13 @@ class PlayerNotificationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (intent == null || !intent.hasExtra(Constants.URL)) {
+        if (intent == null || !intent.hasExtra(Constants.VIDEO_LINK)) {
             stopForeground(true)
             stopSelf()
         } else {
             simpleExoPlayer.setMediaItem(
                 MediaItem.fromUri(
-                    intent.getStringExtra(Constants.URL)!!
+                    intent.getStringExtra(Constants.VIDEO_LINK)!!
                 )
             )
             simpleExoPlayer.prepare()

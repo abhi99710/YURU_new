@@ -25,7 +25,7 @@ class VideoActivity : AppCompatActivity() {
                     WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
-        val url = intent.getStringExtra(Constants.URL)
+        val url = intent.getStringExtra(Constants.VIDEO_LINK)
         if (url.isNullOrBlank()) {
             finish()
             return

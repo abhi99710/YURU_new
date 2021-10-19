@@ -30,7 +30,9 @@
             android:name=".ui.discounts.DiscountCoupons"
             android:exported="true" />
         <activity android:name=".ui.transition.BasicActivity" />
-        <activity android:name=".ui.transition.VideoPlay" />
+        <activity
+            android:name=".ui.transition.VideoPlay"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.transition.TransitionActivity"
             android:screenOrientation="portrait" />

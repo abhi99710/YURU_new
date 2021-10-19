@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -22,13 +21,14 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.app.yuru.R
+import com.app.yuru.corescheduler.player.video.ui.VideoActivity
+import com.app.yuru.corescheduler.utils.Constants
 import com.app.yuru.utility.apivolley.APIVolley
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.time.ExperimentalTime
 
 
 class WakeUpProgram : Fragment() {
@@ -51,8 +51,8 @@ class WakeUpProgram : Fragment() {
     private lateinit var time_tv: TextView
     private lateinit var am_tv: TextView
     private lateinit var pm_tv: TextView
-    private lateinit var save_wakeup : TextView
-    private lateinit var viewall : TextView
+    private lateinit var save_wakeup: TextView
+    private lateinit var viewall: TextView
 
     private var id1Male: MutableList<String> = ArrayList()
     private var category_nameMale: MutableList<String> = ArrayList()
@@ -74,8 +74,6 @@ class WakeUpProgram : Fragment() {
     private val alarmTimePicker: TimePicker? = null
 
     private var clickedGender = ""
-
-
 
 
     override fun onCreateView(
@@ -152,26 +150,27 @@ class WakeUpProgram : Fragment() {
 
         }
         e_option.setOnClickListener {
-            textColor(e_option,c_option, o_option, a_option, n_option)
+            textColor(e_option, c_option, o_option, a_option, n_option)
 
             Toast.makeText(context, "E", Toast.LENGTH_SHORT).show()
         }
 
         a_option.setOnClickListener {
-            textColor(a_option,e_option,c_option, o_option, n_option)
+            textColor(a_option, e_option, c_option, o_option, n_option)
 
             Toast.makeText(context, "A", Toast.LENGTH_SHORT).show()
 
         }
         n_option.setOnClickListener {
-            textColor(n_option,a_option,e_option,c_option, o_option)
+            textColor(n_option, a_option, e_option, c_option, o_option)
 
             Toast.makeText(context, "N", Toast.LENGTH_SHORT).show()
 
         }
 
         save_wakeup.setOnClickListener {
-            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, TransitionToSleep())
+            val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.framwQts, TransitionToSleep())
             fragment.addToBackStack(null)
             fragment.commit()
         }
@@ -206,39 +205,44 @@ class WakeUpProgram : Fragment() {
 
     private fun go() {
 
-        val  SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
+        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
 
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
-        val calList : MutableList<Calendar> = ArrayList()
+        val calList: MutableList<Calendar> = ArrayList()
 
-        for(i in 0..4 ){
+        for (i in 0..4) {
             calList.add(calendar)
         }
 
         val stringBuilder = ""
 
-        for( calItem in calList){
-            calItem.add(Calendar.SECOND,10)
+        for (calItem in calList) {
+            calItem.add(Calendar.SECOND, 10)
 
-            val requestCode = (calendar.timeInMillis/1000).toInt()
+            val requestCode = (calendar.timeInMillis / 1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
-            intent.putExtra("REQUEST_CODE",requestCode)
-            intent.putExtra("fragment","wakeup")
+            intent.putExtra("REQUEST_CODE", requestCode)
+            intent.putExtra("fragment", "wakeup")
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 
             val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-                }else{
-                    alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager?.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    calItem.timeInMillis,
+                    pi
+                )
+            } else {
+                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+            }
 
 
 
-            Toast.makeText(context, "Alarm has been set : \n "+stringBuilder , Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Alarm has been set : \n " + stringBuilder, Toast.LENGTH_SHORT)
+                .show()
 
         }
     }
@@ -274,7 +278,7 @@ class WakeUpProgram : Fragment() {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
-                        if(jsonObject1.getString("gender").equals("Male")){
+                        if (jsonObject1.getString("gender").equals("Male")) {
                             id1Male.add(jsonObject1.getString("id"))
                             category_nameMale.add(jsonObject1.getString("category_name"))
                             language_nameMale.add(jsonObject1.getString("language_name"))
@@ -282,7 +286,7 @@ class WakeUpProgram : Fragment() {
                             traintMale.add(jsonObject1.getString("traint"))
                             durationMale.add(jsonObject1.getString("duration"))
                             url1Male.add(jsonObject1.getString("url"))
-                        }else{
+                        } else {
                             id1Female.add(jsonObject1.getString("id"))
                             category_nameFemale.add(jsonObject1.getString("category_name"))
                             language_nameFemale.add(jsonObject1.getString("language_name"))
@@ -351,15 +355,15 @@ class WakeUpProgram : Fragment() {
 //                "" + category_nameFemale.get(position),
 //                Toast.LENGTH_SHORT
 //            ).show()
-            val intent = Intent(context, VideoPlay::class.java)
+            val intent = Intent(context, VideoActivity::class.java)
             if (clickedGender.equals("male")) {
                 intent.putExtra(
-                    "videoLink", /*genderMale.get(position)*/
+                    Constants.VIDEO_LINK, /*genderMale.get(position)*/
                     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
                 )
             } else {
                 intent.putExtra(
-                    "videoLink", /*genderFemale.get(position)*/
+                    Constants.VIDEO_LINK, /*genderFemale.get(position)*/
                     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
                 )
             }
@@ -371,7 +375,7 @@ class WakeUpProgram : Fragment() {
     fun timePicker() {
 
         time_tv.setOnClickListener {
-          val strin : String =  showDialog("Time Picker")
+            val strin: String = showDialog("Time Picker")
             time_tv.setText(strin)
         }
 
@@ -396,9 +400,9 @@ class WakeUpProgram : Fragment() {
 
     }
 
-    private fun showDialog(title: String) : String{
+    private fun showDialog(title: String): String {
         val dialog = context?.let { Dialog(it) }
-        var txt  = ""
+        var txt = ""
         if (dialog != null) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(false)
@@ -409,26 +413,26 @@ class WakeUpProgram : Fragment() {
             closebtndialog.setOnClickListener {
 
                 val mTimePicker: TimePickerDialog
-            mTimePicker = TimePickerDialog(
+                mTimePicker = TimePickerDialog(
                     context,
-                { timePicker, selectedHour, selectedMinute -> time_tv.setText("$selectedHour:$selectedMinute") },
-                hours,
-                minutes,
-                true
+                    { timePicker, selectedHour, selectedMinute -> time_tv.setText("$selectedHour:$selectedMinute") },
+                    hours,
+                    minutes,
+                    true
                 )
 
-                 txt  = ""+ Calendar.HOUR_OF_DAY + " " + Calendar.MINUTE
+                txt = "" + Calendar.HOUR_OF_DAY + " " + Calendar.MINUTE
                 dialog.dismiss()
 
             }
 
-            }
-
-        return txt
         }
 
+        return txt
+    }
 
-    fun textColor(tv1 : TextView,tv2 : TextView,tv3 : TextView, tv4 : TextView,tv5 : TextView ){
+
+    fun textColor(tv1: TextView, tv2: TextView, tv3: TextView, tv4: TextView, tv5: TextView) {
 
         tv1.setBackgroundColor(Color.parseColor("#FFC107")) // Yellow
 

@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.yuru.R;
+import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
+import com.app.yuru.corescheduler.utils.Constants;
 
 public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
     final Context context;
@@ -31,9 +33,9 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
     @Override
     public void onBindViewHolder(@NonNull Myholder holder, int position) {
 
-        holder.tts_videoview.setOnClickListener(v->{
-            Intent intent = new Intent(context, VideoPlay.class);
-            intent.putExtra("videoLink", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4");
+        holder.tts_videoview.setOnClickListener(v -> {
+            Intent intent = new Intent(context, VideoActivity.class);
+            intent.putExtra(Constants.VIDEO_LINK, "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4");
             context.startActivity(intent);
         });
     }
@@ -45,6 +47,7 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
     public class Myholder extends RecyclerView.ViewHolder {
         final ImageView tts_videoview;
+
         public Myholder(@NonNull View itemView) {
             super(itemView);
 

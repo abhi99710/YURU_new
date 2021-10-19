@@ -57,7 +57,7 @@ object SchedulerUtils {
         val manager: AlarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, PlayerNotificationService::class.java)
-        intent.putExtra(Constants.URL, url)
+        intent.putExtra(Constants.VIDEO_LINK, url)
         val pendingIntent =
             when {
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
@@ -92,7 +92,7 @@ object SchedulerUtils {
         val manager: AlarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, VideoActivity::class.java)
-        intent.putExtra(Constants.URL, url)
+        intent.putExtra(Constants.VIDEO_LINK, url)
         val pendingIntent =
             when {
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {

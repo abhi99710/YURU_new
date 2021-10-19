@@ -31,26 +31,28 @@ public class VideoPlay extends AppCompatActivity {
 
 
     }
-    public void playVideo(VideoView videoView,String path) {
+
+    public void playVideo(VideoView videoView, String path) {
 
         MediaController ctlr = new MediaController(this);
         ctlr.setMediaPlayer(videoView);
         videoView.setMediaController(ctlr);
 
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
+//        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
 //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
         videoView.setMediaController(ctlr);
 
-        videoView.setVideoURI(uri);
+//        videoView.setVideoURI(uri);
+        videoView.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
         videoView.start();
 
-        new Handler().postDelayed(() -> {
-
-
-            startActivity(new Intent(VideoPlay.this, TransitionActivity.class));
-
-
-        }, 30000);
+//        new Handler().postDelayed(() -> {
+//
+//
+//            startActivity(new Intent(VideoPlay.this, TransitionActivity.class));
+//
+//
+//        }, 30000);
 
     }
 
