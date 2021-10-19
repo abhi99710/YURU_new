@@ -38,7 +38,7 @@ public class VideoPlay extends AppCompatActivity {
         videoView.setMediaController(ctlr);
 
         Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
-//        Uri uri = Uri.parse(url);
+//        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
         videoView.setMediaController(ctlr);
 
         videoView.setVideoURI(uri);

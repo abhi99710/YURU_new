@@ -48,6 +48,13 @@
     <string name="low_vs_high_openness">Low vs High Openness</string>
     <string name="low">Low</string>
     <string name="high">High</string>
-    <string name="openness">Openness</string>
+    <string name="choose_a_subscription">choose_a_subscription</string>
+    <string name="complete">Please select your subscription plan to complete the registration process</string>
+    <string name="payment_">Payment of $37.56 every 12 months.  Cancel anytime.</string>
+    <string name="_20_discount_applied">20% DISCOUNT APPLIED</string>
+    <string name="monthly">Monthly</string>
+    <string name="_3_92_month">$4.90/Month</string>
+    <string name="he_yearly_m">The yearly membership gives you unlimited access to video sessions on sleep, stress, wakeup, affirmations and entire library of content.  *You may cancel your subscription at any time.</string>
+    <string name="enter_your_discount_code">Enter your Discount Coupon</string>
 
 </resources>

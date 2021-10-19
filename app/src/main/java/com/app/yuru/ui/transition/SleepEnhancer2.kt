@@ -42,6 +42,8 @@ class SleepEnhancer2 : Fragment() {
     private lateinit var a1Option: ImageView
     private lateinit var n1option: ImageView
 
+    lateinit var seekBar1 : VerticalSeekBar
+
     private var left_1_count = 0   //count for left click for image 1
     private var right_1_count = 0  //count for right click for image 1
     private var left_2_count = 0  //count for left click for image 2
@@ -298,6 +300,8 @@ class SleepEnhancer2 : Fragment() {
         c_option = view.findViewById(R.id.c_option)
         a1Option = view.findViewById(R.id.a1Option)
         n1option = view.findViewById(R.id.n1option)
+
+        seekBar1 = view.findViewById(R.id.seekBar2)
     }
 
     private fun showDialog(title: String) {

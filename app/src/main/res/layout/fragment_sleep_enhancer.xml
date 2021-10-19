@@ -167,6 +167,19 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <com.app.yuru.ui.transition.VerticalSeekBar
+                        android:id="@+id/seekBar1"
+                        android:layout_width="8dp"
+                        android:layout_height="200dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#fff"
+                        android:scrollIndicators="top"
+                        android:scrollbarSize="@dimen/_20sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+"/>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

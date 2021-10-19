@@ -46,8 +46,8 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
         }
         binding.btnProceed.setOnClickListener{
 
-//            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(context, TransitionActivity::class.java))
+            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(context, TransitionActivity::class.java))
 
             if(binding.edtEmail.text.toString().isNullOrEmpty()){
                 Toast.makeText(context, "please enter your email", Toast.LENGTH_SHORT).show()
@@ -56,7 +56,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                 Toast.makeText(context, "please enter your password", Toast.LENGTH_SHORT).show()
 
             }else{
-                apiLogin()
+//                apiLogin()
             }
 
 

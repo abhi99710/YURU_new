@@ -34,9 +34,9 @@ public class MyReceiver extends BroadcastReceiver {
 //            i.putExtra("ques", "")
             context.startActivity(i);
 
-//            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.lop);
-//            mediaPlayer.isLooping();
-//            mediaPlayer.start();
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.lop);
+            mediaPlayer.isLooping();
+            mediaPlayer.start();
 
 //            VideoView videoView = new VideoView(context);
 //            ctlr = new MediaController(context);

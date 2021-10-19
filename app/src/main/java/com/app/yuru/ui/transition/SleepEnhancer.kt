@@ -19,6 +19,14 @@ import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.time.ExperimentalTime
+import android.widget.SeekBar
+
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.widget.SeekBar.OnSeekBarChangeListener
+
+import androidx.core.content.ContextCompat.getSystemService
+import java.lang.Exception
 
 
 class SleepEnhancer : Fragment() {
@@ -42,6 +50,10 @@ class SleepEnhancer : Fragment() {
     private var toXdelta2 = 0.0f  // saves the position to which the second imageview slides right side
     private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
     private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
+
+
+
+    lateinit var seekBar1 : VerticalSeekBar
 
     private var alarmAnser = 45
 
@@ -69,6 +81,24 @@ class SleepEnhancer : Fragment() {
         transitionClickListner()
 
 
+        try {
+            val mediaPlayer = MediaPlayer()
+             lateinit var audioManager : AudioManager
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
+            audioManager = (context?.getSystemService(requireContext().toString()) as AudioManager?)!!
+            seekBar1.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
+            seekBar1.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC))
+            seekBar1.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            })
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         return view
 
@@ -224,6 +254,8 @@ class SleepEnhancer : Fragment() {
         center1 = view.findViewById(R.id.center1)
         center2 = view.findViewById(R.id.center2)
         save_sleep_enhancer = view.findViewById(R.id.save_sleep_enhancer)
+
+        seekBar1 = view.findViewById(R.id.seekBar1)
     }
 
 
