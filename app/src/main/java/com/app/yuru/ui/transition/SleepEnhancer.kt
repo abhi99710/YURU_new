@@ -26,6 +26,13 @@ import android.media.MediaPlayer
 import android.widget.SeekBar.OnSeekBarChangeListener
 
 import androidx.core.content.ContextCompat.getSystemService
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.app.yuru.utility.apivolley.APIVolley
+import org.json.JSONException
+import org.json.JSONObject
 import java.lang.Exception
 
 
@@ -50,6 +57,7 @@ class SleepEnhancer : Fragment() {
     private var toXdelta2 = 0.0f  // saves the position to which the second imageview slides right side
     private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
     private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
+
 
 
 
@@ -80,6 +88,8 @@ class SleepEnhancer : Fragment() {
         // this method is used for transition of image
         transitionClickListner()
 
+//        apiSleep()
+
 
         try {
             val mediaPlayer = MediaPlayer()
@@ -103,6 +113,8 @@ class SleepEnhancer : Fragment() {
         return view
 
     }
+
+
 
     private fun transitionClickListner() {
 
