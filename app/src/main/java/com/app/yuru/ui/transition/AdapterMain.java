@@ -23,7 +23,6 @@ public class AdapterMain extends BaseAdapter {
 
     final Context context;
     final List<String> id;
-    // --Commented out by Inspection (7/23/2021 11:13 AM):final List<String> name;
     final List<String> category_name;
     final  List<String> language_name;
     final List<String> gender;

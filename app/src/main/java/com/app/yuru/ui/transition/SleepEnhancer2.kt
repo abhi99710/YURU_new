@@ -48,10 +48,14 @@ class SleepEnhancer2 : Fragment() {
     private var right_2_count = 0  //count for right click for image 2
     private var answerForLeft = 45  // real time answer for image 1 button clicks
     private var annserForRight = 135  // real time answer for image 1 button clicks
-    private var toXdelta1 = 0.0f  // saves the position to which the first imageview slides right side
-    private var toXdelta2 = 0.0f  // saves the position to which the second imageview slides right side
-    private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
-    private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
+    private var toXdelta1 =
+        0.0f  // saves the position to which the first imageview slides right side
+    private var toXdelta2 =
+        0.0f  // saves the position to which the second imageview slides right side
+    private var negXdelta1 =
+        0.0f  // saves the position to which the first imageview slides left side
+    private var negXdelta2 =
+        0.0f  // saves the position to which the second imageview slides left side
     private var countClicked = 0
 
     override fun onCreateView(
@@ -77,7 +81,8 @@ class SleepEnhancer2 : Fragment() {
         save_sleep_enhancer_2.setOnClickListener {
 //            it.findNavController().navigate(R.id.wakeUpProgram)
 
-            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, WakeUpProgram())
+            val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.framwQts, WakeUpProgram())
             fragment.addToBackStack(null)
             fragment.commit()
         }
@@ -92,10 +97,10 @@ class SleepEnhancer2 : Fragment() {
 
     private fun methodForUpperImageClicks() {
         o_option.setOnClickListener {
-            if(countClicked == 0) {
+            if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
                 countClicked = 1
-            }else{
+            } else {
                 bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
                 countClicked = 0
             }
@@ -103,20 +108,20 @@ class SleepEnhancer2 : Fragment() {
 
 
         e_option.setOnClickListener {
-            if(countClicked == 0) {
+            if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
                 countClicked = 1
-            }else{
+            } else {
                 bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
                 countClicked = 0
             }
         }
 
         c_option.setOnClickListener {
-            if(countClicked == 0) {
+            if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
                 countClicked = 1
-            }else{
+            } else {
                 bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
                 countClicked = 0
             }
@@ -124,20 +129,20 @@ class SleepEnhancer2 : Fragment() {
 
 
         a1Option.setOnClickListener {
-            if(countClicked == 0) {
+            if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
                 countClicked = 1
-            }else{
+            } else {
                 bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
                 countClicked = 0
             }
         }
 
         n1option.setOnClickListener {
-            if(countClicked == 0) {
+            if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
                 countClicked = 1
-            }else{
+            } else {
                 bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
                 countClicked = 0
             }
@@ -303,29 +308,29 @@ class SleepEnhancer2 : Fragment() {
             dialog.setContentView(R.layout.dialogtransition)
             dialog.show()
 
-            val cv1 : CardView = dialog.findViewById(R.id.cv1)
-            val cv2 : CardView = dialog.findViewById(R.id.cv2)
-            val cv3 : CardView = dialog.findViewById(R.id.cv3)
-            val cv4 : CardView = dialog.findViewById(R.id.cv4)
-            cv1.setOnClickListener{
+            val cv1: CardView = dialog.findViewById(R.id.cv1)
+            val cv2: CardView = dialog.findViewById(R.id.cv2)
+            val cv3: CardView = dialog.findViewById(R.id.cv3)
+            val cv4: CardView = dialog.findViewById(R.id.cv4)
+            cv1.setOnClickListener {
                 val intent = Intent(context, VideoPlay::class.java)
                 intent.putExtra("videoLink", "")
                 context?.startActivity(intent)
             }
 
-            cv2.setOnClickListener{
+            cv2.setOnClickListener {
                 val intent = Intent(context, VideoPlay::class.java)
                 intent.putExtra("videoLink", "")
                 context?.startActivity(intent)
             }
 
-            cv3.setOnClickListener{
+            cv3.setOnClickListener {
                 val intent = Intent(context, VideoPlay::class.java)
                 intent.putExtra("videoLink", "")
                 context?.startActivity(intent)
             }
 
-            cv4.setOnClickListener{
+            cv4.setOnClickListener {
                 val intent = Intent(context, VideoPlay::class.java)
                 intent.putExtra("videoLink", "")
                 context?.startActivity(intent)
@@ -340,41 +345,46 @@ class SleepEnhancer2 : Fragment() {
     }
 
 
-    private fun go(hike : Int) {
+    private fun go(hike: Int) {
 
-        val  SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
+        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
 
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
-        val calList : MutableList<Calendar> = ArrayList()
+        val calList: MutableList<Calendar> = ArrayList()
 
-        for(i in 0..4 ){
+        for (i in 0..4) {
             calList.add(calendar)
         }
 
         val stringBuilder = ""
 
-        for( calItem in calList){
-            calItem.add(Calendar.MINUTE,hike)
+        for (calItem in calList) {
+            calItem.add(Calendar.MINUTE, hike)
 
-            val requestCode = (calendar.timeInMillis/1000).toInt()
+            val requestCode = (calendar.timeInMillis / 1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
-            intent.putExtra("REQUEST_CODE",requestCode)
-            intent.putExtra("fragment","sleep_enhancer_2")
+            intent.putExtra("REQUEST_CODE", requestCode)
+            intent.putExtra("fragment", "sleep_enhancer_2")
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 
             val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-            }else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager?.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    calItem.timeInMillis,
+                    pi
+                )
+            } else {
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
             }
 
 
 
-            Toast.makeText(context, "Alarm has been set : \n "+stringBuilder , Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Alarm has been set : \n " + stringBuilder, Toast.LENGTH_SHORT)
+                .show()
 
         }
     }

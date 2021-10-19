@@ -51,8 +51,8 @@ class WakeUpProgram : Fragment() {
     private lateinit var time_tv: TextView
     private lateinit var am_tv: TextView
     private lateinit var pm_tv: TextView
-    private lateinit var save_wakeup: TextView
-    private lateinit var viewall: TextView
+    private lateinit var save_wakeup : TextView
+    private lateinit var viewall : TextView
 
     private var id1Male: MutableList<String> = ArrayList()
     private var category_nameMale: MutableList<String> = ArrayList()
@@ -74,6 +74,8 @@ class WakeUpProgram : Fragment() {
     private val alarmTimePicker: TimePicker? = null
 
     private var clickedGender = ""
+
+
 
 
     override fun onCreateView(
@@ -150,27 +152,26 @@ class WakeUpProgram : Fragment() {
 
         }
         e_option.setOnClickListener {
-            textColor(e_option, c_option, o_option, a_option, n_option)
+            textColor(e_option,c_option, o_option, a_option, n_option)
 
             Toast.makeText(context, "E", Toast.LENGTH_SHORT).show()
         }
 
         a_option.setOnClickListener {
-            textColor(a_option, e_option, c_option, o_option, n_option)
+            textColor(a_option,e_option,c_option, o_option, n_option)
 
             Toast.makeText(context, "A", Toast.LENGTH_SHORT).show()
 
         }
         n_option.setOnClickListener {
-            textColor(n_option, a_option, e_option, c_option, o_option)
+            textColor(n_option,a_option,e_option,c_option, o_option)
 
             Toast.makeText(context, "N", Toast.LENGTH_SHORT).show()
 
         }
 
         save_wakeup.setOnClickListener {
-            val fragment = requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.framwQts, TransitionToSleep())
+            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, TransitionToSleep())
             fragment.addToBackStack(null)
             fragment.commit()
         }
@@ -205,44 +206,39 @@ class WakeUpProgram : Fragment() {
 
     private fun go() {
 
-        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
+        val  SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
 
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
-        val calList: MutableList<Calendar> = ArrayList()
+        val calList : MutableList<Calendar> = ArrayList()
 
-        for (i in 0..4) {
+        for(i in 0..4 ){
             calList.add(calendar)
         }
 
         val stringBuilder = ""
 
-        for (calItem in calList) {
-            calItem.add(Calendar.SECOND, 10)
+        for( calItem in calList){
+            calItem.add(Calendar.SECOND,10)
 
-            val requestCode = (calendar.timeInMillis / 1000).toInt()
+            val requestCode = (calendar.timeInMillis/1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
-            intent.putExtra("REQUEST_CODE", requestCode)
-            intent.putExtra("fragment", "wakeup")
+            intent.putExtra("REQUEST_CODE",requestCode)
+            intent.putExtra("fragment","wakeup")
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 
             val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager?.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calItem.timeInMillis,
-                    pi
-                )
-            } else {
-                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-            }
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+                }else{
+                    alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+                }
 
 
 
-            Toast.makeText(context, "Alarm has been set : \n " + stringBuilder, Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(context, "Alarm has been set : \n "+stringBuilder , Toast.LENGTH_SHORT).show()
 
         }
     }
@@ -278,7 +274,7 @@ class WakeUpProgram : Fragment() {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
-                        if (jsonObject1.getString("gender").equals("Male")) {
+                        if(jsonObject1.getString("gender").equals("Male")){
                             id1Male.add(jsonObject1.getString("id"))
                             category_nameMale.add(jsonObject1.getString("category_name"))
                             language_nameMale.add(jsonObject1.getString("language_name"))
@@ -286,7 +282,7 @@ class WakeUpProgram : Fragment() {
                             traintMale.add(jsonObject1.getString("traint"))
                             durationMale.add(jsonObject1.getString("duration"))
                             url1Male.add(jsonObject1.getString("url"))
-                        } else {
+                        }else{
                             id1Female.add(jsonObject1.getString("id"))
                             category_nameFemale.add(jsonObject1.getString("category_name"))
                             language_nameFemale.add(jsonObject1.getString("language_name"))
@@ -375,7 +371,7 @@ class WakeUpProgram : Fragment() {
     fun timePicker() {
 
         time_tv.setOnClickListener {
-            val strin: String = showDialog("Time Picker")
+          val strin : String =  showDialog("Time Picker")
             time_tv.setText(strin)
         }
 
@@ -400,30 +396,39 @@ class WakeUpProgram : Fragment() {
 
     }
 
-    private fun showDialog(title: String): String {
+    private fun showDialog(title: String) : String{
         val dialog = context?.let { Dialog(it) }
-        var txt = ""
+        var txt  = ""
         if (dialog != null) {
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(false)
             dialog.setContentView(R.layout.dialog_time_picker)
             dialog.show()
-            val timePicker = dialog.findViewById<TimePicker>(R.id.alarmTimePicker)
+
             val closebtndialog = dialog.findViewById<TextView>(R.id.alarmToggle)
             closebtndialog.setOnClickListener {
-                if (Build.VERSION.SDK_INT < 23) {
-                    time_tv.text = "${timePicker.currentHour}:${timePicker.currentMinute}"
-                } else {
-                    time_tv.text = "${timePicker.hour}:${timePicker.minute}"
-                }
+
+                val mTimePicker: TimePickerDialog
+            mTimePicker = TimePickerDialog(
+                    context,
+                { timePicker, selectedHour, selectedMinute -> time_tv.setText("$selectedHour:$selectedMinute") },
+                hours,
+                minutes,
+                true
+                )
+
+                 txt  = ""+ Calendar.HOUR_OF_DAY + " " + Calendar.MINUTE
                 dialog.dismiss()
+
             }
-        }
+
+            }
+
         return txt
-    }
+        }
 
 
-    fun textColor(tv1: TextView, tv2: TextView, tv3: TextView, tv4: TextView, tv5: TextView) {
+    fun textColor(tv1 : TextView,tv2 : TextView,tv3 : TextView, tv4 : TextView,tv5 : TextView ){
 
         tv1.setBackgroundColor(Color.parseColor("#FFC107")) // Yellow
 

@@ -14,9 +14,6 @@ import com.app.yuru.R;
 
 public class VideoPlay extends AppCompatActivity {
 
-    private VideoView videoPlay_videoview;
-    private String url ;
-    private MediaController ctlr;
     int x = 1;
 
 
@@ -26,11 +23,9 @@ public class VideoPlay extends AppCompatActivity {
         setContentView(R.layout.activity_video_play);
 
 
+        String url = getIntent().getStringExtra("videoLink");
 
-
-        url = getIntent().getStringExtra("videoLink");
-
-        videoPlay_videoview = findViewById(R.id.videoPlay_videoview);
+        VideoView videoPlay_videoview = findViewById(R.id.videoPlay_videoview);
 
         playVideo(videoPlay_videoview, url);
 
@@ -38,7 +33,7 @@ public class VideoPlay extends AppCompatActivity {
     }
     public void playVideo(VideoView videoView,String path) {
 
-         ctlr = new MediaController(this);
+        MediaController ctlr = new MediaController(this);
         ctlr.setMediaPlayer(videoView);
         videoView.setMediaController(ctlr);
 

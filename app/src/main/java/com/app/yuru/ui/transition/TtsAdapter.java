@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.yuru.R;
 
 public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
-    Context context;
+    final Context context;
 
     public TtsAdapter(Context context) {
         this.context = context;
@@ -44,7 +44,7 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
     }
 
     public class Myholder extends RecyclerView.ViewHolder {
-        ImageView tts_videoview;
+        final ImageView tts_videoview;
         public Myholder(@NonNull View itemView) {
             super(itemView);
 

@@ -10,14 +10,14 @@ import com.app.yuru.coreandroid.base.BaseFragmentBinding
 
 class DetailNewsFragment : BaseFragmentBinding<FragmentDetailNewsBinding>() {
 
-    private val args: DetailNewsFragmentArgs by navArgs()
+//    private val args: DetailNewsFragmentArgs by navArgs()
 
     private var newsDto: NewsDto? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        newsDto = args.newsDto
+//        newsDto = args.newsDto
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDetailNewsBinding

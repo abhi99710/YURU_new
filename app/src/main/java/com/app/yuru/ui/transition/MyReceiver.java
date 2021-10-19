@@ -21,14 +21,15 @@ import static androidx.legacy.content.WakefulBroadcastReceiver.startWakefulServi
 public class MyReceiver extends BroadcastReceiver {
 
     private MediaController ctlr;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context, "Alarm Ringing...", Toast.LENGTH_SHORT).show();
         int requestCode = intent.getIntExtra("REQUEST_CODE", -1);
 
-        if(intent.getStringExtra("fragment").equalsIgnoreCase("sleep_enhancer_2")) {
+        if (intent.getStringExtra("fragment").equalsIgnoreCase("sleep_enhancer_2")) {
 
-           Intent i = new Intent(context, VideoPlay.class);
+            Intent i = new Intent(context, VideoPlay.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            i.putExtra("ques", "")
             context.startActivity(i);
@@ -48,7 +49,7 @@ public class MyReceiver extends BroadcastReceiver {
 //
 //            videoView.setVideoURI(uri);
 //            videoView.start();
-        }else {
+        } else {
             try {
                 MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.whatsapp);
                 mediaPlayer.isLooping();

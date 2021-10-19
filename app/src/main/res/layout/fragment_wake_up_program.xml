@@ -489,6 +489,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/dayOfAlarm"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="wrap_content"
                         android:text="never"

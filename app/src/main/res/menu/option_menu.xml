@@ -6,11 +6,11 @@
         android:id="@+id/notification"
         android:icon="@drawable/ic_baseline_notifications_24"
         android:title="Noti"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/profile_option"
         android:icon="@drawable/profile_toolbar"
         android:title="Profile"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>

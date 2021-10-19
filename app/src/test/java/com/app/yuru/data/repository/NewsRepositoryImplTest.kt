@@ -1,7 +1,7 @@
 package com.app.yuru.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.yuru.data.datasource.local.NewsLocalDatasource
+//import com.app.yuru.data.datasource.local.NewsLocalDatasource
 import com.app.yuru.data.datasource.remote.YuruRemoteDatasource
 import com.app.yuru.domain.entity.News
 import com.app.yuru.domain.entity.NewsSource
@@ -29,8 +29,8 @@ class NewsRepositoryImplTest {
     @MockK
     lateinit var newsRemoteDatasource: YuruRemoteDatasource
 
-    @MockK
-    lateinit var newsLocalDatasource: NewsLocalDatasource
+//    @MockK
+//    lateinit var newsLocalDatasource: NewsLocalDatasource
 
     @MockK
     lateinit var networkChecker: NetworkChecker
@@ -59,7 +59,7 @@ class NewsRepositoryImplTest {
 
         // network down
         every { networkChecker.isNetworkConnected() } returns true
-        coEvery { newsLocalDatasource.insertNews(generateFakeData()) } returns Unit
+//        coEvery { newsLocalDatasource.insertNews(generateFakeData()) } returns Unit
 
         coEvery {
             newsRemoteDatasource.getTopHeadlines(
@@ -70,7 +70,7 @@ class NewsRepositoryImplTest {
 
         val result = newsRepository.getTopHeadlines(country, category)
 
-        coVerify { newsLocalDatasource.insertNews(generateFakeData()) }
+//        coVerify { newsLocalDatasource.insertNews(generateFakeData()) }
 
         assertTrue(result.isRight)
     }
@@ -85,7 +85,7 @@ class NewsRepositoryImplTest {
         every { networkChecker.isNetworkConnected() } returns false
 
         // local return data
-        coEvery { newsLocalDatasource.getAllNews() } returns generateFakeData()
+//        coEvery { newsLocalDatasource.getAllNews() } returns generateFakeData()
 
         // when
         val result = newsRepository.getTopHeadlines(country, category)
@@ -116,7 +116,7 @@ class NewsRepositoryImplTest {
 
             // network down
             every { networkChecker.isNetworkConnected() } returns false
-            coEvery { newsLocalDatasource.getAllNews() } returns emptyList()
+//            coEvery { newsLocalDatasource.getAllNews() } returns emptyList()
 
             // when
             val result = newsRepository.getTopHeadlines(country, category)

@@ -24,7 +24,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
      * rect object that represents the bounds of the piechart, needed for
      * drawing the circle
      */
-    private RectF mCircleBox = new RectF();
+    private final RectF mCircleBox = new RectF();
 
     /**
      * flag indicating if entry labels should be drawn or not
@@ -66,7 +66,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
      */
     private CharSequence mCenterText = "";
 
-    private MPPointF mCenterTextOffset = MPPointF.getInstance(0, 0);
+    private final MPPointF mCenterTextOffset = MPPointF.getInstance(0, 0);
 
     /**
      * indicates the size of the hole in the center of the piechart, default:
