@@ -28,7 +28,7 @@ public class MyReceiver extends BroadcastReceiver {
         Toast.makeText(context, "Alarm Ringing...", Toast.LENGTH_SHORT).show();
         int requestCode = intent.getIntExtra("REQUEST_CODE", -1);
 
-        if (intent.getStringExtra("fragment").equalsIgnoreCase("sleep_enhancer_2")) {
+        if (!intent.getStringExtra("fragment").equalsIgnoreCase("sleep_enhancer_2")) {
 
             Intent i = new Intent(context, VideoActivity.class);
             //TODO pass URL
@@ -36,9 +36,9 @@ public class MyReceiver extends BroadcastReceiver {
 //            i.putExtra("ques", "")
             context.startActivity(i);
 
-//            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.lop);
-//            mediaPlayer.isLooping();
-//            mediaPlayer.start();
+            MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sleep1);
+            mediaPlayer.isLooping();
+            mediaPlayer.start();
 
 //            VideoView videoView = new VideoView(context);
 //            ctlr = new MediaController(context);

@@ -24,6 +24,7 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.utility.apivolley.APIVolley
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.lang.reflect.Method
@@ -45,20 +46,30 @@ class TransitionToSleep : Fragment() {
     private var id: MutableList<String> = ArrayList()
     private var filename: MutableList<String> = ArrayList()*/
 
-    private var id1Male: MutableList<String> = ArrayList()
-    private var category_nameMale: MutableList<String> = ArrayList()
-    private var language_nameMale: MutableList<String> = ArrayList()
-    private var genderMale: MutableList<String> = ArrayList()
-    private var traintMale: MutableList<String> = ArrayList()
-    private var durationMale: MutableList<String> = ArrayList()
-    private var url1Male: MutableList<String> = ArrayList()
-    private var id1Female: MutableList<String> = ArrayList()
-    private var category_nameFemale: MutableList<String> = ArrayList()
-    private var language_nameFemale: MutableList<String> = ArrayList()
-    private var genderFemale: MutableList<String> = ArrayList()
-    private var traintFemale: MutableList<String> = ArrayList()
-    private var durationFemale: MutableList<String> = ArrayList()
-    private var url1Female: MutableList<String> = ArrayList()
+    private var idParent45: MutableList<String> = ArrayList()
+    private var language_slug45: MutableList<String> = ArrayList()
+    private var title45: MutableList<String> = ArrayList()
+    private var transition_id45: MutableList<String> = ArrayList()
+    private var medium45: MutableList<String> = ArrayList()
+    private var filename45: MutableList<String> = ArrayList()
+    private var duration45: MutableList<String> = ArrayList()
+    private var idChild45: MutableList<String> = ArrayList()
+
+    // 90 sec
+    private var idParent90: MutableList<String> = ArrayList()
+    private var language_slug490: MutableList<String> = ArrayList()
+    private var title90: MutableList<String> = ArrayList()
+    private var transition_id90: MutableList<String> = ArrayList()
+    private var medium90: MutableList<String> = ArrayList()
+    private var filename90: MutableList<String> = ArrayList()
+    private var duration90: MutableList<String> = ArrayList()
+    private var idChild90: MutableList<String> = ArrayList()
+
+    lateinit var tv45min : TextView
+    lateinit var tv90min : TextView
+    lateinit var sleep_male : TextView
+    lateinit var sleep_female : TextView
+
 
 
     override fun onCreateView(
@@ -70,8 +81,36 @@ class TransitionToSleep : Fragment() {
 
 //        Navigation.createNavigateOnClickListener(R.id.nav_host_homepage, null);
 
+        tv45min = view.findViewById(R.id.tv45min)
+        tv90min = view.findViewById(R.id.tv90min)
+        sleep_male = view.findViewById(R.id.sleep_male)
+        sleep_female = view.findViewById(R.id.sleep_female)
 
+        tv45min.setOnClickListener {
+            val transitionToSleepAdapter = TtsAdapter(context, idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
+            transition_to_sleep_recy.setHasFixedSize(true)
+            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.adapter = transitionToSleepAdapter
+        }
 
+        tv90min.setOnClickListener {
+            val transitionToSleepAdapter = TtsAdapter(context, idParent90, title90, idChild90, transition_id90, medium90, language_slug490, filename90, duration90)
+            transition_to_sleep_recy.setHasFixedSize(true)
+            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.adapter = transitionToSleepAdapter
+        }
+        sleep_male.setOnClickListener {
+            val transitionToSleepAdapter = TtsAdapter(context,  idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
+            transition_to_sleep_recy.setHasFixedSize(true)
+            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.adapter = transitionToSleepAdapter
+        }
+        sleep_female.setOnClickListener {
+            val transitionToSleepAdapter = TtsAdapter(context,  idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
+            transition_to_sleep_recy.setHasFixedSize(true)
+            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.adapter = transitionToSleepAdapter
+        }
 
         transition_to_sleep_recy = view.findViewById(R.id.transition_to_sleep_recy)
         skipSleep = view.findViewById(R.id.skipSleep)
@@ -91,7 +130,7 @@ class TransitionToSleep : Fragment() {
         }
 
 
-//        apiVideos()
+        apiVideos()
         adapterConnects()
 
 
@@ -100,7 +139,7 @@ class TransitionToSleep : Fragment() {
     }
 
     private fun apiVideos() {
-        val url = APIVolley.videosApi
+        val url = APIVolley.transition
 
         val stringRequest = object : StringRequest(
             Method.GET, url,
@@ -110,43 +149,47 @@ class TransitionToSleep : Fragment() {
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")
 
-                    id1Male.clear()
-                    category_nameMale.clear()
-                    language_nameMale.clear()
-                    genderMale.clear()
-                    traintMale.clear()
-                    durationMale.clear()
-                    url1Male.clear()
-                    genderFemale.clear()
-                    traintFemale.clear()
-                    durationFemale.clear()
-                    url1Female.clear()
-                    id1Female.clear()
-                    category_nameFemale.clear()
-                    language_nameFemale.clear()
+                    idParent45.clear()
+                    transition_id45.clear()
+                    medium45.clear()
+                    language_slug45.clear()
+                    filename45.clear()
+                    duration45.clear()
+                    title45.clear()
+                    idChild45.clear()
+
 
                     for (i in 0 until jsonArray.length()) {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
-                        if(jsonObject1.getString("gender").equals("Male")){
-                            id1Male.add(jsonObject1.getString("id"))
-                            category_nameMale.add(jsonObject1.getString("category_name"))
-                            language_nameMale.add(jsonObject1.getString("language_name"))
-                            genderMale.add(jsonObject1.getString("gender"))
-                            traintMale.add(jsonObject1.getString("traint"))
-                            durationMale.add(jsonObject1.getString("duration"))
-                            url1Male.add(jsonObject1.getString("url"))
-                        }else{
-                            id1Female.add(jsonObject1.getString("id"))
-                            category_nameFemale.add(jsonObject1.getString("category_name"))
-                            language_nameFemale.add(jsonObject1.getString("language_name"))
-                            genderFemale.add(jsonObject1.getString("gender"))
-                            traintFemale.add(jsonObject1.getString("traint"))
-                            durationFemale.add(jsonObject1.getString("duration"))
-                            url1Female.add(jsonObject1.getString("url"))
-                        }
 
+
+
+                       val jsonArrayNew = jsonObject1.getJSONArray("videos")
+                        for (j in 0 until jsonArrayNew.length()){
+                            val jsonObjectNew = jsonArrayNew.getJSONObject(j)
+
+                            if(jsonObjectNew.getString("duration").equals("45 sec")) {
+                                idChild45.add(jsonObjectNew.getString("id"))
+                                transition_id45.add(jsonObjectNew.getString("transition_id"))
+                                medium45.add(jsonObjectNew.getString("medium"))
+                                language_slug45.add(jsonObjectNew.getString("language_slug"))
+                                filename45.add(jsonObjectNew.getString("filename"))
+                                duration45.add(jsonObjectNew.getString("duration"))
+                                idParent45.add(jsonObject1.getString("id"))
+                                title45.add(jsonObject1.getString("title"))
+                            }else{
+                                idChild90.add(jsonObjectNew.getString("id"))
+                                transition_id90.add(jsonObjectNew.getString("transition_id"))
+                                medium90.add(jsonObjectNew.getString("medium"))
+                                language_slug490.add(jsonObjectNew.getString("language_slug"))
+                                filename90.add(jsonObjectNew.getString("filename"))
+                                duration90.add(jsonObjectNew.getString("duration"))
+                                idParent90.add(jsonObject1.getString("id"))
+                                title90.add(jsonObject1.getString("title"))
+                            }
+                        }
 
                     }
 
@@ -187,7 +230,7 @@ class TransitionToSleep : Fragment() {
     }
 
     private fun adapterConnects() {
-        val transitionToSleepAdapter = TtsAdapter(requireContext())
+        val transitionToSleepAdapter = TtsAdapter(context,  idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
         transition_to_sleep_recy.setHasFixedSize(true)
         transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
         transition_to_sleep_recy.adapter = transitionToSleepAdapter

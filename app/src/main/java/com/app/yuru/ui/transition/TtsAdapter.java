@@ -15,11 +15,30 @@ import com.app.yuru.R;
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
 import com.app.yuru.corescheduler.utils.Constants;
 
-public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
-    final Context context;
+import java.util.List;
 
-    public TtsAdapter(Context context) {
+public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
+     Context context;
+     List<String> idParent;
+    List<String> title;
+    List<String> idChild;
+    List<String> transition_id;
+    List<String> medium;
+    List<String> language_slug;
+    List<String> filename;
+    List<String> duration;
+
+    public TtsAdapter(Context context, List<String> idParent, List<String> title, List<String> idChild, List<String> transition_id,
+                      List<String> medium, List<String> language_slug, List<String> filename, List<String> duration) {
         this.context = context;
+        this.idParent = idParent;
+        this.title = title;
+        this.idChild = idChild;
+        this.transition_id = transition_id;
+        this.medium = medium;
+        this.language_slug = language_slug;
+        this.filename = filename;
+        this.duration = duration;
     }
 
     @NonNull
@@ -42,7 +61,7 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return idParent.size();
     }
 
     public class Myholder extends RecyclerView.ViewHolder {

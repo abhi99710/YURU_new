@@ -176,8 +176,8 @@ class WakeUpProgram : Fragment() {
         }
 
         viewall.setOnClickListener {
-            val intent = Intent(context, BasicActivity::class.java)
-            context?.startActivity(intent)
+//            val intent = Intent(context, BasicActivity::class.java)
+//            context?.startActivity(intent)
         }
 
         optionAlarm_tv.setOnClickListener {

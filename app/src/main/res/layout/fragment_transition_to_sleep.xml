@@ -125,18 +125,106 @@
                             app:layout_constraintStart_toEndOf="@+id/n_option"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="20dp" />
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+                        <ImageView
+                            android:id="@+id/sleep_male"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_32sdp"
+                            android:background="@drawable/male_tts"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent=".5" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent=".25" />
+
+                        <ImageView
+                            android:id="@+id/sleep_female"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_32sdp"
+                            android:background="@drawable/female_tts"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+                            app:layout_constraintStart_toStartOf="@+id/guideline9"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent=".75" />
+
+                        <TextView
+                            android:id="@+id/tv45min"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:text="45 sec"
+                            android:gravity="center"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_18sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline10"
+                            app:layout_constraintStart_toStartOf="@+id/guideline8"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv90min"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:text="90 sec"
+                            android:gravity="center"
+                            android:textColor="#000"
+                            android:textSize="@dimen/_18sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/guideline10"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/transition_to_sleep_recy"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10" />
 
                 <!--    <GridView
                         android:id="@+id/transition_to_sleep_recy"

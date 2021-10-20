@@ -78,6 +78,15 @@ class SleepEnhancer : Fragment() {
 
         save_sleep_enhancer.setOnClickListener {
 
+
+            go(alarmAnser, 0)
+            go(answerForLeft, 1)
+            go(annserForRight, 2)
+            go(annserForRight, 3)
+            go(45, 4)
+            go(2, 5)
+
+
             val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, SleepEnhancer2())
             fragment.addToBackStack(null)
             fragment.commit()
@@ -125,7 +134,7 @@ class SleepEnhancer : Fragment() {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
                 alarmAnser += answerForLeft
-                Toast.makeText(context, "+$right_1_count:$alarmAnser", Toast.LENGTH_SHORT)
+                Toast.makeText(context, ""+right_1_count, Toast.LENGTH_SHORT)
                     .show()
 
                 toXdelta1 = toXdelta1 + 20.0f
@@ -133,7 +142,7 @@ class SleepEnhancer : Fragment() {
                 animation.setDuration(1000)
                 animation.setFillAfter(true)
                 bottom_1.startAnimation(animation)
-                go(alarmAnser, 0)
+
 
 
 
@@ -161,7 +170,7 @@ class SleepEnhancer : Fragment() {
                 animation.setFillAfter(true)
                 bottom_1.startAnimation(animation)
 
-                go(answerForLeft, 1)
+//                go(answerForLeft, 1)
 
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
@@ -185,7 +194,7 @@ class SleepEnhancer : Fragment() {
                 animation.setFillAfter(true)
                 bottom2.startAnimation(animation)
 
-                go(annserForRight, 2)
+//                go(annserForRight, 2)
 
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
@@ -208,7 +217,7 @@ class SleepEnhancer : Fragment() {
                 animation.setFillAfter(true)
                 bottom2.startAnimation(animation)
 
-                go(annserForRight, 3)
+//                go(annserForRight, 3)
 
 
             } else {
@@ -233,7 +242,7 @@ class SleepEnhancer : Fragment() {
             animation.setFillAfter(true)
             bottom_1.startAnimation(animation)
 
-            go(45, 4)
+//            go(45, 4)
 
         }
 
@@ -250,7 +259,7 @@ class SleepEnhancer : Fragment() {
             animation.setFillAfter(true)
             bottom2.startAnimation(animation)
 
-            go(135, 5)
+//            go(135, 5)
         }
 
 
@@ -303,8 +312,6 @@ class SleepEnhancer : Fragment() {
             }else{
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
             }
-
-
 
             Toast.makeText(context, "Alarm has been set :  $stringBuilder" , Toast.LENGTH_SHORT).show()
 

@@ -18,10 +18,10 @@ public class BasicActivity extends AppCompatActivity {
 
         recyViewAll = findViewById(R.id.recyViewAll);
 
-        TtsAdapter ttsAdapter = new TtsAdapter(this);
-        recyViewAll.setHasFixedSize(true);
-        recyViewAll.setLayoutManager(new LinearLayoutManager(this));
-        recyViewAll.setAdapter(ttsAdapter);
+//        TtsAdapter ttsAdapter = new TtsAdapter(this);
+//        recyViewAll.setHasFixedSize(true);
+//        recyViewAll.setLayoutManager(new LinearLayoutManager(this));
+//        recyViewAll.setAdapter(ttsAdapter);
 
 
     }
