@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentLoginBinding
+
 import com.app.yuru.ui.getStarted.GetStartedActivity
 import com.app.yuru.ui.test.TestActivity
 import com.app.yuru.ui.transition.AdapterMain
@@ -46,8 +47,8 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
         }
         binding.btnProceed.setOnClickListener{
 
-            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(context, TransitionActivity::class.java))
+//            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(context, TransitionActivity::class.java))
 
             if(binding.edtEmail.text.toString().isNullOrEmpty()){
                 Toast.makeText(context, "please enter your email", Toast.LENGTH_SHORT).show()
@@ -56,7 +57,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                 Toast.makeText(context, "please enter your password", Toast.LENGTH_SHORT).show()
 
             }else{
-//                apiLogin()
+                apiLogin()
             }
 
 

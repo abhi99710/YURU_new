@@ -1,6 +1,7 @@
 package com.app.yuru.ui.transition
 
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -92,6 +93,11 @@ class TransitionToSleep : Fragment() {
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
+
+            tv45min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+            tv90min.setBackgroundResource(R.drawable.border)
+            tv90min.setTextColor(Color.BLACK)
+            tv45min.setTextColor(Color.WHITE)
         }
 
         tv90min.setOnClickListener {
@@ -99,6 +105,11 @@ class TransitionToSleep : Fragment() {
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
+
+            tv90min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+            tv45min.setBackgroundResource(R.drawable.border)
+            tv45min.setTextColor(Color.BLACK)
+            tv90min.setTextColor(Color.WHITE)
         }
         sleep_male.setOnClickListener {
             val transitionToSleepAdapter = TtsAdapter(context,  idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
