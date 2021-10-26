@@ -70,6 +70,7 @@ class SleepEnhancer : Fragment() {
     lateinit var seekBar1 : VerticalSeekBar
 
     private var alarmAnser = 45
+    var checkClicked = false
 
 
     override fun onCreateView(
@@ -84,13 +85,20 @@ class SleepEnhancer : Fragment() {
 
         save_sleep_enhancer.setOnClickListener {
 
+            if (checkClicked){
+                go(alarmAnser, 0)
+                go(90, 1)
 
-            go(alarmAnser, 0)
-            go(answerForLeft, 1)
-            go(annserForRight, 2)
-            go(annserForRight, 3)
-            go(45, 4)
-            go(2, 5)
+                go(annserForRight, 2)
+//                go(annserForRight, 3)
+            }else{
+                go(45, 0)
+                go(90, 1)
+                go(135, 2)
+            }
+
+
+
 
 
             val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, SleepEnhancer2())
@@ -135,7 +143,7 @@ class SleepEnhancer : Fragment() {
 
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-
+                                        checkClicked = true
             if (right_1_count < 5) {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
@@ -168,7 +176,7 @@ class SleepEnhancer : Fragment() {
 
         // left arrow for first image slide
         arrowLeft1.setOnClickListener {
-
+            checkClicked = true
 
             if (left_1_count > -5) {
                 left_1_count--
@@ -203,7 +211,7 @@ class SleepEnhancer : Fragment() {
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-
+                checkClicked = true
             if (left_2_count > -5) {
                 left_2_count--
                 annserForRight = annserForRight - 1
@@ -234,6 +242,7 @@ class SleepEnhancer : Fragment() {
         // right arrow for second image slide
         arrowRight2.setOnClickListener {
 
+            checkClicked = true
             if (right_2_count < 5) {
                 right_2_count++
                 annserForRight = annserForRight + 1
