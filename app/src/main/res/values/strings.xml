@@ -35,8 +35,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="transition_to_sleep">Transition To Sleep</string>
-    <string name="skip_to_sleep_enhancer">Skip to Sleep Enhancer</string>
-    <string name="skip_to_wake_program">Skip to Wake Program</string>
+    <string name="skip_to_sleep_enhancer">Sleep Enhancer</string>
+    <string name="skip_to_wake_program">Wake Program</string>
     <string name="openness">Openness</string>
     <string name="save">Save</string>
     <string name="wake_up_program">Wake Up Program</string>

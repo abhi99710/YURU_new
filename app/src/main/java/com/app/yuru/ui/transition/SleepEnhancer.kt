@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -57,6 +58,11 @@ class SleepEnhancer : Fragment() {
     private var toXdelta2 = 0.0f  // saves the position to which the second imageview slides right side
     private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
     private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
+
+    lateinit var showAns2 : TextView
+    lateinit var showAns  : TextView
+    lateinit var showAdd2 : TextView
+    lateinit var showAdd1 : TextView
 
 
 
@@ -134,8 +140,14 @@ class SleepEnhancer : Fragment() {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
                 alarmAnser += answerForLeft
-                Toast.makeText(context, ""+right_1_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, ""+right_1_count, Toast.LENGTH_SHORT)
+//                    .show()
+
+                showAdd1.setText("(+"+right_1_count+")")
+                if (right_1_count > 0)
+                    showAdd1.setTextColor(Color.GREEN)
+                else
+                    showAdd1.setTextColor(Color.RED)
 
                 toXdelta1 = toXdelta1 + 20.0f
                 val animation = TranslateAnimation(0f, toXdelta1, 0f, 0f)
@@ -162,8 +174,18 @@ class SleepEnhancer : Fragment() {
                 left_1_count--
                 answerForLeft = answerForLeft - 1
                 alarmAnser += answerForLeft
-                Toast.makeText(context, "" + left_1_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, "" + left_1_count, Toast.LENGTH_SHORT)
+//                    .show()
+
+                if (left_1_count < 0) {
+                    showAdd1.setTextColor(Color.RED)
+                    showAdd1.setText("("+left_1_count +")")
+                }
+                else {
+                    showAdd1.setTextColor(Color.GREEN)
+                    showAdd1.setText("("+left_1_count +")")
+                }
+
                 negXdelta1 = negXdelta1 - 20
                 val animation = TranslateAnimation(0f, negXdelta1, 0f, 0f)
                 animation.setDuration(1000)
@@ -186,8 +208,15 @@ class SleepEnhancer : Fragment() {
                 left_2_count--
                 annserForRight = annserForRight - 1
 
-                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
+//                    .show()
+
+                showAdd2.setText("("+left_2_count+")")
+                if (left_2_count < 0)
+                    showAdd2.setTextColor(Color.RED)
+                else
+                    showAdd2.setTextColor(Color.GREEN)
+
                 negXdelta2 = negXdelta2 - 20
                 val animation = TranslateAnimation(0f, negXdelta2, 0f, 0f)
                 animation.setDuration(1000)
@@ -208,8 +237,14 @@ class SleepEnhancer : Fragment() {
             if (right_2_count < 5) {
                 right_2_count++
                 annserForRight = annserForRight + 1
-                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
+//                    .show()
+
+                showAdd2.setText("(+"+right_2_count+")")
+                if (right_2_count > 0)
+                    showAdd2.setTextColor(Color.GREEN)
+                else
+                    showAdd2.setTextColor(Color.RED)
 
                 toXdelta2 = toXdelta2 + 20.0f
                 val animation = TranslateAnimation(0f, toXdelta2, 0f, 0f)
@@ -236,7 +271,10 @@ class SleepEnhancer : Fragment() {
             left_1_count = 0
             negXdelta1 = 0.0f
             toXdelta1 = 0.0f
-            Toast.makeText(context, "$answerForLeft", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "$answerForLeft", Toast.LENGTH_SHORT).show()
+
+            showAdd1.setText("  ")
+
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
             animation.setDuration(1000)
             animation.setFillAfter(true)
@@ -253,6 +291,9 @@ class SleepEnhancer : Fragment() {
             left_2_count = 0
             negXdelta2 = 0.0f
             toXdelta2 = 0.0f
+
+            showAdd2.setText("  ")
+
             Toast.makeText(context, "$annserForRight", Toast.LENGTH_SHORT).show()
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
             animation.setDuration(1000)
@@ -277,6 +318,11 @@ class SleepEnhancer : Fragment() {
         save_sleep_enhancer = view.findViewById(R.id.save_sleep_enhancer)
 
         seekBar1 = view.findViewById(R.id.seekBar1)
+
+        showAdd1 = view.findViewById(R.id.showAdd1)
+        showAdd2 = view.findViewById(R.id.showAdd2)
+        showAns = view.findViewById(R.id.showAns)
+        showAns2 = view.findViewById(R.id.showAns2)
     }
 
 

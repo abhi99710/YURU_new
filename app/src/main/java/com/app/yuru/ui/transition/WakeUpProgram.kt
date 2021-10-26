@@ -1,9 +1,6 @@
 package com.app.yuru.ui.transition
 
-import android.app.AlarmManager
-import android.app.Dialog
-import android.app.PendingIntent
-import android.app.TimePickerDialog
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -68,6 +65,7 @@ class WakeUpProgram : Fragment() {
     private var traintFemale: MutableList<String> = ArrayList()
     private var durationFemale: MutableList<String> = ArrayList()
     private var url1Female: MutableList<String> = ArrayList()
+    lateinit var progressDialog: ProgressDialog
 
 //    private var
 
@@ -86,6 +84,11 @@ class WakeUpProgram : Fragment() {
         findIds(view)
 
         allClickListner()
+
+        progressDialog = ProgressDialog(context)
+        progressDialog.show()
+        progressDialog.setCancelable(false)
+        progressDialog.setMessage("Loading...")
 
 //        requireActivity().fragmentManager.beginTransaction().
 
@@ -183,6 +186,16 @@ class WakeUpProgram : Fragment() {
         optionAlarm_tv.setOnClickListener {
 
         }
+
+        pm_tv.setOnClickListener {
+            pm_tv.setBackgroundResource(R.drawable.wakeup_selected)
+            am_tv.setBackgroundColor(Color.TRANSPARENT)
+        }
+
+        am_tv.setOnClickListener {
+            am_tv.setBackgroundResource(R.drawable.wakeup_selected)
+            pm_tv.setBackgroundColor(Color.TRANSPARENT)
+        }
     }
 
     private fun findIds(view: View) {
@@ -255,6 +268,7 @@ class WakeUpProgram : Fragment() {
             Method.GET, url,
             Response.Listener<String> { response ->
                 try {
+                    progressDialog.dismiss()
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")

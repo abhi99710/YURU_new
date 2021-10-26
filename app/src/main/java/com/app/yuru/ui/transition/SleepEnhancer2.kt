@@ -3,6 +3,7 @@ package com.app.yuru.ui.transition
 import android.app.AlarmManager
 import android.app.Dialog
 import android.app.PendingIntent
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -61,8 +62,8 @@ class SleepEnhancer2 : Fragment() {
     private var right_1_count = 0  //count for right click for image 1
     private var left_2_count = 0  //count for left click for image 2
     private var right_2_count = 0  //count for right click for image 2
-    private var answerForLeft = 45  // real time answer for image 1 button clicks
-    private var annserForRight = 135  // real time answer for image 1 button clicks
+    private var answerForLeft = 225  // real time answer for image 1 button clicks
+    private var annserForRight = 315  // real time answer for image 1 button clicks
     private var toXdelta1 =
         0.0f  // saves the position to which the first imageview slides right side
     private var toXdelta2 =
@@ -80,6 +81,8 @@ class SleepEnhancer2 : Fragment() {
     private var gender: MutableList<String> = ArrayList()
     private var duration: MutableList<String> = ArrayList()
     private var filename: MutableList<String> = ArrayList()
+
+    lateinit var progressDialog: ProgressDialog
 
    /* private var id1Female: MutableList<String> = ArrayList()
     private var category_nameFemale: MutableList<String> = ArrayList()
@@ -102,6 +105,10 @@ class SleepEnhancer2 : Fragment() {
 
         apiVideos()
 
+        progressDialog = ProgressDialog(context)
+        progressDialog.setCancelable(false)
+        progressDialog.setMessage("Loading...")
+        progressDialog.show()
 
         // bottom left side imageview click managed here
         bottom_1.setOnClickListener {
@@ -430,6 +437,7 @@ class SleepEnhancer2 : Fragment() {
             Method.GET, url,
             Response.Listener<String> { response ->
                 try {
+                    progressDialog.dismiss()
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")

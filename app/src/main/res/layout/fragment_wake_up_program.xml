@@ -209,7 +209,7 @@
 
                     <ImageView
                         android:id="@+id/female"
-                        android:layout_width="@dimen/_25sdp"
+                        android:layout_width="@dimen/_22sdp"
                         android:layout_height="@dimen/_32sdp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
@@ -221,7 +221,7 @@
 
                     <ImageView
                         android:id="@+id/male"
-                        android:layout_width="@dimen/_25sdp"
+                        android:layout_width="@dimen/_22sdp"
                         android:layout_height="@dimen/_32sdp"
                         android:background="@drawable/male_tts"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -404,7 +404,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="#222"
+                    android:background="@drawable/corner_wakeup"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
@@ -427,39 +427,54 @@
                         android:id="@+id/time_tv"
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/corner_new_wakeup"
+                        android:gravity="center"
                         android:text="7"
                         android:textColor="#fff"
-                        android:gravity="center"
-                        android:background="#333"
                         android:textSize="@dimen/_15sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/am_tv"
+                        app:layout_constraintEnd_toStartOf="@+id/constraintLayout11"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/am_tv"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:text="AM"
-                        android:textColor="#fff"
-                        android:textSize="@dimen/_15sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/pm_tv"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/pm_tv"
-                        android:layout_width="@dimen/_40sdp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="PM"
-                        android:textColor="#fff"
-                        android:textSize="@dimen/_15sdp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/corner_new_wakeup"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/am_tv"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="2dp"
+                            android:background="@drawable/wakeup_selected"
+                            android:gravity="center"
+                            android:text="AM"
+                            android:textColor="#fff"
+                            android:textSize="@dimen/_15sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/pm_tv"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/pm_tv"
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="match_parent"
+                            android:text="PM"
+                            android:textColor="#fff"
+                            android:gravity="center"
+                            android:textSize="@dimen/_15sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -469,7 +484,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="#222"
+                    android:background="@drawable/corner_wakeup"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">

@@ -3,6 +3,7 @@ package com.app.yuru.ui.transition;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,6 +1,7 @@
 package com.app.yuru.ui.transition
 
 
+import android.app.ProgressDialog
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -39,6 +40,7 @@ class TransitionToSleep : Fragment() {
     private var requestQueue: RequestQueue? = null
     lateinit var skipToProgram : TextView
     lateinit var skipSleep : TextView
+    lateinit var progressDialog : ProgressDialog
 
 /*    private var id_45: MutableList<String> = ArrayList()
     private var language_slug: MutableList<String> = ArrayList()
@@ -87,6 +89,11 @@ class TransitionToSleep : Fragment() {
         tv90min = view.findViewById(R.id.tv90min)
         sleep_male = view.findViewById(R.id.sleep_male)
         sleep_female = view.findViewById(R.id.sleep_female)
+
+        progressDialog = ProgressDialog(context)
+        progressDialog.setCancelable(false)
+        progressDialog.setMessage("Loding...")
+        progressDialog.show()
 
         tv45min.setOnClickListener {
             val transitionToSleepAdapter = TtsAdapter(context, idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
@@ -157,6 +164,7 @@ class TransitionToSleep : Fragment() {
             Method.GET, url,
             Response.Listener<String> { response ->
                 try {
+                    progressDialog.dismiss()
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")

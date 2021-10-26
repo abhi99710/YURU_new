@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#E0EEFA"
     android:layout_height="match_parent"
     tools:context=".ui.transition.SleepEnhancer2">
 
@@ -15,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="15dp"
+        android:background="#E0EEFA"
         android:orientation="horizontal"
         app:cardCornerRadius="@dimen/_5sdp"
         app:cardElevation="@dimen/_5sdp"
@@ -194,7 +196,7 @@
 
                 <com.app.yuru.ui.transition.VerticalSeekBar
                     android:id="@+id/seekBar2"
-                    android:layout_width="8dp"
+                    android:layout_width="11dp"
                     android:layout_height="200dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"

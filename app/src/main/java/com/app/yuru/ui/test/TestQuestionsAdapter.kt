@@ -122,6 +122,7 @@ class TestQuestionsAdapter(
         RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         init {
             binding.btnNext.setOnClickListener(this)
+            binding.btnNext.setText("Submit")
         }
 
         override fun onClick(v: View?) {
