@@ -51,14 +51,14 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
         holder.sleep_videoview.setOnClickListener(v->
         {
             Intent intent = new Intent(context, VideoActivity.class);
-            intent.putExtra(Constants.VIDEO_LINK, /*filename.get(position)*/"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4");
+            intent.putExtra(Constants.VIDEO_LINK, filename.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
             context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return idParent.size();
+        return filename.size();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {

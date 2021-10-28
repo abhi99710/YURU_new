@@ -1,11 +1,16 @@
 package com.app.yuru.ui.transition;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -27,9 +32,10 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
     List<String> language_slug;
     List<String> filename;
     List<String> duration;
+    Activity activity;
 
     public TtsAdapter(Context context, List<String> idParent, List<String> title, List<String> idChild, List<String> transition_id,
-                      List<String> medium, List<String> language_slug, List<String> filename, List<String> duration) {
+                      List<String> medium, List<String> language_slug, List<String> filename, List<String> duration, Activity activity) {
         this.context = context;
         this.idParent = idParent;
         this.title = title;
@@ -39,6 +45,7 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
         this.language_slug = language_slug;
         this.filename = filename;
         this.duration = duration;
+        this.activity = activity;
     }
 
     @NonNull
@@ -54,9 +61,24 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
         holder.tts_videoview.setOnClickListener(v -> {
             Intent intent = new Intent(context, VideoActivity.class);
-            intent.putExtra(Constants.VIDEO_LINK, "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4");
+            intent.putExtra(Constants.VIDEO_LINK, filename.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
             context.startActivity(intent);
         });
+
+        holder.save_ttsvids.setOnClickListener(v -> {
+//            context.startActivity(new Intent(activity, SleepEnhancer.class));
+            Toast.makeText(context, "saved", Toast.LENGTH_SHORT).show();
+
+//            FragmentManager fragmentManager = activity.getFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager
+//                    .beginTransaction();
+//            fragmentTransaction.replace(R.id.framwQts, new SleepEnhancer());
+//            fragmentTransaction.commit();
+
+
+        });
+
+        holder.title_tv.setText(title.get(position));
     }
 
     @Override
@@ -66,11 +88,14 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
     public class Myholder extends RecyclerView.ViewHolder {
         final ImageView tts_videoview;
+        final TextView save_ttsvids, title_tv;
 
         public Myholder(@NonNull View itemView) {
             super(itemView);
 
             tts_videoview = itemView.findViewById(R.id.tts_videoview);
+            save_ttsvids = itemView.findViewById(R.id.save_ttsvids);
+            title_tv = itemView.findViewById(R.id.title_tv);
         }
     }
 }

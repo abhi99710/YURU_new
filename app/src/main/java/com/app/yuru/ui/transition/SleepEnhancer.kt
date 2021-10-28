@@ -11,19 +11,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.TranslateAnimation
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.app.yuru.R
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.time.ExperimentalTime
-import android.widget.SeekBar
 
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
+import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 
 import androidx.core.content.ContextCompat.getSystemService
@@ -59,18 +57,22 @@ class SleepEnhancer : Fragment() {
     private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
     private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
 
-    lateinit var showAns2 : TextView
-    lateinit var showAns  : TextView
-    lateinit var showAdd2 : TextView
-    lateinit var showAdd1 : TextView
+    private lateinit var showAns2 : TextView
+    private lateinit var showAns  : TextView
+    private lateinit var showAdd2 : TextView
+    private lateinit var showAdd1 : TextView
+
+    private lateinit var tts_vids : VideoView
 
 
 
-
-    lateinit var seekBar1 : VerticalSeekBar
+    private lateinit var seekBar1 : VerticalSeekBar
 
     private var alarmAnser = 45
-    var checkClicked = false
+    private  var checkClickedL1 = false
+    private var checkClickedR1 = false
+    private var checkClickedL2 = false
+    private var checkClickedR2 = false
 
 
     override fun onCreateView(
@@ -85,16 +87,36 @@ class SleepEnhancer : Fragment() {
 
         save_sleep_enhancer.setOnClickListener {
 
-            if (checkClicked){
+            if (checkClickedL1){
                 go(alarmAnser, 0)
                 go(90, 1)
 
                 go(annserForRight, 2)
-//                go(annserForRight, 3)
-            }else{
+                go(180, 3)
+            }else if(checkClickedR1){
+                go(alarmAnser, 0)
+                go(90, 1)
+
+                go(annserForRight, 2)
+                go(180, 3)
+            }else if(checkClickedL2){
+                go(alarmAnser, 0)
+                go(90, 1)
+
+                go(annserForRight, 2)
+                go(180, 3)
+            }else if(checkClickedR2){
+                go(alarmAnser, 0)
+                go(90, 1)
+
+                go(annserForRight, 2)
+                go(180, 3)
+            }
+            else{
                 go(45, 0)
                 go(90, 1)
                 go(135, 2)
+                go(180,3)
             }
 
 
@@ -143,7 +165,7 @@ class SleepEnhancer : Fragment() {
 
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-                                        checkClicked = true
+                                        checkClickedR1 = true
             if (right_1_count < 5) {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
@@ -176,7 +198,7 @@ class SleepEnhancer : Fragment() {
 
         // left arrow for first image slide
         arrowLeft1.setOnClickListener {
-            checkClicked = true
+            checkClickedL1 = true
 
             if (left_1_count > -5) {
                 left_1_count--
@@ -211,7 +233,7 @@ class SleepEnhancer : Fragment() {
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-                checkClicked = true
+                checkClickedL2 = true
             if (left_2_count > -5) {
                 left_2_count--
                 annserForRight = annserForRight - 1
@@ -242,7 +264,7 @@ class SleepEnhancer : Fragment() {
         // right arrow for second image slide
         arrowRight2.setOnClickListener {
 
-            checkClicked = true
+            checkClickedR2 = true
             if (right_2_count < 5) {
                 right_2_count++
                 annserForRight = annserForRight + 1
@@ -312,7 +334,7 @@ class SleepEnhancer : Fragment() {
 //            go(135, 5)
         }
 
-
+        videoPlay()
     }
 
     private fun findIds(view: View) {
@@ -332,6 +354,9 @@ class SleepEnhancer : Fragment() {
         showAdd2 = view.findViewById(R.id.showAdd2)
         showAns = view.findViewById(R.id.showAns)
         showAns2 = view.findViewById(R.id.showAns2)
+
+        tts_vids = view.findViewById(R.id.sleep_video)
+
     }
 
 
@@ -368,9 +393,29 @@ class SleepEnhancer : Fragment() {
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
             }
 
-            Toast.makeText(context, "Alarm has been set :  $stringBuilder" , Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Alarm has been set " , Toast.LENGTH_SHORT).show()
 
         }
+    }
+
+    private fun videoPlay() {
+        val ctlr = MediaController(context)
+        ctlr.setMediaPlayer(tts_vids)
+        tts_vids.setMediaController(ctlr)
+
+        val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+
+//                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+        tts_vids.setMediaController(ctlr)
+
+        //        videoView.setVideoURI(uri);
+
+        tts_vids.setVideoURI(uri);
+//        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
+        tts_vids.start()
+
     }
 
 }

@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -84,7 +86,18 @@ class SleepEnhancer2 : Fragment() {
 
     lateinit var progressDialog: ProgressDialog
 
-   /* private var id1Female: MutableList<String> = ArrayList()
+    private  var checkClickedL1 = false
+    private var checkClickedR1 = false
+    private var checkClickedL2 = false
+    private var checkClickedR2 = false
+
+    private lateinit var showAns2 : TextView
+    private lateinit var showAns  : TextView
+    private lateinit var showAdd2 : TextView
+    private lateinit var showAdd1 : TextView
+
+
+    /* private var id1Female: MutableList<String> = ArrayList()
     private var category_nameFemale: MutableList<String> = ArrayList()
     private var language_nameFemale: MutableList<String> = ArrayList()
     private var genderFemale: MutableList<String> = ArrayList()
@@ -121,13 +134,38 @@ class SleepEnhancer2 : Fragment() {
         // save button click listener
         save_sleep_enhancer_2.setOnClickListener {
 //            it.findNavController().navigate(R.id.wakeUpProgram)
+            if (checkClickedL1){
+                go(answerForLeft, )
+                go(270, )
 
-            go(1)
-            go(answerForLeft)
-            go(answerForLeft)
-            go(annserForRight)
-            go(annserForRight)
-            go(45)
+                go(annserForRight, )
+                go(360, )
+            }else if(checkClickedR1){
+                go(answerForLeft, )
+                go(270, )
+
+                go(annserForRight, )
+                go(360, )
+            }else if(checkClickedL2){
+                go(answerForLeft, )
+                go(270, )
+
+                go(annserForRight, )
+                go(360, )
+            }else if(checkClickedR2){
+                go(answerForLeft, )
+                go(270, )
+
+                go(annserForRight, )
+                go(360, )
+            }
+            else{
+                go(225, )
+                go(270, )
+                go(315, )
+                go(360,)
+            }
+
 
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.framwQts, WakeUpProgram())
@@ -201,12 +239,18 @@ class SleepEnhancer2 : Fragment() {
 
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-
+                 checkClickedR1 = true
             if (right_1_count < 5) {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
-                Toast.makeText(context, "+" + right_1_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, "+" + right_1_count, Toast.LENGTH_SHORT)
+//                    .show()
+
+                showAdd1.setText("(+"+right_1_count+")")
+                if (right_1_count > 0)
+                    showAdd1.setTextColor(Color.GREEN)
+                else
+                    showAdd1.setTextColor(Color.RED)
 
                 toXdelta1 = toXdelta1 + 20.0f
                 val animation = TranslateAnimation(0f, toXdelta1, 0f, 0f)
@@ -227,12 +271,22 @@ class SleepEnhancer2 : Fragment() {
 
         // left arrow for first image slide
         arrowLeft1.setOnClickListener {
-
+                checkClickedL1 = true
             if (left_1_count > -5) {
                 left_1_count--
                 answerForLeft = answerForLeft - 1
-                Toast.makeText(context, "" + left_1_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, "" + left_1_count, Toast.LENGTH_SHORT)
+//                    .show()
+
+                if (left_1_count < 0) {
+                    showAdd1.setTextColor(Color.RED)
+                    showAdd1.setText("("+left_1_count +")")
+                }
+                else {
+                    showAdd1.setTextColor(Color.GREEN)
+                    showAdd1.setText("("+left_1_count +")")
+                }
+
                 negXdelta1 = negXdelta1 - 20
                 val animation = TranslateAnimation(0f, negXdelta1, 0f, 0f)
                 animation.setDuration(1000)
@@ -250,13 +304,19 @@ class SleepEnhancer2 : Fragment() {
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-
+                checkClickedL2 = true
             if (left_2_count > -5) {
                 left_2_count--
                 annserForRight = annserForRight - 1
                 negXdelta2 = negXdelta2 - 20
-                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
+//                    .show()
+                showAdd2.setText("("+left_2_count+")")
+                if (left_2_count < 0)
+                    showAdd2.setTextColor(Color.RED)
+                else
+                    showAdd2.setTextColor(Color.GREEN)
+
                 val animation = TranslateAnimation(0f, negXdelta2, 0f, 0f)
                 animation.setDuration(1000)
                 animation.setFillAfter(true)
@@ -272,12 +332,18 @@ class SleepEnhancer2 : Fragment() {
 
         // right arrow for second image slide
         arrowRight2.setOnClickListener {
-
+                checkClickedR2 = true
             if (right_2_count < 5) {
                 right_2_count++
                 annserForRight = annserForRight + 1
-                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
-                    .show()
+//                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
+//                    .show()
+
+                showAdd2.setText("(+"+right_2_count+")")
+                if (right_2_count > 0)
+                    showAdd2.setTextColor(Color.GREEN)
+                else
+                    showAdd2.setTextColor(Color.RED)
 
                 toXdelta2 = toXdelta2 + 20.0f
                 val animation = TranslateAnimation(0f, toXdelta2, 0f, 0f)
@@ -305,11 +371,13 @@ class SleepEnhancer2 : Fragment() {
             toXdelta1 = 0.0f
             negXdelta1 = 0.0f
 //            go(45)
-            Toast.makeText(context, "$answerForLeft", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "$answerForLeft", Toast.LENGTH_SHORT).show()
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
             animation.setDuration(1000)
             animation.setFillAfter(true)
             bottom_1.startAnimation(animation)
+
+            showAdd1.setText("  ")
 
         }
 
@@ -321,7 +389,9 @@ class SleepEnhancer2 : Fragment() {
             toXdelta2 = 0.0f
             negXdelta2 = 0.0f
 //            go(135)
-            Toast.makeText(context, "$annserForRight", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "$annserForRight", Toast.LENGTH_SHORT).show()
+
+            showAdd2.setText("  ")
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
             animation.setDuration(1000)
             animation.setFillAfter(true)
@@ -341,13 +411,18 @@ class SleepEnhancer2 : Fragment() {
         center2 = view.findViewById(R.id.center2_sl2)
         save_sleep_enhancer_2 = view.findViewById(R.id.save_sleep_enhancer_2)
 
-        o_option = view.findViewById(R.id.o_option)
-        e_option = view.findViewById(R.id.e_option)
-        c_option = view.findViewById(R.id.c_option)
+        o_option = view.findViewById(R.id.o_option1)
+        e_option = view.findViewById(R.id.e_option1)
+        c_option = view.findViewById(R.id.c_option1)
         a1Option = view.findViewById(R.id.a1Option)
         n1option = view.findViewById(R.id.n1option)
 
         seekBar1 = view.findViewById(R.id.seekBar2)
+
+        showAdd1 = view.findViewById(R.id.showAdd1S2)
+        showAdd2 = view.findViewById(R.id.showAdd2S2)
+        showAns = view.findViewById(R.id.showAnsS2)
+        showAns2 = view.findViewById(R.id.showAns2S2)
     }
 
     private fun showDialog(title: String) {
@@ -359,6 +434,11 @@ class SleepEnhancer2 : Fragment() {
             dialog.show()
 
             val recyclerView : RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
+
+            val dialog_title : TextView = dialog.findViewById(R.id.dialog_title)
+            val logo : TextView = dialog.findViewById(R.id.logo)
+            val cl90 : ConstraintLayout = dialog.findViewById(R.id.cl90)
+            val cl45 : ConstraintLayout = dialog.findViewById(R.id.cl45)
 
             val adapterSleep = AdapterSleep(requireActivity(), idParent, language_slug, gender, traint, idChild, duration, filename)
 
@@ -464,9 +544,9 @@ class SleepEnhancer2 : Fragment() {
                             val jsonArray2 = jsonObject1.getJSONArray("videos");
                                 for (j in 0 until jsonArray2.length()) {
                                     val jsonObjectNew = jsonArray2.getJSONObject(j)
-                                    idChild.add(jsonObject1.getString("id"))
-                                    duration.add(jsonObject1.getString("duration"))
-                                    filename.add(jsonObject1.getString("filename"))
+                                    idChild.add(jsonObjectNew.getString("id"))
+                                    duration.add(jsonObjectNew.getString("duration"))
+                                    filename.add(jsonObjectNew.getString("filename"))
 
                                 }
                     }
@@ -501,42 +581,5 @@ class SleepEnhancer2 : Fragment() {
         requestQueue?.add(stringRequest)
     }
 
-
-
-    /* private fun adapterConnects() {
-         val adapterMain = AdapterMain(
-             context,
-             id1Female,
-             category_nameFemale,
-             language_nameFemale,
-             genderFemale,
-             traintFemale,
-             durationFemale,
-             url1Female
-         )
-         wakeuprecy?.adapter = adapterMain
-
-         wakeuprecy?.setOnItemClickListener { parent, view, position, id ->
-
- //            Toast.makeText(
- //                context,
- //                "" + category_nameFemale.get(position),
- //                Toast.LENGTH_SHORT
- //            ).show()
-             val intent = Intent(context, VideoActivity::class.java)
-             if (clickedGender.equals("male")) {
-                 intent.putExtra(
-                     Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
-                    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
-                )
-            } else {
-                intent.putExtra(
-                    Constants.VIDEO_LINK, *//*genderFemale.get(position)*//*
-                    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
-                )
-            }
-            startActivity(intent)
-        }
-    }*/
 
 }

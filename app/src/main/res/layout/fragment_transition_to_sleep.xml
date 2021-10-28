@@ -8,6 +8,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.transition.TransitionToSleep">
 
+    <VideoView
+        android:id="@+id/tts_vids"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -207,7 +212,7 @@
                             android:layout_marginBottom="8dp"
                             android:background="@color/colorPrimaryDark"
                             android:gravity="center"
-                            android:text="45 sec"
+                            android:text="5 min"
                             android:textColor="#ffffff"
                             android:textSize="@dimen/_16sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -225,7 +230,7 @@
                             android:layout_marginBottom="8dp"
                             android:background="@drawable/border"
                             android:gravity="center"
-                            android:text="90 sec"
+                            android:text="9 min"
                             android:textColor="#000"
                             android:textSize="@dimen/_16sdp"
                             app:layout_constraintBottom_toBottomOf="parent"

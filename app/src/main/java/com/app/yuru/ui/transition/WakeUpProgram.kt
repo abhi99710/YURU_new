@@ -4,6 +4,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -67,6 +68,8 @@ class WakeUpProgram : Fragment() {
     private var url1Female: MutableList<String> = ArrayList()
     lateinit var progressDialog: ProgressDialog
 
+    private lateinit var wake_up_video : VideoView
+
 //    private var
 
     private val alarmTimePicker: TimePicker? = null
@@ -92,6 +95,7 @@ class WakeUpProgram : Fragment() {
 
 //        requireActivity().fragmentManager.beginTransaction().
 
+        videoPlay()
 
         apiVideos()
 
@@ -213,6 +217,8 @@ class WakeUpProgram : Fragment() {
         wakeuprecy = view.findViewById(R.id.wakeuprecy)
         save_wakeup = view.findViewById(R.id.save_wakeup)
         viewall = view.findViewById(R.id.viewall)
+
+        wake_up_video = view.findViewById(R.id.wake_up_video)
     }
 
 
@@ -373,12 +379,12 @@ class WakeUpProgram : Fragment() {
             if (clickedGender.equals("male")) {
                 intent.putExtra(
                     Constants.VIDEO_LINK, /*genderMale.get(position)*/
-                    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+                    url1Male.get(position)
                 )
             } else {
                 intent.putExtra(
                     Constants.VIDEO_LINK, /*genderFemale.get(position)*/
-                    "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+                    url1Female.get(position)
                 )
             }
             startActivity(intent)
@@ -458,7 +464,25 @@ class WakeUpProgram : Fragment() {
 
     }
 
+    private fun videoPlay() {
+        val ctlr = MediaController(context)
+        ctlr.setMediaPlayer(wake_up_video)
+        wake_up_video.setMediaController(ctlr)
 
+        val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+
+//                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+        wake_up_video.setMediaController(ctlr)
+
+        //        videoView.setVideoURI(uri);
+
+        wake_up_video.setVideoURI(uri);
+//        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
+        wake_up_video.start()
+
+    }
 }
 
 

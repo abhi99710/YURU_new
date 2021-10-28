@@ -71,6 +71,8 @@ public class AdapterMain extends BaseAdapter {
         ConstraintLayout cardsub = convertView.findViewById(R.id.cardsub);
         ImageView videoView = convertView.findViewById(R.id.gridIMageView);
 
+
+
         Picasso.get().load(url.get(position)).into(videoView);
 
 

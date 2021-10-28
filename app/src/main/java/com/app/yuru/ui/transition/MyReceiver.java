@@ -33,7 +33,7 @@ public class MyReceiver extends BroadcastReceiver {
             Intent i = new Intent(context, VideoActivity.class);
             //TODO pass URL
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            i.putExtra("ques", "")
+            i.putExtra("ques", "");
             context.startActivity(i);
 
             MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.sleep1);

@@ -3,22 +3,15 @@ package com.app.yuru.ui.transition
 
 import android.app.ProgressDialog
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-
-
+import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -26,12 +19,10 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.utility.apivolley.APIVolley
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import org.json.JSONArray
+import com.google.common.reflect.Reflection.getPackageName
 import org.json.JSONException
 import org.json.JSONObject
-import java.lang.reflect.Method
-import java.util.ArrayList
+import java.util.*
 
 
 class TransitionToSleep : Fragment() {
@@ -69,10 +60,11 @@ class TransitionToSleep : Fragment() {
     private var duration90: MutableList<String> = ArrayList()
     private var idChild90: MutableList<String> = ArrayList()
 
-    lateinit var tv45min : TextView
-    lateinit var tv90min : TextView
-    lateinit var sleep_male : ImageView
-    lateinit var sleep_female : ImageView
+    private lateinit var tv45min : TextView
+    private lateinit var tv90min : TextView
+    private lateinit var sleep_male : ImageView
+    private  lateinit var sleep_female : ImageView
+    private lateinit var tts_vids : VideoView
 
 
 
@@ -89,14 +81,28 @@ class TransitionToSleep : Fragment() {
         tv90min = view.findViewById(R.id.tv90min)
         sleep_male = view.findViewById(R.id.sleep_male)
         sleep_female = view.findViewById(R.id.sleep_female)
+        tts_vids = view.findViewById(R.id.tts_vids)
 
         progressDialog = ProgressDialog(context)
         progressDialog.setCancelable(false)
         progressDialog.setMessage("Loding...")
         progressDialog.show()
 
+        videoPlay()
+
         tv45min.setOnClickListener {
-            val transitionToSleepAdapter = TtsAdapter(context, idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
+            val transitionToSleepAdapter = TtsAdapter(
+                context,
+                idParent45,
+                title45,
+                idChild45,
+                transition_id45,
+                medium45,
+                language_slug45,
+                filename45,
+                duration45,
+                activity
+            )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
@@ -108,7 +114,18 @@ class TransitionToSleep : Fragment() {
         }
 
         tv90min.setOnClickListener {
-            val transitionToSleepAdapter = TtsAdapter(context, idParent90, title90, idChild90, transition_id90, medium90, language_slug490, filename90, duration90)
+            val transitionToSleepAdapter = TtsAdapter(
+                context,
+                idParent90,
+                title90,
+                idChild90,
+                transition_id90,
+                medium90,
+                language_slug490,
+                filename90,
+                duration90,
+                activity
+            )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
@@ -119,13 +136,35 @@ class TransitionToSleep : Fragment() {
             tv90min.setTextColor(Color.WHITE)
         }
         sleep_male.setOnClickListener {
-            val transitionToSleepAdapter = TtsAdapter(context,  idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
+            val transitionToSleepAdapter = TtsAdapter(
+                context,
+                idParent45,
+                title45,
+                idChild45,
+                transition_id45,
+                medium45,
+                language_slug45,
+                filename45,
+                duration45,
+                activity
+            )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
         }
         sleep_female.setOnClickListener {
-            val transitionToSleepAdapter = TtsAdapter(context,  idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
+            val transitionToSleepAdapter = TtsAdapter(
+                context,
+                idParent45,
+                title45,
+                idChild45,
+                transition_id45,
+                medium45,
+                language_slug45,
+                filename45,
+                duration45,
+                activity
+            )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
@@ -136,14 +175,20 @@ class TransitionToSleep : Fragment() {
         skipToProgram = view.findViewById(R.id.skipToProgram)
 
         skipSleep.setOnClickListener {
-            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, SleepEnhancer())
+            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.framwQts,
+                SleepEnhancer()
+            )
             fragment.addToBackStack(null)
             fragment.commit()
 
         }
 
         skipToProgram.setOnClickListener {
-            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, WakeUpProgram())
+            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.framwQts,
+                WakeUpProgram()
+            )
             fragment.addToBackStack(null)
             fragment.commit()
         }
@@ -154,6 +199,26 @@ class TransitionToSleep : Fragment() {
 
 
         return view
+
+    }
+
+    private fun videoPlay() {
+        val ctlr = MediaController(context)
+        ctlr.setMediaPlayer(tts_vids)
+        tts_vids.setMediaController(ctlr)
+
+                val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+
+//                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+        tts_vids.setMediaController(ctlr)
+
+        //        videoView.setVideoURI(uri);
+
+        tts_vids.setVideoURI(uri);
+//        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
+        tts_vids.start()
 
     }
 
@@ -184,13 +249,11 @@ class TransitionToSleep : Fragment() {
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
 
-
-
-                       val jsonArrayNew = jsonObject1.getJSONArray("videos")
-                        for (j in 0 until jsonArrayNew.length()){
+                        val jsonArrayNew = jsonObject1.getJSONArray("videos")
+                        for (j in 0 until jsonArrayNew.length()) {
                             val jsonObjectNew = jsonArrayNew.getJSONObject(j)
 
-                            if(jsonObjectNew.getString("duration").equals("45 sec")) {
+                            if (jsonObjectNew.getString("duration").equals("45 sec")) {
                                 idChild45.add(jsonObjectNew.getString("id"))
                                 transition_id45.add(jsonObjectNew.getString("transition_id"))
                                 medium45.add(jsonObjectNew.getString("medium"))
@@ -199,7 +262,7 @@ class TransitionToSleep : Fragment() {
                                 duration45.add(jsonObjectNew.getString("duration"))
                                 idParent45.add(jsonObject1.getString("id"))
                                 title45.add(jsonObject1.getString("title"))
-                            }else{
+                            } else {
                                 idChild90.add(jsonObjectNew.getString("id"))
                                 transition_id90.add(jsonObjectNew.getString("transition_id"))
                                 medium90.add(jsonObjectNew.getString("medium"))
@@ -250,7 +313,18 @@ class TransitionToSleep : Fragment() {
     }
 
     private fun adapterConnects() {
-        val transitionToSleepAdapter = TtsAdapter(context,  idParent45, title45, idChild45, transition_id45, medium45, language_slug45, filename45, duration45)
+        val transitionToSleepAdapter = TtsAdapter(
+            context,
+            idParent45,
+            title45,
+            idChild45,
+            transition_id45,
+            medium45,
+            language_slug45,
+            filename45,
+            duration45,
+            activity
+        )
         transition_to_sleep_recy.setHasFixedSize(true)
         transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
         transition_to_sleep_recy.adapter = transitionToSleepAdapter
@@ -267,46 +341,5 @@ class TransitionToSleep : Fragment() {
         )
         transition_to_sleep_recy?.adapter = adapterMain*/
     }
-
-    /* private fun apiVideos() {
-         val url  = "https://promask.com.co/yuru/api/sleep"
-
-         val stringRequest = object : StringRequest(
-             Method.GET, url,
-             Response.Listener { response ->
-                 try {
-                     val obj = JSONObject(response)
-                     var jsonObject = obj.getJSONObject("result")
-                     val jsonArray = jsonObject.getJSONArray("data")
-                     for(i in 0 until jsonArray.length()){
-                         val jsonObject2 = jsonArray.getJSONObject(i)
-
-                         val transitionToSleepAdapter = TransitionToSleepAdapter(requireContext())
-                         transition_to_sleep_recy.setHasFixedSize(true)
-                         transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
-                         transition_to_sleep_recy.adapter = transitionToSleepAdapter
-
-                     }
-
-                 } catch (e: JSONException) {
-                     e.printStackTrace()
-                 }
-             },
-             object : Response.ErrorListener {
-                 override fun onErrorResponse(volleyError: VolleyError) {
-                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
-                 }
-             }) {
- //            @Throws(AuthFailureError::class)
- //            override fun getParams(): Map<String, String> {
- //                val params = HashMap<String, String>()
- //                params.put("roleType", "admin")
- //
- //                return params
- //            }
-         }
-         requestQueue = Volley.newRequestQueue(context)
-         requestQueue?.add(stringRequest)
-     }*/
 
 }
