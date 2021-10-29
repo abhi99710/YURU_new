@@ -18,24 +18,24 @@ import java.util.List;
 
 public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
     Context context;
-    List<String> idParent;
+    List<String> ids;
     List<String> language_slug;
     List<String> gender;
     List<String> traint;
-    List<String> idChild;
+    List<String> sleep_id;
     List<String> duration;
-    List<String> filename;
+    List<String> url;
 
-    public AdapterSleep(Context context, List<String> idParent, List<String> language_slug, List<String> gender, List<String> traint,
-                        List<String> idChild, List<String> duration, List<String> filename) {
+    public AdapterSleep(Context context, List<String> ids, List<String> language_slug, List<String>
+            gender, List<String> traint, List<String> sleep_id, List<String> duration, List<String> url) {
         this.context = context;
-        this.idParent = idParent;
+        this.ids = ids;
         this.language_slug = language_slug;
         this.gender = gender;
         this.traint = traint;
-        this.idChild = idChild;
+        this.sleep_id = sleep_id;
         this.duration = duration;
-        this.filename = filename;
+        this.url = url;
     }
 
     @NonNull
@@ -51,14 +51,14 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
         holder.sleep_videoview.setOnClickListener(v->
         {
             Intent intent = new Intent(context, VideoActivity.class);
-            intent.putExtra(Constants.VIDEO_LINK, filename.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
+            intent.putExtra(Constants.VIDEO_LINK, url.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
             context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return filename.size();
+        return url.size();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {

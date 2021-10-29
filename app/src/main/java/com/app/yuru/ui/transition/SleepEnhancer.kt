@@ -52,24 +52,24 @@ class SleepEnhancer : Fragment() {
     private var right_2_count = 0  //count for right click for image 2
     private var answerForLeft = 45  // real time answer for image 1 button clicks
     private var annserForRight = 135  // real time answer for image 1 button clicks
-    private var toXdelta1 = 0.0f  // saves the position to which the first imageview slides right side
-    private var toXdelta2 = 0.0f  // saves the position to which the second imageview slides right side
-    private var negXdelta1 = 0.0f  // saves the position to which the first imageview slides left side
-    private var negXdelta2 = 0.0f  // saves the position to which the second imageview slides left side
+    private var toXdelta1 =
+        0.0f  // saves the position to which the first imageview slides right side
+    private var toXdelta2 =
+        0.0f  // saves the position to which the second imageview slides right side
+    private var negXdelta1 =
+        0.0f  // saves the position to which the first imageview slides left side
+    private var negXdelta2 =
+        0.0f  // saves the position to which the second imageview slides left side
 
-    private lateinit var showAns2 : TextView
-    private lateinit var showAns  : TextView
-    private lateinit var showAdd2 : TextView
-    private lateinit var showAdd1 : TextView
-
-    private lateinit var tts_vids : VideoView
-
-
-
-    private lateinit var seekBar1 : VerticalSeekBar
+    private lateinit var showAns2: TextView
+    private lateinit var showAns: TextView
+    private lateinit var showAdd2: TextView
+    private lateinit var showAdd1: TextView
+    private lateinit var tts_vids: VideoView
+    private lateinit var seekBar1: VerticalSeekBar
 
     private var alarmAnser = 45
-    private  var checkClickedL1 = false
+    private var checkClickedL1 = false
     private var checkClickedR1 = false
     private var checkClickedL2 = false
     private var checkClickedR2 = false
@@ -87,43 +87,40 @@ class SleepEnhancer : Fragment() {
 
         save_sleep_enhancer.setOnClickListener {
 
-            if (checkClickedL1){
+            if (checkClickedL1) {
                 go(alarmAnser, 0)
                 go(90, 1)
 
                 go(annserForRight, 2)
                 go(180, 3)
-            }else if(checkClickedR1){
+            } else if (checkClickedR1) {
                 go(alarmAnser, 0)
                 go(90, 1)
 
                 go(annserForRight, 2)
                 go(180, 3)
-            }else if(checkClickedL2){
+            } else if (checkClickedL2) {
                 go(alarmAnser, 0)
                 go(90, 1)
 
                 go(annserForRight, 2)
                 go(180, 3)
-            }else if(checkClickedR2){
+            } else if (checkClickedR2) {
                 go(alarmAnser, 0)
                 go(90, 1)
 
                 go(annserForRight, 2)
                 go(180, 3)
-            }
-            else{
+            } else {
                 go(45, 0)
                 go(90, 1)
                 go(135, 2)
-                go(180,3)
+                go(180, 3)
             }
 
 
-
-
-
-            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, SleepEnhancer2())
+            val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.framwQts, SleepEnhancer2())
             fragment.addToBackStack(null)
             fragment.commit()
 
@@ -138,9 +135,10 @@ class SleepEnhancer : Fragment() {
 
         try {
             val mediaPlayer = MediaPlayer()
-             lateinit var audioManager : AudioManager
+            lateinit var audioManager: AudioManager
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            audioManager = (context?.getSystemService(requireContext().toString()) as AudioManager?)!!
+            audioManager =
+                (context?.getSystemService(requireContext().toString()) as AudioManager?)!!
             seekBar1.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
             seekBar1.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC))
             seekBar1.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
@@ -160,12 +158,11 @@ class SleepEnhancer : Fragment() {
     }
 
 
-
     private fun transitionClickListner() {
 
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-                                        checkClickedR1 = true
+            checkClickedR1 = true
             if (right_1_count < 5) {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
@@ -173,7 +170,7 @@ class SleepEnhancer : Fragment() {
 //                Toast.makeText(context, ""+right_1_count, Toast.LENGTH_SHORT)
 //                    .show()
 
-                showAdd1.setText("(+"+right_1_count+")")
+                showAdd1.setText("(+" + right_1_count + ")")
                 if (right_1_count > 0)
                     showAdd1.setTextColor(Color.GREEN)
                 else
@@ -184,8 +181,6 @@ class SleepEnhancer : Fragment() {
                 animation.setDuration(1000)
                 animation.setFillAfter(true)
                 bottom_1.startAnimation(animation)
-
-
 
 
             } else {
@@ -209,11 +204,10 @@ class SleepEnhancer : Fragment() {
 
                 if (left_1_count < 0) {
                     showAdd1.setTextColor(Color.RED)
-                    showAdd1.setText("("+left_1_count +")")
-                }
-                else {
+                    showAdd1.setText("(" + left_1_count + ")")
+                } else {
                     showAdd1.setTextColor(Color.GREEN)
-                    showAdd1.setText("("+left_1_count +")")
+                    showAdd1.setText("(" + left_1_count + ")")
                 }
 
                 negXdelta1 = negXdelta1 - 20
@@ -233,7 +227,7 @@ class SleepEnhancer : Fragment() {
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-                checkClickedL2 = true
+            checkClickedL2 = true
             if (left_2_count > -5) {
                 left_2_count--
                 annserForRight = annserForRight - 1
@@ -241,7 +235,7 @@ class SleepEnhancer : Fragment() {
 //                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
 //                    .show()
 
-                showAdd2.setText("("+left_2_count+")")
+                showAdd2.setText("(" + left_2_count + ")")
                 if (left_2_count < 0)
                     showAdd2.setTextColor(Color.RED)
                 else
@@ -271,7 +265,7 @@ class SleepEnhancer : Fragment() {
 //                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
 //                    .show()
 
-                showAdd2.setText("(+"+right_2_count+")")
+                showAdd2.setText("(+" + right_2_count + ")")
                 if (right_2_count > 0)
                     showAdd2.setTextColor(Color.GREEN)
                 else
@@ -360,40 +354,44 @@ class SleepEnhancer : Fragment() {
     }
 
 
-    private fun go(ans : Int, chechReq : Int) {
+    private fun go(ans: Int, chechReq: Int) {
 
-        val  SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
+        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
 
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
-        val calList : MutableList<Calendar> = ArrayList()
+        val calList: MutableList<Calendar> = ArrayList()
 
-        for(i in 0..4 ){
+        for (i in 0..4) {
             calList.add(calendar)
         }
 
         val stringBuilder = ""
 
-        for( calItem in calList){
-            calItem.add(Calendar.MINUTE,ans)
+        for (calItem in calList) {
+            calItem.add(Calendar.MINUTE, ans)
 
-            val requestCode = (calendar.timeInMillis/1000).toInt()
+            val requestCode = (calendar.timeInMillis / 1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
-            intent.putExtra("REQUEST_CODE",requestCode)
-            intent.putExtra("fragment","sleep1")
+            intent.putExtra("REQUEST_CODE", requestCode)
+            intent.putExtra("fragment", "sleep1")
 
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 
             val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-            }else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager?.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP,
+                    calItem.timeInMillis,
+                    pi
+                )
+            } else {
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
             }
 
-            Toast.makeText(context, "Alarm has been set " , Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Alarm has been set ", Toast.LENGTH_SHORT).show()
 
         }
     }
@@ -403,7 +401,8 @@ class SleepEnhancer : Fragment() {
         ctlr.setMediaPlayer(tts_vids)
         tts_vids.setMediaController(ctlr)
 
-        val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
+        val uri =
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);

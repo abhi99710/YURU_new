@@ -49,7 +49,7 @@ class Splash2 : AppCompatActivity() {
     }
 
     private val runnable = Runnable {
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, Splash3::class.java))
         finish()
     }
 

@@ -16,7 +16,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.splash.Splash2"></activity>
+        <activity
+            android:name=".ui.journals.DeleteJournal"
+            android:exported="true" />
+        <activity
+            android:name=".ui.journals.ViewJournal"
+            android:exported="true" />
+        <activity
+            android:name=".ui.journals.Addjournal"
+            android:exported="true" />
+        <activity
+            android:name=".ui.journals.ActiveJournal"
+            android:exported="true" />
+        <activity
+            android:name=".ui.journals.StartJournal"
+            android:exported="true" />
+        <activity
+            android:name=".ui.splash.Splash7"
+            android:exported="true" />
+        <activity
+            android:name=".ui.splash.Spalsh6"
+            android:exported="true" />
+        <activity
+            android:name=".ui.splash.Splash5"
+            android:exported="true" />
+        <activity
+            android:name=".ui.splash.Splash4"
+            android:exported="true" />
+        <activity
+            android:name=".ui.splash.Splash3"
+            android:exported="true" />
+        <activity android:name=".ui.splash.Splash2" />
         <activity android:name=".ui.result.OpennessResult" />
         <activity
             android:name=".ui.discounts.DailyJournals"

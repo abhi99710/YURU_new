@@ -54,7 +54,7 @@ class SignUpFragment : BaseFragmentBinding<FragmentSignupBinding>() {
                     baseActivity.showToast(it.message)
                 }
                 is SignUpViewModel.SignUpState.Success -> {
-                    Intent(baseActivity, GetStartedActivity::class.java).apply {
+                    Intent(baseActivity, LoginActivity::class.java).apply {
                         putExtra(ARG_NAME, binding.edtName.trimString())
                         startActivity(this)
                     }

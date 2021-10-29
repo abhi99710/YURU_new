@@ -48,8 +48,8 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
         }
         binding.btnProceed.setOnClickListener{
 
-//            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
-//            startActivity(Intent(context, Splash2::class.java))
+            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(context, TransitionActivity::class.java))
 
             if(binding.edtEmail.text.toString().isNullOrEmpty()){
                 Toast.makeText(context, "please enter your email", Toast.LENGTH_SHORT).show()
@@ -58,7 +58,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                 Toast.makeText(context, "please enter your password", Toast.LENGTH_SHORT).show()
 
             }else{
-                apiLogin()
+//                apiLogin()
             }
 
 
@@ -76,10 +76,12 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                     val obj = JSONObject(response)
 //                    progressDialog.dismiss()
                     var jsonObject = obj.getJSONObject("result")
-//                    val jsonObject = jsonObject.getJSONArray("data")
+                    var jsonObject1 = jsonObject.getJSONObject("data")
 
                      if(jsonObject.getString("message").equals("You have successfully logged In")) {
-                         startActivity(Intent(context, GetStartedActivity::class.java))
+                        var intent = Intent(context, GetStartedActivity::class.java)
+                         intent.putExtra("nameLogin", jsonObject1.getString("full_name"))
+                         startActivity(intent)
                          Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
 
 //                         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)

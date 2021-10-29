@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:textColor="#777777"
             android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="I often feel blue." />
 

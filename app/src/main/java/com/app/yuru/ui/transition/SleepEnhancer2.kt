@@ -58,7 +58,7 @@ class SleepEnhancer2 : Fragment() {
     private lateinit var a1Option: ImageView
     private lateinit var n1option: ImageView
 
-    lateinit var seekBar1 : VerticalSeekBar
+    lateinit var seekBar1: VerticalSeekBar
 
     private var left_1_count = 0   //count for left click for image 1
     private var right_1_count = 0  //count for right click for image 1
@@ -76,25 +76,34 @@ class SleepEnhancer2 : Fragment() {
         0.0f  // saves the position to which the second imageview slides left side
     private var countClicked = 0
 
-    private var idParent: MutableList<String> = ArrayList()
-    private var idChild: MutableList<String> = ArrayList()
-    private var language_slug: MutableList<String> = ArrayList()
-    private var traint: MutableList<String> = ArrayList()
-    private var gender: MutableList<String> = ArrayList()
-    private var duration: MutableList<String> = ArrayList()
-    private var filename: MutableList<String> = ArrayList()
+
+    private var id45: MutableList<String> = ArrayList()
+    private var language_slug45: MutableList<String> = ArrayList()
+    private var traint45: MutableList<String> = ArrayList()
+    private var gender45: MutableList<String> = ArrayList()
+    private var duration45: MutableList<String> = ArrayList()
+    private var sleep_id45: MutableList<String> = ArrayList()
+    private var url45: MutableList<String> = ArrayList()
+
+    private var id90: MutableList<String> = ArrayList()
+    private var language_slug90: MutableList<String> = ArrayList()
+    private var traint90: MutableList<String> = ArrayList()
+    private var gender90: MutableList<String> = ArrayList()
+    private var duration90: MutableList<String> = ArrayList()
+    private var sleep_id90: MutableList<String> = ArrayList()
+    private var url90 :  MutableList<String> = ArrayList()
 
     lateinit var progressDialog: ProgressDialog
 
-    private  var checkClickedL1 = false
+    private var checkClickedL1 = false
     private var checkClickedR1 = false
     private var checkClickedL2 = false
     private var checkClickedR2 = false
 
-    private lateinit var showAns2 : TextView
-    private lateinit var showAns  : TextView
-    private lateinit var showAdd2 : TextView
-    private lateinit var showAdd1 : TextView
+    private lateinit var showAns2: TextView
+    private lateinit var showAns: TextView
+    private lateinit var showAdd2: TextView
+    private lateinit var showAdd1: TextView
 
 
     /* private var id1Female: MutableList<String> = ArrayList()
@@ -125,7 +134,7 @@ class SleepEnhancer2 : Fragment() {
 
         // bottom left side imageview click managed here
         bottom_1.setOnClickListener {
-//            showDialog("Openness")
+            showDialog("Openness")
         }
 
         methodForUpperImageClicks()  // upper image click managed my this method
@@ -134,36 +143,41 @@ class SleepEnhancer2 : Fragment() {
         // save button click listener
         save_sleep_enhancer_2.setOnClickListener {
 //            it.findNavController().navigate(R.id.wakeUpProgram)
-            if (checkClickedL1){
-                go(answerForLeft, )
-                go(270, )
+            if (checkClickedL1) {
 
-                go(annserForRight, )
-                go(360, )
-            }else if(checkClickedR1){
-                go(answerForLeft, )
-                go(270, )
+                go(answerForLeft)
+                go(270)
+                go(annserForRight)
+                go(360)
 
-                go(annserForRight, )
-                go(360, )
-            }else if(checkClickedL2){
-                go(answerForLeft, )
-                go(270, )
+            } else if (checkClickedR1) {
 
-                go(annserForRight, )
-                go(360, )
-            }else if(checkClickedR2){
-                go(answerForLeft, )
-                go(270, )
+                go(answerForLeft)
+                go(270)
+                go(annserForRight)
+                go(360)
 
-                go(annserForRight, )
-                go(360, )
-            }
-            else{
-                go(225, )
-                go(270, )
-                go(315, )
-                go(360,)
+            } else if (checkClickedL2) {
+
+                go(answerForLeft)
+                go(270)
+                go(annserForRight)
+                go(360)
+
+            } else if (checkClickedR2) {
+
+                go(answerForLeft)
+                go(270)
+                go(annserForRight)
+                go(360)
+
+            } else {
+
+                go(225)
+                go(270)
+                go(315)
+                go(360)
+
             }
 
 
@@ -239,14 +253,14 @@ class SleepEnhancer2 : Fragment() {
 
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-                 checkClickedR1 = true
+            checkClickedR1 = true
             if (right_1_count < 5) {
                 right_1_count++
                 answerForLeft = answerForLeft + 1
 //                Toast.makeText(context, "+" + right_1_count, Toast.LENGTH_SHORT)
 //                    .show()
 
-                showAdd1.setText("(+"+right_1_count+")")
+                showAdd1.setText("(+" + right_1_count + ")")
                 if (right_1_count > 0)
                     showAdd1.setTextColor(Color.GREEN)
                 else
@@ -271,7 +285,7 @@ class SleepEnhancer2 : Fragment() {
 
         // left arrow for first image slide
         arrowLeft1.setOnClickListener {
-                checkClickedL1 = true
+            checkClickedL1 = true
             if (left_1_count > -5) {
                 left_1_count--
                 answerForLeft = answerForLeft - 1
@@ -280,11 +294,10 @@ class SleepEnhancer2 : Fragment() {
 
                 if (left_1_count < 0) {
                     showAdd1.setTextColor(Color.RED)
-                    showAdd1.setText("("+left_1_count +")")
-                }
-                else {
+                    showAdd1.setText("(" + left_1_count + ")")
+                } else {
                     showAdd1.setTextColor(Color.GREEN)
-                    showAdd1.setText("("+left_1_count +")")
+                    showAdd1.setText("(" + left_1_count + ")")
                 }
 
                 negXdelta1 = negXdelta1 - 20
@@ -304,14 +317,14 @@ class SleepEnhancer2 : Fragment() {
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-                checkClickedL2 = true
+            checkClickedL2 = true
             if (left_2_count > -5) {
                 left_2_count--
                 annserForRight = annserForRight - 1
                 negXdelta2 = negXdelta2 - 20
 //                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
 //                    .show()
-                showAdd2.setText("("+left_2_count+")")
+                showAdd2.setText("(" + left_2_count + ")")
                 if (left_2_count < 0)
                     showAdd2.setTextColor(Color.RED)
                 else
@@ -332,14 +345,14 @@ class SleepEnhancer2 : Fragment() {
 
         // right arrow for second image slide
         arrowRight2.setOnClickListener {
-                checkClickedR2 = true
+            checkClickedR2 = true
             if (right_2_count < 5) {
                 right_2_count++
                 annserForRight = annserForRight + 1
 //                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
 //                    .show()
 
-                showAdd2.setText("(+"+right_2_count+")")
+                showAdd2.setText("(+" + right_2_count + ")")
                 if (right_2_count > 0)
                     showAdd2.setTextColor(Color.GREEN)
                 else
@@ -433,14 +446,57 @@ class SleepEnhancer2 : Fragment() {
             dialog.setContentView(R.layout.dialogtransition)
             dialog.show()
 
-            val recyclerView : RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
+            val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
-            val dialog_title : TextView = dialog.findViewById(R.id.dialog_title)
-            val logo : TextView = dialog.findViewById(R.id.logo)
-            val cl90 : ConstraintLayout = dialog.findViewById(R.id.cl90)
-            val cl45 : ConstraintLayout = dialog.findViewById(R.id.cl45)
+            val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
+            val logo: ImageView = dialog.findViewById(R.id.logo)
+            val cl90: ConstraintLayout = dialog.findViewById(R.id.cl90)
+            val cl45: ConstraintLayout = dialog.findViewById(R.id.cl45)
 
-            val adapterSleep = AdapterSleep(requireActivity(), idParent, language_slug, gender, traint, idChild, duration, filename)
+            val adapterSleep = AdapterSleep(
+                requireActivity(),
+                id45,
+                language_slug45,
+                gender45,
+                traint45,
+                sleep_id45,
+                duration45,
+                url45
+            )
+
+            cl45.setOnClickListener {
+
+                cl45.setBackgroundColor(Color.parseColor("#eeeeee"))
+                cl90.setBackgroundColor(Color.TRANSPARENT)
+
+                val adapterSleep = AdapterSleep(
+                    requireActivity(),
+                    id45,
+                    language_slug45,
+                    gender45,
+                    traint45,
+                    sleep_id45,
+                    duration45,
+                    url45
+                )
+            }
+
+            cl90.setOnClickListener {
+
+                cl45.setBackgroundColor(Color.TRANSPARENT)
+                cl90.setBackgroundColor(Color.parseColor("#eeeeee"))
+
+                val adapterSleep = AdapterSleep(
+                    requireActivity(),
+                    id90,
+                    language_slug90,
+                    gender90,
+                    traint90,
+                    sleep_id90,
+                    duration90,
+                    url90
+                )
+            }
 
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = LinearLayoutManager(context)
@@ -522,33 +578,49 @@ class SleepEnhancer2 : Fragment() {
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")
 
-                    idParent.clear()
-                    language_slug.clear()
-                    gender.clear()
-                    filename.clear()
-                    idChild.clear()
-                    duration.clear()
-                    traint.clear()
+                    id45.clear()
+                    language_slug45.clear()
+                    gender45.clear()
+                    url45.clear()
+                    sleep_id45.clear()
+                    duration45.clear()
+                    traint45.clear()
+                    id90.clear()
+                    language_slug90.clear()
+                    gender90.clear()
+                    url90.clear()
+                    sleep_id90.clear()
+                    duration90.clear()
+                    traint90.clear()
+
 
 
                     for (i in 0 until jsonArray.length()) {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
+                        if(jsonObject1.getString("duration").equals("45sec")){
 
-                            idParent.add(jsonObject1.getString("id"))
-                            language_slug.add(jsonObject1.getString("language_slug"))
-                            gender.add(jsonObject1.getString("gender"))
-                            traint.add(jsonObject1.getString("traint"))
+                            id45.add(jsonObject1.getString("id"))
+                            language_slug45.add(jsonObject1.getString("language_slug"))
+                            gender45.add(jsonObject1.getString("gender"))
+                            url45.add(jsonObject1.getString("url"))
+                            sleep_id45.add(jsonObject1.getString("sleep_id"))
+                            duration45.add(jsonObject1.getString("duration"))
+                            traint45.add(jsonObject1.getString("traint"))
 
-                            val jsonArray2 = jsonObject1.getJSONArray("videos");
-                                for (j in 0 until jsonArray2.length()) {
-                                    val jsonObjectNew = jsonArray2.getJSONObject(j)
-                                    idChild.add(jsonObjectNew.getString("id"))
-                                    duration.add(jsonObjectNew.getString("duration"))
-                                    filename.add(jsonObjectNew.getString("filename"))
+                        }else{
+                            id90.add(jsonObject1.getString("id"))
+                            language_slug90.add(jsonObject1.getString("language_slug"))
+                            gender90.add(jsonObject1.getString("gender"))
+                            url90.add(jsonObject1.getString("url"))
+                            sleep_id90.add(jsonObject1.getString("sleep_id"))
+                            duration90.add(jsonObject1.getString("duration"))
+                            traint90.add(jsonObject1.getString("traint"))
+                        }
 
-                                }
+
+
                     }
 
 //                    adapterConnects()

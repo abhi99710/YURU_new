@@ -7,7 +7,7 @@ import com.app.yuru.coreandroid.base.BaseActivityBinding
 import com.app.yuru.databinding.ActivityGetStartedBinding
 import com.app.yuru.ui.test.TestActivity
 
-const val ARG_NAME = "name"
+const val ARG_NAME = "nameLogin"
 
 class GetStartedActivity : BaseActivityBinding<ActivityGetStartedBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityGetStartedBinding
