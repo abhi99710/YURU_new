@@ -125,7 +125,7 @@ class SleepEnhancer2 : Fragment() {
 
         // bottom left side imageview click managed here
         bottom_1.setOnClickListener {
-            showDialog("Openness")
+//            showDialog("Openness")
         }
 
         methodForUpperImageClicks()  // upper image click managed my this method

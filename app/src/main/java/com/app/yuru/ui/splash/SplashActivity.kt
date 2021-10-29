@@ -13,7 +13,7 @@ class SplashActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
 
     private val runnable = Runnable {
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, Splash2::class.java))
         finish()
     }
 

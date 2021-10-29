@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.splash.Splash2"></activity>
         <activity android:name=".ui.result.OpennessResult" />
         <activity
             android:name=".ui.discounts.DailyJournals"

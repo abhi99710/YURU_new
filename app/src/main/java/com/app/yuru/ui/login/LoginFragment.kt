@@ -18,6 +18,7 @@ import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentLoginBinding
 
 import com.app.yuru.ui.getStarted.GetStartedActivity
+import com.app.yuru.ui.splash.Splash2
 import com.app.yuru.ui.test.TestActivity
 import com.app.yuru.ui.transition.AdapterMain
 import com.app.yuru.ui.transition.TransitionActivity
@@ -47,8 +48,8 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
         }
         binding.btnProceed.setOnClickListener{
 
-            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(context, TransitionActivity::class.java))
+//            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+//            startActivity(Intent(context, Splash2::class.java))
 
             if(binding.edtEmail.text.toString().isNullOrEmpty()){
                 Toast.makeText(context, "please enter your email", Toast.LENGTH_SHORT).show()
@@ -57,7 +58,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                 Toast.makeText(context, "please enter your password", Toast.LENGTH_SHORT).show()
 
             }else{
-//                apiLogin()
+                apiLogin()
             }
 
 
@@ -77,10 +78,10 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                     var jsonObject = obj.getJSONObject("result")
 //                    val jsonObject = jsonObject.getJSONArray("data")
 
-                     if(jsonObject.getString("message").equals("Registration has been done successfully")) {
-
-                         Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+                     if(jsonObject.getString("message").equals("You have successfully logged In")) {
                          startActivity(Intent(context, GetStartedActivity::class.java))
+                         Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+
 //                         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
 //                         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
 
