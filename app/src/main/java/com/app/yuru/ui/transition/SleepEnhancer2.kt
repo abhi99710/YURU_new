@@ -1,5 +1,6 @@
 package com.app.yuru.ui.transition
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.Dialog
 import android.app.PendingIntent
@@ -9,7 +10,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +18,8 @@ import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -28,13 +28,9 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.app.yuru.R
-import com.app.yuru.corescheduler.player.video.ui.VideoActivity
-import com.app.yuru.corescheduler.utils.Constants
 import com.app.yuru.utility.apivolley.APIVolley
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -91,14 +87,9 @@ class SleepEnhancer2 : Fragment() {
     private var gender90: MutableList<String> = ArrayList()
     private var duration90: MutableList<String> = ArrayList()
     private var sleep_id90: MutableList<String> = ArrayList()
-    private var url90 :  MutableList<String> = ArrayList()
+    private var url90: MutableList<String> = ArrayList()
 
     lateinit var progressDialog: ProgressDialog
-
-    private var checkClickedL1 = false
-    private var checkClickedR1 = false
-    private var checkClickedL2 = false
-    private var checkClickedR2 = false
 
     private lateinit var showAns2: TextView
     private lateinit var showAns: TextView
@@ -142,45 +133,8 @@ class SleepEnhancer2 : Fragment() {
 
         // save button click listener
         save_sleep_enhancer_2.setOnClickListener {
-//            it.findNavController().navigate(R.id.wakeUpProgram)
-            if (checkClickedL1) {
-
-                go(answerForLeft)
-//                go(270)
-                go(annserForRight)
-//                go(360)
-
-            } else if (checkClickedR1) {
-
-                go(answerForLeft)
-//                go(270)
-                go(annserForRight)
-//                go(360)
-
-            } else if (checkClickedL2) {
-
-                go(answerForLeft)
-//                go(270)
-                go(annserForRight)
-//                go(360)
-
-            } else if (checkClickedR2) {
-
-                go(answerForLeft)
-//                go(270)
-                go(annserForRight)
-//                go(360)
-
-            } else {
-
-                go(225)
-//                go(270)
-                go(315)
-//                go(360)
-
-            }
-
-
+            go(answerForLeft)
+            go(annserForRight)
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.framwQts, WakeUpProgram())
             fragment.addToBackStack(null)
@@ -249,94 +203,68 @@ class SleepEnhancer2 : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun clickListnerForTransition() {
 
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-            checkClickedR1 = true
             if (right_1_count < 5) {
                 right_1_count++
-                answerForLeft = answerForLeft + 1
-//                Toast.makeText(context, "+" + right_1_count, Toast.LENGTH_SHORT)
-//                    .show()
-
-                showAdd1.setText("(+" + right_1_count + ")")
+                answerForLeft += 1
+                showAdd1.text = "(+" + right_1_count + ")"
                 if (right_1_count > 0)
                     showAdd1.setTextColor(Color.GREEN)
                 else
                     showAdd1.setTextColor(Color.RED)
-
-                toXdelta1 = toXdelta1 + 20.0f
+                toXdelta1 += 20.0f
                 val animation = TranslateAnimation(0f, toXdelta1, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom_1.startAnimation(animation)
-
-//                go(answerForLeft)
-
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
-
             }
-
         }
 
         // left arrow for first image slide
         arrowLeft1.setOnClickListener {
-            checkClickedL1 = true
             if (left_1_count > -5) {
                 left_1_count--
-                answerForLeft = answerForLeft - 1
-//                Toast.makeText(context, "" + left_1_count, Toast.LENGTH_SHORT)
-//                    .show()
-
+                answerForLeft -= 1
                 if (left_1_count < 0) {
                     showAdd1.setTextColor(Color.RED)
-                    showAdd1.setText("(" + left_1_count + ")")
+                    showAdd1.text = "(" + left_1_count + ")"
                 } else {
                     showAdd1.setTextColor(Color.GREEN)
-                    showAdd1.setText("(" + left_1_count + ")")
+                    showAdd1.text = "(" + left_1_count + ")"
                 }
-
-                negXdelta1 = negXdelta1 - 20
+                negXdelta1 -= 20
                 val animation = TranslateAnimation(0f, negXdelta1, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom_1.startAnimation(animation)
-
-//                go(answerForLeft)
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
             }
-
         }
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-            checkClickedL2 = true
             if (left_2_count > -5) {
                 left_2_count--
-                annserForRight = annserForRight - 1
-                negXdelta2 = negXdelta2 - 20
-//                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
-//                    .show()
+                annserForRight -= 1
+                negXdelta2 -= 20
                 showAdd2.setText("(" + left_2_count + ")")
                 if (left_2_count < 0)
                     showAdd2.setTextColor(Color.RED)
                 else
                     showAdd2.setTextColor(Color.GREEN)
-
                 val animation = TranslateAnimation(0f, negXdelta2, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom2.startAnimation(animation)
-
-//                go(annserForRight)
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
@@ -345,69 +273,50 @@ class SleepEnhancer2 : Fragment() {
 
         // right arrow for second image slide
         arrowRight2.setOnClickListener {
-            checkClickedR2 = true
             if (right_2_count < 5) {
                 right_2_count++
-                annserForRight = annserForRight + 1
-//                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
-//                    .show()
-
-                showAdd2.setText("(+" + right_2_count + ")")
+                annserForRight += 1
+                showAdd2.text = "(+$right_2_count)"
                 if (right_2_count > 0)
                     showAdd2.setTextColor(Color.GREEN)
                 else
                     showAdd2.setTextColor(Color.RED)
-
-                toXdelta2 = toXdelta2 + 20.0f
+                toXdelta2 += 20.0f
                 val animation = TranslateAnimation(0f, toXdelta2, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom2.startAnimation(animation)
-
-//                go(annserForRight)
-
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
-
             }
-
         }
 
         // center icon for first image slide to position 0 ( 45 min )
         center1.setOnClickListener {
-
-            answerForLeft = 45
+            answerForLeft = 225
             right_1_count = 0
             left_1_count = 0
             toXdelta1 = 0.0f
             negXdelta1 = 0.0f
-//            go(45)
-//            Toast.makeText(context, "$answerForLeft", Toast.LENGTH_SHORT).show()
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
-            animation.setDuration(1000)
-            animation.setFillAfter(true)
+            animation.duration = 1000
+            animation.fillAfter = true
             bottom_1.startAnimation(animation)
-
-            showAdd1.setText("  ")
-
+            showAdd1.text = "  "
         }
 
         // center icon for second image slide to position 0 ( 135 min )
         center2.setOnClickListener {
-            annserForRight = 135
+            annserForRight = 315
             right_2_count = 0
             left_2_count = 0
             toXdelta2 = 0.0f
             negXdelta2 = 0.0f
-//            go(135)
-//            Toast.makeText(context, "$annserForRight", Toast.LENGTH_SHORT).show()
-
-            showAdd2.setText("  ")
+            showAdd2.text = "  "
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
-            animation.setDuration(1000)
-            animation.setFillAfter(true)
+            animation.duration = 1000
+            animation.fillAfter = true
             bottom2.startAnimation(animation)
         }
     }
@@ -449,7 +358,7 @@ class SleepEnhancer2 : Fragment() {
             val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
             val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
-            val logo: ImageView = dialog.findViewById(R.id.logo)
+            val logo: TextView = dialog.findViewById(R.id.logo)
             val cl90: ConstraintLayout = dialog.findViewById(R.id.cl90)
             val cl45: ConstraintLayout = dialog.findViewById(R.id.cl45)
 
@@ -523,19 +432,10 @@ class SleepEnhancer2 : Fragment() {
 
 
     private fun go(hike: Int) {
-
-        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
-
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
         val calList: MutableList<Calendar> = ArrayList()
-
-        for (i in 0..4) {
-            calList.add(calendar)
-        }
-
-        val stringBuilder = ""
-
+        calList.add(calendar)
         for (calItem in calList) {
             calItem.add(Calendar.MINUTE, hike)
 
@@ -557,12 +457,8 @@ class SleepEnhancer2 : Fragment() {
             } else {
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
             }
-
-
-
-            Toast.makeText(context, "Alarm has been set : \n " + stringBuilder, Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Alarm has been set", Toast.LENGTH_SHORT)
                 .show()
-
         }
     }
 
@@ -599,7 +495,7 @@ class SleepEnhancer2 : Fragment() {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
-                        if(jsonObject1.getString("duration").equals("45sec")){
+                        if (jsonObject1.getString("duration").equals("45sec")) {
 
                             id45.add(jsonObject1.getString("id"))
                             language_slug45.add(jsonObject1.getString("language_slug"))
@@ -608,8 +504,7 @@ class SleepEnhancer2 : Fragment() {
                             sleep_id45.add(jsonObject1.getString("sleep_id"))
                             duration45.add(jsonObject1.getString("duration"))
                             traint45.add(jsonObject1.getString("traint"))
-
-                        }else{
+                        } else {
                             id90.add(jsonObject1.getString("id"))
                             language_slug90.add(jsonObject1.getString("language_slug"))
                             gender90.add(jsonObject1.getString("gender"))
@@ -618,9 +513,6 @@ class SleepEnhancer2 : Fragment() {
                             duration90.add(jsonObject1.getString("duration"))
                             traint90.add(jsonObject1.getString("traint"))
                         }
-
-
-
                     }
 
 //                    adapterConnects()

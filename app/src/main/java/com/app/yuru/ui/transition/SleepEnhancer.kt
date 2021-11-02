@@ -1,38 +1,25 @@
 package com.app.yuru.ui.transition
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.AudioManager
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.TranslateAnimation
-import androidx.fragment.app.Fragment
-import com.app.yuru.R
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.time.ExperimentalTime
-
-import android.media.AudioManager
-import android.media.MediaPlayer
-import android.net.Uri
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
-
-import androidx.core.content.ContextCompat.getSystemService
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.app.yuru.utility.apivolley.APIVolley
-import org.json.JSONException
-import org.json.JSONObject
-import java.lang.Exception
+import androidx.fragment.app.Fragment
+import com.app.yuru.R
+import java.util.*
 
 
 class SleepEnhancer : Fragment() {
@@ -65,15 +52,11 @@ class SleepEnhancer : Fragment() {
     private lateinit var showAns: TextView
     private lateinit var showAdd2: TextView
     private lateinit var showAdd1: TextView
+
     private lateinit var tts_vids: VideoView
+
+
     private lateinit var seekBar1: VerticalSeekBar
-
-    private var alarmAnser = 45
-    private var checkClickedL1 = false
-    private var checkClickedR1 = false
-    private var checkClickedL2 = false
-    private var checkClickedR2 = false
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,58 +69,19 @@ class SleepEnhancer : Fragment() {
         findIds(view)
 
         save_sleep_enhancer.setOnClickListener {
-
-            if (checkClickedL1) {
-                go(alarmAnser, 0)
-//                go(90, 1)
-
-                go(annserForRight, 2)
-//                go(180, 3)
-            } else if (checkClickedR1) {
-                go(alarmAnser, 0)
-//                go(90, 1)
-
-                go(annserForRight, 2)
-//                go(180, 3)
-            } else if (checkClickedL2) {
-                go(alarmAnser, 0)
-//                go(90, 1)
-
-                go(annserForRight, 2)
-//                go(180, 3)
-            } else if (checkClickedR2) {
-                go(alarmAnser, 0)
-//                go(90, 1)
-
-                go(annserForRight, 2)
-//                go(180, 3)
-            } else {
-                go(45, 0)
-//                go(90, 1)
-                go(135, 2)
-//                go(180, 3)
-            }
-
-
+            go(answerForLeft)
+            go(annserForRight)
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.framwQts, SleepEnhancer2())
             fragment.addToBackStack(null)
             fragment.commit()
-
-
         }
-
         // this method is used for transition of image
         transitionClickListner()
-
-//        apiSleep()
-
-
         try {
             val mediaPlayer = MediaPlayer()
-            lateinit var audioManager: AudioManager
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            audioManager =
+            val audioManager: AudioManager =
                 (context?.getSystemService(requireContext().toString()) as AudioManager?)!!
             seekBar1.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
             seekBar1.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC))
@@ -158,97 +102,67 @@ class SleepEnhancer : Fragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun transitionClickListner() {
-
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-            checkClickedR1 = true
             if (right_1_count < 5) {
                 right_1_count++
-                answerForLeft = answerForLeft + 1
-                alarmAnser += answerForLeft
-//                Toast.makeText(context, ""+right_1_count, Toast.LENGTH_SHORT)
-//                    .show()
-
-                showAdd1.setText("(+" + right_1_count + ")")
+                answerForLeft += 1
+                showAdd1.text = "(+$right_1_count)"
                 if (right_1_count > 0)
                     showAdd1.setTextColor(Color.GREEN)
                 else
                     showAdd1.setTextColor(Color.RED)
-
-                toXdelta1 = toXdelta1 + 20.0f
+                toXdelta1 += 20.0f
                 val animation = TranslateAnimation(0f, toXdelta1, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom_1.startAnimation(animation)
-
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
-
             }
-
         }
 
         // left arrow for first image slide
         arrowLeft1.setOnClickListener {
-            checkClickedL1 = true
-
             if (left_1_count > -5) {
                 left_1_count--
-                answerForLeft = answerForLeft - 1
-                alarmAnser += answerForLeft
-//                Toast.makeText(context, "" + left_1_count, Toast.LENGTH_SHORT)
-//                    .show()
-
+                answerForLeft -= 1
                 if (left_1_count < 0) {
                     showAdd1.setTextColor(Color.RED)
-                    showAdd1.setText("(" + left_1_count + ")")
+                    showAdd1.text = "(" + left_1_count + ")"
                 } else {
                     showAdd1.setTextColor(Color.GREEN)
-                    showAdd1.setText("(" + left_1_count + ")")
+                    showAdd1.text = "(" + left_1_count + ")"
                 }
-
-                negXdelta1 = negXdelta1 - 20
+                negXdelta1 -= 20
                 val animation = TranslateAnimation(0f, negXdelta1, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom_1.startAnimation(animation)
-
-//                go(answerForLeft, 1)
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
             }
-
         }
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-            checkClickedL2 = true
             if (left_2_count > -5) {
                 left_2_count--
-                annserForRight = annserForRight - 1
-
-//                Toast.makeText(context, "" + left_2_count, Toast.LENGTH_SHORT)
-//                    .show()
-
-                showAdd2.setText("(" + left_2_count + ")")
+                annserForRight -= 1
+                showAdd2.text = "(" + left_2_count + ")"
                 if (left_2_count < 0)
                     showAdd2.setTextColor(Color.RED)
                 else
                     showAdd2.setTextColor(Color.GREEN)
-
-                negXdelta2 = negXdelta2 - 20
+                negXdelta2 -= 20
                 val animation = TranslateAnimation(0f, negXdelta2, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom2.startAnimation(animation)
-
-//                go(annserForRight, 2)
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
@@ -257,56 +171,37 @@ class SleepEnhancer : Fragment() {
 
         // right arrow for second image slide
         arrowRight2.setOnClickListener {
-
-            checkClickedR2 = true
             if (right_2_count < 5) {
                 right_2_count++
-                annserForRight = annserForRight + 1
-//                Toast.makeText(context, "+" + right_2_count, Toast.LENGTH_SHORT)
-//                    .show()
-
-                showAdd2.setText("(+" + right_2_count + ")")
+                annserForRight += 1
+                showAdd2.text = "(+$right_2_count)"
                 if (right_2_count > 0)
                     showAdd2.setTextColor(Color.GREEN)
                 else
                     showAdd2.setTextColor(Color.RED)
-
-                toXdelta2 = toXdelta2 + 20.0f
+                toXdelta2 += 20.0f
                 val animation = TranslateAnimation(0f, toXdelta2, 0f, 0f)
-                animation.setDuration(1000)
-                animation.setFillAfter(true)
+                animation.duration = 1000
+                animation.fillAfter = true
                 bottom2.startAnimation(animation)
-
-//                go(annserForRight, 3)
-
-
             } else {
                 Toast.makeText(context, "not allowed", Toast.LENGTH_SHORT)
                     .show()
-
             }
-
         }
 
         // center icon for first image slide to position 0 ( 45 min )
         center1.setOnClickListener {
-
             answerForLeft = 45
             right_1_count = 0
             left_1_count = 0
             negXdelta1 = 0.0f
             toXdelta1 = 0.0f
-//            Toast.makeText(context, "$answerForLeft", Toast.LENGTH_SHORT).show()
-
-            showAdd1.setText("  ")
-
+            showAdd1.text = "  "
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
-            animation.setDuration(1000)
-            animation.setFillAfter(true)
+            animation.duration = 1000
+            animation.fillAfter = true
             bottom_1.startAnimation(animation)
-
-//            go(45, 4)
-
         }
 
         // center icon for second image slide to position 0 ( 135 min )
@@ -316,18 +211,12 @@ class SleepEnhancer : Fragment() {
             left_2_count = 0
             negXdelta2 = 0.0f
             toXdelta2 = 0.0f
-
-            showAdd2.setText("  ")
-
-            Toast.makeText(context, "$annserForRight", Toast.LENGTH_SHORT).show()
+            showAdd2.text = "  "
             val animation = TranslateAnimation(0f, 0f, 0f, 0f)
-            animation.setDuration(1000)
-            animation.setFillAfter(true)
+            animation.duration = 1000
+            animation.fillAfter = true
             bottom2.startAnimation(animation)
-
-//            go(135, 5)
         }
-
         videoPlay()
     }
 
@@ -354,33 +243,20 @@ class SleepEnhancer : Fragment() {
     }
 
 
-    private fun go(ans: Int, chechReq: Int) {
-
-        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
-
+    private fun go(ans: Int) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
         val calList: MutableList<Calendar> = ArrayList()
-
-        for (i in 0..4) {
-            calList.add(calendar)
-        }
-
-        val stringBuilder = ""
-
+        calList.add(calendar)
         for (calItem in calList) {
             calItem.add(Calendar.MINUTE, ans)
-
             val requestCode = (calendar.timeInMillis / 1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
             intent.putExtra("REQUEST_CODE", requestCode)
             intent.putExtra("fragment", "sleep1")
-
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
-
             val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager?.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
@@ -390,31 +266,19 @@ class SleepEnhancer : Fragment() {
             } else {
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
             }
-
             Toast.makeText(context, "Alarm has been set ", Toast.LENGTH_SHORT).show()
-
         }
     }
 
     private fun videoPlay() {
         val ctlr = MediaController(context)
         ctlr.setMediaPlayer(tts_vids)
-//        tts_vids.setMediaController(ctlr)
-
+        tts_vids.setMediaController(ctlr)
         val uri =
-            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
-        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-
-//                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
-        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-//        tts_vids.setMediaController(ctlr)
-
-        //        videoView.setVideoURI(uri);
-
+            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.moonset);
+        tts_vids.setMediaController(ctlr)
         tts_vids.setVideoURI(uri);
-//        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
         tts_vids.start()
-
     }
 
 }
