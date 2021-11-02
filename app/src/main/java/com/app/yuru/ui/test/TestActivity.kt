@@ -1,9 +1,11 @@
 package com.app.yuru.ui.test
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import com.app.yuru.coreandroid.base.BaseActivityBinding
 import com.app.yuru.databinding.ActivityTestBinding
+import com.app.yuru.ui.coupons.Journals
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,6 +20,10 @@ class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
     override fun setupView(binding: ActivityTestBinding) {
         binding.toolbar.setNavigationOnClickListener {
             finish()
+
+            binding.skipTest.setOnClickListener {
+                startActivity(Intent(this, Journals::class.java))
+            }
         }
         resetStep()
         viewModel.pageLiveData.observe(this, {

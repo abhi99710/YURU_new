@@ -1,5 +1,6 @@
 package com.app.yuru.ui.transition
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentContainer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.app.yuru.R
+import com.app.yuru.ui.coupons.Journals
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TransitionActivity : AppCompatActivity() {
@@ -32,10 +34,10 @@ class TransitionActivity : AppCompatActivity() {
 
             when(it.itemId){
                 R.id.home_nv->setCurrentFragment(firstFragment)
-               R.id.journal_nv->setCurrentFragment(secondFragment)
-                R.id.wakeup_nv->setCurrentFragment(thirdFragment)
-                R.id.sleep_nv->setCurrentFragment(fourthFragment)
-                R.id.english_nv->setCurrentFragment(fifthFragment)
+               R.id.journal_nv->startActivity(Intent(this, Journals::class.java))
+                R.id.wakeup_nv->setCurrentFragment(fifthFragment)
+                R.id.sleep_nv->setCurrentFragment(secondFragment)
+//                R.id.english_nv->setCurrentFragment(firstFragment)
             }
             true
         }

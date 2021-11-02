@@ -8,5 +8,7 @@ class APIVolley {
          val sleep = "https://promask.com.co/yuru/api/sleep"
 
          val transition = "https://promask.com.co/yuru/api/transition"
+
+        val addJournal = "https://promask.com.co/yuru/api/activity/create"
     }
 }

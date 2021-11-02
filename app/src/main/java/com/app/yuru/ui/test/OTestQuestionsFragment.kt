@@ -1,9 +1,12 @@
 package com.app.yuru.ui.test
 
+import android.content.Intent
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.yuru.R
 import com.app.yuru.databinding.FragmentTestQuestionsBinding
+import com.app.yuru.ui.testResult.TestResultActivity
+import com.app.yuru.ui.transition.SleepEnhancer2
 import com.app.yuru.utility.concatArray
 import com.app.yuru.utility.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +44,16 @@ class OTestQuestionsFragment : TestQuestionsFragment() {
 
 
         })
+
+        binding.skipQues.setOnClickListener {
+
+//            val fragment = requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.framwQts, SleepEnhancer2())
+//            fragment.addToBackStack(null)
+//            fragment.commit()
+
+            startActivity(Intent(context,TestResultActivity::class.java))
+        }
     }
 
     override fun getTestQuestionsListener(): TestQuestionsListener {

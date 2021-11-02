@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentTestResultsBinding
+import com.app.yuru.ui.coupons.Journals
 import com.app.yuru.ui.transition.TransitionActivity
 import com.app.yuru.utility.ValueFormatter
 import com.github.mikephil.charting.data.Entry
@@ -30,7 +31,7 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
 
 
         binding.btnProceed.setOnClickListener {
-            startActivity(Intent(context, TransitionActivity::class.java))
+            startActivity(Intent(context, Journals::class.java))
         }
 
         binding.pieChart.setUsePercentValues(true)

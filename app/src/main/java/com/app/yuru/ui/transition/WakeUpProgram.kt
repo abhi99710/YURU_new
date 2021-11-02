@@ -467,14 +467,14 @@ class WakeUpProgram : Fragment() {
     private fun videoPlay() {
         val ctlr = MediaController(context)
         ctlr.setMediaPlayer(wake_up_video)
-        wake_up_video.setMediaController(ctlr)
+//        wake_up_video.setMediaController(ctlr)
 
         val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-        wake_up_video.setMediaController(ctlr)
+//        wake_up_video.setMediaController(ctlr)
 
         //        videoView.setVideoURI(uri);
 

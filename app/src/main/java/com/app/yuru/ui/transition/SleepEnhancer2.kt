@@ -146,37 +146,37 @@ class SleepEnhancer2 : Fragment() {
             if (checkClickedL1) {
 
                 go(answerForLeft)
-                go(270)
+//                go(270)
                 go(annserForRight)
-                go(360)
+//                go(360)
 
             } else if (checkClickedR1) {
 
                 go(answerForLeft)
-                go(270)
+//                go(270)
                 go(annserForRight)
-                go(360)
+//                go(360)
 
             } else if (checkClickedL2) {
 
                 go(answerForLeft)
-                go(270)
+//                go(270)
                 go(annserForRight)
-                go(360)
+//                go(360)
 
             } else if (checkClickedR2) {
 
                 go(answerForLeft)
-                go(270)
+//                go(270)
                 go(annserForRight)
-                go(360)
+//                go(360)
 
             } else {
 
                 go(225)
-                go(270)
+//                go(270)
                 go(315)
-                go(360)
+//                go(360)
 
             }
 

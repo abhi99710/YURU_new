@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.Button
 import android.widget.MediaController
 import android.widget.VideoView
 import com.app.yuru.R
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit
 class Splash2 : AppCompatActivity() {
 
     private lateinit var tts_vids : VideoView
+    private lateinit var skipSplash : Button
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +25,11 @@ class Splash2 : AppCompatActivity() {
         setContentView(R.layout.activity_splash2)
 
         tts_vids = findViewById(R.id.tts_vids)
+        skipSplash = findViewById(R.id.skipSplash)
+
+        skipSplash.setOnClickListener{
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
 
         videoPlay()
@@ -31,14 +38,14 @@ class Splash2 : AppCompatActivity() {
     private fun videoPlay() {
         val ctlr = MediaController(this)
         ctlr.setMediaPlayer(tts_vids)
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
         val uri =  Uri.parse("android.resource://" + this?.getPackageName() + "/R.raw/" + R.raw.splash1);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
         //        videoView.setVideoURI(uri);
 

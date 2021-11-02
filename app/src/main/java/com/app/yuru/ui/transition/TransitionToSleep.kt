@@ -205,7 +205,7 @@ class TransitionToSleep : Fragment() {
     private fun videoPlay() {
         val ctlr = MediaController(context)
         ctlr.setMediaPlayer(tts_vids)
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
                 val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");

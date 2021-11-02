@@ -100,4 +100,14 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardSteps"
         app:navGraph="@navigation/test_nav_graph" />
+
+    <Button
+        android:id="@+id/skip_test"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Skip"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardSteps" />
 </androidx.constraintlayout.widget.ConstraintLayout>

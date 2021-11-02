@@ -31,14 +31,14 @@ class Splash3 : AppCompatActivity() {
     private fun videoPlay() {
         val ctlr = MediaController(this)
         ctlr.setMediaPlayer(tts_vids)
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
         val uri =  Uri.parse("android.resource://" + this?.getPackageName() + "/R.raw/" + R.raw.splash3);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
         //        videoView.setVideoURI(uri);
 

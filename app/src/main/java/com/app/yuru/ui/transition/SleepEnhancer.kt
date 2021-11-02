@@ -89,33 +89,33 @@ class SleepEnhancer : Fragment() {
 
             if (checkClickedL1) {
                 go(alarmAnser, 0)
-                go(90, 1)
+//                go(90, 1)
 
                 go(annserForRight, 2)
-                go(180, 3)
+//                go(180, 3)
             } else if (checkClickedR1) {
                 go(alarmAnser, 0)
-                go(90, 1)
+//                go(90, 1)
 
                 go(annserForRight, 2)
-                go(180, 3)
+//                go(180, 3)
             } else if (checkClickedL2) {
                 go(alarmAnser, 0)
-                go(90, 1)
+//                go(90, 1)
 
                 go(annserForRight, 2)
-                go(180, 3)
+//                go(180, 3)
             } else if (checkClickedR2) {
                 go(alarmAnser, 0)
-                go(90, 1)
+//                go(90, 1)
 
                 go(annserForRight, 2)
-                go(180, 3)
+//                go(180, 3)
             } else {
                 go(45, 0)
-                go(90, 1)
+//                go(90, 1)
                 go(135, 2)
-                go(180, 3)
+//                go(180, 3)
             }
 
 
@@ -399,7 +399,7 @@ class SleepEnhancer : Fragment() {
     private fun videoPlay() {
         val ctlr = MediaController(context)
         ctlr.setMediaPlayer(tts_vids)
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
         val uri =
             Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
@@ -407,7 +407,7 @@ class SleepEnhancer : Fragment() {
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
         //        videoView.setVideoURI(uri);
 
