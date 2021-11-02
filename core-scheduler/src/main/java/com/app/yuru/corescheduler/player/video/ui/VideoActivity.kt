@@ -1,7 +1,8 @@
 package com.app.yuru.corescheduler.player.video.ui
 
+import android.app.KeyguardManager
+import android.os.Build
 import android.os.Bundle
-import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.corescheduler.databinding.ActivityVideoBinding
@@ -20,16 +21,32 @@ class VideoActivity : AppCompatActivity() {
         binding = ActivityVideoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
-        window.addFlags(
-            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
+                setInheritShowWhenLocked(true)
+                setShowWhenLocked(true)
+                setTurnScreenOn(true)
+                val keyGuardManager: KeyguardManager =
+                    getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+                keyGuardManager.requestDismissKeyguard(this, null)
+            }
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> {
+                setShowWhenLocked(true)
+                setTurnScreenOn(true)
+                val keyGuardManager: KeyguardManager =
+                    getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+                keyGuardManager.requestDismissKeyguard(this, null)
+            }
+            else -> {
+                window.addFlags(
                     WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
-                    WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
-                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN
-
-        )
+                            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN
+                )
+            }
+        }
         val url = intent.getStringExtra(Constants.VIDEO_LINK)
         if (url.isNullOrBlank()) {
             finish()
@@ -50,13 +67,13 @@ class VideoActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         player?.play()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
         player?.pause()
     }
 
