@@ -16,23 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.yuru.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder> {
     Context context;
-    private List<String> ids ;
-    private List<String> user_id ;
-    private List<String> title ;
-    private List<String> date_time ;
-    private List<String> description ;
-    private List<String> created_at ;
-    private List<String> updated_at ;
-    boolean[] checkSelected ;
+    private List<String> ids;
+    private List<String> user_id;
+    private List<String> title;
+    private List<String> date_time;
+    private List<String> description;
+    private List<String> created_at;
+    private List<String> updated_at;
     ListInterface listInterface;
+    private List<String> selectedIds;
 
 
     public AdapterJornals(Context context, List<String> ids, List<String> user_id, List<String> title, List<String> date_time, List<String> description,
@@ -45,71 +42,27 @@ public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder
         this.description = description;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        checkSelected = new boolean[ids.size()];
-        for (int i = 0; i <ids.size() ; i++) {
-            checkSelected[i] = false;
-        }
         this.listInterface = listInterface;
+        selectedIds = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public Myholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recycler_journals,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recycler_journals, parent, false);
         return new AdapterJornals.Myholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Myholder holder, int position) {
-
-        JSONObject jsonObject = new JSONObject();
-        List<Integer> selectedIds = new ArrayList<>();
-
         holder.recyContent.setText(description.get(position));
         holder.recyDate.setText(date_time.get(position));
         holder.recyTitle.setText(title.get(position));
-        holder.recyCheck.setOnClickListener(v->{
-            if(checkSelected[position]) {
-                holder.recyCheck.setImageResource(R.drawable.check_selected);
-                checkSelected[position] = false;
-                try {
-                    selectedIds.remove(position);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }else {
-                holder.recyCheck.setImageResource(R.drawable.check_rect);
-                checkSelected[position] = true;
-                selectedIds.add(position);
-
-            }
-        });
-
-        try {
-            jsonObject.putOpt("selected", checkSelected);
-            listInterface.selected(jsonObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (selectedIds.contains(ids.get(position))) {
+            holder.recyCheck.setImageResource(R.drawable.check_selected);
+        } else {
+            holder.recyCheck.setImageResource(R.drawable.check_rect);
         }
-
-        holder.clayoutRecycler.setOnClickListener(v->{
-            Intent intent = new Intent(context, EditJournal.class);
-            intent.putExtra("id", ids.get(position));
-            context.startActivity(intent);
-        });
-
-        holder.cardList.setOnClickListener(v->{
-            Intent intent = new Intent(context, EditJournal.class);
-            intent.putExtra("id", ids.get(position));
-            context.startActivity(intent);
-        });
-
-        holder.recyContent.setOnClickListener(v->{
-            Intent intent = new Intent(context, EditJournal.class);
-            intent.putExtra("id", ids.get(position));
-            context.startActivity(intent);
-        });
     }
 
     @Override
@@ -118,11 +71,11 @@ public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder
     }
 
     public class Myholder extends RecyclerView.ViewHolder {
-        private ImageView recyCheck;
-        private EditText recyTitle, recyContent;
-        private TextView recyDate;
-        private ConstraintLayout clayoutRecycler;
-        private CardView cardList;
+        private final ImageView recyCheck;
+        private final EditText recyTitle;
+        private final EditText recyContent;
+        private final TextView recyDate;
+
         public Myholder(@NonNull View itemView) {
             super(itemView);
 
@@ -130,8 +83,48 @@ public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder
             recyTitle = itemView.findViewById(R.id.recyTitle);
             recyContent = itemView.findViewById(R.id.recyContent);
             recyDate = itemView.findViewById(R.id.recyDate);
-            clayoutRecycler = itemView.findViewById(R.id.clayoutRecycler);
-            cardList = itemView.findViewById(R.id.cardList);
+            ConstraintLayout clayoutRecycler = itemView.findViewById(R.id.clayoutRecycler);
+            CardView cardList = itemView.findViewById(R.id.cardList);
+            recyCheck.setOnClickListener(v -> {
+                String id = ids.get(getBindingAdapterPosition());
+                if (selectedIds.contains(id)) {
+                    selectedIds.remove(id);
+                } else {
+                    selectedIds.add(id);
+                }
+                notifyItemChanged(getBindingAdapterPosition());
+            });
+
+            recyContent.setOnClickListener(v -> {
+                Intent intent = new Intent(context, EditJournal.class);
+                intent.putExtra("id", ids.get(getBindingAdapterPosition()));
+                context.startActivity(intent);
+            });
+
+            clayoutRecycler.setOnClickListener(v -> {
+                Intent intent = new Intent(context, EditJournal.class);
+                intent.putExtra("id", ids.get(getBindingAdapterPosition()));
+                context.startActivity(intent);
+            });
+
+            cardList.setOnClickListener(v -> {
+                Intent intent = new Intent(context, EditJournal.class);
+                intent.putExtra("id", ids.get(getBindingAdapterPosition()));
+                context.startActivity(intent);
+            });
         }
+    }
+
+    public String getSelectedIds() {
+        StringBuilder builder = new StringBuilder();
+        boolean appendComma = false;
+        for (String id : selectedIds) {
+            if (appendComma) {
+                builder.append(",");
+            }
+            appendComma = true;
+            builder.append(id);
+        }
+        return builder.toString();
     }
 }
