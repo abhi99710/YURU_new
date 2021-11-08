@@ -1,10 +1,12 @@
 package com.app.yuru.ui.coupons;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,6 +24,8 @@ import com.app.yuru.utility.apivolley.APIVolley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,9 +38,9 @@ public class JournalAdd extends AppCompatActivity {
     private TextView jour_date;
     private EditText jour_content;
     private ImageView jour_font;
-    Date currentTime;
+    private Date currentTime;
     private ImageView jour_idea;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,7 @@ public class JournalAdd extends AppCompatActivity {
         }, error -> {
             Toast.makeText(this, ""+error, Toast.LENGTH_SHORT).show();
         }){
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -93,9 +98,13 @@ public class JournalAdd extends AppCompatActivity {
                 map.put("user_id","1");
                 map.put("title",jour_title.getText().toString());
 
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime now1 = LocalDateTime.now();
+                String s1 = now1.toString();
+                String s2 = s1.replace("T", " ");
+                String[] s = s2.split("\\.",2);
 
-
-                map.put("date_time",""+currentTime);
+                map.put("date_time",""+s[0]);
                 map.put("description",jour_content.getText().toString());
 
 

@@ -20,10 +20,10 @@ class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
     override fun setupView(binding: ActivityTestBinding) {
         binding.toolbar.setNavigationOnClickListener {
             finish()
+        }
 
-            binding.skipTest.setOnClickListener {
-                startActivity(Intent(this, Journals::class.java))
-            }
+        binding.skipTest.setOnClickListener {
+            startActivity(Intent(this, Journals::class.java))
         }
         resetStep()
         viewModel.pageLiveData.observe(this, {

@@ -212,7 +212,7 @@ class TransitionToSleep : Fragment() {
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
 
         //        videoView.setVideoURI(uri);
 

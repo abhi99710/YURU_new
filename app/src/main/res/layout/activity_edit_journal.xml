@@ -6,4 +6,103 @@
     android:layout_height="match_parent"
     tools:context=".ui.coupons.EditJournal">
 
+
+    <EditText
+        android:id="@+id/jour_title_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/entry_title"
+        android:textColor="#000"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/jour_save_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/jour_title_edit"
+        app:layout_constraintEnd_toEndOf="@+id/view12_edit"
+        app:layout_constraintTop_toTopOf="@+id/jour_title_edit"
+        app:srcCompat="@drawable/save_btn" />
+
+    <View
+        android:id="@+id/view12_edit"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="#000"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jour_title_edit" />
+
+    <ImageView
+        android:id="@+id/choose_date_edit"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/view12_edit"
+        app:layout_constraintTop_toBottomOf="@+id/view12_edit"
+        app:srcCompat="@drawable/date_icon" />
+
+    <View
+        android:id="@+id/view13_edit"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:background="#000"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_date_edit" />
+
+    <TextView
+        android:id="@+id/jour_date_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/choose_date_edit"
+        app:layout_constraintStart_toEndOf="@+id/choose_date_edit"
+        app:layout_constraintTop_toTopOf="@+id/choose_date_edit" />
+
+    <ImageView
+        android:id="@+id/jour_font_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/jour_idea_edit"
+        app:layout_constraintEnd_toEndOf="@+id/jour_save_edit"
+        app:layout_constraintTop_toTopOf="@+id/jour_idea_edit"
+        app:srcCompat="@drawable/font_journals" />
+
+    <ImageView
+        android:id="@+id/jour_idea_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/view13_edit"
+        app:layout_constraintEnd_toStartOf="@+id/jour_font_edit"
+        app:layout_constraintTop_toBottomOf="@+id/view12_edit"
+        app:srcCompat="@drawable/idea_journals" />
+
+    <EditText
+        android:id="@+id/jour_content_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:textColor="#000"
+        android:inputType="textPersonName"
+        android:hint="Your Entry here"
+        app:layout_constraintEnd_toEndOf="@+id/view13_edit"
+        app:layout_constraintStart_toStartOf="@+id/view13_edit"
+        app:layout_constraintTop_toBottomOf="@+id/view13_edit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

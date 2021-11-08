@@ -100,7 +100,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -113,18 +113,21 @@
         <EditText
             android:id="@+id/searchEdit"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/_50sdp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/text_background_filled"
+            android:hint="Search here"
             android:imeOptions="actionSearch"
+            android:gravity="center_vertical"
             android:inputType="text"
-            android:hint="search here"
-            android:textColorHint="@color/white"
             android:lines="1"
             android:maxLength="30"
             android:maxLines="1"
+            android:textSize="@dimen/_14sdp"
             android:singleLine="true"
+            android:textColor="#000"
+            android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ivSearch"
             app:layout_constraintStart_toStartOf="parent"
@@ -137,7 +140,7 @@
             android:background="@drawable/ic_baseline_search_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/searchEdit" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -166,6 +169,7 @@
             android:layout_height="25dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/printts"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView35"
             app:layout_constraintTop_toTopOf="parent" />
@@ -174,6 +178,7 @@
             android:id="@+id/delete"
             android:layout_width="22dp"
             android:layout_height="25dp"
+            android:visibility="visible"
             android:layout_marginEnd="16dp"
             android:background="@drawable/deletss"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -189,7 +194,7 @@
             android:layout_marginBottom="8dp"
             android:text="Date Created"
             android:textColor="#000"
-            android:textSize="@dimen/_17sdp"
+            android:textSize="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
