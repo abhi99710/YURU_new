@@ -5,9 +5,17 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentTestResultsBinding
+import com.app.yuru.ui.coupons.DiscountCode
 import com.app.yuru.ui.coupons.Journals
+import com.app.yuru.ui.getStarted.GetStartedActivity
 import com.app.yuru.ui.transition.TransitionActivity
 import com.app.yuru.utility.ValueFormatter
 import com.github.mikephil.charting.data.Entry
@@ -18,11 +26,15 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
+import org.json.JSONObject
+import java.lang.reflect.Method
 import java.util.*
 
 
 @AndroidEntryPoint
 class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
+    private var requestQueue: RequestQueue? = null
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTestResultsBinding
         get() = FragmentTestResultsBinding::inflate
@@ -31,7 +43,10 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
 
 
         binding.btnProceed.setOnClickListener {
-            startActivity(Intent(context, Journals::class.java))
+
+//            apiGetCoupon()
+            Toast.makeText(context, "Discount sent please wait for a while.", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(context, DiscountCode::class.java))
         }
 
         binding.pieChart.setUsePercentValues(true)
@@ -61,6 +76,49 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
 
         binding.pieChart.legend.isEnabled = false
         setData(5, 10F)
+    }
+
+    private fun apiGetCoupon() {
+        val url  = "https://promask.com.co/yuru/api/login"
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener<String> { response ->
+                try {
+                    val obj = JSONObject(response)
+//                    progressDialog.dismiss()
+                    var jsonObject = obj.getJSONObject("result")
+                    var jsonObject1 = jsonObject.getJSONObject("data")
+
+                    if(jsonObject.getString("message").equals("You have successfully logged In")) {
+                        var intent = Intent(context, GetStartedActivity::class.java)
+                        intent.putExtra("nameLogin", jsonObject1.getString("full_name"))
+                        startActivity(intent)
+                        Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+
+                    }
+                    else{
+                        Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            })
+        {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+
+                return params
+            }
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
     }
 
     private fun setData(count: Int, range: Float) {

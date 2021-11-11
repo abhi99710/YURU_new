@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import com.app.yuru.coreandroid.base.BaseActivityBinding
 import com.app.yuru.databinding.ActivityTestBinding
+import com.app.yuru.ui.coupons.DiscountCode
 import com.app.yuru.ui.coupons.Journals
+import com.app.yuru.ui.testResult.TestResultActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,7 +25,7 @@ class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
         }
 
         binding.skipTest.setOnClickListener {
-            startActivity(Intent(this, Journals::class.java))
+            startActivity(Intent(this, TestResultActivity::class.java))
         }
         resetStep()
         viewModel.pageLiveData.observe(this, {

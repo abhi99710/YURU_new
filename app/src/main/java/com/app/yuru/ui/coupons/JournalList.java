@@ -56,7 +56,8 @@ public class JournalList extends AppCompatActivity implements ListInterface {
     private List<String> description = new ArrayList<>();
     private List<String> created_at = new ArrayList<>();
     private List<String> updated_at = new ArrayList<>();
-
+    int i = 0;
+    private List<String> listDeleted = new ArrayList<>();
 
 
     @Override
@@ -77,6 +78,19 @@ public class JournalList extends AppCompatActivity implements ListInterface {
         checkAll = findViewById(R.id.checkAll);
         totalEntries = findViewById(R.id.totalEntries);
         date_journl = findViewById(R.id.date_journl);
+        delete = findViewById(R.id.delete);
+
+        delete.setOnClickListener(v->{
+            if(!listDeleted.isEmpty()) {
+                new Handler().postDelayed(() -> {
+
+                    deleteEntry(listDeleted.get(i));
+                    i++;
+                }, 5);
+            }else {
+                Toast.makeText(this, "Delete initialize", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         cl_add_list.setOnClickListener(v->{
             startActivity(new Intent(this, JournalAdd.class));
@@ -219,9 +233,9 @@ public class JournalList extends AppCompatActivity implements ListInterface {
         requestQueue.add(stringRequest);
     }
 
-    void deleteEntry(){
+    void deleteEntry(String idDeleted){
 
-        String url = "https://promask.com.co/yuru/api/activity/delete?id="+"";
+        String url = "https://promask.com.co/yuru/api/activity/delete?id=" + idDeleted;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             try {
@@ -243,16 +257,10 @@ public class JournalList extends AppCompatActivity implements ListInterface {
 
 
     @Override
-    public void selected(JSONObject jsonObject) {
+    public void selected(List<String> list) {
 
-        new Handler().postDelayed(() -> {
+        listDeleted = list;
 
-
-            JSONObject jsonObject1 = jsonObject;
-
-            deleteEntry();
-
-        }, 2);
 
 
     }

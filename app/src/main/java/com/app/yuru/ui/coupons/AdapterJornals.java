@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.yuru.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder> {
@@ -93,6 +94,9 @@ public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder
                     selectedIds.add(id);
                 }
                 notifyItemChanged(getBindingAdapterPosition());
+               String[] newList = getSelectedIds().split(",",1);
+                List<String> li = Arrays.asList(newList);
+                listInterface.selected(li);
             });
 
             recyContent.setOnClickListener(v -> {

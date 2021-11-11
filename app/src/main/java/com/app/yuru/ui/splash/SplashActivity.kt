@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
     private val runnable = Runnable {
 //        startActivity(Intent(this, Splash2::class.java))
 //        startActivity(Intent(this, Splash2::class.java))
-        startActivity(Intent(this, Journals::class.java))
+        startActivity(Intent(this, Splash2::class.java))
         finish()
     }
 

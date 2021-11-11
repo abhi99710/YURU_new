@@ -28,7 +28,7 @@
         app:layout_constraintGuide_percent=".2" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/enterCoupon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/discount_Text" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonSubmitCoupon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -54,6 +54,6 @@
         android:text="Apply Discount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/enterCoupon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
