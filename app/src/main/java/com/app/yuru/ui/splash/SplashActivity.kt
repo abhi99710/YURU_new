@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
 import com.app.yuru.ui.coupons.Journals
 import com.app.yuru.ui.login.LoginActivity
+import com.app.yuru.ui.testResult.TestResultActivity
+import com.app.yuru.ui.transition.TransitionActivity
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : AppCompatActivity() {
@@ -16,7 +18,8 @@ class SplashActivity : AppCompatActivity() {
     private val runnable = Runnable {
 //        startActivity(Intent(this, Splash2::class.java))
 //        startActivity(Intent(this, Splash2::class.java))
-        startActivity(Intent(this, Splash2::class.java))
+        startActivity(Intent(this, TransitionActivity::class.java))
+//        startActivity(Intent(this, TestResultActivity::class.java))
         finish()
     }
 

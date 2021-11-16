@@ -54,12 +54,13 @@ public class MoreInformation extends AppCompatActivity {
         genderList.add("Female");
 
         langList.add("Select");
-        langList.add("English");
-        langList.add("Hindi");
-        langList.add("Spanish");
-        langList.add("Russian");
-        langList.add("Chinese");
-        langList.add("Japnese");
+        langList.add("English"); // en
+        langList.add("Hindi"); // hi
+        langList.add("Spanish"); // es
+        langList.add("Russian"); // ru
+        langList.add("Chinese"); // zh
+        langList.add("Japnese"); // ja
+        langList.add("Korean");  // ko
 
         selectGender();
         selectAge();

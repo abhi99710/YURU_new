@@ -42,8 +42,8 @@
     <string name="wake_up_program">Wake Up Program</string>
     <string name="sleep_enhancer">Sleep Enhancer</string>
     <string name="view_all">View all</string>
-    <string name="enter_your_discount_code_here">enter your discount code here</string>
-    <string name="enter_your_discount_coupon">enter your discount coupon</string>
+    <string name="enter_your_discount_code_here">Enter your discount code</string>
+    <string name="enter_your_discount_coupon">Enter your discount coupon</string>
     <string name="yourverall_openne_oss_score">Your overall Openness Score</string>
     <string name="low_vs_high_openness">Low vs High Openness</string>
     <string name="low">Low</string>

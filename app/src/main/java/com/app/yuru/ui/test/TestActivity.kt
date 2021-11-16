@@ -25,7 +25,7 @@ class TestActivity : BaseActivityBinding<ActivityTestBinding>() {
         }
 
         binding.skipTest.setOnClickListener {
-            startActivity(Intent(this, TestResultActivity::class.java))
+            startActivity(Intent(this, DiscountCode::class.java))
         }
         resetStep()
         viewModel.pageLiveData.observe(this, {

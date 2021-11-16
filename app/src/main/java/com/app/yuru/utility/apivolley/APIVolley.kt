@@ -11,6 +11,10 @@ class APIVolley {
 
         val addJournal = "https://promask.com.co/yuru/api/activity/create"
 
-        val editJournal =  "https://promask.com.co/yuru/api/activity/update";
+        val editJournal =  "https://promask.com.co/yuru/api/activity/update"
+
+        val generateCode = "https://promask.com.co/yuru/api/activity/generatecode"
+
+        val sendemail = "https://promask.com.co/yuru/api/activity/sendemail"
     }
 }
