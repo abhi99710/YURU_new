@@ -177,7 +177,7 @@ class WakeUpProgram : Fragment() {
 
         save_wakeup.setOnClickListener {
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.framwQts, TransitionToSleep())
+                .replace(R.id.framwQts, EveningProgram())
             fragment.addToBackStack(null)
             fragment.commit()
         }

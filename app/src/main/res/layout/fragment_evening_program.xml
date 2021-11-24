@@ -316,6 +316,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
+                        android:numColumns="2"
                         android:layout_marginBottom="5dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -338,6 +339,54 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout15" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewAll_eve"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageView
+                        android:id="@+id/short_video"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:visibility="invisible"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/videoback"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/half_video"
+                        android:layout_width="@dimen/_80sdp"
+                        android:visibility="invisible"
+                        android:layout_height="@dimen/_80sdp"
+                        android:background="@drawable/videoback"
+                        app:layout_constraintBottom_toBottomOf="@+id/short_video"
+                        app:layout_constraintEnd_toStartOf="@+id/full_video"
+                        app:layout_constraintStart_toEndOf="@+id/short_video"
+                        app:layout_constraintTop_toTopOf="@+id/short_video"
+                        app:layout_constraintVertical_bias="0.746" />
+
+                    <ImageView
+                        android:id="@+id/full_video"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginEnd="8dp"
+                        android:visibility="invisible"
+                        android:background="@drawable/videoback"
+                        app:layout_constraintBottom_toBottomOf="@+id/half_video"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/half_video"
+                        app:layout_constraintVertical_bias="0.492" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

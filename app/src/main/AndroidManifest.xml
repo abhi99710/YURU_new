@@ -22,15 +22,15 @@
         <activity android:name=".ui.coupons.JournalOptions" />
         <activity android:name=".ui.coupons.Journals" />
         <activity android:name=".ui.coupons.DiscountCode" />
+        <activity android:name=".ui.discounts.MoreInformation"/>
+
         <activity
             android:name=".ui.journals.DeleteJournal"
             android:exported="true" />
         <activity
             android:name=".ui.journals.ViewJournal"
             android:exported="true" />
-      <!--  <activity
-            android:name=".ui.journals.Addjournal"
-            android:exported="true" />-->
+
         <activity
             android:name=".ui.journals.ActiveJournal"
             android:exported="true" />
@@ -61,9 +61,7 @@
             android:name=".ui.splash.Splash2"
             android:theme="@style/AppTheme.Login" />
         <activity android:name=".ui.result.OpennessResult" />
-        <activity
-            android:name=".ui.discounts.MoreInformation"
-            android:exported="true" />
+
         <activity
             android:name=".ui.discounts.CouponApplied"
             android:exported="true" />

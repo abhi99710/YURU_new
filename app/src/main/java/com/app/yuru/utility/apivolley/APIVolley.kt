@@ -16,5 +16,7 @@ class APIVolley {
         val generateCode = "https://promask.com.co/yuru/api/activity/generatecode"
 
         val sendemail = "https://promask.com.co/yuru/api/activity/sendemail"
+
+        val updateProfile = "https://promask.com.co/yuru/api/user/profile/update"
     }
 }

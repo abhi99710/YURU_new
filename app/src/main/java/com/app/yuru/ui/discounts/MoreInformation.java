@@ -1,5 +1,6 @@
 package com.app.yuru.ui.discounts;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,21 +9,43 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.ui.coupons.Journals;
+import com.app.yuru.utility.apivolley.APIVolley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MoreInformation extends AppCompatActivity {
 
     private Spinner spinnerLanguage, spinnerAge, spinnerGender;
     private Button ProceedMore;
-    List<String> ageList = new ArrayList<>();
-    List<String> genderList = new ArrayList<>();
-    List<String> langList = new ArrayList<>();
+    private List<String> ageList = new ArrayList<>();
+    private List<String> genderList = new ArrayList<>();
+    private List<String> langList = new ArrayList<>();
+    private List<String> langlistCode = new ArrayList<>();
+
+    private ImageView backMoreInformation;
+
+    private String apiAgeVarCeil;
+    private String apiAgeVarfloor;
+    private String apiLangVar;
+    private String apiGenderVar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +57,14 @@ public class MoreInformation extends AppCompatActivity {
         spinnerLanguage = findViewById(R.id.spinnerLanguage);
         ProceedMore = findViewById(R.id.ProceedMore);
 
+        backMoreInformation = findViewById(R.id.backMoreInformation);
+        backMoreInformation.setOnClickListener(v->{
+            startActivity(new Intent(this, CouponApplied.class));
+        });
+
         ProceedMore.setOnClickListener(v -> {
-            startActivity(new Intent(this, Journals.class));
+            apiMoreInformation();
+//            startActivity(new Intent(this, Journals.class));
         });
 
         ageList.add("Select");
@@ -62,6 +91,16 @@ public class MoreInformation extends AppCompatActivity {
         langList.add("Japnese"); // ja
         langList.add("Korean");  // ko
 
+        langlistCode.add("Select");
+        langlistCode.add("en");
+        langlistCode.add("hi");
+        langlistCode.add("es");
+        langlistCode.add("ru");
+        langlistCode.add("zh");
+        langlistCode.add("ja");
+        langlistCode.add("ko");
+
+
         selectGender();
         selectAge();
         selectLanguage();
@@ -84,6 +123,13 @@ public class MoreInformation extends AppCompatActivity {
                 if (position != 0) {
 //                    mediumIdPosition = mediumId.get(position);
 //                    classResponse();
+
+                    if(genderList.get(position).equalsIgnoreCase("Male")){
+                        apiGenderVar = "1";
+                    }else {
+
+                        apiGenderVar = "2";
+                    }
                 }
             }
 
@@ -113,6 +159,10 @@ public class MoreInformation extends AppCompatActivity {
                 if (position != 0) {
 //                    mediumIdPosition = mediumId.get(position);
 //                    classResponse();
+
+                    apiAgeVarCeil = ageList.get(position).split("-",0)[0];
+                    apiAgeVarfloor = ageList.get(position).split("-",0)[1];
+
                 }
             }
 
@@ -142,6 +192,8 @@ public class MoreInformation extends AppCompatActivity {
                 if (position != 0) {
 //                    mediumIdPosition = mediumId.get(position);
 //                    classResponse();
+
+                    apiLangVar = langlistCode.get(position);
                 }
             }
 
@@ -152,6 +204,43 @@ public class MoreInformation extends AppCompatActivity {
             }
 
         });
+
+    }
+
+    void apiMoreInformation(){
+
+        String url = APIVolley.Companion.getUpdateProfile();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url , response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                boolean str = jsonObject.getBoolean("valid");
+                if(str){
+                    Intent intent = new Intent(MoreInformation.this, Journals.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(this, "Please select all values", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        },
+                error -> Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show()){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams()  {
+                Map<String, String> map = new HashMap<>();
+                map.put("user_id", "1");
+                map.put("gender", apiGenderVar);
+                map.put("language_code", apiLangVar);
+                map.put("age_floor", apiAgeVarfloor);
+                map.put("age_ceiling", apiAgeVarCeil);
+                return map;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
 
     }
 
