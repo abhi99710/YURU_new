@@ -4,9 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.app.yuru.R
 import com.app.yuru.ui.coupons.Journals
 import com.google.android.material.bottomnavigation.BottomNavigationView

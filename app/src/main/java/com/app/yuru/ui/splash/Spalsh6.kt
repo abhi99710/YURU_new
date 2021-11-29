@@ -2,12 +2,12 @@ package com.app.yuru.ui.splash
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.MediaController
 import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
 import java.util.concurrent.TimeUnit
 

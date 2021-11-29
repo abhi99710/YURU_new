@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".MyApp"
@@ -16,21 +17,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.splash.PermissionActivity"
+            android:exported="false" />
         <activity android:name=".ui.coupons.EditJournal" />
         <activity android:name=".ui.coupons.JournalList" />
         <activity android:name=".ui.coupons.JournalAdd" />
         <activity android:name=".ui.coupons.JournalOptions" />
         <activity android:name=".ui.coupons.Journals" />
         <activity android:name=".ui.coupons.DiscountCode" />
-        <activity android:name=".ui.discounts.MoreInformation"/>
-
+        <activity android:name=".ui.discounts.MoreInformation" />
         <activity
             android:name=".ui.journals.DeleteJournal"
             android:exported="true" />
         <activity
             android:name=".ui.journals.ViewJournal"
             android:exported="true" />
-
         <activity
             android:name=".ui.journals.ActiveJournal"
             android:exported="true" />
@@ -61,7 +63,6 @@
             android:name=".ui.splash.Splash2"
             android:theme="@style/AppTheme.Login" />
         <activity android:name=".ui.result.OpennessResult" />
-
         <activity
             android:name=".ui.discounts.CouponApplied"
             android:exported="true" />
@@ -74,6 +75,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.SplashActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
