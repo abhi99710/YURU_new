@@ -16,6 +16,7 @@ import com.app.yuru.databinding.FragmentTestResultsBinding
 import com.app.yuru.ui.coupons.DiscountCode
 import com.app.yuru.ui.coupons.Journals
 import com.app.yuru.ui.getStarted.GetStartedActivity
+import com.app.yuru.ui.lowvshigh.LowvsHigh
 import com.app.yuru.ui.transition.TransitionActivity
 import com.app.yuru.utility.ValueFormatter
 import com.github.mikephil.charting.data.Entry
@@ -46,7 +47,7 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
 
 //            apiGetCoupon()
             Toast.makeText(context, "Discount sent please wait for a while.", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(context, DiscountCode::class.java))
+            startActivity(Intent(context, LowvsHigh::class.java))
         }
 
         binding.pieChart.setUsePercentValues(true)

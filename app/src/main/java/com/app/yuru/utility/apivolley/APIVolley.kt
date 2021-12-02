@@ -18,5 +18,7 @@ class APIVolley {
         val sendemail = "https://promask.com.co/yuru/api/activity/sendemail"
 
         val updateProfile = "https://promask.com.co/yuru/api/user/profile/update"
+
+        val summary = "https://promask.com.co/yuru/api/question/summary"
     }
 }
