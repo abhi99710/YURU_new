@@ -48,6 +48,8 @@ public class LowvsHigh extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         findIds();
 
         try {
@@ -115,37 +117,52 @@ public class LowvsHigh extends AppCompatActivity {
         e_option_.setOnClickListener(v->{
 //            setFragment(new E_Fragment());
             title_low.setText("Extraversion");
-            desc_low.setText(modelLowHighs.get(2).getQuestion_title());
+
             guideline15.setGuidelinePercent(.7f);
             tv_percenteage_low.setText("70%");
             tv_percenteage_low.setBackgroundColor(Color.RED);
             e_option_.setBackgroundColor(Color.RED);
             e_option_.setTextColor(Color.WHITE);
             optionBackdround(o_option_, c_option_, a_option_, n_option_);
+            try {
+                desc_low.setText(modelLowHighs.get(2).getQuestion_title());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         a_option_.setOnClickListener(v->{
 //            setFragment(new A_Fragment());
             title_low.setText("Agreeableness");
-            desc_low.setText(modelLowHighs.get(3).getQuestion_title());
+
             guideline15.setGuidelinePercent(.4f);
             tv_percenteage_low.setText("40%");
             tv_percenteage_low.setBackgroundColor(Color.YELLOW);
             a_option_.setBackgroundColor(Color.YELLOW);
             a_option_.setTextColor(Color.WHITE);
             optionBackdround(o_option_, c_option_, e_option_, n_option_);
+            try {
+                desc_low.setText(modelLowHighs.get(3).getQuestion_title());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
         n_option_.setOnClickListener(v->{
 //            setFragment(new N_Fragment());
             title_low.setText("Neuroticism");
-            desc_low.setText(modelLowHighs.get(4).getQuestion_title());
+
             guideline15.setGuidelinePercent(.2f);
             tv_percenteage_low.setText("20%");
             tv_percenteage_low.setBackgroundColor(Color.BLACK);
             n_option_.setBackgroundColor(Color.BLACK);
             n_option_.setTextColor(Color.WHITE);
             optionBackdround(o_option_, c_option_, e_option_, a_option_);
+            try {
+                desc_low.setText(modelLowHighs.get(4).getQuestion_title());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         });
     }
 

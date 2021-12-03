@@ -8,6 +8,8 @@ import android.os.Looper
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
+import com.app.yuru.ui.coupons.DiscountCode
+import com.app.yuru.ui.lowvshigh.LowvsHigh
 import com.app.yuru.ui.transition.TransitionActivity
 import java.util.concurrent.TimeUnit
 
@@ -18,8 +20,8 @@ class SplashActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             startActivity(Intent(this, PermissionActivity::class.java))
         } else {
-//        startActivity(Intent(this, Splash2::class.java))
-            startActivity(Intent(this, TransitionActivity::class.java))
+        startActivity(Intent(this, Splash2::class.java))
+//            startActivity(Intent(this, DiscountCode::class.java))
 //        startActivity(Intent(this, MoreInformation::class.java))
 //        startActivity(Intent(this, TestResultActivity::class.java))
         }

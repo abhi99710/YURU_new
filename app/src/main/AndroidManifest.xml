@@ -20,6 +20,8 @@
         <activity
             android:name=".ui.splash.PermissionActivity"
             android:exported="false" />
+
+        <activity android:name=".ui.lowvshigh.LowvsHigh"/>
         <activity android:name=".ui.coupons.EditJournal" />
         <activity android:name=".ui.coupons.JournalList" />
         <activity android:name=".ui.coupons.JournalAdd" />

@@ -74,6 +74,7 @@ public class DiscountCode extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 JSONObject jsonObject1 = jsonObject.getJSONObject("result");
                  discount_code = jsonObject1.getString("discount_code");
+                Toast.makeText(this, ""+discount_code, Toast.LENGTH_SHORT).show();
                     if(!discount_code.equalsIgnoreCase("0")) {
                         apiSenderMail("1");
                     }
