@@ -32,11 +32,11 @@ import java.util.*
 
 class TransitionToSleep : Fragment() {
 
-    lateinit var transition_to_sleep_recy : RecyclerView
+    lateinit var transition_to_sleep_recy: RecyclerView
     private var requestQueue: RequestQueue? = null
-    lateinit var skipToProgram : TextView
-    lateinit var startTimer : TextView
-    lateinit var progressDialog : ProgressDialog
+    lateinit var skipToProgram: TextView
+    lateinit var startTimer: TextView
+    lateinit var progressDialog: ProgressDialog
 
 /*    private var id_45: MutableList<String> = ArrayList()
     private var language_slug: MutableList<String> = ArrayList()
@@ -65,12 +65,11 @@ class TransitionToSleep : Fragment() {
     private var duration90: MutableList<String> = ArrayList()
     private var idChild90: MutableList<String> = ArrayList()
 
-    private lateinit var tv45min : TextView
-    private lateinit var tv90min : TextView
-    private lateinit var sleep_male : ImageView
-    private  lateinit var sleep_female : ImageView
-    private lateinit var tts_vids : VideoView
-
+    private lateinit var tv45min: TextView
+    private lateinit var tv90min: TextView
+    private lateinit var sleep_male: ImageView
+    private lateinit var sleep_female: ImageView
+    private lateinit var tts_vids: VideoView
 
 
     override fun onCreateView(
@@ -78,7 +77,7 @@ class TransitionToSleep : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view : View = inflater.inflate(R.layout.fragment_transition_to_sleep, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_transition_to_sleep, container, false)
 
 //        Navigation.createNavigateOnClickListener(R.id.nav_host_homepage, null);
 
@@ -95,7 +94,7 @@ class TransitionToSleep : Fragment() {
 
         videoPlay()
 
-         val handler = Handler(Looper.getMainLooper())
+        val handler = Handler(Looper.getMainLooper())
 
         startTimer = view.findViewById(R.id.skipSleep)
         skipToProgram = view.findViewById(R.id.skipToProgram)
@@ -109,15 +108,6 @@ class TransitionToSleep : Fragment() {
             fragment.commit()
 
         }
-
-        private val runnable = Runnable {
-            startActivity(Intent(this, Splash3::class.java))
-            finish()
-        }
-
-
-
-
 
         tv45min.setOnClickListener {
             val transitionToSleepAdapter = TtsAdapter(
@@ -225,7 +215,8 @@ class TransitionToSleep : Fragment() {
         ctlr.setMediaPlayer(tts_vids)
 //        tts_vids.setMediaController(ctlr)
 
-                val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
+        val uri =
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
@@ -347,17 +338,17 @@ class TransitionToSleep : Fragment() {
         transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
         transition_to_sleep_recy.adapter = transitionToSleepAdapter
 
-       /* val adapterMain = AdapterMain(
-            context,
-            id1Female,
-            category_nameFemale,
-            language_nameFemale,
-            genderFemale,
-            traintFemale,
-            durationFemale,
-            url1Female
-        )
-        transition_to_sleep_recy?.adapter = adapterMain*/
+        /* val adapterMain = AdapterMain(
+             context,
+             id1Female,
+             category_nameFemale,
+             language_nameFemale,
+             genderFemale,
+             traintFemale,
+             durationFemale,
+             url1Female
+         )
+         transition_to_sleep_recy?.adapter = adapterMain*/
     }
 
 }
