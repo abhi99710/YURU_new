@@ -2,9 +2,12 @@ package com.app.yuru.ui.transition
 
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +22,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.app.yuru.R
+import com.app.yuru.ui.splash.Splash3
 import com.app.yuru.utility.apivolley.APIVolley
 import com.google.common.reflect.Reflection.getPackageName
 import org.json.JSONException
@@ -31,7 +35,7 @@ class TransitionToSleep : Fragment() {
     lateinit var transition_to_sleep_recy : RecyclerView
     private var requestQueue: RequestQueue? = null
     lateinit var skipToProgram : TextView
-    lateinit var skipSleep : TextView
+    lateinit var startTimer : TextView
     lateinit var progressDialog : ProgressDialog
 
 /*    private var id_45: MutableList<String> = ArrayList()
@@ -90,6 +94,30 @@ class TransitionToSleep : Fragment() {
         progressDialog.show()
 
         videoPlay()
+
+         val handler = Handler(Looper.getMainLooper())
+
+        startTimer = view.findViewById(R.id.skipSleep)
+        skipToProgram = view.findViewById(R.id.skipToProgram)
+
+        startTimer.setOnClickListener {
+            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.framwQts,
+                SleepEnhancer()
+            )
+            fragment.addToBackStack(null)
+            fragment.commit()
+
+        }
+
+        private val runnable = Runnable {
+            startActivity(Intent(this, Splash3::class.java))
+            finish()
+        }
+
+
+
+
 
         tv45min.setOnClickListener {
             val transitionToSleepAdapter = TtsAdapter(
@@ -172,18 +200,7 @@ class TransitionToSleep : Fragment() {
         }
 
         transition_to_sleep_recy = view.findViewById(R.id.transition_to_sleep_recy)
-        skipSleep = view.findViewById(R.id.skipSleep)
-        skipToProgram = view.findViewById(R.id.skipToProgram)
 
-        skipSleep.setOnClickListener {
-            val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(
-                R.id.framwQts,
-                SleepEnhancer()
-            )
-            fragment.addToBackStack(null)
-            fragment.commit()
-
-        }
 
         skipToProgram.setOnClickListener {
             val fragment = requireActivity().supportFragmentManager.beginTransaction().replace(
