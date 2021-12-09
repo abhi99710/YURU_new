@@ -47,7 +47,6 @@
                     android:id="@+id/grid_evening_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/_10sdp"
                     android:layout_gravity="center"
                     android:contentDescription="TODO"
                     android:elevation="100dp"

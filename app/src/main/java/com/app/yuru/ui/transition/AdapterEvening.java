@@ -24,10 +24,10 @@ public class AdapterEvening extends BaseAdapter {
     final  List<String> traint;
     final List<String> duration;
     final  List<String> url;
+    final List<String> thumbnail;
 
-    public AdapterEvening(Context context, List<String> id,
-                       List<String> category_name, List<String> language_name, List<String> gender,
-                       List<String> traint, List<String> duration, List<String> url) {
+    public AdapterEvening(Context context, List<String> id, List<String> category_name, List<String> language_name,
+                          List<String> gender, List<String> traint, List<String> duration, List<String> url, List<String> thumbnail) {
         this.context = context;
         this.id = id;
         this.category_name = category_name;
@@ -36,8 +36,8 @@ public class AdapterEvening extends BaseAdapter {
         this.traint = traint;
         this.duration = duration;
         this.url = url;
+        this.thumbnail = thumbnail;
     }
-
 
     @Override
     public int getCount() {
@@ -66,8 +66,9 @@ public class AdapterEvening extends BaseAdapter {
 
 
 
-        Picasso.get().load(url.get(position)).into(videoView);
-
+//        Picasso.get().load(thumbnail.get(position)).into(videoView);
+        Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
+                .centerCrop().noFade().fit().into(videoView);
 
         return convertView;
     }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -104,7 +105,7 @@ class TransitionToSleep : Fragment() {
                 activity
             )
             transition_to_sleep_recy.setHasFixedSize(true)
-            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
 
             tv45min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
@@ -127,7 +128,7 @@ class TransitionToSleep : Fragment() {
                 activity
             )
             transition_to_sleep_recy.setHasFixedSize(true)
-            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
 
             tv90min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
@@ -149,7 +150,7 @@ class TransitionToSleep : Fragment() {
                 activity
             )
             transition_to_sleep_recy.setHasFixedSize(true)
-            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
         }
         sleep_female.setOnClickListener {
@@ -166,7 +167,7 @@ class TransitionToSleep : Fragment() {
                 activity
             )
             transition_to_sleep_recy.setHasFixedSize(true)
-            transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+            transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
         }
 
@@ -326,7 +327,7 @@ class TransitionToSleep : Fragment() {
             activity
         )
         transition_to_sleep_recy.setHasFixedSize(true)
-        transition_to_sleep_recy.layoutManager = LinearLayoutManager(context)
+        transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
         transition_to_sleep_recy.adapter = transitionToSleepAdapter
 
        /* val adapterMain = AdapterMain(

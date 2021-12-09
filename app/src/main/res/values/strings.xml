@@ -35,8 +35,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="transition_to_sleep">Transition To Sleep</string>
-    <string name="skip_to_sleep_enhancer">Sleep Enhancer</string>
-    <string name="skip_to_wake_program">Wake Program</string>
+    <string name="skip_to_sleep_enhancer">Start Timer</string>
+    <string name="skip_to_wake_program">Wakeup</string>
     <string name="openness">Openness</string>
     <string name="save">Save</string>
     <string name="wake_up_program">Wake Up Program</string>
@@ -53,7 +53,7 @@
     <string name="payment_">Payment of $37.56 every 12 months.  Cancel anytime.</string>
     <string name="_20_discount_applied">20% DISCOUNT APPLIED</string>
     <string name="monthly">Monthly</string>
-    <string name="_3_92_month">$4.90/Month</string>
+    <string name="_3_92_month">$29.90/Month</string>
     <string name="he_yearly_m">The yearly membership gives you unlimited access to video sessions on sleep, stress, wakeup, affirmations and entire library of content.  *You may cancel your subscription at any time.</string>
     <string name="enter_your_discount_code">Enter your Discount Coupon</string>
     <string name="entry_title">Entry Title</string>
@@ -69,6 +69,6 @@ People who are high in this trait tend to be more adventurous and creative. Peop
     <string name="text_low_small">This trait features characteristics such as imagination and insight.1﻿ People who are high in this trait also tend to have a broad range of interests. They are curious about the world and other people and eager to learn new things and enjoy new experiences.
 
 People who are high in this trait tend to be more adventurous and creative. People low in this trait are often much more traditional and may struggle with abstract thinking.</string>
-<!--    <string name="continue">Continue</string>-->
+    <!--    <string name="continue">Continue</string>-->
 
 </resources>

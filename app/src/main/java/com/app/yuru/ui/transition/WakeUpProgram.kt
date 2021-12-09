@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import com.app.yuru.corescheduler.utils.Constants
+import com.app.yuru.ui.coupons.Journals
 import com.app.yuru.utility.apivolley.APIVolley
 import org.json.JSONException
 import org.json.JSONObject
@@ -59,6 +60,8 @@ class WakeUpProgram : Fragment() {
     private var traintMale: MutableList<String> = ArrayList()
     private var durationMale: MutableList<String> = ArrayList()
     private var url1Male: MutableList<String> = ArrayList()
+    private var thumbnailMale : MutableList<String> = ArrayList()
+
     private var id1Female: MutableList<String> = ArrayList()
     private var category_nameFemale: MutableList<String> = ArrayList()
     private var language_nameFemale: MutableList<String> = ArrayList()
@@ -66,6 +69,9 @@ class WakeUpProgram : Fragment() {
     private var traintFemale: MutableList<String> = ArrayList()
     private var durationFemale: MutableList<String> = ArrayList()
     private var url1Female: MutableList<String> = ArrayList()
+    private var thumbnailFemale : MutableList<String> = ArrayList()
+
+
     lateinit var progressDialog: ProgressDialog
 
     private lateinit var wake_up_video : VideoView
@@ -120,7 +126,8 @@ class WakeUpProgram : Fragment() {
                 genderFemale,
                 traintFemale,
                 durationFemale,
-                url1Female
+                url1Female,
+                thumbnailFemale
             )
             wakeuprecy?.adapter = adapterMain
 
@@ -139,7 +146,8 @@ class WakeUpProgram : Fragment() {
                 genderMale,
                 traintMale,
                 durationMale,
-                url1Male
+                url1Male,
+                thumbnailMale
             )
             wakeuprecy?.adapter = adapterMain
         }
@@ -176,10 +184,12 @@ class WakeUpProgram : Fragment() {
         }
 
         save_wakeup.setOnClickListener {
-            val fragment = requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.framwQts, EveningProgram())
-            fragment.addToBackStack(null)
-            fragment.commit()
+//            val fragment = requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.framwQts, EveningProgram())
+//            fragment.addToBackStack(null)
+//            fragment.commit()
+            val intent = Intent(context, Journals::class.java)
+            startActivity(intent)
         }
 
         viewall.setOnClickListener {
@@ -293,6 +303,8 @@ class WakeUpProgram : Fragment() {
                     id1Female.clear()
                     category_nameFemale.clear()
                     language_nameFemale.clear()
+                    thumbnailFemale.clear()
+                    thumbnailMale.clear()
 
                     for (i in 0 until jsonArray.length()) {
 
@@ -306,6 +318,7 @@ class WakeUpProgram : Fragment() {
                             traintMale.add(jsonObject1.getString("traint"))
                             durationMale.add(jsonObject1.getString("duration"))
                             url1Male.add(jsonObject1.getString("url"))
+                            thumbnailMale.add(jsonObject1.getString("thumb"))
                         } else {
                             id1Female.add(jsonObject1.getString("id"))
                             category_nameFemale.add(jsonObject1.getString("category_name"))
@@ -314,6 +327,8 @@ class WakeUpProgram : Fragment() {
                             traintFemale.add(jsonObject1.getString("traint"))
                             durationFemale.add(jsonObject1.getString("duration"))
                             url1Female.add(jsonObject1.getString("url"))
+                            thumbnailFemale.add(jsonObject1.getString("thumb"))
+
                         }
 
 
@@ -364,7 +379,8 @@ class WakeUpProgram : Fragment() {
             genderFemale,
             traintFemale,
             durationFemale,
-            url1Female
+            url1Female,
+            thumbnailFemale
         )
         wakeuprecy?.adapter = adapterMain
 

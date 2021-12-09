@@ -24,6 +24,7 @@ import com.app.yuru.corescheduler.utils.Constants
 import com.app.yuru.utility.apivolley.APIVolley
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 class EveningProgram : Fragment(), View.OnClickListener {
 
@@ -55,6 +56,7 @@ class EveningProgram : Fragment(), View.OnClickListener {
     private var url1Male5Short: MutableList<String> = ArrayList()
     private var url1Male5Medium: MutableList<String> = ArrayList()
     private var url1Male5Large: MutableList<String> = ArrayList()
+    private var thumbnail5Male : MutableList<String> = ArrayList()
 
     private var id1Female5: MutableList<String> = ArrayList()
     private var category_nameFemale5: MutableList<String> = ArrayList()
@@ -66,6 +68,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
     private var url1Female5Short: MutableList<String> = ArrayList()
     private var url1Female5Medium: MutableList<String> = ArrayList()
     private var url1Female5Large: MutableList<String> = ArrayList()
+    private var thumbnail5Female : MutableList<String> = ArrayList()
+
 
     lateinit var progressDialog: ProgressDialog // progress dialog
 
@@ -81,6 +85,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
     private var url1Male9Short: MutableList<String> = ArrayList()
     private var url1Male9Medium: MutableList<String> = ArrayList()
     private var url1Male9Large: MutableList<String> = ArrayList()
+    private var thumbnail9Male : MutableList<String> = ArrayList()
+
 
     private var id1Female9: MutableList<String> = ArrayList()
     private var category_nameFemale9: MutableList<String> = ArrayList()
@@ -92,6 +98,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
     private var url1Female9Short: MutableList<String> = ArrayList()
     private var url1Female9Medium: MutableList<String> = ArrayList()
     private var url1Female9Large: MutableList<String> = ArrayList()
+    private var thumbnail9Female : MutableList<String> = ArrayList()
+
 
     private var clickedGender = ""
     private var clickedTime = ""
@@ -335,6 +343,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                                 url1Male5Short.add(jsonObject1.getString("short_video"))
                                 url1Male5Medium.add(jsonObject1.getString("half_video"))
                                 url1Male5Large.add(jsonObject1.getString("full_video"))
+                                thumbnail5Male.add(jsonObject1.getString("thumb"))
+
 
                             } else {
 
@@ -348,6 +358,7 @@ class EveningProgram : Fragment(), View.OnClickListener {
                                 url1Male9Short.add(jsonObject1.getString("short_video"))
                                 url1Male9Medium.add(jsonObject1.getString("half_video"))
                                 url1Male9Large.add(jsonObject1.getString("full_video"))
+                                thumbnail9Male.add(jsonObject1.getString("thumb"))
 
                             }
 
@@ -363,6 +374,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                                 url1Female5Short.add(jsonObject1.getString("short_video"))
                                 url1Female5Medium.add(jsonObject1.getString("half_video"))
                                 url1Female5Large.add(jsonObject1.getString("full_video"))
+                                thumbnail5Female.add(jsonObject1.getString("thumb"))
+
 
                             } else {
                                 id1Female9.add(jsonObject1.getString("id"))
@@ -375,6 +388,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                                 url1Female9Short.add(jsonObject1.getString("short_video"))
                                 url1Female9Medium.add(jsonObject1.getString("half_video"))
                                 url1Female9Large.add(jsonObject1.getString("full_video"))
+                                thumbnail9Female.add(jsonObject1.getString("thumb"))
+
                             }
 
                         }
@@ -427,7 +442,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
             genderFemale5,
             traintFemale5,
             durationFemale5,
-            url1Female5
+            url1Female5,
+            thumbnail5Female
         )
         gridEvening?.adapter = adapterMain
 
@@ -504,7 +520,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                     genderMale5,
                     traintMale5,
                     durationMale5,
-                    url1Male5
+                    url1Male5,
+                    thumbnail5Male
                 )
                 gridEvening?.adapter = adapterMain
             }
@@ -519,7 +536,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                     genderFemale5,
                     traintFemale5,
                     durationFemale5,
-                    url1Female5
+                    url1Female5,
+                    thumbnail5Female
                 )
                 gridEvening?.adapter = adapterMain
             }
@@ -534,7 +552,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                         genderMale5,
                         traintMale5,
                         durationMale5,
-                        url1Male5
+                        url1Male5,
+                        thumbnail5Male
                     )
                     gridEvening?.adapter = adapterMain
                 }else{
@@ -546,7 +565,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                         genderFemale5,
                         traintFemale5,
                         durationFemale5,
-                        url1Female5
+                        url1Female5,
+                        thumbnail5Female
                     )
                     gridEvening?.adapter = adapterMain
                 }
@@ -564,7 +584,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                         genderMale9,
                         traintMale9,
                         durationMale9,
-                        url1Male9
+                        url1Male9,
+                        thumbnail9Male
                     )
                     gridEvening?.adapter = adapterMain
                 }else{
@@ -576,7 +597,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
                         genderFemale9,
                         traintFemale9,
                         durationFemale9,
-                        url1Female9
+                        url1Female9,
+                        thumbnail9Female
                     )
                     gridEvening?.adapter = adapterMain
                 }

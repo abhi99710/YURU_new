@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.yuru.R;
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
 import com.app.yuru.corescheduler.utils.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -74,6 +75,12 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 //                    .beginTransaction();
 //            fragmentTransaction.replace(R.id.framwQts, new SleepEnhancer());
 //            fragmentTransaction.commit();
+
+//          Picasso.get().load("https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png")
+//                    .centerCrop().fit().into(holder.tts_videoview);
+
+            Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
+                    .fit().centerCrop().noFade().into(holder.tts_videoview);
 
 
         });

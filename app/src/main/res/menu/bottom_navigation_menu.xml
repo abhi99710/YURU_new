@@ -4,19 +4,21 @@
     android:title="Home"
     android:icon="@drawable/bottom_home"/>
 
-    <item android:id="@+id/journal_nv"
-        android:title="Journal"
-        android:icon="@drawable/bottom_journal"/>
+    <item android:id="@+id/sleep_nv"
+        android:title="Sleep"
+        android:icon="@drawable/bottom_sleep"
+       />
 
+
+    <item android:id="@+id/evening_nv"
+        android:title="Evening"
+        android:icon="@drawable/bottom_english"/>
     <item android:id="@+id/wakeup_nv"
         android:title="Wake Up"
         android:icon="@drawable/bottom_wakeup"/>
 
-    <item android:id="@+id/sleep_nv"
-        android:title="Sleep"
-        android:icon="@drawable/bottom_sleep"/>
-
-    <item android:id="@+id/english_nv"
-        android:title="English"
-        android:icon="@drawable/bottom_english"/>
+    <item android:id="@+id/journal_nv"
+        android:title="Journal"
+        android:icon="@drawable/bottom_journal"
+       />
 </menu>

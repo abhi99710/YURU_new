@@ -30,11 +30,14 @@ class TransitionActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
 
             when(it.itemId){
-                R.id.home_nv->setCurrentFragment(firstFragment)
-               R.id.journal_nv->startActivity(Intent(this, Journals::class.java))
-                R.id.wakeup_nv->setCurrentFragment(fifthFragment)
+                R.id.home_nv->setCurrentFragment(TransitionToSleep())
                 R.id.sleep_nv->setCurrentFragment(secondFragment)
-//                R.id.english_nv->setCurrentFragment(firstFragment)
+                R.id.evening_nv->setCurrentFragment(EveningProgram())
+                R.id.wakeup_nv->setCurrentFragment(WakeUpProgram())
+               R.id.journal_nv->startActivity(Intent(this, Journals::class.java))
+
+
+
             }
             true
         }

@@ -1,7 +1,9 @@
 package com.app.yuru.ui.login
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ProgressBar
@@ -26,6 +28,7 @@ import com.app.yuru.ui.transition.TransitionActivity
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
 import org.json.JSONObject
+import java.util.*
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
@@ -82,17 +85,17 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                     var jsonObject1 = jsonObject.getJSONObject("data")
 
                      if(jsonObject.getString("message").equals("You have successfully logged In")) {
-                        var intent = Intent(context, GetStartedActivity::class.java)
+                        var intent = Intent(context, AnimLogin::class.java)
                          intent.putExtra("nameLogin", jsonObject1.getString("full_name"))
                          startActivity(intent)
                          Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
 
-//                         val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
-//                         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+                         val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+                         val editor: SharedPreferences.Editor =  sharedPreferences.edit()
 
-//                         editor.putString("email",jsonObject.getString("email"))
-//                         editor.apply()
-//                         editor.commit()
+                         editor.putString("id",jsonObject.getString("id"))
+                         editor.apply()
+                         editor.commit()
 //
 //                         intent = Intent(applicationContext, Dashboard::class.java)
 //                         startActivity(intent)

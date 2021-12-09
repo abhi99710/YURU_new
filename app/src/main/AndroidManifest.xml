@@ -17,11 +17,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.discounts.CalenderV"></activity>
+        <activity android:name=".ui.login.AnimLogin" />
+        <activity android:name=".ui.discounts.RocketTake" />
+        <activity android:name=".ui.discounts.Survey" />
         <activity
             android:name=".ui.splash.PermissionActivity"
             android:exported="false" />
-
-        <activity android:name=".ui.lowvshigh.LowvsHigh"/>
+        <activity android:name=".ui.lowvshigh.LowvsHigh" />
         <activity android:name=".ui.coupons.EditJournal" />
         <activity android:name=".ui.coupons.JournalList" />
         <activity android:name=".ui.coupons.JournalAdd" />
