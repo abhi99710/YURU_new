@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -27,7 +28,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class WakeUpProgram : Fragment() {
@@ -91,6 +91,50 @@ class WakeUpProgram : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_wake_up_program, container, false)
 
         findIds(view)
+
+        val dayOfAlarm : TextView = view.findViewById(R.id.dayOfAlarm)
+        dayOfAlarm.setOnClickListener {
+            val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
+            if (dialog != null) {
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setCancelable(true)
+                dialog.setContentView(R.layout.dialog_repeat_alarm)
+                dialog.show()
+
+//                val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
+
+                val friday4: TextView = dialog.findViewById(R.id.friday4)
+
+                friday4.setOnClickListener {
+                    dialog.dismiss()
+                }
+//                val logo: TextView = dialog.findViewById(R.id.logo)
+              /*  val repeat_dialog_tts: Button = dialog.findViewById(R.id.repeat_dialog_tts)
+                val sleep_dialog_tts: Button = dialog.findViewById(R.id.sleep_dialog_tts)
+
+                repeat_dialog_tts.setOnClickListener {
+                    val intent = Intent(context, VideoActivity::class.java)
+                    intent.putExtra(
+                        Constants.VIDEO_LINK,
+                        filename45.get(0) *//*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*//*
+                    )
+                    startActivity(intent)
+                    dialog.dismiss()
+                }*/
+
+
+              /*  sleep_dialog_tts.setOnClickListener {
+                    val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.framwQts, SleepEnhancer())
+                    fragment.addToBackStack(null)
+                    fragment.commit()
+
+                    dialog.dismiss()
+                }*/
+
+            }
+        }
+
 
         allClickListner()
 

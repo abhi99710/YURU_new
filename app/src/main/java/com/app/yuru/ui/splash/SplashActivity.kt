@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
         } else {
         startActivity(Intent(this, Splash2::class.java))
 //            startActivity(Intent(this, TransitionActivity::class.java))
-        startActivity(Intent(this, Survey::class.java))
+//        startActivity(Intent(this, Survey::class.java))
 //        startActivity(Intent(this, TestResultActivity::class.java))
         }
         finish()

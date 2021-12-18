@@ -55,6 +55,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     testImplementation 'androidx.test:core:1.4.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
@@ -81,8 +83,8 @@ dependencies {
     kapt(AndroidLib.room_compiler)
 
     // Kotlin
-    implementation "androidx.navigation:navigation-fragment-ktx:$Versions.android_navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$Versions.android_navigation"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.5"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.5"
 
     //volley
     implementation 'com.android.volley:volley:1.2.0'

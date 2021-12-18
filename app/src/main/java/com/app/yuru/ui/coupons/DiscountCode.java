@@ -58,7 +58,7 @@ public class DiscountCode extends AppCompatActivity {
                 startActivity(new Intent(this, CouponApplied.class));
             }
             else {
-                Toast.makeText(this, "Entered discount Coupon is Wrong.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Entered discount Coupon is Wrong.", Toast.LENGTH_LONG).show();
             }
         });
 

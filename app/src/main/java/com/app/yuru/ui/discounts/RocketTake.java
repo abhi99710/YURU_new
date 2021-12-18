@@ -16,11 +16,14 @@ import com.app.yuru.ui.getStarted.GetStartedActivity;
 public class RocketTake extends AppCompatActivity {
 
     private VideoView rocketVideo;
-    private Button skipLogin;
+//    private Button skipLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rocket_take);
+
+//        skipLogin = findViewById(R.id.skipLogin);
 
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(this, CalenderV.class);
@@ -28,7 +31,7 @@ public class RocketTake extends AppCompatActivity {
             startActivity(intent);
         },16000);
 
-        rocketVideo = findViewById(R.id.videoLoginAnim);
+        rocketVideo = findViewById(R.id.rocketVideo);
         //Creating MediaController
         MediaController mediaController= new MediaController(this);
         mediaController.setAnchorView(rocketVideo);

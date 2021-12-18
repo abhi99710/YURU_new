@@ -69,9 +69,9 @@ public class Survey extends AppCompatActivity {
             radioButton2 = findViewById(selectedId2);
 
             int selectedId3 = radioGroup3.getCheckedRadioButtonId();
-            radioButton1 = findViewById(selectedId3);
+            radioButton3 = findViewById(selectedId3);
 
-            apiSaveQuestions(selectedId1, selectedId2, selectedId3);
+            apiSaveQuestions(/*""+radioButton1.getId(), ""+radioButton2.getId(), ""+radioButton3.getId()*/);
         });
 
         apiGetQuestions();
@@ -118,7 +118,7 @@ public class Survey extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void apiSaveQuestions(int selectedId1, int selectedId2, int selectedId3) {
+    private void apiSaveQuestions(/*String selectedId1, String selectedId2, String selectedId3*/) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String user = sharedPreferences.getString("id", "1");
@@ -149,15 +149,15 @@ public class Survey extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("userId",user);
-                map.put("q1ID",ques_id.get(0));
-                map.put("q2ID",ques_id.get(1));
-                map.put("q3ID",ques_id.get(2));
-                map.put("q4ID",ques_id.get(3));
-                map.put("q5ID",ques_id.get(4));
-                map.put("q1RT",""+selectedId1);
-                map.put("q2RT",""+selectedId2);
-                map.put("q3RT",""+selectedId3);
+                map.put("userId", user);
+                map.put("q1ID", ques_id.get(0));
+                map.put("q2ID", ques_id.get(1));
+                map.put("q3ID", ques_id.get(2));
+                map.put("q4ID", ques_id.get(3));
+                map.put("q5ID", ques_id.get(4));
+                map.put("q1RT", "5");
+                map.put("q2RT", "4");
+                map.put("q3RT", "5");
                 map.put("q4RT","3");
                 map.put("q5RT","5");
 

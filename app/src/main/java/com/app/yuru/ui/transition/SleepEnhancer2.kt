@@ -292,6 +292,32 @@ class SleepEnhancer2 : Fragment() {
             }
         }
 
+        showAns.setOnClickListener {
+            answerForLeft = 225
+            right_1_count = 0
+            left_1_count = 0
+            toXdelta1 = 0.0f
+            negXdelta1 = 0.0f
+            val animation = TranslateAnimation(0f, 0f, 0f, 0f)
+            animation.duration = 1000
+            animation.fillAfter = true
+            bottom_1.startAnimation(animation)
+            showAdd1.text = "  "
+        }
+
+        showAns2.setOnClickListener {
+            annserForRight = 315
+            right_2_count = 0
+            left_2_count = 0
+            toXdelta2 = 0.0f
+            negXdelta2 = 0.0f
+            showAdd2.text = "  "
+            val animation = TranslateAnimation(0f, 0f, 0f, 0f)
+            animation.duration = 1000
+            animation.fillAfter = true
+            bottom2.startAnimation(animation)
+        }
+
         // center icon for first image slide to position 0 ( 45 min )
         center1.setOnClickListener {
             answerForLeft = 225
