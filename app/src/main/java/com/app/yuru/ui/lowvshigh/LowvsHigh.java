@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.ui.coupons.DiscountCode;
+import com.app.yuru.ui.transition.TransitionActivity;
 import com.app.yuru.utility.apivolley.APIVolley;
 
 import org.json.JSONArray;
@@ -85,7 +86,7 @@ public class LowvsHigh extends AppCompatActivity {
         });
 
         btn_low.setOnClickListener(v->{
-            startActivity(new Intent(this, DiscountCode.class));
+            startActivity(new Intent(this, TransitionActivity.class));
         });
     }
 

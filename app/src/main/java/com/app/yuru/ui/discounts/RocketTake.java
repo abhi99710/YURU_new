@@ -29,7 +29,7 @@ public class RocketTake extends AppCompatActivity {
             Intent intent = new Intent(this, CalenderV.class);
 //            intent.putExtra("nameLogin", nameLogin);
             startActivity(intent);
-        },16000);
+        },6000);
 
         rocketVideo = findViewById(R.id.rocketVideo);
         //Creating MediaController
@@ -39,7 +39,7 @@ public class RocketTake extends AppCompatActivity {
         //specify the location of media file
 //        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/media/1.mp4");
 
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.splash1);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.rocket);
         //Setting MediaController and URI, then starting the videoView
 //        videoLoginAnim.setMediaController(mediaController);
         rocketVideo.setVideoURI(uri);

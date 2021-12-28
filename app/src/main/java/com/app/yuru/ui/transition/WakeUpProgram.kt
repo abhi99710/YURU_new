@@ -98,16 +98,62 @@ class WakeUpProgram : Fragment() {
             if (dialog != null) {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setCancelable(true)
-                dialog.setContentView(R.layout.dialog_repeat_alarm)
+                dialog.setContentView(R.layout.dialogshow_options)
                 dialog.show()
 
 //                val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
-                val friday4: TextView = dialog.findViewById(R.id.friday4)
+                val friday4: TextView = dialog.findViewById(R.id.friDay)
+                val sunday: TextView = dialog.findViewById(R.id.sunday)
+                val monDay: TextView = dialog.findViewById(R.id.monDay)
+                val tuesDay: TextView = dialog.findViewById(R.id.tuesDay)
+                val wedsnesDay: TextView = dialog.findViewById(R.id.wedsnesDay)
+                val thursDay: TextView = dialog.findViewById(R.id.thursDay)
+                val saturDay: TextView = dialog.findViewById(R.id.saturDay)
+                val everyDay: TextView = dialog.findViewById(R.id.everyDay)
+                val never: TextView = dialog.findViewById(R.id.never)
 
                 friday4.setOnClickListener {
                     dialog.dismiss()
+                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
+
+                never.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
+                }
+                everyDay.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
+                }
+                saturDay.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
+                }
+
+                sunday.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
+                }
+                monDay.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
+                }
+
+                tuesDay.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
+                }
+
+                wedsnesDay.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
+                }
+                thursDay.setOnClickListener {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
+                }
+
 //                val logo: TextView = dialog.findViewById(R.id.logo)
               /*  val repeat_dialog_tts: Button = dialog.findViewById(R.id.repeat_dialog_tts)
                 val sleep_dialog_tts: Button = dialog.findViewById(R.id.sleep_dialog_tts)

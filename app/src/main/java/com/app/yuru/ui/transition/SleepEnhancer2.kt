@@ -384,7 +384,7 @@ class SleepEnhancer2 : Fragment() {
             val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
             val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
-            val logo: TextView = dialog.findViewById(R.id.logo)
+            val logo: ImageView = dialog.findViewById(R.id.logo)
             val cl90: ConstraintLayout = dialog.findViewById(R.id.cl90)
             val cl45: ConstraintLayout = dialog.findViewById(R.id.cl45)
 

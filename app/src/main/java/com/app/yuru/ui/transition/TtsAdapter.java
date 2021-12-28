@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
      Context context;
      List<String> idParent;
@@ -66,6 +68,9 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
             context.startActivity(intent);
         });
 
+        Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
+                .fit().centerCrop().noFade().into(holder.tts_videoview);
+
         holder.save_ttsvids.setOnClickListener(v -> {
 //            context.startActivity(new Intent(activity, SleepEnhancer.class));
             Toast.makeText(context, "saved", Toast.LENGTH_SHORT).show();
@@ -78,9 +83,6 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
 //          Picasso.get().load("https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png")
 //                    .centerCrop().fit().into(holder.tts_videoview);
-
-            Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
-                    .fit().centerCrop().noFade().into(holder.tts_videoview);
 
 
         });

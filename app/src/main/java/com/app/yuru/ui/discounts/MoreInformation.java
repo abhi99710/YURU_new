@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.ui.coupons.Journals;
+import com.app.yuru.ui.lowvshigh.LowvsHigh;
 import com.app.yuru.ui.transition.TransitionActivity;
 import com.app.yuru.utility.apivolley.APIVolley;
 
@@ -217,7 +218,7 @@ public class MoreInformation extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 boolean str = jsonObject.getBoolean("valid");
                 if(str){
-                    Intent intent = new Intent(MoreInformation.this, TransitionActivity.class);
+                    Intent intent = new Intent(MoreInformation.this, LowvsHigh.class);
                     startActivity(intent);
                 }else {
                     Toast.makeText(this, "Please select all values", Toast.LENGTH_SHORT).show();

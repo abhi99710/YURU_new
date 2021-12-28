@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.transition.AnimationOnLeft"></activity>
         <activity android:name=".ui.discounts.CalenderV" />
         <activity android:name=".ui.login.AnimLogin" />
         <activity android:name=".ui.discounts.RocketTake" />

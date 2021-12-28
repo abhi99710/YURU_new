@@ -1,22 +1,24 @@
 package com.app.yuru.ui.transition
 
 
+import android.app.ActionBar
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -57,6 +59,9 @@ class TransitionToSleep : Fragment() {
     private var duration45: MutableList<String> = ArrayList()
     private var idChild45: MutableList<String> = ArrayList()
 
+    private lateinit var male_tts_cl : ConstraintLayout
+    private lateinit var female_tts_cl : ConstraintLayout
+
     // 90 sec
     private var idParent90: MutableList<String> = ArrayList()
     private var language_slug490: MutableList<String> = ArrayList()
@@ -73,6 +78,8 @@ class TransitionToSleep : Fragment() {
     private lateinit var sleep_female: ImageView
     private lateinit var tts_vids: VideoView
 
+    private var userId : Int = 0
+
     val handler = Handler(Looper.getMainLooper())
 
 
@@ -85,11 +92,16 @@ class TransitionToSleep : Fragment() {
 
 //        Navigation.createNavigateOnClickListener(R.id.nav_host_homepage, null);
 
+        checkOnline()
+
         tv45min = view.findViewById(R.id.tv45min)
         tv90min = view.findViewById(R.id.tv90min)
         sleep_male = view.findViewById(R.id.sleep_male)
         sleep_female = view.findViewById(R.id.sleep_female)
         tts_vids = view.findViewById(R.id.tts_vids)
+
+        male_tts_cl = view.findViewById(R.id.male_tts_cl)
+        female_tts_cl = view.findViewById(R.id.female_tts_cl)
 
         progressDialog = ProgressDialog(context)
         progressDialog.setCancelable(false)
@@ -104,7 +116,7 @@ class TransitionToSleep : Fragment() {
                  val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
                  if (dialog != null) {
                      dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                     dialog.setCancelable(true)
+                     dialog.setCancelable(false)
                      dialog.setContentView(R.layout.dialog_splash)
                      dialog.show()
 
@@ -127,17 +139,28 @@ class TransitionToSleep : Fragment() {
 
 
                      sleep_dialog_tts.setOnClickListener {
-                         val fragment = requireActivity().supportFragmentManager.beginTransaction()
-                             .replace(R.id.framwQts, SleepEnhancer())
-                         fragment.addToBackStack(null)
-                         fragment.commit()
 
-                         dialog.dismiss()
+                         if(userId.equals(1)){
+                             val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                                 .replace(R.id.framwQts, SleepEnhancerNew())
+                             fragment.addToBackStack(null)
+                             fragment.commit()
+
+                             dialog.dismiss()
+                         }else{
+                             val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                                 .replace(R.id.framwQts, SleepEnhancer())
+                             fragment.addToBackStack(null)
+                             fragment.commit()
+
+                             dialog.dismiss()
+                         }
+
                      }
 
              }
             }
-        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(300000))
+        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(30))
 
         startTimer = view.findViewById(R.id.skipSleep)
         skipToProgram = view.findViewById(R.id.skipToProgram)
@@ -198,6 +221,13 @@ class TransitionToSleep : Fragment() {
             tv90min.setTextColor(Color.WHITE)
         }
         sleep_male.setOnClickListener {
+
+            sleep_male.setImageResource(R.drawable.white_male)
+            male_tts_cl.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+
+            sleep_female.setImageResource(R.drawable.female_tts)
+            female_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
             val transitionToSleepAdapter = TtsAdapter(
                 context,
                 idParent45,
@@ -215,6 +245,13 @@ class TransitionToSleep : Fragment() {
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
         }
         sleep_female.setOnClickListener {
+
+            sleep_male.setImageResource(R.drawable.male_tts)
+            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+            sleep_female.setImageResource(R.drawable.white_female)
+            female_tts_cl.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+
             val transitionToSleepAdapter = TtsAdapter(
                 context,
                 idParent45,
@@ -352,13 +389,13 @@ class TransitionToSleep : Fragment() {
                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
                 }
             }) {
-//            @Throws(AuthFailureError::class)
-//            override fun getParams(): Map<String, String> {
-//                val params = HashMap<String, String>()
-//                params.put("roleType", "admin")
-//
-//                return params
-//            }
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("roleType", "admin")
+
+                return params
+            }
         }
         requestQueue = Volley.newRequestQueue(context)
         requestQueue?.add(stringRequest)
@@ -392,6 +429,49 @@ class TransitionToSleep : Fragment() {
              url1Female
          )
          transition_to_sleep_recy?.adapter = adapterMain*/
+    }
+
+    private fun checkOnline() {
+
+        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences(
+            "share",
+            Context.MODE_PRIVATE
+        )
+        val sharedNameValue : String? = sharedPreferences.getString("id", "12")
+
+        val url = "https://promask.com.co/yuru/api/checkForLogged"
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener<String> { response ->
+                try {
+                    progressDialog.dismiss()
+                    val obj = JSONObject(response)
+                    var jsonObject = obj.getJSONObject("result")
+                    val jsonObject1 = jsonObject.getJSONObject("data")
+
+                    userId = jsonObject1.getInt("hasOpened")
+                    Toast.makeText(context, " " + userId, Toast.LENGTH_SHORT)
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userId", "12")
+
+                return params
+            }
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
     }
 
 }
