@@ -23,9 +23,9 @@ class SplashActivity : AppCompatActivity() {
             startActivity(Intent(this, PermissionActivity::class.java))
         } else {
 //        startActivity(Intent(this, Splash2::class.java))
-//            startActivity(Intent(this, TransitionActivity::class.java))
+            startActivity(Intent(this, TransitionActivity::class.java))
 //        startActivity(Intent(this, Survey::class.java))
-        startActivity(Intent(this, CalenderV::class.java))
+//        startActivity(Intent(this, CalenderV::class.java))
         }
         finish()
     }

@@ -301,11 +301,11 @@ class SleepEnhancer : Fragment() {
 
     private fun videoPlay() {
         val ctlr = MediaController(context)
-        ctlr.setMediaPlayer(tts_vids)
-        tts_vids.setMediaController(ctlr)
+//        ctlr.setMediaPlayer(tts_vids)
+//        tts_vids.setMediaController(ctlr)
         val uri =
             Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.moonset);
-        tts_vids.setMediaController(ctlr)
+//        tts_vids.setMediaController(ctlr)
         tts_vids.setVideoURI(uri);
         tts_vids.start()
     }

@@ -25,14 +25,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="15dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:background="@color/transparent"
+                app:cardBackgroundColor="@color/transparent"
                 android:orientation="horizontal"
-                app:cardCornerRadius="@dimen/_5sdp"
-                app:cardElevation="@dimen/_5sdp"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +38,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/transparent"
                     android:layout_margin="5dp">
 
                     <TextView
@@ -50,6 +47,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:text="@string/transition_to_sleep"
+                        android:visibility="gone"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_24sdp"
                         android:paddingStart="10dp"
@@ -57,18 +55,20 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
+                    <!--    android:background="@drawable/border_corner"-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
-                        android:background="@drawable/border_corner"
+                        android:layout_marginBottom="32dp"
+
                         android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView">
+                        app:layout_constraintStart_toStartOf="parent">
 
 
                         <de.hdodenhof.circleimageview.CircleImageView
@@ -87,12 +87,12 @@
                             android:id="@+id/skipSleep"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_3sdp"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/raleway_bold"
                             android:text="@string/skip_to_sleep_enhancer"
-                            android:textColor="#5A93C5"
-                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/guideline2"
                             app:layout_constraintStart_toEndOf="@+id/imageView1"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,6 +101,7 @@
                             android:layout_width="1dp"
                             android:layout_height="40dp"
                             android:background="#8E8EF3"
+                            android:visibility="invisible"
                             app:layout_constraintStart_toStartOf="@+id/guideline2"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,10 +116,10 @@
                             android:id="@+id/n_option"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:layout_marginStart="16dp"
                             android:elevation="4dp"
                             android:src="@drawable/sun_tts"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/skipToProgram"
                             app:layout_constraintStart_toEndOf="@+id/view"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_scrollFlags="scroll" />
@@ -127,11 +128,12 @@
                             android:id="@+id/skipToProgram"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/raleway_bold"
                             android:text="@string/skip_to_wake_program"
-                            android:textColor="#5A93C5"
-                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/n_option"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,35 +148,39 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                    <!-- android:background="@drawable/border_corner"-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout10"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_30sdp"
                         android:layout_marginStart="8dp"
-                        android:background="@drawable/border_corner"
-                        android:layout_marginTop="8dp"
-                        android:padding="@dimen/_2sdp"
                         android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:padding="@dimen/_2sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/transition_to_sleep_recy"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                        app:layout_constraintStart_toStartOf="parent">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/male_tts_cl"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
+
                             android:padding="5dp"
-                            android:background="@color/colorPrimaryDark"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline9"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <ImageView
+                            <TextView
                                 android:id="@+id/sleep_male"
-                                android:layout_width="@dimen/_22sdp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="@dimen/_32sdp"
-                                android:src="@drawable/white_male"
+                                android:gravity="center"
+                                android:text="Male"
+                                android:fontFamily="@font/raleway_bold"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +188,6 @@
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
                         <androidx.constraintlayout.widget.Guideline
@@ -197,14 +202,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            app:layout_constraintGuide_percent=".15" />
+                            app:layout_constraintGuide_percent=".25" />
 
                         <androidx.constraintlayout.widget.Guideline
                             android:id="@+id/guideline15"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            app:layout_constraintGuide_percent=".3" />
+                            app:layout_constraintGuide_percent=".5" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/female_tts_cl"
@@ -216,17 +221,20 @@
                             app:layout_constraintStart_toEndOf="@+id/male_tts_cl"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <ImageView
+                            <TextView
                                 android:id="@+id/sleep_female"
-                                android:layout_width="@dimen/_22sdp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="@dimen/_32sdp"
-                                android:background="@drawable/female_tts"
+                                android:fontFamily="@font/raleway_semibold"
+                                android:gravity="center"
+                                android:text="Female"
+                                android:textColor="#66FFFFFF"
+                                android:textSize="20sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
                         <androidx.constraintlayout.widget.Guideline
@@ -240,25 +248,28 @@
                             android:id="@+id/tv45min"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:background="@color/colorPrimaryDark"
+
                             android:gravity="center"
                             android:text="5 min"
                             android:textColor="#ffffff"
-                            android:textSize="@dimen/_16sdp"
+                            android:fontFamily="@font/raleway_bold"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline10"
                             app:layout_constraintStart_toStartOf="@+id/guideline8"
                             app:layout_constraintTop_toTopOf="parent" />
 
+                        <!--android:background="@drawable/border"-->
                         <TextView
                             android:id="@+id/tv90min"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:background="@drawable/border"
+
                             android:gravity="center"
                             android:text="9 min"
-                            android:textColor="#000"
-                            android:textSize="@dimen/_16sdp"
+                            android:fontFamily="@font/raleway_semibold"
+                            android:textColor="#66FFFFFF"
+                            android:textSize="20sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/guideline10"
@@ -269,12 +280,13 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/transition_to_sleep_recy"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_height="300dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout10" />
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 <!--    <GridView
                         android:id="@+id/transition_to_sleep_recy"

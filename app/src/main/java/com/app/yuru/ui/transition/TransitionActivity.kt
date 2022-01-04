@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.app.yuru.R
+import com.app.yuru.ui.coupons.JournalOptions
 import com.app.yuru.ui.coupons.Journals
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -34,7 +35,7 @@ class TransitionActivity : AppCompatActivity() {
                 R.id.sleep_nv->setCurrentFragment(SleepEnhancer2())
                 R.id.evening_nv->setCurrentFragment(EveningProgram())
                 R.id.wakeup_nv->setCurrentFragment(WakeUpProgram())
-               R.id.journal_nv->startActivity(Intent(this, Journals::class.java))
+               R.id.journal_nv->startActivity(Intent(this, JournalOptions::class.java))
 
 
 

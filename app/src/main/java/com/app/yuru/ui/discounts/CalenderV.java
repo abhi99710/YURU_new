@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.ui.transition.TransitionActivity;
+import com.app.yuru.ui.transition.TransitionToSleep;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
@@ -45,7 +46,7 @@ import java.util.Map;
 
 public class CalenderV extends AppCompatActivity {
 
-//    private Button Thanks;
+    private Button Thanks;
     private List<String> dated_list = new ArrayList<>();
 //    List<Calendar> highlighted = new ArrayList<>();
 //    private CalendarView calendarView;
@@ -61,6 +62,16 @@ public class CalenderV extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calender_v);
+        
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        Thanks = findViewById(R.id.Thanks);
+        Thanks.setOnClickListener(v->{
+            getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new TransitionToSleep()).commit();
+        });
 
 
         mm.add("31-12-2021");
@@ -125,6 +136,7 @@ public class CalenderV extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             try {
+                progressDialog.dismiss();
                 JSONObject jsonObject = new JSONObject(response);
                 JSONObject result = jsonObject.getJSONObject("result");
                 JSONArray jsonArray = result.getJSONArray("dateArr");
@@ -132,11 +144,13 @@ public class CalenderV extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length() ; i++) {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
                     String s = jsonObject1.getString("updatedDate");
-                    dated_list.add(s);
+
                     String k = s.split(" ", 0)[0];
                     int year = Integer.parseInt(k.split("-",0)[0]);
                     int month = Integer.parseInt(k.split("-",0)[1]);
                     int day = Integer.parseInt(k.split("-",0)[2]);
+
+                    dated_list.add(day+"-"+month+"-"+year);
 //                    Calendar cal = Calendar.getInstance();
 
                     calendarSet(dated_list);

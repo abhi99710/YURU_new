@@ -1,5 +1,6 @@
 package com.app.yuru.ui.transition;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,9 @@ public class AdapterEvening extends BaseAdapter {
         ConstraintLayout cardsub = convertView.findViewById(R.id.clEve);
         ImageView videoView = convertView.findViewById(R.id.grid_evening_iv);
 
+        cardsub.setOnClickListener(v->{
+            openDialog();
+        });
 
 
 //        Picasso.get().load(thumbnail.get(position)).into(videoView);
@@ -72,4 +76,16 @@ public class AdapterEvening extends BaseAdapter {
 
         return convertView;
     }
+    public void openDialog() {
+        final Dialog dialog = new Dialog(context); // Context, this, etc.
+        dialog.setContentView(R.layout.dialogwakeupandevening);
+        dialog.setTitle("Video Dialog");
+
+        ImageView imageView = dialog.findViewById(R.id.canceldialog);
+        imageView.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
+
 }

@@ -32,7 +32,7 @@ class Spalsh6 : AppCompatActivity() {
         ctlr.setMediaPlayer(tts_vids)
 //        tts_vids.setMediaController(ctlr)
 
-        val uri =  Uri.parse("android.resource://" + this?.getPackageName() + "/R.raw/" + R.raw.splash6);
+        val uri =  Uri.parse("android.resource://" + this?.getPackageName() + "/R.raw/" + R.raw.splashparts);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
@@ -42,6 +42,12 @@ class Spalsh6 : AppCompatActivity() {
         //        videoView.setVideoURI(uri);
 
         tts_vids.setVideoURI(uri);
+        tts_vids.setOnPreparedListener({
+            it.seekTo(83000)
+            it.setOnSeekCompleteListener {
+                tts_vids.start()
+            }
+        })
 //        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
         tts_vids.start()
 
@@ -54,7 +60,7 @@ class Spalsh6 : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(22))
+        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(100)) //22
     }
 
     override fun onPause() {

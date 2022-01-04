@@ -58,6 +58,7 @@ class TransitionToSleep : Fragment() {
     private var filename45: MutableList<String> = ArrayList()
     private var duration45: MutableList<String> = ArrayList()
     private var idChild45: MutableList<String> = ArrayList()
+    private var thumb45 : MutableList<String> = ArrayList()
 
     private lateinit var male_tts_cl : ConstraintLayout
     private lateinit var female_tts_cl : ConstraintLayout
@@ -71,11 +72,12 @@ class TransitionToSleep : Fragment() {
     private var filename90: MutableList<String> = ArrayList()
     private var duration90: MutableList<String> = ArrayList()
     private var idChild90: MutableList<String> = ArrayList()
+    private var thumb90 : MutableList<String> = ArrayList()
 
     private lateinit var tv45min: TextView
     private lateinit var tv90min: TextView
-    private lateinit var sleep_male: ImageView
-    private lateinit var sleep_female: ImageView
+    private lateinit var sleep_male: TextView
+    private lateinit var sleep_female: TextView
     private lateinit var tts_vids: VideoView
 
     private var userId : Int = 0
@@ -140,7 +142,7 @@ class TransitionToSleep : Fragment() {
 
                      sleep_dialog_tts.setOnClickListener {
 
-                         if(userId.equals(1)){
+                         if(userId.equals(0)){
                              val fragment = requireActivity().supportFragmentManager.beginTransaction()
                                  .replace(R.id.framwQts, SleepEnhancerNew())
                              fragment.addToBackStack(null)
@@ -160,7 +162,7 @@ class TransitionToSleep : Fragment() {
 
              }
             }
-        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(30))
+        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(300))
 
         startTimer = view.findViewById(R.id.skipSleep)
         skipToProgram = view.findViewById(R.id.skipToProgram)
@@ -187,14 +189,15 @@ class TransitionToSleep : Fragment() {
                 filename45,
                 duration45,
                 activity
+//                thumb45
             )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
 
-            tv45min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            tv90min.setBackgroundResource(R.drawable.border)
-            tv90min.setTextColor(Color.BLACK)
+//            tv45min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+//            tv90min.setBackgroundResource(R.drawable.border)
+            tv90min.setTextColor(Color.GRAY)
             tv45min.setTextColor(Color.WHITE)
         }
 
@@ -210,23 +213,24 @@ class TransitionToSleep : Fragment() {
                 filename90,
                 duration90,
                 activity
+//                thumb90
             )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
             transition_to_sleep_recy.adapter = transitionToSleepAdapter
 
-            tv90min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-            tv45min.setBackgroundResource(R.drawable.border)
-            tv45min.setTextColor(Color.BLACK)
+//            tv90min.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+//            tv45min.setBackgroundResource(R.drawable.border)
+            tv45min.setTextColor(Color.GRAY)
             tv90min.setTextColor(Color.WHITE)
         }
         sleep_male.setOnClickListener {
 
-            sleep_male.setImageResource(R.drawable.white_male)
-            male_tts_cl.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+            sleep_male.setTextColor(Color.WHITE)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
 
-            sleep_female.setImageResource(R.drawable.female_tts)
-            female_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+            sleep_female.setTextColor(Color.GRAY)
+//            female_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
 
             val transitionToSleepAdapter = TtsAdapter(
                 context,
@@ -239,6 +243,7 @@ class TransitionToSleep : Fragment() {
                 filename45,
                 duration45,
                 activity
+//                thumb45
             )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
@@ -246,11 +251,11 @@ class TransitionToSleep : Fragment() {
         }
         sleep_female.setOnClickListener {
 
-            sleep_male.setImageResource(R.drawable.male_tts)
-            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+            sleep_male.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
 
-            sleep_female.setImageResource(R.drawable.white_female)
-            female_tts_cl.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+            sleep_female.setTextColor(Color.WHITE)
+//            female_tts_cl.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
 
             val transitionToSleepAdapter = TtsAdapter(
                 context,
@@ -263,6 +268,7 @@ class TransitionToSleep : Fragment() {
                 filename45,
                 duration45,
                 activity
+//                thumb45
             )
             transition_to_sleep_recy.setHasFixedSize(true)
             transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
@@ -296,7 +302,7 @@ class TransitionToSleep : Fragment() {
 //        tts_vids.setMediaController(ctlr)
 
         val uri =
-            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.transitionvidnew);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
@@ -351,6 +357,7 @@ class TransitionToSleep : Fragment() {
                                 duration45.add(jsonObjectNew.getString("duration"))
                                 idParent45.add(jsonObject1.getString("id"))
                                 title45.add(jsonObject1.getString("title"))
+                                thumb45.add(jsonObject1.getString("thumb"))
                             } else {
                                 idChild90.add(jsonObjectNew.getString("id"))
                                 transition_id90.add(jsonObjectNew.getString("transition_id"))
@@ -360,6 +367,7 @@ class TransitionToSleep : Fragment() {
                                 duration90.add(jsonObjectNew.getString("duration"))
                                 idParent90.add(jsonObject1.getString("id"))
                                 title90.add(jsonObject1.getString("title"))
+                                thumb90.add(jsonObject1.getString("thumb"))
                             }
                         }
 
@@ -413,6 +421,7 @@ class TransitionToSleep : Fragment() {
             filename45,
             duration45,
             activity
+//            thumb45
         )
         transition_to_sleep_recy.setHasFixedSize(true)
         transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)

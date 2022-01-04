@@ -4,6 +4,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,8 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -44,8 +46,8 @@ class WakeUpProgram : Fragment() {
     private lateinit var e_option: TextView
     private lateinit var a_option: TextView
     private lateinit var n_option: TextView
-    private lateinit var female: ImageView
-    private lateinit var male: ImageView
+    private lateinit var female: TextView
+    private lateinit var male: TextView
     private lateinit var optionAlarm_tv: ImageView
     private lateinit var time_tv: TextView
     private lateinit var am_tv: TextView
@@ -71,6 +73,9 @@ class WakeUpProgram : Fragment() {
     private var url1Female: MutableList<String> = ArrayList()
     private var thumbnailFemale : MutableList<String> = ArrayList()
 
+    private lateinit var cl_wakeup_female : ConstraintLayout
+    private lateinit var cl_wakeup_male : ConstraintLayout
+
 
     lateinit var progressDialog: ProgressDialog
 
@@ -82,6 +87,12 @@ class WakeUpProgram : Fragment() {
 
     private var clickedGender = ""
 
+    private lateinit var e_new : ImageView
+    private lateinit var a_new : ImageView
+    private lateinit var n_new : ImageView
+    private lateinit var o_new : ImageView
+    private lateinit var c_new : ImageView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -89,6 +100,9 @@ class WakeUpProgram : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_wake_up_program, container, false)
+
+        cl_wakeup_male = view.findViewById(R.id.cl_wakeup_male)
+        cl_wakeup_female = view.findViewById(R.id.cl_wakeup_female)
 
         findIds(view)
 
@@ -100,6 +114,11 @@ class WakeUpProgram : Fragment() {
                 dialog.setCancelable(true)
                 dialog.setContentView(R.layout.dialogshow_options)
                 dialog.show()
+
+                var back_dialog_wake : ImageView = dialog.findViewById(R.id.back_dialog_wake)
+                back_dialog_wake.setOnClickListener {
+                    dialog.dismiss()
+                }
 
 //                val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
@@ -115,42 +134,51 @@ class WakeUpProgram : Fragment() {
 
                 friday4.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Friday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
                 never.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Never"
                     Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
                 }
                 everyDay.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Everyday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
                 saturDay.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Saturday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
                 sunday.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Sunday"
                     Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
                 }
                 monDay.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Monday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
                 tuesDay.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Tuesday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
                 wedsnesDay.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Wednesday"
                     Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
                 }
                 thursDay.setOnClickListener {
                     dialog.dismiss()
+                    dayOfAlarm.text = "Thursday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
@@ -206,6 +234,20 @@ class WakeUpProgram : Fragment() {
         female.setOnClickListener {
             Toast.makeText(context, "female", Toast.LENGTH_SHORT).show()
 
+//            cl_wakeup_female.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+//            cl_wakeup_male.setBackgroundColor(Color.TRANSPARENT)
+
+            male.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+            female.setTextColor(Color.WHITE)
+
+            val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_bold)
+            female.setTypeface(typeface)
+
+            val typeface1: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_semibold)
+            male.setTypeface(typeface)
+
             clickedGender = "female"
 
             val adapterMain = AdapterMain(
@@ -225,6 +267,23 @@ class WakeUpProgram : Fragment() {
 
         male.setOnClickListener {
             Toast.makeText(context, "male", Toast.LENGTH_SHORT).show()
+
+//            cl_wakeup_male.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+//            cl_wakeup_female.setBackgroundColor(Color.TRANSPARENT)
+
+            female.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+            male.setTextColor(Color.WHITE)
+
+
+            //or to support all versions use
+            //or to support all versions use
+            val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_bold)
+            male.setTypeface(typeface)
+
+            val typeface1: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_semibold)
+            female.setTypeface(typeface)
 
             clickedGender = "male"
 
@@ -300,6 +359,50 @@ class WakeUpProgram : Fragment() {
             am_tv.setBackgroundResource(R.drawable.wakeup_selected)
             pm_tv.setBackgroundColor(Color.TRANSPARENT)
         }
+
+
+        /*all gear new setup click listner*/
+
+        o_new.setOnClickListener({
+            e_new.setImageResource(R.drawable.setting_o)
+            o_new.setImageResource(R.drawable.setting_a)
+            c_new.setImageResource(R.drawable.setting_n)
+            a_new.setImageResource(R.drawable.setting_c)
+            n_new.setImageResource(R.drawable.setting_e)
+        })
+
+        c_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_c)
+            o_new.setImageResource(R.drawable.setting_n)
+            c_new.setImageResource(R.drawable.setting_o)
+            a_new.setImageResource(R.drawable.setting_e)
+            n_new.setImageResource(R.drawable.setting_a)
+        }
+
+        e_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_e)
+            o_new.setImageResource(R.drawable.setting_o)
+            c_new.setImageResource(R.drawable.setting_c)
+            a_new.setImageResource(R.drawable.setting_a)
+            n_new.setImageResource(R.drawable.setting_n)
+        }
+
+        a_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_a)
+            o_new.setImageResource(R.drawable.setting_c)
+            c_new.setImageResource(R.drawable.setting_e)
+            a_new.setImageResource(R.drawable.setting_n)
+            n_new.setImageResource(R.drawable.setting_o)
+        }
+
+        n_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_n)
+            o_new.setImageResource(R.drawable.setting_e)
+            c_new.setImageResource(R.drawable.setting_a)
+            a_new.setImageResource(R.drawable.setting_o)
+            n_new.setImageResource(R.drawable.setting_c)
+        }
+
     }
 
     private fun findIds(view: View) {
@@ -319,6 +422,12 @@ class WakeUpProgram : Fragment() {
         viewall = view.findViewById(R.id.viewall)
 
         wake_up_video = view.findViewById(R.id.wake_up_video)
+
+        c_new = view.findViewById(R.id.c_new)
+        o_new = view.findViewById(R.id.o_new)
+        e_new = view.findViewById(R.id.e_new)
+        a_new = view.findViewById(R.id.a_new)
+        n_new = view.findViewById(R.id.n_new)
     }
 
 
@@ -502,7 +611,7 @@ class WakeUpProgram : Fragment() {
 
         time_tv.setOnClickListener {
             val strin: String = showDialog("Time Picker")
-            time_tv.setText(strin)
+            time_tv.setText("" + strin)
         }
 
 
@@ -547,7 +656,7 @@ class WakeUpProgram : Fragment() {
                     true
                 )
 
-                txt = "" + Calendar.HOUR_OF_DAY + " " + Calendar.MINUTE
+                txt = "" + Calendar.HOUR_OF_DAY + " : " + Calendar.MINUTE
                 dialog.dismiss()
 
             }
@@ -587,6 +696,17 @@ class WakeUpProgram : Fragment() {
         wake_up_video.setVideoURI(uri);
 //        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
         wake_up_video.start()
+
+    }
+
+    private fun setGear(
+        image1: ImageView,
+        image2: ImageView,
+        image3: ImageView,
+        image4: ImageView,
+        image5: ImageView
+    ){
+
 
     }
 }

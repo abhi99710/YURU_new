@@ -77,7 +77,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Ashok's Journal"
+                android:text="Users's Journal"
                 android:textColor="#000"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold"
@@ -168,9 +168,18 @@
             android:layout_height="@dimen/_25sdp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:visibility="gone"
             android:text="Skip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_back_jo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/arrow_toolbar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

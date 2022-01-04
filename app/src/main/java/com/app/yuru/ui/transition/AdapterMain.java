@@ -1,5 +1,6 @@
 package com.app.yuru.ui.transition;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -73,6 +74,13 @@ public class AdapterMain extends BaseAdapter {
         ImageView videoView = convertView.findViewById(R.id.gridIMageView);
 
 
+        cardsub.setOnClickListener(v->{
+
+            openDialog();
+
+        }
+
+        );
 
 //        Picasso.get().load(thumbnail.get(position)).into(videoView);
           Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
@@ -80,5 +88,14 @@ public class AdapterMain extends BaseAdapter {
 
         return convertView;
     }
-
+    public void openDialog() {
+        final Dialog dialog = new Dialog(context); // Context, this, etc.
+        dialog.setContentView(R.layout.dialogwakeupandevening);
+        dialog.setTitle("Video Dialog");
+        ImageView imageView = dialog.findViewById(R.id.canceldialog);
+        imageView.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        dialog.show();
+    }
 }

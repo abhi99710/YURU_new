@@ -39,7 +39,7 @@ class Splash2 : AppCompatActivity() {
         ctlr.setMediaPlayer(tts_vids)
 //        tts_vids.setMediaController(ctlr)
 
-        val uri =  Uri.parse("android.resource://" + this?.getPackageName() + "/R.raw/" + R.raw.splash1);
+        val uri =  Uri.parse("android.resource://" + this?.getPackageName() + "/R.raw/" + R.raw.splashparts);
         //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
 
 //                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
@@ -61,7 +61,7 @@ class Splash2 : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(16))
+        handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(22))  //16
     }
 
     override fun onPause() {

@@ -3,16 +3,15 @@ package com.app.yuru.ui.transition
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -40,8 +39,8 @@ class EveningProgram : Fragment(), View.OnClickListener {
 
     private lateinit var fiveEvening: TextView
     private lateinit var nineEvening: TextView
-    private lateinit var female_evening: ImageView
-    private lateinit var male_evening: ImageView
+    private lateinit var female_evening: TextView
+    private lateinit var male_evening: TextView
     private lateinit var viewAll_eve: TextView
 
     private var requestQueue: RequestQueue? = null
@@ -109,7 +108,18 @@ class EveningProgram : Fragment(), View.OnClickListener {
     private lateinit var half_video : ImageView
     private lateinit var short_video : ImageView
 
+    private lateinit var clFemale_eve : ConstraintLayout
+    private lateinit var clmale_eve : ConstraintLayout
+
     private var positionNew = 0
+
+    private lateinit var e_new : ImageView
+    private lateinit var a_new : ImageView
+    private lateinit var n_new : ImageView
+    private lateinit var o_new : ImageView
+    private lateinit var c_new : ImageView
+
+    private lateinit var videoevening : VideoView
 
 
     override fun onCreateView(
@@ -121,9 +131,61 @@ class EveningProgram : Fragment(), View.OnClickListener {
 
         findIds(view)  // find ids
 
+        videoevening = view.findViewById(R.id.videoevening)
+        videoPlay()
+
         apiVideos()  // api calling
 
         allClick()  // click listner
+
+        c_new = view.findViewById(R.id.c_new1)
+        o_new = view.findViewById(R.id.o_new1)
+        e_new = view.findViewById(R.id.e_new1)
+        a_new = view.findViewById(R.id.a_new1)
+        n_new = view.findViewById(R.id.n_new1)
+
+        /*all gear new setup click listner*/
+
+        o_new.setOnClickListener({
+            e_new.setImageResource(R.drawable.setting_o)
+            o_new.setImageResource(R.drawable.setting_a)
+            c_new.setImageResource(R.drawable.setting_n)
+            a_new.setImageResource(R.drawable.setting_c)
+            n_new.setImageResource(R.drawable.setting_e)
+        })
+
+        c_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_c)
+            o_new.setImageResource(R.drawable.setting_n)
+            c_new.setImageResource(R.drawable.setting_o)
+            a_new.setImageResource(R.drawable.setting_e)
+            n_new.setImageResource(R.drawable.setting_a)
+        }
+
+        e_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_e)
+            o_new.setImageResource(R.drawable.setting_o)
+            c_new.setImageResource(R.drawable.setting_c)
+            a_new.setImageResource(R.drawable.setting_a)
+            n_new.setImageResource(R.drawable.setting_n)
+        }
+
+        a_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_a)
+            o_new.setImageResource(R.drawable.setting_c)
+            c_new.setImageResource(R.drawable.setting_e)
+            a_new.setImageResource(R.drawable.setting_n)
+            n_new.setImageResource(R.drawable.setting_o)
+        }
+
+        n_new.setOnClickListener {
+            e_new.setImageResource(R.drawable.setting_n)
+            o_new.setImageResource(R.drawable.setting_e)
+            c_new.setImageResource(R.drawable.setting_a)
+            a_new.setImageResource(R.drawable.setting_o)
+            n_new.setImageResource(R.drawable.setting_c)
+        }
+
 
         save_evening.setOnClickListener {
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
@@ -132,34 +194,36 @@ class EveningProgram : Fragment(), View.OnClickListener {
             fragment.commit()
         }
 
+
+
         return view
     }
 
     private fun allClick() {
-        // short video click
+    /*    // short video click
         short_video.setOnClickListener {
             val intent = Intent(context, VideoActivity::class.java)
             if (clickedGender.equals("male")) {
                 if (clickedTime.equals("5min")) {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Male5Short.get(positionNew)
                     )
                 } else {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Male9Short.get(positionNew)
                     )
                 }
             } else {
                 if (clickedTime.equals("5min")) {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Female5Short.get(positionNew)
                     )
                 } else {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Female9Short.get(positionNew)
                     )
                 }
@@ -174,24 +238,24 @@ class EveningProgram : Fragment(), View.OnClickListener {
             if (clickedGender.equals("male")) {
                 if (clickedTime.equals("5min")) {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Male5Medium.get(positionNew)
                     )
                 } else {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Male9Medium.get(positionNew)
                     )
                 }
             } else {
                 if (clickedTime.equals("5min")) {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Female5Medium.get(positionNew)
                     )
                 } else {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Female9Medium.get(positionNew)
                     )
                 }
@@ -206,47 +270,63 @@ class EveningProgram : Fragment(), View.OnClickListener {
             if (clickedGender.equals("male")) {
                 if (clickedTime.equals("5min")) {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Male5Large.get(positionNew)
                     )
                 } else {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Male9Large.get(positionNew)
                     )
                 }
             } else {
                 if (clickedTime.equals("5min")) {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Female5Large.get(positionNew)
                     )
                 } else {
                     intent.putExtra(
-                        Constants.VIDEO_LINK, /*genderMale.get(position)*/
+                        Constants.VIDEO_LINK, *//*genderMale.get(position)*//*
                         url1Female9Large.get(positionNew)
                     )
                 }
             }
 
             startActivity(intent)
-        }
+        }*/
 
         // male click
         male_evening.setOnClickListener {
             context
+            female_evening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+            male_evening.setTextColor(Color.WHITE)
         }
 
         female_evening.setOnClickListener {
             context
+            male_evening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+            female_evening.setTextColor(Color.WHITE)
         }
 
         fiveEvening.setOnClickListener {
             context
+            nineEvening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+            fiveEvening.setTextColor(Color.WHITE)
         }
 
         nineEvening.setOnClickListener {
             context
+            fiveEvening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+            nineEvening.setTextColor(Color.WHITE)
         }
 
 
@@ -311,6 +391,9 @@ class EveningProgram : Fragment(), View.OnClickListener {
             short_video = view.findViewById(R.id.short_video)
             full_video = view.findViewById(R.id.full_video)
             half_video = view.findViewById(R.id.half_video)
+
+            clFemale_eve = view.findViewById(R.id.clFemale_eve)
+            clmale_eve = view.findViewById(R.id.clmale_eve)
         }
 
     }
@@ -512,6 +595,17 @@ class EveningProgram : Fragment(), View.OnClickListener {
         when (view?.id) {
 
             R.id.male_evening ->{
+
+                clmale_eve.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+                clFemale_eve.setBackgroundColor(Color.TRANSPARENT)
+//                male_evening.setImageResource(R.drawable.white_male)
+//                female_evening.setImageResource(R.drawable.female_tts)
+
+                female_evening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+                male_evening.setTextColor(Color.WHITE)
+
                 clickedGender = "male"
                 val adapterMain = AdapterEvening(
                     context,
@@ -527,6 +621,18 @@ class EveningProgram : Fragment(), View.OnClickListener {
                 gridEvening?.adapter = adapterMain
             }
             R.id.female_evening -> {
+
+                clFemale_eve.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
+                clmale_eve.setBackgroundColor(Color.TRANSPARENT)
+//                male_evening.setImageResource(R.drawable.male_tts)
+//                female_evening.setImageResource(R.drawable.white_female)
+
+
+                male_evening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+                female_evening.setTextColor(Color.WHITE)
+
                 clickedGender = "female"
 
                 val adapterMain = AdapterEvening(
@@ -543,6 +649,15 @@ class EveningProgram : Fragment(), View.OnClickListener {
                 gridEvening?.adapter = adapterMain
             }
             R.id.fiveEvening -> {
+
+//                fiveEvening.setBackgroundColor(Color.GRAY)
+//                nineEvening.setBackgroundColor(Color.BLACK)
+
+                nineEvening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+                fiveEvening.setTextColor(Color.WHITE)
+
                 clickedTime = "5min"
                 if (clickedGender.equals("male")){
                     val adapterMain = AdapterEvening(
@@ -575,6 +690,15 @@ class EveningProgram : Fragment(), View.OnClickListener {
 
             }
             R.id.nineEvening -> {
+
+//                fiveEvening.setBackgroundColor(Color.BLACK)
+//                nineEvening.setBackgroundColor(Color.GRAY)
+
+                fiveEvening.setTextColor(Color.GRAY)
+//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
+
+                nineEvening.setTextColor(Color.WHITE)
+
                 clickedTime = "9min"
                 if (clickedGender.equals("male")){
                     val adapterMain = AdapterEvening(
@@ -607,5 +731,24 @@ class EveningProgram : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun videoPlay() {
+        val ctlr = MediaController(context)
+        ctlr.setMediaPlayer(videoevening)
+//        tts_vids.setMediaController(ctlr)
 
+        val uri =
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.eveningvideo);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+
+//                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
+        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
+//        tts_vids.setMediaController(ctlr)
+
+        //        videoView.setVideoURI(uri);
+
+        videoevening.setVideoURI(uri);
+//        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
+        videoevening.start()
+
+    }
 }

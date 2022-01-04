@@ -36,9 +36,11 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
     List<String> filename;
     List<String> duration;
     Activity activity;
+//    List<String> thumb;
 
     public TtsAdapter(Context context, List<String> idParent, List<String> title, List<String> idChild, List<String> transition_id,
-                      List<String> medium, List<String> language_slug, List<String> filename, List<String> duration, Activity activity) {
+                      List<String> medium, List<String> language_slug, List<String> filename, List<String> duration, Activity activity
+                      /*List<String> thumb*/) {
         this.context = context;
         this.idParent = idParent;
         this.title = title;
@@ -49,6 +51,7 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
         this.filename = filename;
         this.duration = duration;
         this.activity = activity;
+//        this.thumb = thumb;
     }
 
     @NonNull
@@ -70,6 +73,8 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
         Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
                 .fit().centerCrop().noFade().into(holder.tts_videoview);
+//        Picasso.get().load(thumb.get(position))
+//                .fit().centerCrop().noFade().into(holder.tts_videoview);
 
         holder.save_ttsvids.setOnClickListener(v -> {
 //            context.startActivity(new Intent(activity, SleepEnhancer.class));

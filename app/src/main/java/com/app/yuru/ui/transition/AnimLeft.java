@@ -44,7 +44,7 @@ public class AnimLeft extends Fragment {
         //specify the location of media file
 //        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/media/1.mp4");
 
-        Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/R.raw/" + R.raw.splash1);
+        Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/R.raw/" + R.raw.rocket);
         //Setting MediaController and URI, then starting the videoView
 //        videoLoginAnim.setMediaController(mediaController);
         videoLeftAnim.setVideoURI(uri);

@@ -49,7 +49,7 @@ public class AnimLogin extends AppCompatActivity {
         //specify the location of media file
 //        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/media/1.mp4");
 
-        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.splash1);
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.rocket);
         //Setting MediaController and URI, then starting the videoView
 //        videoLoginAnim.setMediaController(mediaController);
         videoLoginAnim.setVideoURI(uri);

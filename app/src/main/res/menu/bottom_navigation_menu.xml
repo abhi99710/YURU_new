@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:id="@+id/home_nv"
-    android:title="Sleep1"
-    android:icon="@drawable/bottom_home"/>
+    android:title="Sleep"
+    android:icon="@drawable/yurunewicon"/>
 
     <item android:id="@+id/sleep_nv"
-        android:title="Sleep2"
+        android:title="Sleep+"
         android:icon="@drawable/bottom_sleep"
        />
 
 
     <item android:id="@+id/evening_nv"
         android:title="Evening"
-        android:icon="@drawable/bottom_english"/>
+        android:icon="@drawable/daynight"/>
     <item android:id="@+id/wakeup_nv"
         android:title="Wake Up"
-        android:icon="@drawable/bottom_wakeup"/>
+        android:icon="@drawable/sunrises"/>
 
     <item android:id="@+id/journal_nv"
         android:title="Journal"
