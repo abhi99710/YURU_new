@@ -55,6 +55,8 @@ class SleepEnhancer : Fragment() {
 
     private lateinit var tts_vids: VideoView
 
+    private lateinit var rightArraow_sleep : ImageView
+    private lateinit var leftArrow_sleep : ImageView
 
     private lateinit var seekBar1: VerticalSeekBar
 
@@ -65,6 +67,17 @@ class SleepEnhancer : Fragment() {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_sleep_enhancer, container, false)
 
+        rightArraow_sleep = view.findViewById(R.id.rightArraow_sleep)
+        rightArraow_sleep.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, SleepEnhancer2()).commit()
+        }
+
+        leftArrow_sleep = view.findViewById(R.id.leftArrow_sleep)
+        leftArrow_sleep.setOnClickListener {
+//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, AnimationOnLeft()).commit()
+                val i = Intent(requireActivity(), AnimationOnLeft::class.java)
+            startActivity(i)
+        }
 
         findIds(view)
 

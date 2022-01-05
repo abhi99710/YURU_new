@@ -79,7 +79,7 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
         setData(5, 10F)
     }
 
-    private fun apiGetCoupon() {
+  /*  private fun apiGetCoupon() {
         val url  = "https://promask.com.co/yuru/api/login"
 
         val stringRequest = object : StringRequest(
@@ -120,7 +120,7 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
         }
         requestQueue = Volley.newRequestQueue(context)
         requestQueue?.add(stringRequest)
-    }
+    }*/
 
     private fun setData(count: Int, range: Float) {
         val entries = ArrayList<PieEntry>()

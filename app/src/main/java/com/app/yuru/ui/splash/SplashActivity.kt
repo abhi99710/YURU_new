@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
 import com.app.yuru.ui.coupons.DiscountCode
@@ -22,8 +23,8 @@ class SplashActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             startActivity(Intent(this, PermissionActivity::class.java))
         } else {
-//        startActivity(Intent(this, Splash2::class.java))
-            startActivity(Intent(this, TransitionActivity::class.java))
+        startActivity(Intent(this, Splash2::class.java))
+//            startActivity(Intent(this, TransitionActivity::class.java))
 //        startActivity(Intent(this, Survey::class.java))
 //        startActivity(Intent(this, CalenderV::class.java))
         }
@@ -33,6 +34,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     override fun onResume() {

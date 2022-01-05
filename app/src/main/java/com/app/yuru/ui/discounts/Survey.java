@@ -149,7 +149,7 @@ public class Survey extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("userId", user);
+                map.put("userId", "12");
                 map.put("q1ID", ques_id.get(0));
                 map.put("q2ID", ques_id.get(1));
                 map.put("q3ID", ques_id.get(2));

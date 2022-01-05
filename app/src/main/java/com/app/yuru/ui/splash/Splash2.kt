@@ -5,7 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +19,19 @@ class Splash2 : AppCompatActivity() {
 
     private lateinit var tts_vids : VideoView
     private lateinit var skipSplash : Button
+    private lateinit var splash_next_btn : ImageView
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash2)
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        splash_next_btn = findViewById(R.id.splash_next_btn2)
+        splash_next_btn.setOnClickListener {
+            startActivity(Intent(this, Splash3::class.java))
+        }
 
         tts_vids = findViewById(R.id.tts_vids)
         skipSplash = findViewById(R.id.skipSplash)

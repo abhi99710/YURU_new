@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.ui.discounts.CouponApplied;
+import com.app.yuru.ui.transition.TransitionActivity;
 import com.app.yuru.utility.apivolley.APIVolley;
 
 import org.json.JSONException;
@@ -32,11 +34,21 @@ public class DiscountCode extends AppCompatActivity {
     private EditText enterCoupon;
     private String discount_code;
     private TextView resendCode;
+    private TextView discountCodeForTesting;
+    private Button skip_btn_discount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_code);
+
+        discountCodeForTesting = findViewById(R.id.discountCodeForTesting);
+        skip_btn_discount = findViewById(R.id.skip_btn_discount);
+        skip_btn_discount.setOnClickListener(v->{
+            startActivity(new Intent(this, TransitionActivity.class));
+        });
+
+
 
         resendCode = findViewById(R.id.resendCode);
 //        resendCode.setEnabled(false);
@@ -75,6 +87,9 @@ public class DiscountCode extends AppCompatActivity {
                 JSONObject jsonObject1 = jsonObject.getJSONObject("result");
                  discount_code = jsonObject1.getString("discount_code");
                 Toast.makeText(this, ""+discount_code, Toast.LENGTH_SHORT).show();
+
+                discountCodeForTesting.setText(discount_code);
+
                     if(!discount_code.equalsIgnoreCase("0")) {
                         apiSenderMail("1");
                     }

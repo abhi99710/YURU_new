@@ -50,9 +50,10 @@ public class CalenderV extends AppCompatActivity {
     private List<String> dated_list = new ArrayList<>();
 //    List<Calendar> highlighted = new ArrayList<>();
 //    private CalendarView calendarView;
-    CalendarPickerView calendar;
-    Button button;
-    List<String> mm = new ArrayList<>();
+    private CalendarPickerView calendar;
+    private Button button;
+//    private ProgressDialog progressDialog;
+    private List<String> mm = new ArrayList<>();
 
 
     private ProgressDialog progressDialog;
@@ -70,7 +71,8 @@ public class CalenderV extends AppCompatActivity {
 
         Thanks = findViewById(R.id.Thanks);
         Thanks.setOnClickListener(v->{
-            getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new TransitionToSleep()).commit();
+//            getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new TransitionToSleep()).commit();
+            startActivity(new Intent(this, TransitionActivity.class));
         });
 
 

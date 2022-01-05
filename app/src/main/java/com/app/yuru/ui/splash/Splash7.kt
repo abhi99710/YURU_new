@@ -5,6 +5,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.MediaController
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +18,21 @@ import java.util.concurrent.TimeUnit
 class Splash7 : AppCompatActivity() {
 
     private lateinit var tts_vids : VideoView
+    private lateinit var splash_next_btn : ImageView
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash7)
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         tts_vids = findViewById(R.id.slpash7mp4)
+
+        splash_next_btn = findViewById(R.id.splash_next_btn7)
+        splash_next_btn.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
 
         videoPlay()
