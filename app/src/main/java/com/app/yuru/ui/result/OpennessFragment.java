@@ -2,7 +2,6 @@ package com.app.yuru.ui.result;
 
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.Guideline;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;

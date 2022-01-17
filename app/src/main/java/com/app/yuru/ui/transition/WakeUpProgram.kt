@@ -16,6 +16,7 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -29,10 +30,11 @@ import com.app.yuru.utility.apivolley.APIVolley
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
+import java.time.Duration
 import java.util.*
 
 
-class WakeUpProgram : Fragment() {
+class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
 
     var wakeuprecy: GridView? = null
@@ -46,8 +48,10 @@ class WakeUpProgram : Fragment() {
     private lateinit var e_option: TextView
     private lateinit var a_option: TextView
     private lateinit var n_option: TextView
+
     private lateinit var female: TextView
     private lateinit var male: TextView
+
     private lateinit var optionAlarm_tv: ImageView
     private lateinit var time_tv: TextView
     private lateinit var am_tv: TextView
@@ -56,28 +60,14 @@ class WakeUpProgram : Fragment() {
     private lateinit var viewall: TextView
 
     private var id1Male: MutableList<String> = ArrayList()
-    private var category_nameMale: MutableList<String> = ArrayList()
-    private var language_nameMale: MutableList<String> = ArrayList()
-    private var genderMale: MutableList<String> = ArrayList()
-    private var traintMale: MutableList<String> = ArrayList()
-    private var durationMale: MutableList<String> = ArrayList()
-    private var url1Male: MutableList<String> = ArrayList()
-    private var thumbnailMale : MutableList<String> = ArrayList()
-
-    private var id1Female: MutableList<String> = ArrayList()
-    private var category_nameFemale: MutableList<String> = ArrayList()
-    private var language_nameFemale: MutableList<String> = ArrayList()
-    private var genderFemale: MutableList<String> = ArrayList()
-    private var traintFemale: MutableList<String> = ArrayList()
-    private var durationFemale: MutableList<String> = ArrayList()
-    private var url1Female: MutableList<String> = ArrayList()
-    private var thumbnailFemale : MutableList<String> = ArrayList()
+    private var fileURL: MutableList<String> = ArrayList()
+    private var thumb: MutableList<String> = ArrayList()
+    private var durationL: MutableList<String> = ArrayList()
+    private var traits: MutableList<String> = ArrayList()
+    private var fileName: MutableList<String> = ArrayList()
 
     private lateinit var cl_wakeup_female : ConstraintLayout
     private lateinit var cl_wakeup_male : ConstraintLayout
-
-
-    lateinit var progressDialog: ProgressDialog
 
     private lateinit var wake_up_video : VideoView
 
@@ -92,6 +82,10 @@ class WakeUpProgram : Fragment() {
     private lateinit var n_new : ImageView
     private lateinit var o_new : ImageView
     private lateinit var c_new : ImageView
+
+    var day = 0
+    var month: Int = 0
+    var year: Int = 0
 
 
     override fun onCreateView(
@@ -122,233 +116,155 @@ class WakeUpProgram : Fragment() {
 
 //                val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
-                val friday4: TextView = dialog.findViewById(R.id.friDay)
-                val sunday: TextView = dialog.findViewById(R.id.sunday)
-                val monDay: TextView = dialog.findViewById(R.id.monDay)
-                val tuesDay: TextView = dialog.findViewById(R.id.tuesDay)
-                val wedsnesDay: TextView = dialog.findViewById(R.id.wedsnesDay)
-                val thursDay: TextView = dialog.findViewById(R.id.thursDay)
-                val saturDay: TextView = dialog.findViewById(R.id.saturDay)
-                val everyDay: TextView = dialog.findViewById(R.id.everyDay)
-                val never: TextView = dialog.findViewById(R.id.never)
+                val friday4: CheckBox = dialog.findViewById(R.id.friCheck)
+                val sunday: CheckBox = dialog.findViewById(R.id.sunCheck)
+                val monDay: CheckBox = dialog.findViewById(R.id.monCheck)
+                val tuesDay: CheckBox = dialog.findViewById(R.id.tueCheck)
+                val wedsnesDay: CheckBox = dialog.findViewById(R.id.wedCheck)
+                val thursDay: CheckBox = dialog.findViewById(R.id.thuCheck)
+                val saturDay: CheckBox = dialog.findViewById(R.id.satCheck)
+                val everyDay: CheckBox = dialog.findViewById(R.id.everyCheck)
+                val never: CheckBox = dialog.findViewById(R.id.neverCheck)
+                var nd = "never"
 
-                friday4.setOnClickListener {
+                if(friday4.isChecked() == true){
                     dialog.dismiss()
+                    nd = "friday"
                     dayOfAlarm.text = "Friday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
-                never.setOnClickListener {
+                if(never.isChecked() == true) {
+                    sunday.isChecked = false
+                    monDay.isChecked = false
+                    thursDay.isChecked = false
+                    wedsnesDay.isChecked = false
+                    thursDay.isChecked = false
+                    friday4.isChecked = false
+                    saturDay.isChecked = false
+                    everyDay.isChecked = false
+
                     dialog.dismiss()
                     dayOfAlarm.text = "Never"
                     Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
                 }
-                everyDay.setOnClickListener {
+                if(everyDay.isChecked()) {
+                    sunday.isChecked = false
+                    monDay.isChecked = false
+                    thursDay.isChecked = false
+                    wedsnesDay.isChecked = false
+                    thursDay.isChecked = false
+                    friday4.isChecked = false
+                    saturDay.isChecked = false
+                    never.isChecked = false
+
                     dialog.dismiss()
                     dayOfAlarm.text = "Everyday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
-                saturDay.setOnClickListener {
+                if(saturDay.isChecked) {
                     dialog.dismiss()
                     dayOfAlarm.text = "Saturday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
-                sunday.setOnClickListener {
+                if(sunday.isChecked) {
                     dialog.dismiss()
                     dayOfAlarm.text = "Sunday"
                     Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
                 }
-                monDay.setOnClickListener {
+                if(monDay.isChecked) {
                     dialog.dismiss()
                     dayOfAlarm.text = "Monday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
-                tuesDay.setOnClickListener {
+                if(tuesDay.isChecked) {
                     dialog.dismiss()
                     dayOfAlarm.text = "Tuesday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
-                wedsnesDay.setOnClickListener {
+                if(wedsnesDay.isChecked) {
                     dialog.dismiss()
                     dayOfAlarm.text = "Wednesday"
                     Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
                 }
-                thursDay.setOnClickListener {
+                if(thursDay.isChecked) {
                     dialog.dismiss()
                     dayOfAlarm.text = "Thursday"
                     Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
                 }
 
-//                val logo: TextView = dialog.findViewById(R.id.logo)
-              /*  val repeat_dialog_tts: Button = dialog.findViewById(R.id.repeat_dialog_tts)
-                val sleep_dialog_tts: Button = dialog.findViewById(R.id.sleep_dialog_tts)
+            }
+        }
 
-                repeat_dialog_tts.setOnClickListener {
-                    val intent = Intent(context, VideoActivity::class.java)
-                    intent.putExtra(
-                        Constants.VIDEO_LINK,
-                        filename45.get(0) *//*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*//*
-                    )
-                    startActivity(intent)
-                    dialog.dismiss()
-                }*/
+        time_tv.setOnClickListener {
+            val calendar: Calendar = Calendar.getInstance()
+            day = calendar.get(Calendar.DAY_OF_MONTH)
+            month = calendar.get(Calendar.MONTH)
+            year = calendar.get(Calendar.YEAR)
 
 
-              /*  sleep_dialog_tts.setOnClickListener {
-                    val fragment = requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.framwQts, SleepEnhancer())
-                    fragment.addToBackStack(null)
-                    fragment.commit()
+           val mHour = calendar.get(Calendar.HOUR_OF_DAY);
+          val mMinute = calendar.get(Calendar.MINUTE);
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
 
-                    dialog.dismiss()
-                }*/
+                time_tv.text = SimpleDateFormat("HH:mm").format(calendar.time)
+            }
+
+            time_tv.setOnClickListener {
+                TimePickerDialog.THEME_DEVICE_DEFAULT_DARK
+                TimePickerDialog(context,R.style.MyTimePickerDialogTheme, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+
 
             }
+
+
+
         }
 
 
         allClickListner()
 
-        progressDialog = ProgressDialog(context)
-        progressDialog.show()
-        progressDialog.setCancelable(false)
-        progressDialog.setMessage("Loading...")
-
-//        requireActivity().fragmentManager.beginTransaction().
 
         videoPlay()
 
-        apiVideos()
+        apiVideos("45sec", "O")
 
-//        go()
-
-        timePicker()
         return view
     }
 
     private fun allClickListner() {
 
         female.setOnClickListener {
-            Toast.makeText(context, "female", Toast.LENGTH_SHORT).show()
-
-//            cl_wakeup_female.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-//            cl_wakeup_male.setBackgroundColor(Color.TRANSPARENT)
 
             male.setTextColor(Color.GRAY)
-//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
-
             female.setTextColor(Color.WHITE)
 
-            val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_bold)
-            female.setTypeface(typeface)
+            clickedGender = "90sec"
 
-            val typeface1: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_semibold)
-            male.setTypeface(typeface)
-
-            clickedGender = "female"
-
-            val adapterMain = AdapterMain(
-                context,
-                id1Female,
-                category_nameFemale,
-                language_nameFemale,
-                genderFemale,
-                traintFemale,
-                durationFemale,
-                url1Female,
-                thumbnailFemale
-            )
-            wakeuprecy?.adapter = adapterMain
 
         }
 
         male.setOnClickListener {
-            Toast.makeText(context, "male", Toast.LENGTH_SHORT).show()
-
-//            cl_wakeup_male.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
-//            cl_wakeup_female.setBackgroundColor(Color.TRANSPARENT)
 
             female.setTextColor(Color.GRAY)
-//            male_tts_cl.setBackgroundColor(resources.getColor(R.color.white))
-
             male.setTextColor(Color.WHITE)
 
-
-            //or to support all versions use
-            //or to support all versions use
-            val typeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_bold)
-            male.setTypeface(typeface)
-
-            val typeface1: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.raleway_semibold)
-            female.setTypeface(typeface)
-
-            clickedGender = "male"
-
-            val adapterMain = AdapterMain(
-                context,
-                id1Male,
-                category_nameMale,
-                language_nameMale,
-                genderMale,
-                traintMale,
-                durationMale,
-                url1Male,
-                thumbnailMale
-            )
-            wakeuprecy?.adapter = adapterMain
-        }
-
-        o_option.setOnClickListener {
-
-            textColor(o_option, c_option, e_option, a_option, n_option)
-
-            Toast.makeText(context, "O", Toast.LENGTH_SHORT).show()
-        }
-
-        c_option.setOnClickListener {
-            textColor(c_option, o_option, e_option, a_option, n_option)
-            Toast.makeText(context, "C", Toast.LENGTH_SHORT).show()
+            clickedGender = "45sec"
 
         }
-        e_option.setOnClickListener {
-            textColor(e_option, c_option, o_option, a_option, n_option)
 
-            Toast.makeText(context, "E", Toast.LENGTH_SHORT).show()
-        }
-
-        a_option.setOnClickListener {
-            textColor(a_option, e_option, c_option, o_option, n_option)
-
-            Toast.makeText(context, "A", Toast.LENGTH_SHORT).show()
-
-        }
-        n_option.setOnClickListener {
-            textColor(n_option, a_option, e_option, c_option, o_option)
-
-            Toast.makeText(context, "N", Toast.LENGTH_SHORT).show()
-
-        }
 
         save_wakeup.setOnClickListener {
-//            val fragment = requireActivity().supportFragmentManager.beginTransaction()
-//                .replace(R.id.framwQts, EveningProgram())
-//            fragment.addToBackStack(null)
-//            fragment.commit()
+
             val intent = Intent(context, Journals::class.java)
             startActivity(intent)
         }
 
-        viewall.setOnClickListener {
-//            val intent = Intent(context, BasicActivity::class.java)
-//            context?.startActivity(intent)
-        }
-
-        optionAlarm_tv.setOnClickListener {
-
-        }
 
         pm_tv.setOnClickListener {
             pm_tv.setBackgroundResource(R.drawable.wakeup_selected)
@@ -364,6 +280,11 @@ class WakeUpProgram : Fragment() {
         /*all gear new setup click listner*/
 
         o_new.setOnClickListener({
+            if(clickedGender.equals("45sec")){
+                apiVideos("45sec", "O")
+            }else{
+                apiVideos("90sec", "O")
+            }
             e_new.setImageResource(R.drawable.setting_o)
             o_new.setImageResource(R.drawable.setting_a)
             c_new.setImageResource(R.drawable.setting_n)
@@ -372,6 +293,11 @@ class WakeUpProgram : Fragment() {
         })
 
         c_new.setOnClickListener {
+            if(clickedGender.equals("45sec")){
+                apiVideos("45sec", "C")
+            }else{
+                apiVideos("90sec", "C")
+            }
             e_new.setImageResource(R.drawable.setting_c)
             o_new.setImageResource(R.drawable.setting_n)
             c_new.setImageResource(R.drawable.setting_o)
@@ -380,6 +306,11 @@ class WakeUpProgram : Fragment() {
         }
 
         e_new.setOnClickListener {
+            if(clickedGender.equals("45sec")){
+                apiVideos("45sec", "E")
+            }else{
+                apiVideos("90sec", "E")
+            }
             e_new.setImageResource(R.drawable.setting_e)
             o_new.setImageResource(R.drawable.setting_o)
             c_new.setImageResource(R.drawable.setting_c)
@@ -388,6 +319,11 @@ class WakeUpProgram : Fragment() {
         }
 
         a_new.setOnClickListener {
+            if(clickedGender.equals("45sec")){
+                apiVideos("45sec", "A")
+            }else{
+                apiVideos("90sec", "A")
+            }
             e_new.setImageResource(R.drawable.setting_a)
             o_new.setImageResource(R.drawable.setting_c)
             c_new.setImageResource(R.drawable.setting_e)
@@ -396,6 +332,11 @@ class WakeUpProgram : Fragment() {
         }
 
         n_new.setOnClickListener {
+            if(clickedGender.equals("45sec")){
+                apiVideos("45sec", "N")
+            }else{
+                apiVideos("90sec", "N")
+            }
             e_new.setImageResource(R.drawable.setting_n)
             o_new.setImageResource(R.drawable.setting_e)
             c_new.setImageResource(R.drawable.setting_a)
@@ -411,6 +352,7 @@ class WakeUpProgram : Fragment() {
         e_option = view.findViewById(R.id.e_option)
         a_option = view.findViewById(R.id.a_option)
         n_option = view.findViewById(R.id.n_option)
+
         female = view.findViewById(R.id.female)
         male = view.findViewById(R.id.male)
         optionAlarm_tv = view.findViewById(R.id.optionAlarm_tv)
@@ -431,123 +373,90 @@ class WakeUpProgram : Fragment() {
     }
 
 
-    private fun go() {
+//    private fun go() {
+//
+//        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
+//
+//        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+//        val calendar = Calendar.getInstance()
+//        val calList: MutableList<Calendar> = ArrayList()
+//
+//        for (i in 0..4) {
+//            calList.add(calendar)
+//        }
+//
+//        val stringBuilder = ""
+//
+//        for (calItem in calList) {
+//            calItem.add(Calendar.SECOND, 10)
+//
+//            val requestCode = (calendar.timeInMillis / 1000).toInt()
+//            val intent = Intent(context, MyReceiver::class.java)
+//            intent.putExtra("REQUEST_CODE", requestCode)
+//            intent.putExtra("fragment", "wakeup")
+//            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+//            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+//
+//            val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
+//
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                alarmManager?.setExactAndAllowWhileIdle(
+//                    AlarmManager.RTC_WAKEUP,
+//                    calItem.timeInMillis,
+//                    pi
+//                )
+//            } else {
+//                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+//            }
+//
+//
+//
+//            Toast.makeText(context, "Alarm has been set : \n " + stringBuilder, Toast.LENGTH_SHORT)
+//                .show()
+//
+//        }
+//    }
 
-        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
 
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-        val calendar = Calendar.getInstance()
-        val calList: MutableList<Calendar> = ArrayList()
-
-        for (i in 0..4) {
-            calList.add(calendar)
-        }
-
-        val stringBuilder = ""
-
-        for (calItem in calList) {
-            calItem.add(Calendar.SECOND, 10)
-
-            val requestCode = (calendar.timeInMillis / 1000).toInt()
-            val intent = Intent(context, MyReceiver::class.java)
-            intent.putExtra("REQUEST_CODE", requestCode)
-            intent.putExtra("fragment", "wakeup")
-            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
-
-            val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager?.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calItem.timeInMillis,
-                    pi
-                )
-            } else {
-                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-            }
-
-
-
-            Toast.makeText(context, "Alarm has been set : \n " + stringBuilder, Toast.LENGTH_SHORT)
-                .show()
-
-        }
-    }
-
-
-    private fun apiVideos() {
-        val url = APIVolley.videosApi
+    private fun apiVideos(duration: String, trait : String) {
+        val url = "https://promask.com.co/yuru/api/web/getAllEveningProgram"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
 
         val stringRequest = object : StringRequest(
-            Method.GET, url,
-            Response.Listener<String> { response ->
+            Method.POST, url,
+            Response.Listener { response ->
                 try {
-                    progressDialog.dismiss()
+                    process.dismiss()
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")
 
                     id1Male.clear()
-                    category_nameMale.clear()
-                    language_nameMale.clear()
-                    genderMale.clear()
-                    traintMale.clear()
-                    durationMale.clear()
-                    url1Male.clear()
-                    genderFemale.clear()
-                    traintFemale.clear()
-                    durationFemale.clear()
-                    url1Female.clear()
-                    id1Female.clear()
-                    category_nameFemale.clear()
-                    language_nameFemale.clear()
-                    thumbnailFemale.clear()
-                    thumbnailMale.clear()
+                    fileName.clear()
+                    traits.clear()
+                    durationL.clear()
+                    thumb.clear()
+                    fileURL.clear()
 
                     for (i in 0 until jsonArray.length()) {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
-                        if (jsonObject1.getString("gender").equals("Male")) {
+
                             id1Male.add(jsonObject1.getString("id"))
-                            category_nameMale.add(jsonObject1.getString("category_name"))
-                            language_nameMale.add(jsonObject1.getString("language_name"))
-                            genderMale.add(jsonObject1.getString("gender"))
-                            traintMale.add(jsonObject1.getString("traint"))
-                            durationMale.add(jsonObject1.getString("duration"))
-                            url1Male.add(jsonObject1.getString("url"))
-                            thumbnailMale.add(jsonObject1.getString("thumb"))
-                        } else {
-                            id1Female.add(jsonObject1.getString("id"))
-                            category_nameFemale.add(jsonObject1.getString("category_name"))
-                            language_nameFemale.add(jsonObject1.getString("language_name"))
-                            genderFemale.add(jsonObject1.getString("gender"))
-                            traintFemale.add(jsonObject1.getString("traint"))
-                            durationFemale.add(jsonObject1.getString("duration"))
-                            url1Female.add(jsonObject1.getString("url"))
-                            thumbnailFemale.add(jsonObject1.getString("thumb"))
-
-                        }
-
+                            fileName.add(jsonObject1.getString("fileName"))
+                            traits.add(jsonObject1.getString("traits"))
+                            durationL.add(jsonObject1.getString("duration"))
+                            thumb.add(jsonObject1.getString("thumb"))
+                            fileURL.add(jsonObject1.getString("fileURL"))
 
                     }
 
                     adapterConnects()
 
-
-                    /* if(obj.getString("msg").equals("Logged Successfully")) {
-
- //                        val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
- //                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
- //
- //                        editor.putString("email",jsonObject.getString("email"))
- //                        editor.apply()
- //                        editor.commit()
-
- //                        intent = Intent(applicationContext, Dashboard::class.java)
- //                        startActivity(intent)
-                     }*/
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -557,13 +466,13 @@ class WakeUpProgram : Fragment() {
                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
                 }
             }) {
-//            @Throws(AuthFailureError::class)
-//            override fun getParams(): Map<String, String> {
-//                val params = HashMap<String, String>()
-//                params.put("roleType", "admin")
-//
-//                return params
-//            }
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("duration", duration)
+                params.put("trait", trait)
+                return params
+            }
         }
         requestQueue = Volley.newRequestQueue(context)
         requestQueue?.add(stringRequest)
@@ -572,143 +481,46 @@ class WakeUpProgram : Fragment() {
     private fun adapterConnects() {
         val adapterMain = AdapterMain(
             context,
-            id1Female,
-            category_nameFemale,
-            language_nameFemale,
-            genderFemale,
-            traintFemale,
-            durationFemale,
-            url1Female,
-            thumbnailFemale
+           id1Male,
+            fileName,
+            traits,
+            durationL,
+            thumb,
+            fileURL
         )
         wakeuprecy?.adapter = adapterMain
 
         wakeuprecy?.setOnItemClickListener { parent, view, position, id ->
 
-//            Toast.makeText(
-//                context,
-//                "" + category_nameFemale.get(position),
-//                Toast.LENGTH_SHORT
-//            ).show()
+
             val intent = Intent(context, VideoActivity::class.java)
-            if (clickedGender.equals("male")) {
                 intent.putExtra(
-                    Constants.VIDEO_LINK, /*genderMale.get(position)*/
-                    url1Male.get(position)
+                    Constants.VIDEO_LINK,
+                    fileURL.get(position)
                 )
-            } else {
-                intent.putExtra(
-                    Constants.VIDEO_LINK, /*genderFemale.get(position)*/
-                    url1Female.get(position)
-                )
-            }
+
             startActivity(intent)
         }
     }
 
 
-    fun timePicker() {
-
-        time_tv.setOnClickListener {
-            val strin: String = showDialog("Time Picker")
-            time_tv.setText("" + strin)
-        }
-
-
-//        time_tv.setOnClickListener {
-//
-//            val mTimePicker: TimePickerDialog
-//            mTimePicker = TimePickerDialog(
-//                context,
-//                { timePicker, selectedHour, selectedMinute -> time_tv.setText("$selectedHour:$selectedMinute") },
-//                hours,
-//                minutes,
-//                true
-//            ) //Yes 24 hour time
-//
-//            mTimePicker.setTitle("Select Time")
-//             mTimePicker.updateTime(11,45)
-//            mTimePicker.show()
-//
-
-//        }
-
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        val myHour = hourOfDay
+        val myMinute = minute
+        time_tv.text = "$myHour : $myMinute"
     }
 
-    private fun showDialog(title: String): String {
-        val dialog = context?.let { Dialog(it) }
-        var txt = ""
-        if (dialog != null) {
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setCancelable(false)
-            dialog.setContentView(R.layout.dialog_time_picker)
-            dialog.show()
-
-            val closebtndialog = dialog.findViewById<TextView>(R.id.alarmToggle)
-            closebtndialog.setOnClickListener {
-
-                val mTimePicker: TimePickerDialog
-                mTimePicker = TimePickerDialog(
-                    context,
-                    { timePicker, selectedHour, selectedMinute -> time_tv.setText("$selectedHour:$selectedMinute") },
-                    hours,
-                    minutes,
-                    true
-                )
-
-                txt = "" + Calendar.HOUR_OF_DAY + " : " + Calendar.MINUTE
-                dialog.dismiss()
-
-            }
-
-        }
-
-        return txt
-    }
-
-
-    fun textColor(tv1: TextView, tv2: TextView, tv3: TextView, tv4: TextView, tv5: TextView) {
-
-        tv1.setBackgroundColor(Color.parseColor("#FFC107")) // Yellow
-
-        // Black
-        tv2.setBackgroundColor(Color.parseColor("#000000"))
-        tv3.setBackgroundColor(Color.parseColor("#000000"))
-        tv4.setBackgroundColor(Color.parseColor("#000000"))
-        tv5.setBackgroundColor(Color.parseColor("#000000"))
-
-    }
 
     private fun videoPlay() {
         val ctlr = MediaController(context)
         ctlr.setMediaPlayer(wake_up_video)
-//        wake_up_video.setMediaController(ctlr)
 
         val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
-        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-
-//                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.lop);
-        //        Uri uri = Uri.parse("https://invoiz-assets.s3.amazonaws.com/hearts.mp4");
-//        wake_up_video.setMediaController(ctlr)
-
-        //        videoView.setVideoURI(uri);
-
         wake_up_video.setVideoURI(uri);
-//        tts_vids.setVideoPath("https://invoiz-assets.s3.amazonaws.com/hearts.mp4")
         wake_up_video.start()
 
     }
 
-    private fun setGear(
-        image1: ImageView,
-        image2: ImageView,
-        image3: ImageView,
-        image4: ImageView,
-        image5: ImageView
-    ){
-
-
-    }
 }
 
 

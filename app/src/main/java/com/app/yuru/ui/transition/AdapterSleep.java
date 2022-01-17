@@ -13,27 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.yuru.R;
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
 import com.app.yuru.corescheduler.utils.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
-    Context context;
-    List<String> ids;
-    List<String> language_slug;
-    List<String> gender;
-    List<String> traint;
-    List<String> sleep_id;
-    List<String> duration;
-    List<String> url;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-    public AdapterSleep(Context context, List<String> ids, List<String> language_slug, List<String>
-            gender, List<String> traint, List<String> sleep_id, List<String> duration, List<String> url) {
+public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
+    final Context context;
+    final List<String> ids;
+    final List<String> traint;
+    final List<String> thumb;
+    final List<String> duration;
+    final List<String> url;
+
+    public AdapterSleep(Context context, List<String> ids,  List<String> traint, List<String> thumb, List<String> duration, List<String> url) {
         this.context = context;
         this.ids = ids;
-        this.language_slug = language_slug;
-        this.gender = gender;
         this.traint = traint;
-        this.sleep_id = sleep_id;
+        this.thumb = thumb;
         this.duration = duration;
         this.url = url;
     }
@@ -42,11 +40,14 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recyclersleep, parent, false);
-        return new AdapterSleep.MyHolder(view);
+        return new MyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+
+
+        Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg").fit().into(holder.sleep_videoview);
 
         holder.sleep_videoview.setOnClickListener(v->
         {
@@ -61,8 +62,8 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
         return url.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder {
-        ImageView sleep_videoview;
+    public static class MyHolder extends RecyclerView.ViewHolder {
+        final ImageView sleep_videoview;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
 

@@ -1,7 +1,5 @@
 package com.app.yuru.ui.lowvshigh;
 
-import com.android.volley.toolbox.StringRequest;
-
 public class ModelLowHigh {
     private String id;
     private String question_text;

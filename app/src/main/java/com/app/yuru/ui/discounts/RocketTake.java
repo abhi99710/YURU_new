@@ -6,17 +6,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.app.yuru.R;
-import com.app.yuru.ui.getStarted.GetStartedActivity;
 
 public class RocketTake extends AppCompatActivity {
 
-    private VideoView rocketVideo;
-//    private Button skipLogin;
+    //    private Button skipLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +28,7 @@ public class RocketTake extends AppCompatActivity {
             startActivity(intent);
         },6000);
 
-        rocketVideo = findViewById(R.id.rocketVideo);
+        VideoView rocketVideo = findViewById(R.id.rocketVideo);
         //Creating MediaController
         MediaController mediaController= new MediaController(this);
         mediaController.setAnchorView(rocketVideo);

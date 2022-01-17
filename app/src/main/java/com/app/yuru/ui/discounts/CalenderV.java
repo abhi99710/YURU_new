@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -20,10 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.ui.transition.TransitionActivity;
-import com.app.yuru.ui.transition.TransitionToSleep;
-import com.applandeo.materialcalendarview.CalendarView;
-import com.applandeo.materialcalendarview.EventDay;
-import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.savvi.rangedatepicker.CalendarPickerView;
 import com.savvi.rangedatepicker.SubTitle;
 
@@ -33,8 +28,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,14 +39,13 @@ import java.util.Map;
 
 public class CalenderV extends AppCompatActivity {
 
-    private Button Thanks;
-    private List<String> dated_list = new ArrayList<>();
+    private final List<String> dated_list = new ArrayList<>();
 //    List<Calendar> highlighted = new ArrayList<>();
 //    private CalendarView calendarView;
     private CalendarPickerView calendar;
     private Button button;
 //    private ProgressDialog progressDialog;
-    private List<String> mm = new ArrayList<>();
+    private final List<String> mm = new ArrayList<>();
 
 
     private ProgressDialog progressDialog;
@@ -69,8 +61,8 @@ public class CalenderV extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        Thanks = findViewById(R.id.Thanks);
-        Thanks.setOnClickListener(v->{
+        Button thanks = findViewById(R.id.Thanks);
+        thanks.setOnClickListener(v->{
 //            getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new TransitionToSleep()).commit();
             startActivity(new Intent(this, TransitionActivity.class));
         });
@@ -161,12 +153,10 @@ public class CalenderV extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show();
-        }){
+        }, error -> Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show()){
             @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
                 map.put("userId", "12");
                 return map;

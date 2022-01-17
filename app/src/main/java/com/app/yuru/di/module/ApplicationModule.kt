@@ -1,3 +1,5 @@
+@file:Suppress("Annotator", "Annotator")
+
 package com.app.yuru.di.module
 
 import com.app.yuru.BuildConfig

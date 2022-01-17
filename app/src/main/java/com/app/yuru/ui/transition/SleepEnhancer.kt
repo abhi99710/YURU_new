@@ -3,6 +3,7 @@ package com.app.yuru.ui.transition
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -18,7 +19,15 @@ import android.view.animation.TranslateAnimation
 import android.widget.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.Fragment
+import com.android.volley.AuthFailureError
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.app.yuru.R
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
 
 
@@ -32,6 +41,7 @@ class SleepEnhancer : Fragment() {
     lateinit var arrowRight2: ImageView
     lateinit var center1: ImageView
     lateinit var center2: ImageView
+    lateinit var resetBtn : TextView
     lateinit var save_sleep_enhancer: TextView
     private var left_1_count = 0   //count for left click for image 1
     private var right_1_count = 0  //count for right click for image 1
@@ -59,6 +69,15 @@ class SleepEnhancer : Fragment() {
     private lateinit var leftArrow_sleep : ImageView
 
     private lateinit var seekBar1: VerticalSeekBar
+    private lateinit var showOptionclick : ImageView
+
+    private var id45: MutableList<String> = ArrayList()
+    private var fileName: MutableList<String> = ArrayList()
+    private var fileURL: MutableList<String> = ArrayList()
+    private var isActive: MutableList<String> = ArrayList()
+
+    private var requestQueue: RequestQueue? = null
+    private var urlL = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,6 +85,9 @@ class SleepEnhancer : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_sleep_enhancer, container, false)
+
+        findIds(view)
+
 
         rightArraow_sleep = view.findViewById(R.id.rightArraow_sleep)
         rightArraow_sleep.setOnClickListener {
@@ -79,7 +101,21 @@ class SleepEnhancer : Fragment() {
             startActivity(i)
         }
 
-        findIds(view)
+        hideOptions()
+
+        apiVideos()
+
+        resetBtn = view.findViewById(R.id.resetBtn)
+        resetBtn.setOnClickListener {
+            hideOptions()
+        }
+
+        showOptionclick = view.findViewById(R.id.showOptionclick)
+        showOptionclick.setOnClickListener {
+            showOptions()
+            showOptionclick.visibility = View.INVISIBLE
+        }
+
 
         save_sleep_enhancer.setOnClickListener {
             go(answerForLeft)
@@ -285,7 +321,8 @@ class SleepEnhancer : Fragment() {
     }
 
 
-    private fun go(ans: Int) {
+    private fun 
+            go(ans: Int) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
         val calList: MutableList<Calendar> = ArrayList()
@@ -314,13 +351,88 @@ class SleepEnhancer : Fragment() {
 
     private fun videoPlay() {
         val ctlr = MediaController(context)
-//        ctlr.setMediaPlayer(tts_vids)
-//        tts_vids.setMediaController(ctlr)
+
         val uri =
-            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.moonset);
-//        tts_vids.setMediaController(ctlr)
+            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.sl2);
         tts_vids.setVideoURI(uri);
         tts_vids.start()
+    }
+
+    fun hideOptions(){
+        showAns.visibility = View.INVISIBLE
+        showAns2.visibility = View.INVISIBLE
+        bottom_1.visibility = View.INVISIBLE
+        bottom2.visibility = View.INVISIBLE
+        arrowLeft1.visibility = View.INVISIBLE
+        arrowRight1.visibility = View.INVISIBLE
+        arrowLeft2.visibility = View.INVISIBLE
+        arrowRight2.visibility = View.INVISIBLE
+        showAdd1.visibility = View.INVISIBLE
+        showAdd2.visibility = View.INVISIBLE
+    }
+
+    fun showOptions(){
+        showAns.visibility = View.VISIBLE
+        showAns2.visibility = View.VISIBLE
+        bottom_1.visibility = View.VISIBLE
+        bottom2.visibility = View.VISIBLE
+        arrowLeft1.visibility = View.VISIBLE
+        arrowRight1.visibility = View.VISIBLE
+        arrowLeft2.visibility = View.VISIBLE
+        arrowRight2.visibility = View.VISIBLE
+        showAdd1.visibility = View.VISIBLE
+        showAdd2.visibility = View.VISIBLE
+    }
+
+    private fun apiVideos() {
+        val url = "https://promask.com.co/yuru/api/web/getAllSleepEnhancerMaster"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.GET, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+
+                    val obj = JSONObject(response)
+                    var jsonObject = obj.getJSONObject("result")
+                    val jsonArray = jsonObject.getJSONArray("data")
+
+                    id45.clear()
+                    fileName.clear()
+                    fileURL.clear()
+                    isActive.clear()
+
+
+                    for (i in 0 until jsonArray.length()) {
+
+                        var jsonObject1 = jsonArray.getJSONObject(i)
+
+                        id45.add(jsonObject1.getString("id"))
+                        fileName.add(jsonObject1.getString("fileName"))
+                        fileURL.add(jsonObject1.getString("fileURL"))
+                        isActive.add(jsonObject1.getString("isActive"))
+
+                        if(isActive.equals("1")){
+                            urlL = jsonObject1.getString("isActive")
+                        }
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
     }
 
 }

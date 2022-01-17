@@ -32,15 +32,11 @@ import java.util.Map;
 
 public class Survey extends AppCompatActivity {
 
-    private List<String> question = new ArrayList<>();
-    private List<String> ques_id = new ArrayList<>();
-    private Button btn_survey_submit;
+    private final List<String> question = new ArrayList<>();
+    private final List<String> ques_id = new ArrayList<>();
     private TextView ques1, ques2, ques3, ques4, ques5;
     private ProgressDialog progressDialog;
     private RadioGroup radioGroup, radioGroup2, radioGroup3, radioGroup4, radioGroup5;
-    private RadioButton rb1Q1, rb2Q1, rb3Q1, rb4Q1, rb5Q1;
-    private RadioButton rb1Q2, rb2Q2, rb3Q2, rb4Q2, rb5Q2;
-    private RadioButton rb1Q3, rb2Q3, rb3Q3, rb4Q3, rb5Q3;
     private RadioButton rb1Q4, rb2Q4, rb3Q4, rb4Q4, rb5Q4;
     private RadioButton rb1Q5, rb2Q5, rb3Q5, rb4Q5, rb5Q5;
     private RadioButton radioButton1, radioButton2, radioButton3, radioButton4, radioButton5;
@@ -58,8 +54,7 @@ public class Survey extends AppCompatActivity {
         progressDialog.show();
 
 
-
-        btn_survey_submit = findViewById(R.id.btn_survey_submit);
+        Button btn_survey_submit = findViewById(R.id.btn_survey_submit);
         btn_survey_submit.setOnClickListener(v->{
 
             int selectedId1 = radioGroup.getCheckedRadioButtonId();
@@ -110,9 +105,7 @@ public class Survey extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show();
-        });
+        }, error -> Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
@@ -141,13 +134,11 @@ public class Survey extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show();
-        })
+        }, error -> Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show())
         {
             @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
                 map.put("userId", "12");
                 map.put("q1ID", ques_id.get(0));
@@ -182,23 +173,23 @@ public class Survey extends AppCompatActivity {
 //        radioGroup4 = findViewById(R.id.radioGroup4);
 //        radioGroup5 = findViewById(R.id.radioGroup5);
 
-        rb1Q1 = findViewById(R.id.rb1Q1);
-        rb2Q1 = findViewById(R.id.rb2Q1);
-        rb3Q1 = findViewById(R.id.rb3Q1);
-        rb4Q1 = findViewById(R.id.rb4Q1);
-        rb5Q1 = findViewById(R.id.rb5Q1);
+        RadioButton rb1Q1 = findViewById(R.id.rb1Q1);
+        RadioButton rb2Q1 = findViewById(R.id.rb2Q1);
+        RadioButton rb3Q1 = findViewById(R.id.rb3Q1);
+        RadioButton rb4Q1 = findViewById(R.id.rb4Q1);
+        RadioButton rb5Q1 = findViewById(R.id.rb5Q1);
 
-        rb1Q2 = findViewById(R.id.rb1Q2);
-        rb2Q2 = findViewById(R.id.rb2Q2);
-        rb3Q2 = findViewById(R.id.rb3Q2);
-        rb4Q2 = findViewById(R.id.rb4Q2);
-        rb5Q2 = findViewById(R.id.rb5Q2);
+        RadioButton rb1Q2 = findViewById(R.id.rb1Q2);
+        RadioButton rb2Q2 = findViewById(R.id.rb2Q2);
+        RadioButton rb3Q2 = findViewById(R.id.rb3Q2);
+        RadioButton rb4Q2 = findViewById(R.id.rb4Q2);
+        RadioButton rb5Q2 = findViewById(R.id.rb5Q2);
 
-        rb1Q3 = findViewById(R.id.rb1Q3);
-        rb2Q3 = findViewById(R.id.rb2Q3);
-        rb3Q3 = findViewById(R.id.rb3Q3);
-        rb4Q3 = findViewById(R.id.rb4Q3);
-        rb5Q3 = findViewById(R.id.rb5Q3);
+        RadioButton rb1Q3 = findViewById(R.id.rb1Q3);
+        RadioButton rb2Q3 = findViewById(R.id.rb2Q3);
+        RadioButton rb3Q3 = findViewById(R.id.rb3Q3);
+        RadioButton rb4Q3 = findViewById(R.id.rb4Q3);
+        RadioButton rb5Q3 = findViewById(R.id.rb5Q3);
 
 //        rb1Q1 = findViewById(R.id.rb1Q1);
 //        rb2Q1 = findViewById(R.id.rb2Q1);

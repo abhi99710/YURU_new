@@ -21,28 +21,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder> {
-    Context context;
-    private List<String> ids;
-    private List<String> user_id;
-    private List<String> title;
-    private List<String> date_time;
-    private List<String> description;
-    private List<String> created_at;
-    private List<String> updated_at;
-    ListInterface listInterface;
-    private List<String> selectedIds;
+    final Context context;
+    private final List<String> ids;
+    private final List<String> title;
+    private final List<String> date_time;
+    private final List<String> description;
+    final ListInterface listInterface;
+    private final List<String> selectedIds;
 
 
     public AdapterJornals(Context context, List<String> ids, List<String> user_id, List<String> title, List<String> date_time, List<String> description,
                           List<String> created_at, List<String> updated_at, ListInterface listInterface) {
         this.context = context;
         this.ids = ids;
-        this.user_id = user_id;
         this.title = title;
         this.date_time = date_time;
         this.description = description;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
         this.listInterface = listInterface;
         selectedIds = new ArrayList<>();
     }

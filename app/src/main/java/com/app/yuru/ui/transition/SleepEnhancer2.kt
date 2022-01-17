@@ -8,6 +8,8 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,13 +17,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.TranslateAnimation
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -72,38 +74,22 @@ class SleepEnhancer2 : Fragment() {
         0.0f  // saves the position to which the second imageview slides left side
     private var countClicked = 0
 
+    private lateinit var resetBtn2 : TextView
+    private lateinit var showOptionSelect : ImageView
 
     private var id45: MutableList<String> = ArrayList()
-    private var language_slug45: MutableList<String> = ArrayList()
     private var traint45: MutableList<String> = ArrayList()
-    private var gender45: MutableList<String> = ArrayList()
     private var duration45: MutableList<String> = ArrayList()
-    private var sleep_id45: MutableList<String> = ArrayList()
+    private var thumb45: MutableList<String> = ArrayList()
     private var url45: MutableList<String> = ArrayList()
-
-    private var id90: MutableList<String> = ArrayList()
-    private var language_slug90: MutableList<String> = ArrayList()
-    private var traint90: MutableList<String> = ArrayList()
-    private var gender90: MutableList<String> = ArrayList()
-    private var duration90: MutableList<String> = ArrayList()
-    private var sleep_id90: MutableList<String> = ArrayList()
-    private var url90: MutableList<String> = ArrayList()
-
-    lateinit var progressDialog: ProgressDialog
 
     private lateinit var showAns2: TextView
     private lateinit var showAns: TextView
     private lateinit var showAdd2: TextView
     private lateinit var showAdd1: TextView
+    private lateinit var sleVideo : VideoView
 
 
-    /* private var id1Female: MutableList<String> = ArrayList()
-    private var category_nameFemale: MutableList<String> = ArrayList()
-    private var language_nameFemale: MutableList<String> = ArrayList()
-    private var genderFemale: MutableList<String> = ArrayList()
-    private var traintFemale: MutableList<String> = ArrayList()
-    private var durationFemale: MutableList<String> = ArrayList()
-    private var url1Female: MutableList<String> = ArrayList() */
     private var requestQueue: RequestQueue? = null
 
     override fun onCreateView(
@@ -116,16 +102,31 @@ class SleepEnhancer2 : Fragment() {
         // for finding IDs this method is used
         findIds(view)
 
-        apiVideos()
+        sleVideo = view.findViewById(R.id.sleVideo)
+        videoPlay()
 
-        progressDialog = ProgressDialog(context)
-        progressDialog.setCancelable(false)
-        progressDialog.setMessage("Loading...")
-        progressDialog.show()
+
+        hideOptions()
+
+        resetBtn2 = view.findViewById(R.id.resetBtn2)
+        resetBtn2.setOnClickListener {
+//            showOptions()
+            hideOptions()
+        }
+
+        showOptionSelect = view.findViewById(R.id.showOptionSelect)
+        showOptionSelect.setOnClickListener {
+//            hideOptions()
+            showOptions()
+        }
+
+        apiVideos("45sec", "O")
+
+
 
         // bottom left side imageview click managed here
         bottom_1.setOnClickListener {
-            showDialog("Openness")
+//            showDialog("Openness")
         }
 
         methodForUpperImageClicks()  // upper image click managed my this method
@@ -151,6 +152,10 @@ class SleepEnhancer2 : Fragment() {
 
     private fun methodForUpperImageClicks() {
         o_option.setOnClickListener {
+
+//           val o =  o_option.drawable
+            showDialog("Openness")
+
             if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
                 countClicked = 1
@@ -162,6 +167,11 @@ class SleepEnhancer2 : Fragment() {
 
 
         e_option.setOnClickListener {
+
+//            val o =  e_option.drawable
+
+            showDialog("Extraversion")
+
             if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
                 countClicked = 1
@@ -172,6 +182,11 @@ class SleepEnhancer2 : Fragment() {
         }
 
         c_option.setOnClickListener {
+
+//            val o =  c_option.drawable
+
+            showDialog("Conscientiousness")
+
             if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
                 countClicked = 1
@@ -183,6 +198,11 @@ class SleepEnhancer2 : Fragment() {
 
 
         a1Option.setOnClickListener {
+
+//            val o =  a1Option.drawable
+
+            showDialog("Agreeableness")
+
             if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
                 countClicked = 1
@@ -193,6 +213,12 @@ class SleepEnhancer2 : Fragment() {
         }
 
         n1option.setOnClickListener {
+
+            val o =  n1option.drawable
+
+            showDialog("Neuroticism")
+
+
             if (countClicked == 0) {
                 bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
                 countClicked = 1
@@ -376,6 +402,7 @@ class SleepEnhancer2 : Fragment() {
     private fun showDialog(title: String) {
         val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
         if (dialog != null) {
+            var traits = "O"
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setCancelable(false)
             dialog.setContentView(R.layout.dialogtransition)
@@ -384,67 +411,81 @@ class SleepEnhancer2 : Fragment() {
             val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
             val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
+            dialog_title.text = title
+
             val logo: ImageView = dialog.findViewById(R.id.logo)
+
+            when(title){
+                "Extraversion"->{
+                    traits = "E"
+                    logo.setImageResource(R.drawable.setting_e)
+                    dialog_title.setTextColor(Color.parseColor("#FF0000"))
+                }
+                "Agreeableness"->{
+                    traits = "A"
+                    logo.setImageResource(R.drawable.setting_a)
+                    dialog_title.setTextColor(Color.parseColor("#F9CA14"))
+
+
+                }
+
+                "Neuroticism"->{
+                    traits = "N"
+                    logo.setImageResource(R.drawable.setting_n)
+                    dialog_title.setTextColor(Color.parseColor("#808080"))
+
+
+                }
+                "Openness"->{
+                    traits = "O"
+                    logo.setImageResource(R.drawable.setting_o)
+                    dialog_title.setTextColor(Color.parseColor("#008000"))
+
+
+                }
+                "Conscientiousness"->{
+                    traits = "C"
+                    logo.setImageResource(R.drawable.setting_c)
+                    dialog_title.setTextColor(Color.parseColor("#0000FF"))
+
+
+                }
+            }
+//            logo.setImageDrawable(iview)
             val cl90: ConstraintLayout = dialog.findViewById(R.id.cl90)
             val cl45: ConstraintLayout = dialog.findViewById(R.id.cl45)
+
+            val tv45: TextView = dialog.findViewById(R.id.textView7)
+            val tv90: TextView = dialog.findViewById(R.id.program)
 
             val adapterSleep = AdapterSleep(
                 requireActivity(),
                 id45,
-                language_slug45,
-                gender45,
                 traint45,
-                sleep_id45,
+                thumb45,
                 duration45,
                 url45
             )
 
             cl45.setOnClickListener {
 
-                cl45.setBackgroundColor(Color.parseColor("#eeeeee"))
-                cl90.setBackgroundColor(Color.TRANSPARENT)
+                apiVideos("45sec",traits)
+                tv45.setTextColor(Color.parseColor("#008000"))
+                tv90.setTextColor(Color.BLUE)
 
-                val adapterSleep = AdapterSleep(
-                    requireActivity(),
-                    id45,
-                    language_slug45,
-                    gender45,
-                    traint45,
-                    sleep_id45,
-                    duration45,
-                    url45
-                )
             }
 
             cl90.setOnClickListener {
 
-                cl45.setBackgroundColor(Color.TRANSPARENT)
-                cl90.setBackgroundColor(Color.parseColor("#eeeeee"))
+                tv90.setTextColor(Color.parseColor("#008000"))
+                tv45.setTextColor(Color.BLUE)
+                apiVideos("90sec", traits)
 
-                val adapterSleep = AdapterSleep(
-                    requireActivity(),
-                    id90,
-                    language_slug90,
-                    gender90,
-                    traint90,
-                    sleep_id90,
-                    duration90,
-                    url90
-                )
             }
 
             recyclerView.setHasFixedSize(true)
-            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.layoutManager = GridLayoutManager(context,2)
             recyclerView.adapter = adapterSleep
-
-
-//            val cv1: CardView = dialog.findViewById(R.id.cv1)
-
-//            cv1.setOnClickListener {
-//                val intent = Intent(context, VideoPlay::class.java)
-//                intent.putExtra("videoLink", "")
-//                context?.startActivity(intent)
-//            }
 
 
             val closebtndialog = dialog.findViewById<ImageView>(R.id.closebtndialog)
@@ -488,74 +529,40 @@ class SleepEnhancer2 : Fragment() {
         }
     }
 
-    private fun apiVideos() {
-        val url = APIVolley.sleep
+    private fun apiVideos(duration : String, trait : String) {
+        val url = "https://promask.com.co/yuru/api/web/getAllEveningProgram"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
 
         val stringRequest = object : StringRequest(
-            Method.GET, url,
-            Response.Listener<String> { response ->
+            Method.POST, url,
+            Response.Listener { response ->
                 try {
-                    progressDialog.dismiss()
+                    process.dismiss()
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")
 
                     id45.clear()
-                    language_slug45.clear()
-                    gender45.clear()
                     url45.clear()
-                    sleep_id45.clear()
                     duration45.clear()
                     traint45.clear()
-                    id90.clear()
-                    language_slug90.clear()
-                    gender90.clear()
-                    url90.clear()
-                    sleep_id90.clear()
-                    duration90.clear()
-                    traint90.clear()
-
-
+                    thumb45.clear()
 
                     for (i in 0 until jsonArray.length()) {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
-                        if (jsonObject1.getString("duration").equals("45sec")) {
-
                             id45.add(jsonObject1.getString("id"))
-                            language_slug45.add(jsonObject1.getString("language_slug"))
-                            gender45.add(jsonObject1.getString("gender"))
-                            url45.add(jsonObject1.getString("url"))
-                            sleep_id45.add(jsonObject1.getString("sleep_id"))
+                            url45.add(jsonObject1.getString("fileURL"))
+                            thumb45.add(jsonObject1.getString("thumb"))
                             duration45.add(jsonObject1.getString("duration"))
-                            traint45.add(jsonObject1.getString("traint"))
-                        } else {
-                            id90.add(jsonObject1.getString("id"))
-                            language_slug90.add(jsonObject1.getString("language_slug"))
-                            gender90.add(jsonObject1.getString("gender"))
-                            url90.add(jsonObject1.getString("url"))
-                            sleep_id90.add(jsonObject1.getString("sleep_id"))
-                            duration90.add(jsonObject1.getString("duration"))
-                            traint90.add(jsonObject1.getString("traint"))
-                        }
+                            traint45.add(jsonObject1.getString("traits"))
+
                     }
 
-//                    adapterConnects()
-
-
-                    /* if(obj.getString("msg").equals("Logged Successfully")) {
-
- //                        val sharedPreferences: SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
- //                        val editor: SharedPreferences.Editor =  sharedPreferences.edit()
- //
- //                        editor.putString("email",jsonObject.getString("email"))
- //                        editor.apply()
- //                        editor.commit()
-
- //                        intent = Intent(applicationContext, Dashboard::class.java)
- //                        startActivity(intent)
-                     }*/
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -566,10 +573,55 @@ class SleepEnhancer2 : Fragment() {
                 }
             }) {
 
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("duration", duration)
+                params.put("trait", trait)
+                return params
+            }
         }
         requestQueue = Volley.newRequestQueue(context)
         requestQueue?.add(stringRequest)
     }
 
+
+    fun hideOptions(){
+        showAns.visibility = View.INVISIBLE
+        showAns2.visibility = View.INVISIBLE
+        bottom_1.visibility = View.INVISIBLE
+        bottom2.visibility = View.INVISIBLE
+        arrowLeft1.visibility = View.INVISIBLE
+        arrowRight1.visibility = View.INVISIBLE
+        arrowLeft2.visibility = View.INVISIBLE
+        arrowRight2.visibility = View.INVISIBLE
+        showAdd1.visibility = View.INVISIBLE
+        showAdd2.visibility = View.INVISIBLE
+    }
+
+    fun showOptions(){
+        showAns.visibility = View.VISIBLE
+        showAns2.visibility = View.VISIBLE
+        bottom_1.visibility = View.VISIBLE
+        bottom2.visibility = View.VISIBLE
+        arrowLeft1.visibility = View.VISIBLE
+        arrowRight1.visibility = View.VISIBLE
+        arrowLeft2.visibility = View.VISIBLE
+        arrowRight2.visibility = View.VISIBLE
+        showAdd1.visibility = View.VISIBLE
+        showAdd2.visibility = View.VISIBLE
+    }
+
+    private fun videoPlay() {
+        val ctlr = MediaController(context)
+        ctlr.setMediaPlayer(sleVideo)
+
+        val uri =
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.eveningvideo);
+
+        sleVideo.setVideoURI(uri);
+        sleVideo.start()
+
+    }
 
 }

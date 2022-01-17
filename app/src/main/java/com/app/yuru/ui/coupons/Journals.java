@@ -10,14 +10,12 @@ import com.app.yuru.R;
 
 public class Journals extends AppCompatActivity {
 
-    private Button btn_journal_continue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journals);
 
-        btn_journal_continue = findViewById(R.id.btn_journal_continue);
+        Button btn_journal_continue = findViewById(R.id.btn_journal_continue);
         btn_journal_continue.setOnClickListener(v->{
             Intent intent = new Intent(this, JournalOptions.class);
             startActivity(intent);

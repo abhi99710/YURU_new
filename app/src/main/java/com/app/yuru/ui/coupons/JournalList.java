@@ -1,6 +1,5 @@
 package com.app.yuru.ui.coupons;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -22,40 +20,35 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
-import com.app.yuru.utility.apivolley.APIVolley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class JournalList extends AppCompatActivity implements ListInterface {
 
-    private ImageView ivSearch, delete, print;
+    private ImageView ivSearch;
+    private ImageView print;
     private EditText searchEdit;
-    private ConstraintLayout cl_add_list;
     private RecyclerView recyclerViewJournals;
     private TextView totalEntries, date_journl, name_jornal;
     ProgressDialog progressDialog;
-    private ImageView checkAll;
 
-    private List<String> ids = new ArrayList<>();
-    private List<String> user_id = new ArrayList<>();
-    private List<String> title = new ArrayList<>();
-    private List<String> date_time = new ArrayList<>();
-    private List<String> description = new ArrayList<>();
-    private List<String> created_at = new ArrayList<>();
-    private List<String> updated_at = new ArrayList<>();
+    private final List<String> ids = new ArrayList<>();
+    private final List<String> user_id = new ArrayList<>();
+    private final List<String> title = new ArrayList<>();
+    private final List<String> date_time = new ArrayList<>();
+    private final List<String> description = new ArrayList<>();
+    private final List<String> created_at = new ArrayList<>();
+    private final List<String> updated_at = new ArrayList<>();
     int i = 0;
     private List<String> listDeleted = new ArrayList<>();
 
@@ -73,12 +66,12 @@ public class JournalList extends AppCompatActivity implements ListInterface {
 
         searchEdit = findViewById(R.id.searchEdit);
         ivSearch = findViewById(R.id.ivSearch);
-        cl_add_list = findViewById(R.id.cl_add_list);
+        ConstraintLayout cl_add_list = findViewById(R.id.cl_add_list);
         recyclerViewJournals = findViewById(R.id.recyclerViewJournals);
-        checkAll = findViewById(R.id.checkAll);
+        ImageView checkAll = findViewById(R.id.checkAll);
         totalEntries = findViewById(R.id.totalEntries);
         date_journl = findViewById(R.id.date_journl);
-        delete = findViewById(R.id.delete);
+        ImageView delete = findViewById(R.id.delete);
 
         delete.setOnClickListener(v->{
             if(!listDeleted.isEmpty()) {
@@ -92,19 +85,15 @@ public class JournalList extends AppCompatActivity implements ListInterface {
             }
         });
 
-        cl_add_list.setOnClickListener(v->{
-            startActivity(new Intent(this, JournalAdd.class));
-        });
+        cl_add_list.setOnClickListener(v-> startActivity(new Intent(this, JournalAdd.class)));
 
 
-        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+        searchEdit.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                    searchEdit.clearFocus();
-                    InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    in.hideSoftInputFromWindow(searchEdit.getWindowToken(), 0);
+                searchEdit.clearFocus();
+                InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(searchEdit.getWindowToken(), 0);
 
 //                    progressDialog1.show();
 //                    progressDialog1.setMessage("loading...");
@@ -115,9 +104,7 @@ public class JournalList extends AppCompatActivity implements ListInterface {
 //                        progressDialog1.dismiss();
 //                    }
 
-                    ivSearch.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                ivSearch.setOnClickListener(v1 -> {
 
 //                            progressDialog1.show();
 //                            progressDialog1.setMessage("loading...");
@@ -128,18 +115,14 @@ public class JournalList extends AppCompatActivity implements ListInterface {
 //                                progressDialog1.dismiss();
 //                            }
 
-                        }
-                    });
+                });
 
-                    return true;
-                }
-                return false;
+                return true;
             }
+            return false;
         });
 
-        ivSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        ivSearch.setOnClickListener(v -> {
 
 //                progressDialog1.show();
 //                progressDialog1.setMessage("loading...");
@@ -150,7 +133,6 @@ public class JournalList extends AppCompatActivity implements ListInterface {
 //                    progressDialog1.dismiss();
 //                }
 
-            }
         });
     }
 
@@ -198,9 +180,7 @@ public class JournalList extends AppCompatActivity implements ListInterface {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
-        })/*{
+        }, error -> Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show())/*{
             @Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -246,9 +226,7 @@ public class JournalList extends AppCompatActivity implements ListInterface {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
-        });
+        }, error -> Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);

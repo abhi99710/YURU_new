@@ -5,14 +5,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.MediaController
-import android.widget.VideoView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
 import com.app.yuru.ui.login.LoginActivity
+import com.app.yuru.utility.OnSwipeTouchListner
 import java.util.concurrent.TimeUnit
 
 class Splash2 : AppCompatActivity() {
@@ -41,8 +42,11 @@ class Splash2 : AppCompatActivity() {
         }
 
 
+
+
         videoPlay()
     }
+
 
     private fun videoPlay() {
         val ctlr = MediaController(this)

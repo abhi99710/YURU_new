@@ -13,15 +13,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
-import com.app.yuru.ui.coupons.Journals;
 import com.app.yuru.ui.lowvshigh.LowvsHigh;
-import com.app.yuru.ui.transition.TransitionActivity;
 import com.app.yuru.utility.apivolley.APIVolley;
 
 import org.json.JSONException;
@@ -35,13 +32,10 @@ import java.util.Map;
 public class MoreInformation extends AppCompatActivity {
 
     private Spinner spinnerLanguage, spinnerAge, spinnerGender;
-    private Button ProceedMore;
-    private List<String> ageList = new ArrayList<>();
-    private List<String> genderList = new ArrayList<>();
-    private List<String> langList = new ArrayList<>();
-    private List<String> langlistCode = new ArrayList<>();
-
-    private ImageView backMoreInformation;
+    private final List<String> ageList = new ArrayList<>();
+    private final List<String> genderList = new ArrayList<>();
+    private final List<String> langList = new ArrayList<>();
+    private final List<String> langlistCode = new ArrayList<>();
 
     private String apiAgeVarCeil;
     private String apiAgeVarfloor;
@@ -57,14 +51,12 @@ public class MoreInformation extends AppCompatActivity {
         spinnerAge = findViewById(R.id.spinnerAge);
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerLanguage = findViewById(R.id.spinnerLanguage);
-        ProceedMore = findViewById(R.id.ProceedMore);
+        Button proceedMore = findViewById(R.id.ProceedMore);
 
-        backMoreInformation = findViewById(R.id.backMoreInformation);
-        backMoreInformation.setOnClickListener(v->{
-            startActivity(new Intent(this, CouponApplied.class));
-        });
+        ImageView backMoreInformation = findViewById(R.id.backMoreInformation);
+        backMoreInformation.setOnClickListener(v-> startActivity(new Intent(this, CouponApplied.class)));
 
-        ProceedMore.setOnClickListener(v -> {
+        proceedMore.setOnClickListener(v -> {
             apiMoreInformation();
 //            startActivity(new Intent(this, Journals.class));
         });
@@ -110,7 +102,7 @@ public class MoreInformation extends AppCompatActivity {
     }
 
     private void selectGender() {
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MoreInformation.this, R.layout.spinner_layout_background, genderList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(MoreInformation.this, R.layout.spinner_layout_background, genderList);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -146,7 +138,7 @@ public class MoreInformation extends AppCompatActivity {
     }
 
     private void selectAge() {
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MoreInformation.this, R.layout.spinner_layout_background, ageList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(MoreInformation.this, R.layout.spinner_layout_background, ageList);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -179,7 +171,7 @@ public class MoreInformation extends AppCompatActivity {
     }
 
     private void selectLanguage() {
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MoreInformation.this, R.layout.spinner_layout_background, langList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(MoreInformation.this, R.layout.spinner_layout_background, langList);
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

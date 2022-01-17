@@ -1,6 +1,5 @@
 package com.app.yuru.ui.transition;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,12 +14,8 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.app.yuru.R;
-import com.app.yuru.ui.getStarted.GetStartedActivity;
 
 public class AnimLeft extends Fragment {
-
-    private VideoView videoLeftAnim;
-    private Button skipLeft;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,13 +23,10 @@ public class AnimLeft extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_anim_left, container, false);
 
-        videoLeftAnim = view.findViewById(R.id.videoLeftAnim);
-        skipLeft = view.findViewById(R.id.skipLeft);
+        VideoView videoLeftAnim = view.findViewById(R.id.videoLeftAnim);
+        Button skipLeft = view.findViewById(R.id.skipLeft);
 
-        new Handler().postDelayed(() -> {
-           requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.framwQts, new SleepEnhancer2()).commit();
-
-        },16000);
+        new Handler().postDelayed(() -> requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.framwQts, new SleepEnhancer2()).commit(),16000);
 
 //        videoLoginAnim = findViewById(R.id.videoLoginAnim);
         //Creating MediaController

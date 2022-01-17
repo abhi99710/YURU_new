@@ -35,11 +35,8 @@ public class EditJournal extends AppCompatActivity {
 
     private TextView jour_title;
     private ImageView jour_save;
-    private TextView jour_date;
     private EditText jour_content;
-    private ImageView jour_font;
     private Date currentTime;
-    private ImageView jour_idea;
     private ProgressDialog progressDialog;
     private String ids;
 
@@ -85,13 +82,11 @@ public class EditJournal extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, ""+error, Toast.LENGTH_SHORT).show();
-        }){
+        }, error -> Toast.makeText(this, ""+error, Toast.LENGTH_SHORT).show()){
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
                 map.put("user_id","1");
                 map.put("title",jour_title.getText().toString());
@@ -126,10 +121,10 @@ public class EditJournal extends AppCompatActivity {
     }
 
     private void findIds() {
-        jour_idea = findViewById(R.id.jour_idea_edit);
-        jour_font = findViewById(R.id.jour_font_edit);
+        ImageView jour_idea = findViewById(R.id.jour_idea_edit);
+        ImageView jour_font = findViewById(R.id.jour_font_edit);
         jour_content = findViewById(R.id.jour_content_edit);
-        jour_date = findViewById(R.id.jour_date_edit);
+        TextView jour_date = findViewById(R.id.jour_date_edit);
         jour_save = findViewById(R.id.jour_save_edit);
         jour_title = findViewById(R.id.jour_title_edit);
 

@@ -18,7 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
-import com.app.yuru.ui.coupons.DiscountCode;
 import com.app.yuru.ui.transition.TransitionActivity;
 import com.app.yuru.utility.apivolley.APIVolley;
 
@@ -32,11 +31,10 @@ import java.util.List;
 public class LowvsHigh extends AppCompatActivity {
 
     private TextView o_option_, c_option_, e_option_, a_option_, n_option_;
-    private View stepO_, stepC_, stepE_, stepA_, stepN_;
     private TextView title_low, desc_low, tv_percenteage_low, low_low, high_low, desc_min_low;
     private Button btn_low;
     private Guideline guideline15;
-    List<ModelLowHigh> modelLowHighs = new ArrayList<>();
+    final List<ModelLowHigh> modelLowHighs = new ArrayList<>();
     ProgressDialog progressDialog;
 
     @Override
@@ -85,12 +83,10 @@ public class LowvsHigh extends AppCompatActivity {
             low_low.setTextColor(Color.BLACK);
         });
 
-        btn_low.setOnClickListener(v->{
-            startActivity(new Intent(this, TransitionActivity.class));
-        });
+        btn_low.setOnClickListener(v-> startActivity(new Intent(this, TransitionActivity.class)));
     }
 
-    private void fragmentClick() throws Exception {
+    private void fragmentClick() {
         o_option_.setOnClickListener(v->{
 //            setFragment(new FirstFragment());
             title_low.setText("Openness");
@@ -176,11 +172,11 @@ public class LowvsHigh extends AppCompatActivity {
         a_option_ = findViewById(R.id.a_option_);
         n_option_ = findViewById(R.id.n_option_);
 
-        stepO_ = findViewById(R.id.stepO_);
-        stepC_ = findViewById(R.id.stepC_);
-        stepE_ = findViewById(R.id.stepE_);
-        stepA_ = findViewById(R.id.stepA_);
-        stepN_ = findViewById(R.id.stepN_);
+        View stepO_ = findViewById(R.id.stepO_);
+        View stepC_ = findViewById(R.id.stepC_);
+        View stepE_ = findViewById(R.id.stepE_);
+        View stepA_ = findViewById(R.id.stepA_);
+        View stepN_ = findViewById(R.id.stepN_);
 
         btn_low = findViewById(R.id.btn_low);
 
@@ -226,9 +222,7 @@ public class LowvsHigh extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show();
-        });
+        }, error -> Toast.makeText(this, "Server Error", Toast.LENGTH_SHORT).show());
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);

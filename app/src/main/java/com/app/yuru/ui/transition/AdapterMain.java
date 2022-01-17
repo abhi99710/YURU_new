@@ -2,21 +2,18 @@ package com.app.yuru.ui.transition;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.util.AttributeSet;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.MediaController;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.app.yuru.R;
+import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
+import com.app.yuru.corescheduler.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -25,26 +22,21 @@ public class AdapterMain extends BaseAdapter {
 
     final Context context;
     final List<String> id;
-    final List<String> category_name;
-    final  List<String> language_name;
-    final List<String> gender;
-    final  List<String> traint;
+    final List<String> fileName;
+    final List<String> traits;
     final List<String> duration;
-    final  List<String> url;
-    final List<String> thumbnail;
+    final List<String> thumb;
+    final List<String> fileURL;
 
-
-    public AdapterMain(Context context, List<String> id, List<String> category_name, List<String> language_name,
-                       List<String> gender, List<String> traint, List<String> duration, List<String> url, List<String> thumbnail) {
+    public AdapterMain(Context context, List<String> id, List<String> fileName,
+                       List<String> traits, List<String> duration, List<String> thumb, List<String> fileURL) {
         this.context = context;
         this.id = id;
-        this.category_name = category_name;
-        this.language_name = language_name;
-        this.gender = gender;
-        this.traint = traint;
+        this.fileName = fileName;
+        this.traits = traits;
         this.duration = duration;
-        this.url = url;
-        this.thumbnail = thumbnail;
+        this.thumb = thumb;
+        this.fileURL = fileURL;
     }
 
     @Override
@@ -65,8 +57,8 @@ public class AdapterMain extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView==null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.gridsubjects,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.gridsubjects, parent, false);
         }
 
 
@@ -74,28 +66,20 @@ public class AdapterMain extends BaseAdapter {
         ImageView videoView = convertView.findViewById(R.id.gridIMageView);
 
 
-        cardsub.setOnClickListener(v->{
+        cardsub.setOnClickListener(v -> {
 
-            openDialog();
+                    Intent intent = new Intent(context, VideoActivity.class);
+                    intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position));
+                    context.startActivity(intent);
 
-        }
+                }
 
         );
 
-//        Picasso.get().load(thumbnail.get(position)).into(videoView);
-          Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
-                  .centerCrop().fit().noFade().into(videoView);
+        Picasso.get().load(thumb.get(position)).fit().noFade().centerCrop().into(videoView);
+
 
         return convertView;
     }
-    public void openDialog() {
-        final Dialog dialog = new Dialog(context); // Context, this, etc.
-        dialog.setContentView(R.layout.dialogwakeupandevening);
-        dialog.setTitle("Video Dialog");
-        ImageView imageView = dialog.findViewById(R.id.canceldialog);
-        imageView.setOnClickListener(v->{
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
+
 }

@@ -31,9 +31,9 @@ class TransitionActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener {
 
             when(it.itemId){
-                R.id.home_nv->setCurrentFragment(SleepEnhancer())
-                R.id.sleep_nv->setCurrentFragment(SleepEnhancer2())
-                R.id.evening_nv->setCurrentFragment(EveningProgram())
+                R.id.home_nv->setCurrentFragment(TransitionToSleep())
+                R.id.sleep_nv->setCurrentFragment(SleepEnhancer())
+                R.id.evening_nv->setCurrentFragment(SleepEnhancer2())
                 R.id.wakeup_nv->setCurrentFragment(WakeUpProgram())
                R.id.journal_nv->startActivity(Intent(this, JournalOptions::class.java))
 

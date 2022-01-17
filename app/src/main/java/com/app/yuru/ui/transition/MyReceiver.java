@@ -1,18 +1,13 @@
 package com.app.yuru.ui.transition;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.widget.MediaController;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.app.yuru.R;
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
@@ -40,17 +35,6 @@ public class MyReceiver extends BroadcastReceiver {
             mediaPlayer.isLooping();
             mediaPlayer.start();
 
-//            VideoView videoView = new VideoView(context);
-//            ctlr = new MediaController(context);
-//            ctlr.setMediaPlayer(videoView);
-//            videoView.setMediaController(ctlr);
-//
-//            Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/R.raw/" + R.raw.lop);
-////        Uri uri = Uri.parse(url);
-//            videoView.setMediaController(ctlr);
-//
-//            videoView.setVideoURI(uri);
-//            videoView.start();
         } else {
             try {
 //                MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.whatsapp);

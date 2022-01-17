@@ -17,16 +17,13 @@ import com.app.yuru.R;
 
 public class SleepEnhancerNew extends Fragment {
 
-    private ImageView right_new_sleep1, left_new_sleep1;
-    private VideoView sleep_video1;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sleep_enhancer_new, container, false);
 
-        sleep_video1 = view.findViewById(R.id.sleep_video1);
+        VideoView sleep_video1 = view.findViewById(R.id.sleep_video1);
 
         //Creating MediaController
         MediaController mediaController= new MediaController(getContext());
@@ -42,8 +39,8 @@ public class SleepEnhancerNew extends Fragment {
         sleep_video1.requestFocus();
         sleep_video1.start();
 
-        right_new_sleep1 = view.findViewById(R.id.right_new_sleep1);
-        left_new_sleep1  = view.findViewById(R.id.left_new_sleep1);
+        ImageView right_new_sleep1 = view.findViewById(R.id.right_new_sleep1);
+        ImageView left_new_sleep1 = view.findViewById(R.id.left_new_sleep1);
 
         left_new_sleep1.setOnClickListener(v->
         {
@@ -52,9 +49,7 @@ public class SleepEnhancerNew extends Fragment {
         });
 
         right_new_sleep1.setOnClickListener(v->
-        {
-            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new SleepEnhancer2New()).commit();
-        });
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new SleepEnhancer2New()).commit());
 
         return view;
     }

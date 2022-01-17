@@ -163,6 +163,96 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/everyDay" />
+
+        <CheckBox
+            android:id="@+id/sunCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/sunday"
+            app:layout_constraintEnd_toEndOf="@+id/sunday"
+            app:layout_constraintTop_toTopOf="@+id/sunday" />
+
+        <CheckBox
+            android:id="@+id/monCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/monDay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sunday" />
+
+        <CheckBox
+            android:id="@+id/tueCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/tuesDay"
+            app:layout_constraintEnd_toEndOf="@+id/tuesDay"
+            app:layout_constraintTop_toBottomOf="@+id/monDay" />
+
+        <CheckBox
+            android:id="@+id/neverCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/never"
+            app:layout_constraintEnd_toEndOf="@+id/never"
+            app:layout_constraintTop_toBottomOf="@+id/everyDay" />
+
+        <CheckBox
+            android:id="@+id/satCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/saturDay"
+            app:layout_constraintEnd_toEndOf="@+id/saturDay"
+            app:layout_constraintTop_toBottomOf="@+id/friDay" />
+
+        <CheckBox
+            android:id="@+id/friCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/friDay"
+            app:layout_constraintEnd_toEndOf="@+id/friDay"
+            app:layout_constraintTop_toBottomOf="@+id/thursDay" />
+
+        <CheckBox
+            android:id="@+id/wedCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/wedsnesDay"
+            app:layout_constraintEnd_toEndOf="@+id/wedsnesDay"
+            app:layout_constraintTop_toBottomOf="@+id/tuesDay" />
+
+        <CheckBox
+            android:id="@+id/thuCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/thursDay"
+            app:layout_constraintEnd_toEndOf="@+id/thursDay"
+            app:layout_constraintTop_toBottomOf="@+id/wedsnesDay" />
+
+        <CheckBox
+            android:id="@+id/everyCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            app:layout_constraintBottom_toBottomOf="@+id/everyDay"
+            app:layout_constraintEnd_toEndOf="@+id/everyDay"
+            app:layout_constraintTop_toBottomOf="@+id/saturDay" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

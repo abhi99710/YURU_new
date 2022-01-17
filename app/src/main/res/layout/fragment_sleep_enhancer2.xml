@@ -11,15 +11,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <VideoView
+        android:id="@+id/sleVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:background="#E0EEFA"
+        android:layout_margin="0dp"
+        android:background="@color/transparent"
+        app:cardBackgroundColor="@color/transparent"
         android:orientation="horizontal"
-        app:cardCornerRadius="@dimen/_5sdp"
-        app:cardElevation="@dimen/_5sdp"
         tools:context=".ui.dashboard.Sleep_enhancer_two">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,8 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/sleep_enhancer"
-                android:textColor="@color/color_text"
+                android:text="Evening Program"
+                android:textColor="@color/white"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -43,13 +47,13 @@
                 android:id="@+id/save_sleep_enhancer_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="@string/save"
-                android:textColor="@color/colorPrimary"
+                android:text="Set"
+                android:textColor="@color/white"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/resetBtn2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/resetBtn2" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_se2"
@@ -59,7 +63,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/corner_videoview"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -129,7 +132,7 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="56dp"
-                    android:background="@drawable/sysbasricon"
+                    android:background="@drawable/gearback"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/showAnsS2" />
 
@@ -174,7 +177,7 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginEnd="64dp"
-                    android:background="@drawable/sysbasricon"
+                    android:background="@drawable/gearback"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/showAns2S2" />
 
@@ -248,7 +251,29 @@
                     app:layout_constraintStart_toEndOf="@+id/showAns2S2"
                     app:layout_constraintTop_toTopOf="@+id/showAns2S2" />
 
+                <ImageView
+                    android:id="@+id/showOptionSelect"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="16dp"
+                    android:src="@drawable/sleep_bell"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/resetBtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="Reset"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/title_tv"
+                app:layout_constraintEnd_toStartOf="@+id/save_sleep_enhancer_2"
+                app:layout_constraintTop_toTopOf="@+id/title_tv" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

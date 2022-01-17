@@ -38,9 +38,6 @@ public class JournalAdd extends AppCompatActivity {
     private ImageView jour_save;
     private TextView jour_date;
     private EditText jour_content;
-    private ImageView jour_font;
-    private Date currentTime;
-    private ImageView jour_idea;
     private ProgressDialog progressDialog;
 
     @Override
@@ -55,8 +52,8 @@ public class JournalAdd extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
 
-        currentTime = Calendar.getInstance().getTime();
-        jour_date.setText(""+currentTime);
+        Date currentTime = Calendar.getInstance().getTime();
+        jour_date.setText(""+ currentTime);
 
         jour_save.setOnClickListener(v->{
             progressDialog.show();
@@ -88,13 +85,11 @@ public class JournalAdd extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> {
-            Toast.makeText(this, ""+error, Toast.LENGTH_SHORT).show();
-        }){
+        }, error -> Toast.makeText(this, ""+error, Toast.LENGTH_SHORT).show()){
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
                 map.put("user_id","1");
                 map.put("title",jour_title.getText().toString());
@@ -128,8 +123,8 @@ public class JournalAdd extends AppCompatActivity {
     }
 
     private void findIds() {
-        jour_idea = findViewById(R.id.jour_idea);
-        jour_font = findViewById(R.id.jour_font);
+        ImageView jour_idea = findViewById(R.id.jour_idea);
+        ImageView jour_font = findViewById(R.id.jour_font);
         jour_content = findViewById(R.id.jour_content);
         jour_date = findViewById(R.id.jour_date);
         jour_save = findViewById(R.id.jour_save);

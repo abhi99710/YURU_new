@@ -21,6 +21,9 @@ class VideoActivity : AppCompatActivity() {
         binding = ActivityVideoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {

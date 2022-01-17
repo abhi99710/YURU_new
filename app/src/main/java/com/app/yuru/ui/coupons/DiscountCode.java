@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +29,9 @@ import java.util.Map;
 
 public class DiscountCode extends AppCompatActivity {
 
-    private Button buttonSubmitCoupon;
     private EditText enterCoupon;
     private String discount_code;
-    private TextView resendCode;
     private TextView discountCodeForTesting;
-    private Button skip_btn_discount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +39,11 @@ public class DiscountCode extends AppCompatActivity {
         setContentView(R.layout.activity_discount_code);
 
         discountCodeForTesting = findViewById(R.id.discountCodeForTesting);
-        skip_btn_discount = findViewById(R.id.skip_btn_discount);
-        skip_btn_discount.setOnClickListener(v->{
-            startActivity(new Intent(this, TransitionActivity.class));
-        });
+        Button skip_btn_discount = findViewById(R.id.skip_btn_discount);
+        skip_btn_discount.setOnClickListener(v-> startActivity(new Intent(this, TransitionActivity.class)));
 
 
-
-        resendCode = findViewById(R.id.resendCode);
+        TextView resendCode = findViewById(R.id.resendCode);
 //        resendCode.setEnabled(false);
         new Handler().postDelayed(() -> {
 //            resendCode.setEnabled(true);
@@ -63,7 +56,7 @@ public class DiscountCode extends AppCompatActivity {
         apiGetCoupon();  // calling get coupon code api
 
         enterCoupon = findViewById(R.id.enterCoupon);
-        buttonSubmitCoupon = findViewById(R.id.buttonSubmitCoupon);
+        Button buttonSubmitCoupon = findViewById(R.id.buttonSubmitCoupon);
         buttonSubmitCoupon.setOnClickListener(v->{
 
             if(enterCoupon.getText().toString().equalsIgnoreCase(discount_code)){
@@ -124,7 +117,7 @@ public class DiscountCode extends AppCompatActivity {
         }, error -> Toast.makeText(this, "server waiting...", Toast.LENGTH_SHORT).show()){
             @Nullable
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String , String> ma1 = new HashMap<>();
                 ma1.put("user_id", "1");
                 return ma1;

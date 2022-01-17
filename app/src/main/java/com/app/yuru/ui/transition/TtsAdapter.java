@@ -1,8 +1,6 @@
 package com.app.yuru.ui.transition;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,35 +20,28 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
-     Context context;
-     List<String> idParent;
-    List<String> title;
-    List<String> idChild;
-    List<String> transition_id;
-    List<String> medium;
-    List<String> language_slug;
-    List<String> filename;
-    List<String> duration;
-    Activity activity;
-//    List<String> thumb;
+     final Context context;
+     final List<String> idParent;
+    final List<String> fileName;
+    final List<String> gender;
+    final List<String> languages;
+    final List<String> duration;
+    final List<String> thumb;
+    final List<String> fileURL;
+    ClickPosition clickPosition;
 
-    public TtsAdapter(Context context, List<String> idParent, List<String> title, List<String> idChild, List<String> transition_id,
-                      List<String> medium, List<String> language_slug, List<String> filename, List<String> duration, Activity activity
-                      /*List<String> thumb*/) {
+    public TtsAdapter(Context context, List<String> idParent, List<String> fileName,
+                      List<String> gender, List<String> languages, List<String> duration, List<String> thumb, List<String> fileURL, ClickPosition clickPosition) {
         this.context = context;
         this.idParent = idParent;
-        this.title = title;
-        this.idChild = idChild;
-        this.transition_id = transition_id;
-        this.medium = medium;
-        this.language_slug = language_slug;
-        this.filename = filename;
+        this.fileName = fileName;
+        this.gender = gender;
+        this.languages = languages;
         this.duration = duration;
-        this.activity = activity;
-//        this.thumb = thumb;
+        this.thumb = thumb;
+        this.fileURL = fileURL;
+        this.clickPosition = clickPosition;
     }
 
     @NonNull
@@ -59,40 +49,25 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
     public Myholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recycler_transition_to_sleep, parent, false);
 
-        return new TtsAdapter.Myholder(view);
+        return new Myholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Myholder holder, int position) {
 
         holder.tts_videoview.setOnClickListener(v -> {
+            clickPosition.clickPos(position);
             Intent intent = new Intent(context, VideoActivity.class);
-            intent.putExtra(Constants.VIDEO_LINK, filename.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
+            intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
             context.startActivity(intent);
         });
 
-        Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
-                .fit().centerCrop().noFade().into(holder.tts_videoview);
-//        Picasso.get().load(thumb.get(position))
+//        Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")
 //                .fit().centerCrop().noFade().into(holder.tts_videoview);
-
-        holder.save_ttsvids.setOnClickListener(v -> {
-//            context.startActivity(new Intent(activity, SleepEnhancer.class));
-            Toast.makeText(context, "saved", Toast.LENGTH_SHORT).show();
-
-//            FragmentManager fragmentManager = activity.getFragmentManager();
-//            FragmentTransaction fragmentTransaction = fragmentManager
-//                    .beginTransaction();
-//            fragmentTransaction.replace(R.id.framwQts, new SleepEnhancer());
-//            fragmentTransaction.commit();
-
-//          Picasso.get().load("https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png")
-//                    .centerCrop().fit().into(holder.tts_videoview);
+        Picasso.get().load(thumb.get(position))
+                .fit().centerCrop().noFade().into(holder.tts_videoview);
 
 
-        });
-
-        holder.title_tv.setText(title.get(position));
     }
 
     @Override
@@ -100,16 +75,14 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
         return idParent.size();
     }
 
-    public class Myholder extends RecyclerView.ViewHolder {
+    public static class Myholder extends RecyclerView.ViewHolder {
         final ImageView tts_videoview;
-        final TextView save_ttsvids, title_tv;
 
         public Myholder(@NonNull View itemView) {
             super(itemView);
 
             tts_videoview = itemView.findViewById(R.id.tts_videoview);
-            save_ttsvids = itemView.findViewById(R.id.save_ttsvids);
-            title_tv = itemView.findViewById(R.id.title_tv);
+
         }
     }
 }
