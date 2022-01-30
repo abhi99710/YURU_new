@@ -222,6 +222,10 @@ public class JournalList extends AppCompatActivity implements ListInterface {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("code").equalsIgnoreCase("200")){
                     Toast.makeText(this, "Deleted successfully.", Toast.LENGTH_SHORT).show();
+
+                    apiShowList();
+
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

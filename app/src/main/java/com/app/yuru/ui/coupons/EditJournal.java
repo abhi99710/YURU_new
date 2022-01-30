@@ -33,12 +33,14 @@ import java.util.Map;
 public class EditJournal extends AppCompatActivity {
 
 
-    private TextView jour_title;
+    private TextView jour_title, jour_date_edit;
     private ImageView jour_save;
     private EditText jour_content;
-    private Date currentTime;
+    private String currentTime;
     private ProgressDialog progressDialog;
     private String ids;
+    private String title;
+    private String desc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,13 @@ public class EditJournal extends AppCompatActivity {
         progressDialog.setCancelable(false);
 
         ids = getIntent().getStringExtra("id");
+        title = getIntent().getStringExtra("title");
+        desc = getIntent().getStringExtra("desc");
+        currentTime = getIntent().getStringExtra("date");
+
+        jour_content.setText(desc);
+        jour_title.setText(title);
+        jour_date_edit.setText(currentTime);
 
         jour_save.setOnClickListener(v->{
             progressDialog.show();
@@ -124,7 +133,7 @@ public class EditJournal extends AppCompatActivity {
         ImageView jour_idea = findViewById(R.id.jour_idea_edit);
         ImageView jour_font = findViewById(R.id.jour_font_edit);
         jour_content = findViewById(R.id.jour_content_edit);
-        TextView jour_date = findViewById(R.id.jour_date_edit);
+        jour_date_edit = findViewById(R.id.jour_date_edit);
         jour_save = findViewById(R.id.jour_save_edit);
         jour_title = findViewById(R.id.jour_title_edit);
 

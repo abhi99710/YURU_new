@@ -116,6 +116,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
 //                val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
 
+                var showval = ""
+
                 val friday4: CheckBox = dialog.findViewById(R.id.friCheck)
                 val sunday: CheckBox = dialog.findViewById(R.id.sunCheck)
                 val monDay: CheckBox = dialog.findViewById(R.id.monCheck)
@@ -125,76 +127,21 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
                 val saturDay: CheckBox = dialog.findViewById(R.id.satCheck)
                 val everyDay: CheckBox = dialog.findViewById(R.id.everyCheck)
                 val never: CheckBox = dialog.findViewById(R.id.neverCheck)
-                var nd = "never"
 
-                if(friday4.isChecked() == true){
-                    dialog.dismiss()
-                    nd = "friday"
-                    dayOfAlarm.text = "Friday"
-                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
-                }
+                checkClickFunctionality(
+                    everyDay,
+                    monDay,
+                    tuesDay,
+                    wedsnesDay,
+                    thursDay,
+                    friday4,
+                    saturDay,
+                    sunday,
+                    never,
+                    dayOfAlarm,
+                    showval
+                )
 
-                if(never.isChecked() == true) {
-                    sunday.isChecked = false
-                    monDay.isChecked = false
-                    thursDay.isChecked = false
-                    wedsnesDay.isChecked = false
-                    thursDay.isChecked = false
-                    friday4.isChecked = false
-                    saturDay.isChecked = false
-                    everyDay.isChecked = false
-
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Never"
-                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
-                }
-                if(everyDay.isChecked()) {
-                    sunday.isChecked = false
-                    monDay.isChecked = false
-                    thursDay.isChecked = false
-                    wedsnesDay.isChecked = false
-                    thursDay.isChecked = false
-                    friday4.isChecked = false
-                    saturDay.isChecked = false
-                    never.isChecked = false
-
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Everyday"
-                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
-                }
-                if(saturDay.isChecked) {
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Saturday"
-                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
-                }
-
-                if(sunday.isChecked) {
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Sunday"
-                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
-                }
-                if(monDay.isChecked) {
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Monday"
-                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
-                }
-
-                if(tuesDay.isChecked) {
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Tuesday"
-                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
-                }
-
-                if(wedsnesDay.isChecked) {
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Wednesday"
-                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT)
-                }
-                if(thursDay.isChecked) {
-                    dialog.dismiss()
-                    dayOfAlarm.text = "Thursday"
-                    Toast.makeText(context, "Alarm set as per selected option", Toast.LENGTH_SHORT)
-                }
 
             }
         }
@@ -235,6 +182,156 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         apiVideos("45sec", "O")
 
         return view
+    }
+
+    private fun checkClickFunctionality(
+        everyDay: CheckBox,
+        monDay: CheckBox,
+        tuesDay: CheckBox,
+        wedsnesDay: CheckBox,
+        thursDay: CheckBox,
+        friday4: CheckBox,
+        saturDay: CheckBox,
+        sunday: CheckBox,
+        never: CheckBox,
+        dayOfAlarm: TextView,
+        showval: String
+    ) {
+        var showval1 = showval
+        everyDay.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                monDay.isChecked = true
+                tuesDay.isChecked = true
+                wedsnesDay.isChecked = true
+                thursDay.isChecked = true
+                friday4.isChecked = true
+                saturDay.isChecked = true
+                sunday.isChecked = true
+                everyDay.isChecked = true
+                never.isChecked = false
+
+                dayOfAlarm.text = "everyday"
+            }
+        }
+
+        never.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                monDay.isChecked = false
+                tuesDay.isChecked = false
+                wedsnesDay.isChecked = false
+                thursDay.isChecked = false
+                friday4.isChecked = false
+                saturDay.isChecked = false
+                sunday.isChecked = false
+                everyDay.isChecked = false
+                never.isChecked = true
+                dayOfAlarm.text = "never"
+
+            }
+        }
+
+        sunday.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                sunday.isChecked = true
+                never.isChecked = false
+                if (showval1.equals("")) {
+                    showval1 = "sun  "
+                } else {
+                    showval1 = showval1 + ",sun "
+                }
+                dayOfAlarm.text = showval1
+            }
+        }
+
+        monDay.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                monDay.isChecked = true
+                never.isChecked = false
+
+                if (showval1.equals("")) {
+                    showval1 = "mon"
+                } else {
+                    showval1 = showval1 + ",mon "
+                }
+
+                dayOfAlarm.text = showval1
+            }
+        }
+
+        tuesDay.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                tuesDay.isChecked = true
+                never.isChecked = false
+
+                if (showval1.equals("")) {
+                    showval1 = "tue"
+                } else {
+                    showval1 = showval1 + ",tue "
+                }
+
+                dayOfAlarm.text = showval1
+            }
+        }
+
+        wedsnesDay.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                wedsnesDay.isChecked = true
+                never.isChecked = false
+
+                if (showval1.equals("")) {
+                    showval1 = "wed"
+                } else {
+                    showval1 = showval1 + ",wed "
+                }
+
+                dayOfAlarm.text = showval1
+            }
+        }
+
+        thursDay.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                thursDay.isChecked = true
+                never.isChecked = false
+
+                if (showval1.equals("")) {
+                    showval1 = "thu"
+                } else {
+                    showval1 = showval1 + ",thu "
+                }
+
+                dayOfAlarm.text = showval1
+            }
+        }
+
+        friday4.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                friday4.isChecked = true
+                never.isChecked = false
+
+                if (showval1.equals("")) {
+                    showval1 = "fri"
+                } else {
+                    showval1 = showval1 + ",fri "
+                }
+
+                dayOfAlarm.text = showval1
+            }
+        }
+
+        saturDay.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                saturDay.isChecked = true
+                never.isChecked = false
+
+                if (showval1.equals("")) {
+                    showval1 = "sat"
+                } else {
+                    showval1 = showval1 + ",sat "
+                }
+
+                dayOfAlarm.text = showval1
+            }
+        }
     }
 
     private fun allClickListner() {
@@ -518,6 +615,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
         wake_up_video.setVideoURI(uri);
         wake_up_video.start()
+
+        wake_up_video.setOnPreparedListener({ mp -> mp.isLooping = true })
 
     }
 

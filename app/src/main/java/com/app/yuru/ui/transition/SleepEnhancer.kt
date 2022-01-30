@@ -353,9 +353,12 @@ class SleepEnhancer : Fragment() {
         val ctlr = MediaController(context)
 
         val uri =
-            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.sl2);
+            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.eveningvideo);
         tts_vids.setVideoURI(uri);
         tts_vids.start()
+
+
+        tts_vids.setOnPreparedListener({ mp -> mp.isLooping = true })
     }
 
     fun hideOptions(){

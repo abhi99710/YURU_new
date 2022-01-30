@@ -8,7 +8,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,7 +21,6 @@ import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
@@ -30,11 +29,9 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.app.yuru.R
-import com.app.yuru.utility.apivolley.APIVolley
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class SleepEnhancer2 : Fragment() {
@@ -416,12 +413,12 @@ class SleepEnhancer2 : Fragment() {
             val logo: ImageView = dialog.findViewById(R.id.logo)
 
             when(title){
-                "Extraversion"->{
+                "Extraversion" -> {
                     traits = "E"
                     logo.setImageResource(R.drawable.setting_e)
                     dialog_title.setTextColor(Color.parseColor("#FF0000"))
                 }
-                "Agreeableness"->{
+                "Agreeableness" -> {
                     traits = "A"
                     logo.setImageResource(R.drawable.setting_a)
                     dialog_title.setTextColor(Color.parseColor("#F9CA14"))
@@ -429,21 +426,21 @@ class SleepEnhancer2 : Fragment() {
 
                 }
 
-                "Neuroticism"->{
+                "Neuroticism" -> {
                     traits = "N"
                     logo.setImageResource(R.drawable.setting_n)
                     dialog_title.setTextColor(Color.parseColor("#808080"))
 
 
                 }
-                "Openness"->{
+                "Openness" -> {
                     traits = "O"
                     logo.setImageResource(R.drawable.setting_o)
                     dialog_title.setTextColor(Color.parseColor("#008000"))
 
 
                 }
-                "Conscientiousness"->{
+                "Conscientiousness" -> {
                     traits = "C"
                     logo.setImageResource(R.drawable.setting_c)
                     dialog_title.setTextColor(Color.parseColor("#0000FF"))
@@ -469,7 +466,7 @@ class SleepEnhancer2 : Fragment() {
 
             cl45.setOnClickListener {
 
-                apiVideos("45sec",traits)
+                apiVideos("45sec", traits)
                 tv45.setTextColor(Color.parseColor("#008000"))
                 tv90.setTextColor(Color.BLUE)
 
@@ -484,7 +481,7 @@ class SleepEnhancer2 : Fragment() {
             }
 
             recyclerView.setHasFixedSize(true)
-            recyclerView.layoutManager = GridLayoutManager(context,2)
+            recyclerView.layoutManager = GridLayoutManager(context, 2)
             recyclerView.adapter = adapterSleep
 
 
@@ -529,7 +526,7 @@ class SleepEnhancer2 : Fragment() {
         }
     }
 
-    private fun apiVideos(duration : String, trait : String) {
+    private fun apiVideos(duration: String, trait: String) {
         val url = "https://promask.com.co/yuru/api/web/getAllEveningProgram"
         val process = ProgressDialog(context)
         process.setCancelable(false)
@@ -555,11 +552,11 @@ class SleepEnhancer2 : Fragment() {
 
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
-                            id45.add(jsonObject1.getString("id"))
-                            url45.add(jsonObject1.getString("fileURL"))
-                            thumb45.add(jsonObject1.getString("thumb"))
-                            duration45.add(jsonObject1.getString("duration"))
-                            traint45.add(jsonObject1.getString("traits"))
+                        id45.add(jsonObject1.getString("id"))
+                        url45.add(jsonObject1.getString("fileURL"))
+                        thumb45.add(jsonObject1.getString("thumb"))
+                        duration45.add(jsonObject1.getString("duration"))
+                        traint45.add(jsonObject1.getString("traits"))
 
                     }
 
@@ -617,10 +614,12 @@ class SleepEnhancer2 : Fragment() {
         ctlr.setMediaPlayer(sleVideo)
 
         val uri =
-            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.eveningvideo);
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.sl2);
 
         sleVideo.setVideoURI(uri);
         sleVideo.start()
+
+        sleVideo.setOnPreparedListener({ mp -> mp.isLooping = true })
 
     }
 

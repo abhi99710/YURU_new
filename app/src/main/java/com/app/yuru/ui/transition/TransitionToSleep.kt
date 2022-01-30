@@ -237,6 +237,8 @@ class TransitionToSleep : Fragment(), ClickPosition {
         tts_vids.setVideoURI(uri);
         tts_vids.start()
 
+        tts_vids.setOnPreparedListener({ mp -> mp.isLooping = true })
+
     }
 
     private fun apiVideos(gender : String, duration: String) {
