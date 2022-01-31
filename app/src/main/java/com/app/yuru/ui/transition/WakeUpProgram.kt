@@ -516,7 +516,7 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
 
     private fun apiVideos(duration: String, trait : String) {
-        val url = "https://promask.com.co/yuru/api/web/getAllEveningProgram"
+        val url = "https://app.whyuru.com/api/web/getAllEveningProgram"
         val process = ProgressDialog(context)
         process.setCancelable(false)
         process.setMessage("Loading...")

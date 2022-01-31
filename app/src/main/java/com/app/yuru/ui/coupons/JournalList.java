@@ -137,7 +137,7 @@ public class JournalList extends AppCompatActivity implements ListInterface {
     }
 
     private void apiShowList() {
-        String url = "https://promask.com.co/yuru/api/activity";
+        String url = "https://app.whyuru.com/api/activity";
 
         @SuppressLint("SetTextI18n") StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             try {
@@ -215,7 +215,7 @@ public class JournalList extends AppCompatActivity implements ListInterface {
 
     void deleteEntry(String idDeleted){
 
-        String url = "https://promask.com.co/yuru/api/activity/delete?id=" + idDeleted;
+        String url = "https://app.whyuru.com/api/activity/delete?id=" + idDeleted;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             try {

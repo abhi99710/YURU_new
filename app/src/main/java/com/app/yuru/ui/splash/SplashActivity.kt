@@ -23,8 +23,8 @@ class SplashActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             startActivity(Intent(this, PermissionActivity::class.java))
         } else {
-//        startActivity(Intent(this, Splash2::class.java))
-            startActivity(Intent(this, TransitionActivity::class.java))
+        startActivity(Intent(this, Splash2::class.java))
+//            startActivity(Intent(this, TransitionActivity::class.java))
 //        startActivity(Intent(this, Survey::class.java))
 //        startActivity(Intent(this, CalenderV::class.java))
         }

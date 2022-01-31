@@ -78,7 +78,7 @@ public class Survey extends AppCompatActivity {
 
     private void apiGetQuestions() {
 
-        String url = "https://promask.com.co/yuru/api/web/showSurveyquestions";
+        String url = "https://app.whyuru.com/api/web/showSurveyquestions";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             try {
@@ -98,6 +98,7 @@ public class Survey extends AppCompatActivity {
                     ques1.setText(question.get(0));
                     ques2.setText(question.get(1));
                     ques3.setText(question.get(2));
+                    ques4.setText(question.get(3));
 
                 }else {
                     Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
@@ -116,7 +117,7 @@ public class Survey extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String user = sharedPreferences.getString("id", "1");
 
-        String url = "https://promask.com.co/yuru/api/web/addRating";
+        String url = "https://app.whyuru.com/api/web/addRating";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             try {

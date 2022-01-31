@@ -70,6 +70,7 @@ class SleepEnhancer : Fragment() {
 
     private lateinit var seekBar1: VerticalSeekBar
     private lateinit var showOptionclick : ImageView
+    private lateinit var showOptionCLickRight : ImageView
 
     private var id45: MutableList<String> = ArrayList()
     private var fileName: MutableList<String> = ArrayList()
@@ -102,18 +103,29 @@ class SleepEnhancer : Fragment() {
         }
 
         hideOptions()
+        hideOptionRight()
 
         apiVideos()
 
         resetBtn = view.findViewById(R.id.resetBtn)
         resetBtn.setOnClickListener {
             hideOptions()
+            hideOptionRight()
+
+            showOptionCLickRight.visibility = View.VISIBLE
+            showOptionclick.visibility = View.VISIBLE
         }
 
         showOptionclick = view.findViewById(R.id.showOptionclick)
         showOptionclick.setOnClickListener {
             showOptions()
             showOptionclick.visibility = View.INVISIBLE
+        }
+
+        showOptionCLickRight = view.findViewById(R.id.showOptionCLickRight)
+        showOptionCLickRight.setOnClickListener {
+            showOptionRight()
+            showOptionCLickRight.visibility = View.INVISIBLE
         }
 
 
@@ -363,32 +375,41 @@ class SleepEnhancer : Fragment() {
 
     fun hideOptions(){
         showAns.visibility = View.INVISIBLE
-        showAns2.visibility = View.INVISIBLE
         bottom_1.visibility = View.INVISIBLE
-        bottom2.visibility = View.INVISIBLE
         arrowLeft1.visibility = View.INVISIBLE
         arrowRight1.visibility = View.INVISIBLE
+        showAdd1.visibility = View.INVISIBLE
+
+    }
+
+    fun hideOptionRight(){
+        showAns2.visibility = View.INVISIBLE
+        bottom2.visibility = View.INVISIBLE
+
         arrowLeft2.visibility = View.INVISIBLE
         arrowRight2.visibility = View.INVISIBLE
-        showAdd1.visibility = View.INVISIBLE
         showAdd2.visibility = View.INVISIBLE
     }
 
     fun showOptions(){
         showAns.visibility = View.VISIBLE
-        showAns2.visibility = View.VISIBLE
         bottom_1.visibility = View.VISIBLE
-        bottom2.visibility = View.VISIBLE
-        arrowLeft1.visibility = View.VISIBLE
         arrowRight1.visibility = View.VISIBLE
-        arrowLeft2.visibility = View.VISIBLE
-        arrowRight2.visibility = View.VISIBLE
+        arrowLeft1.visibility = View.VISIBLE
+
         showAdd1.visibility = View.VISIBLE
-        showAdd2.visibility = View.VISIBLE
+
     }
 
+    fun showOptionRight(){
+        showAns2.visibility = View.VISIBLE
+        bottom2.visibility = View.VISIBLE
+        arrowLeft2.visibility = View.VISIBLE
+        arrowRight2.visibility = View.VISIBLE
+        showAdd2.visibility = View.VISIBLE
+    }
     private fun apiVideos() {
-        val url = "https://promask.com.co/yuru/api/web/getAllSleepEnhancerMaster"
+        val url = "https://app.whyuru.com/api/web/getAllSleepEnhancerMaster"
         val process = ProgressDialog(context)
         process.setCancelable(false)
         process.setMessage("Loading...")

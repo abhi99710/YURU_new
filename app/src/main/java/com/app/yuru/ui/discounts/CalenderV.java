@@ -126,7 +126,7 @@ public class CalenderV extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     void getDateList(){
 
-        String url = "https://promask.com.co/yuru/api/getSavedDateListByUser";
+        String url = "https://app.whyuru.com/api/getSavedDateListByUser";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             try {

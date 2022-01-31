@@ -85,6 +85,7 @@ class SleepEnhancer2 : Fragment() {
     private lateinit var showAdd2: TextView
     private lateinit var showAdd1: TextView
     private lateinit var sleVideo : VideoView
+    private lateinit var showOptionCLickRight : ImageView
 
 
     private var requestQueue: RequestQueue? = null
@@ -104,17 +105,28 @@ class SleepEnhancer2 : Fragment() {
 
 
         hideOptions()
+        hideOptionRight()
 
         resetBtn2 = view.findViewById(R.id.resetBtn2)
         resetBtn2.setOnClickListener {
 //            showOptions()
             hideOptions()
+            hideOptionRight()
+            showOptionCLickRight.visibility = View.VISIBLE
+            showOptionSelect.visibility = View.VISIBLE
         }
 
         showOptionSelect = view.findViewById(R.id.showOptionSelect)
         showOptionSelect.setOnClickListener {
 //            hideOptions()
             showOptions()
+            showOptionSelect.visibility = View.INVISIBLE
+        }
+
+        showOptionCLickRight = view.findViewById(R.id.showOptionCLickRight2)
+        showOptionCLickRight.setOnClickListener {
+            showOptionRight()
+            showOptionCLickRight.visibility = View.INVISIBLE
         }
 
         apiVideos("45sec", "O")
@@ -527,7 +539,7 @@ class SleepEnhancer2 : Fragment() {
     }
 
     private fun apiVideos(duration: String, trait: String) {
-        val url = "https://promask.com.co/yuru/api/web/getAllEveningProgram"
+        val url = "https://app.whyuru.com/api/web/getAllEveningProgram"
         val process = ProgressDialog(context)
         process.setCancelable(false)
         process.setMessage("Loading...")
@@ -585,27 +597,35 @@ class SleepEnhancer2 : Fragment() {
 
     fun hideOptions(){
         showAns.visibility = View.INVISIBLE
-        showAns2.visibility = View.INVISIBLE
         bottom_1.visibility = View.INVISIBLE
-        bottom2.visibility = View.INVISIBLE
         arrowLeft1.visibility = View.INVISIBLE
         arrowRight1.visibility = View.INVISIBLE
+        showAdd1.visibility = View.INVISIBLE
+
+    }
+
+    fun hideOptionRight(){
+        showAns2.visibility = View.INVISIBLE
+        bottom2.visibility = View.INVISIBLE
         arrowLeft2.visibility = View.INVISIBLE
         arrowRight2.visibility = View.INVISIBLE
-        showAdd1.visibility = View.INVISIBLE
         showAdd2.visibility = View.INVISIBLE
     }
 
     fun showOptions(){
         showAns.visibility = View.VISIBLE
-        showAns2.visibility = View.VISIBLE
         bottom_1.visibility = View.VISIBLE
-        bottom2.visibility = View.VISIBLE
         arrowLeft1.visibility = View.VISIBLE
         arrowRight1.visibility = View.VISIBLE
+        showAdd1.visibility = View.VISIBLE
+
+    }
+
+    fun showOptionRight(){
+        showAns2.visibility = View.VISIBLE
+        bottom2.visibility = View.VISIBLE
         arrowLeft2.visibility = View.VISIBLE
         arrowRight2.visibility = View.VISIBLE
-        showAdd1.visibility = View.VISIBLE
         showAdd2.visibility = View.VISIBLE
     }
 

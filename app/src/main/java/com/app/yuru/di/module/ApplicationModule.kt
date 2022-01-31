@@ -42,7 +42,7 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl("https://promask.com.co/yuru/api/")
+        .baseUrl("https://app.whyuru.com/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()

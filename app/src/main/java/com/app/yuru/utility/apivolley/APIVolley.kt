@@ -3,22 +3,22 @@ package com.app.yuru.utility.apivolley
 class APIVolley {
 
     companion  object{
-         val videosApi = "https://promask.com.co/yuru/api/videos"
+         val videosApi = "https://app.whyuru.com/api/videos"
 
          val sleep = "https://promask.com.co/yuru/api/sleep"
 
-         val transition = "https://promask.com.co/yuru/api/transition"
+         val transition = "https://app.whyuru.com/api/transition"
 
-        val addJournal = "https://promask.com.co/yuru/api/activity/create"
+        val addJournal = "https://app.whyuru.com/api/activity/create"
 
-        val editJournal =  "https://promask.com.co/yuru/api/activity/update"
+        val editJournal =  "https://app.whyuru.com/api/activity/update"
 
-        val generateCode = "https://promask.com.co/yuru/api/activity/generatecode"
+        val generateCode = "https://app.whyuru.com/api/activity/generatecode"
 
-        val sendemail = "https://promask.com.co/yuru/api/activity/sendemail"
+        val sendemail = "https://app.whyuru.com/api/activity/sendemail"
 
-        val updateProfile = "https://promask.com.co/yuru/api/user/profile/update"
+        val updateProfile = "https://app.whyuru.com/api/user/profile/update"
 
-        val summary = "https://promask.com.co/yuru/api/question/summary"
+        val summary = "https://app.whyuru.com/api/question/summary"
     }
 }

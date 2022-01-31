@@ -73,7 +73,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
     }
 
     private fun apiLogin() {
-        val url  = "https://promask.com.co/yuru/api/login"
+        val url  = "https://app.whyuru.com/api/login"
 
         val stringRequest = object : StringRequest(
             Method.POST, url,

@@ -10,17 +10,23 @@
     <com.savvi.rangedatepicker.CalendarPickerView
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:clipToPadding="false"
-        android:paddingBottom="16dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:paddingBottom="16dp"
         android:scrollbarStyle="outsideOverlay"
+        app:layout_constraintBottom_toTopOf="@+id/Thanks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tsquare_dividerColor="@color/transparent"
         app:tsquare_headerTextColor="@color/custom_header_text"
-        app:tsquare_orientation_horizontal="false"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"/>
+        app:tsquare_orientation_horizontal="false" />
 
     <Button
         android:id="@+id/get_selected_dates"
@@ -39,9 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Continue"
-        app:layout_constraintBottom_toBottomOf="@+id/calendar_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

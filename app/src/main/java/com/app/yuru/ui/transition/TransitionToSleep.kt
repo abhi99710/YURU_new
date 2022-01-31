@@ -242,7 +242,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
     }
 
     private fun apiVideos(gender : String, duration: String) {
-        val url = "https://promask.com.co/yuru/api/web/getAllGetToSleep"
+        val url = "http://app.whyuru.com/api/web/getAllGetToSleep"
         val process = ProgressDialog(context)
         process.setCancelable(false)
         process.setMessage("Loading...")
@@ -252,7 +252,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
             Method.POST, url,
             Response.Listener { response ->
                 try {
-//                    progressDialog.dismiss()
+
                      process.dismiss()
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
@@ -330,7 +330,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
         )
         val sharedNameValue : String? = sharedPreferences.getString("id", "12")
 
-        val url = "https://promask.com.co/yuru/api/checkForLogged"
+        val url = "http://app.whyuru.com/api/web/checkForLogged"
 
         val process = ProgressDialog(context)
         process.setCancelable(false)
