@@ -8,7 +8,7 @@
 
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cardeveningandwakeup"
-        android:layout_width="@dimen/_300sdp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/canceldialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/demobig"
+                android:src="@drawable/demobig"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/canceldialog" />
@@ -79,11 +79,11 @@
                 android:id="@+id/textView38"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/_1_2_1_2"
-                android:textStyle="bold"
                 android:textColor="#2E3192"
                 android:textSize="@dimen/_16sdp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/imageView16"
                 app:layout_constraintStart_toStartOf="@+id/imageView16"
                 app:layout_constraintTop_toBottomOf="@+id/imageView16" />

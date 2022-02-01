@@ -26,14 +26,17 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
     final List<String> thumb;
     final List<String> duration;
     final List<String> url;
+    ClickInterface clickInterface;
 
-    public AdapterSleep(Context context, List<String> ids,  List<String> traint, List<String> thumb, List<String> duration, List<String> url) {
+    public AdapterSleep(Context context, List<String> ids,  List<String> traint, List<String> thumb, List<String> duration, List<String> url,
+                        ClickInterface clickInterface) {
         this.context = context;
         this.ids = ids;
         this.traint = traint;
         this.thumb = thumb;
         this.duration = duration;
         this.url = url;
+        this.clickInterface = clickInterface;
     }
 
     @NonNull
@@ -51,9 +54,11 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
 
         holder.sleep_videoview.setOnClickListener(v->
         {
-            Intent intent = new Intent(context, VideoActivity.class);
-            intent.putExtra(Constants.VIDEO_LINK, url.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
-            context.startActivity(intent);
+
+            clickInterface.urlGet(url.get(position));
+//            Intent intent = new Intent(context, VideoActivity.class);
+//            intent.putExtra(Constants.VIDEO_LINK, url.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
+//            context.startActivity(intent);
         });
     }
 

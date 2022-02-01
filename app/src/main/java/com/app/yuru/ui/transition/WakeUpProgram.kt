@@ -1,12 +1,9 @@
 package com.app.yuru.ui.transition
 
 import android.app.*
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +11,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
@@ -26,11 +22,10 @@ import com.app.yuru.R
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import com.app.yuru.corescheduler.utils.Constants
 import com.app.yuru.ui.coupons.Journals
-import com.app.yuru.utility.apivolley.APIVolley
+import com.squareup.picasso.Picasso
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.time.Duration
 import java.util.*
 
 
@@ -87,6 +82,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
     var month: Int = 0
     var year: Int = 0
 
+    private lateinit var progressDialog2 : ProgressDialog
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -102,7 +99,9 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
         val dayOfAlarm : TextView = view.findViewById(R.id.dayOfAlarm)
         dayOfAlarm.setOnClickListener {
-            val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
+
+
+            val dialog =  Dialog(requireContext())
             if (dialog != null) {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setCancelable(true)
@@ -111,6 +110,11 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
                 var back_dialog_wake : ImageView = dialog.findViewById(R.id.back_dialog_wake)
                 back_dialog_wake.setOnClickListener {
+                    dialog.dismiss()
+                }
+
+                val dialog_ok : TextView = dialog.findViewById<TextView>(R.id.dialog_ok)
+                dialog_ok.setOnClickListener{
                     dialog.dismiss()
                 }
 
@@ -164,7 +168,11 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
             time_tv.setOnClickListener {
                 TimePickerDialog.THEME_DEVICE_DEFAULT_DARK
-                TimePickerDialog(context,R.style.MyTimePickerDialogTheme, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show()
+                TimePickerDialog(
+                    context, R.style.MyTimePickerDialogTheme, timeSetListener, calendar.get(
+                        Calendar.HOUR_OF_DAY
+                    ), calendar.get(Calendar.MINUTE), true
+                ).show()
 
 
             }
@@ -377,9 +385,9 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         /*all gear new setup click listner*/
 
         o_new.setOnClickListener({
-            if(clickedGender.equals("45sec")){
+            if (clickedGender.equals("45sec")) {
                 apiVideos("45sec", "O")
-            }else{
+            } else {
                 apiVideos("90sec", "O")
             }
             e_new.setImageResource(R.drawable.setting_o)
@@ -515,8 +523,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 //    }
 
 
-    private fun apiVideos(duration: String, trait : String) {
-        val url = "https://app.whyuru.com/api/web/getAllEveningProgram"
+    private fun apiVideos(duration: String, trait: String) {
+        val url = "https://app.whyuru.com/api/web/getAllWakeUpVideosByFilter"
         val process = ProgressDialog(context)
         process.setCancelable(false)
         process.setMessage("Loading...")
@@ -543,12 +551,12 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
                         var jsonObject1 = jsonArray.getJSONObject(i)
 
 
-                            id1Male.add(jsonObject1.getString("id"))
-                            fileName.add(jsonObject1.getString("fileName"))
-                            traits.add(jsonObject1.getString("traits"))
-                            durationL.add(jsonObject1.getString("duration"))
-                            thumb.add(jsonObject1.getString("thumb"))
-                            fileURL.add(jsonObject1.getString("fileURL"))
+                        id1Male.add(jsonObject1.getString("id"))
+                        fileName.add(jsonObject1.getString("fileName"))
+                        traits.add(jsonObject1.getString("traits"))
+                        durationL.add(jsonObject1.getString("duration"))
+                        thumb.add(jsonObject1.getString("thumb"))
+                        fileURL.add(jsonObject1.getString("fileURL"))
 
                     }
 
@@ -578,7 +586,7 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
     private fun adapterConnects() {
         val adapterMain = AdapterMain(
             context,
-           id1Male,
+            id1Male,
             fileName,
             traits,
             durationL,
@@ -589,14 +597,19 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
         wakeuprecy?.setOnItemClickListener { parent, view, position, id ->
 
+            apiListVideos(id1Male.get(position), fileURL.get(position))
 
-            val intent = Intent(context, VideoActivity::class.java)
-                intent.putExtra(
-                    Constants.VIDEO_LINK,
-                    fileURL.get(position)
-                )
-
-            startActivity(intent)
+            progressDialog2 = ProgressDialog(requireContext())
+            progressDialog2.setCancelable(false)
+            progressDialog2.setMessage("Loading...")
+            progressDialog2.show()
+//            val intent = Intent(context, VideoActivity::class.java)
+//                intent.putExtra(
+//                    Constants.VIDEO_LINK,
+//                    fileURL.get(position)
+//                )
+//
+//            startActivity(intent)
         }
     }
 
@@ -618,6 +631,104 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
         wake_up_video.setOnPreparedListener({ mp -> mp.isLooping = true })
 
+    }
+
+    fun apiListVideos(idaa: String, fileUrl: String) {
+        val url = "https://app.whyuru.com/api/web/getAllSubPartByID"
+        val stringRequest: StringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response: String? ->
+                try {
+                    val jsonObject = JSONObject(response)
+                    progressDialog2.dismiss()
+                    val jsonObject1 = jsonObject.getJSONObject("result")
+                    val jsonArray = jsonObject1.getJSONArray("data")
+
+                    for (i in 0 until jsonArray.length()) {
+                        var jsonObject2 = jsonArray.getJSONObject(i)
+                        idCLickDialog(
+                            fileUrl, jsonObject2.getString("thumb"), jsonObject2.getString(
+                                "sub1URL"
+                            ),
+                            jsonObject2.getString("sub2URL"), jsonObject2.getString("sub3URL")
+                        )
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error: VolleyError? ->
+                Toast.makeText(
+                    context,
+                    "Server Problem",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }) {
+            override fun getParams(): Map<String, String>? {
+                val map: MutableMap<String, String> = HashMap()
+                map.put("mainID", idaa)
+                return map
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(stringRequest)
+    }
+
+    private fun idCLickDialog(url1: String, thumb: String, sub1: String, sub2: String, sub3: String) {
+        val dialog = Dialog(requireContext())
+        //                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialogwakeupandevening)
+        val image1 = dialog.findViewById<ImageView>(R.id.imageView16)
+        val image2 = dialog.findViewById<ImageView>(R.id.imageView17)
+        val image3 = dialog.findViewById<ImageView>(R.id.imageView18)
+        val image4 = dialog.findViewById<ImageView>(R.id.imageView14)
+
+        Picasso.get().load(thumb).centerCrop().noFade().fit().into(image4)
+
+        image1.setOnClickListener {
+
+            val intent = Intent(context, VideoActivity::class.java)
+            intent.putExtra(
+                Constants.VIDEO_LINK,
+                sub1
+            )
+            requireContext().startActivity(intent)
+        }
+
+        image2.setOnClickListener {
+
+            val intent = Intent(context, VideoActivity::class.java)
+            intent.putExtra(
+                Constants.VIDEO_LINK,
+                sub2
+            )
+            requireContext().startActivity(intent)
+        }
+
+        image3.setOnClickListener {
+
+            val intent = Intent(context, VideoActivity::class.java)
+            intent.putExtra(
+                Constants.VIDEO_LINK,
+                sub3
+            )
+            requireContext().startActivity(intent)
+        }
+
+        image4.setOnClickListener {
+
+            val intent = Intent(context, VideoActivity::class.java)
+            intent.putExtra(
+                Constants.VIDEO_LINK,
+                url1
+            )
+            requireContext().startActivity(intent)
+        }
+
+        val dialogButton = dialog.findViewById<ImageView>(R.id.canceldialog)
+        dialogButton.setOnClickListener { v1: View? -> dialog.dismiss() }
+        dialog.show()
     }
 
 }

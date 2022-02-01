@@ -29,12 +29,17 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.app.yuru.R
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.PlayerView
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 
 
-class SleepEnhancer2 : Fragment() {
+class SleepEnhancer2 : Fragment(), ClickInterface {
 
 
     private lateinit var bottom_1: ImageView
@@ -87,6 +92,11 @@ class SleepEnhancer2 : Fragment() {
     private lateinit var sleVideo : VideoView
     private lateinit var showOptionCLickRight : ImageView
 
+    private lateinit var playerView1 : PlayerView
+    private lateinit var clExoPlayer : ConstraintLayout
+    private lateinit var closebtndialog1 : ImageView
+
+    private var newUrl : String = ""
 
     private var requestQueue: RequestQueue? = null
 
@@ -422,6 +432,19 @@ class SleepEnhancer2 : Fragment() {
             val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
             dialog_title.text = title
 
+            playerView1 = dialog.findViewById(R.id.playerView1)
+
+
+            clExoPlayer = dialog.findViewById(R.id.clExoPlayer)
+            closebtndialog1 = dialog.findViewById(R.id.closebtndialog1)
+            closebtndialog1.setOnClickListener {
+                clExoPlayer.visibility = View.INVISIBLE
+            }
+
+
+            click()
+
+
             val logo: ImageView = dialog.findViewById(R.id.logo)
 
             when(title){
@@ -473,7 +496,8 @@ class SleepEnhancer2 : Fragment() {
                 traint45,
                 thumb45,
                 duration45,
-                url45
+                url45,
+                this
             )
 
             cl45.setOnClickListener {
@@ -501,6 +525,28 @@ class SleepEnhancer2 : Fragment() {
             closebtndialog.setOnClickListener {
                 dialog.dismiss()
             }
+        }
+
+
+    }
+
+    private fun click() {
+        var player: SimpleExoPlayer? = null
+
+        if (!newUrl.equals("")) {
+            clExoPlayer.visibility = View.VISIBLE
+        }
+
+        val mediaItem: MediaItem = newUrl.let { MediaItem.fromUri(it) }
+        player = SimpleExoPlayer.Builder(requireContext()).build().also {
+            playerView1.player = it
+            // Set the media item to be played.
+            it.setMediaItem(mediaItem)
+            // Prepare the player.
+            it.prepare()
+            // Start the playback.
+            it.play()
+
         }
 
 
@@ -643,4 +689,23 @@ class SleepEnhancer2 : Fragment() {
 
     }
 
+    override fun urlGet(url: String) {
+        newUrl = url
+        click()
+    }
+//    override fun onStart() {
+//        super.onStart()
+//        player?.play()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        player?.pause()
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        player?.release()
+//        player = null
+//    }
 }

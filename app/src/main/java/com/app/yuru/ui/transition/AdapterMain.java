@@ -6,17 +6,30 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
 import com.app.yuru.corescheduler.utils.Constants;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AdapterMain extends BaseAdapter {
 
@@ -66,20 +79,27 @@ public class AdapterMain extends BaseAdapter {
         ImageView videoView = convertView.findViewById(R.id.gridIMageView);
 
 
-        cardsub.setOnClickListener(v -> {
-
-                    Intent intent = new Intent(context, VideoActivity.class);
-                    intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position));
-                    context.startActivity(intent);
-
-                }
-
-        );
+//        cardsub.setOnClickListener(v -> {
+//
+//                    Intent intent = new Intent(context, VideoActivity.class);
+//                    intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position));
+//                    context.startActivity(intent);
+////
+////            apiListVideos(id.get(position));
+////                    idCLickDialog();
+////
+//                }
+//
+//        );
 
         Picasso.get().load(thumb.get(position)).fit().noFade().centerCrop().into(videoView);
 
 
         return convertView;
     }
+
+
+
+
 
 }
