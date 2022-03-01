@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -137,6 +138,10 @@ public class JournalList extends AppCompatActivity implements ListInterface {
     }
 
     private void apiShowList() {
+        SharedPreferences sh = getSharedPreferences("share", MODE_PRIVATE);
+
+        String ids1 = sh.getString("id", "");
+
         String url = "https://app.whyuru.com/api/activity";
 
         @SuppressLint("SetTextI18n") StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {

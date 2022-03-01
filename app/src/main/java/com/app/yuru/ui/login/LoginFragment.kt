@@ -25,6 +25,7 @@ import com.app.yuru.ui.splash.Splash2
 import com.app.yuru.ui.test.TestActivity
 import com.app.yuru.ui.transition.AdapterMain
 import com.app.yuru.ui.transition.TransitionActivity
+import com.app.yuru.utility.apivolley.Global
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
 import org.json.JSONObject
@@ -50,6 +51,15 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
 //            progressDialog.show()
 
         }
+
+        binding.tvForgotPassword.setOnClickListener {
+
+//            Toast.makeText(context, "---------", Toast.LENGTH_SHORT).show()
+            var intent = Intent(context, ForgotPassword::class.java)
+            startActivity(intent)
+
+        }
+
         binding.btnProceed.setOnClickListener{
 
 //            Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
@@ -64,6 +74,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                 Toast.makeText(context, "please enter your password", Toast.LENGTH_SHORT).show()
 
             }else{
+//                progressDialog.show()
                 apiLogin()
             }
 
@@ -92,8 +103,8 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
 
                          val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
                          val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-
-                         editor.putString("id",jsonObject.getString("id"))
+                            Global.ids1 = jsonObject1.getString("id")
+                         editor.putString("id",jsonObject1.getString("id"))
                          editor.apply()
                          editor.commit()
 //
@@ -109,6 +120,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
             },
             object : Response.ErrorListener {
                 override fun onErrorResponse(volleyError: VolleyError) {
+//                    progressDialog.dismiss()
                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
                 }
             })

@@ -1,21 +1,18 @@
 package com.app.yuru.ui.transition
 
 
-import android.app.ActionBar
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.*
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,11 +26,8 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import com.app.yuru.corescheduler.utils.Constants
-import com.app.yuru.utility.apivolley.APIVolley
-import okhttp3.internal.toNonNegativeInt
 import org.json.JSONException
 import org.json.JSONObject
-import java.time.Duration
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -241,7 +235,12 @@ class TransitionToSleep : Fragment(), ClickPosition {
 
     }
 
-    private fun apiVideos(gender : String, duration: String) {
+    private fun apiVideos(gender: String, duration: String) {
+
+        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
         val url = "http://app.whyuru.com/api/web/getAllGetToSleep"
         val process = ProgressDialog(context)
         process.setCancelable(false)
@@ -253,7 +252,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
             Response.Listener { response ->
                 try {
 
-                     process.dismiss()
+                    process.dismiss()
                     val obj = JSONObject(response)
                     var jsonObject = obj.getJSONObject("result")
                     val jsonArray = jsonObject.getJSONArray("data")
@@ -278,7 +277,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
                         thumb.add(jsonObject1.getString("thumb"))
                         fileURL.add(jsonObject1.getString("fileURL"))
 
-                        }
+                    }
 
                     adapterConnects()
 
@@ -296,6 +295,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
                 val params = HashMap<String, String>()
                 params.put("gender", gender)
                 params.put("duration", duration)
+                params.put("userId", ids1.toString());
 
                 return params
             }
@@ -307,7 +307,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
     private fun adapterConnects() {
         val transitionToSleepAdapter = TtsAdapter(
             context,
-           idC,
+            idC,
             fileName,
             genderL,
             languages,

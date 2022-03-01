@@ -47,7 +47,7 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
 
 //            apiGetCoupon()
             Toast.makeText(context, "Discount sent please wait for a while.", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(context, LowvsHigh::class.java))
+            startActivity(Intent(context, DiscountCode::class.java))
         }
 
         binding.pieChart.setUsePercentValues(true)

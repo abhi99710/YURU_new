@@ -48,6 +48,8 @@ public class Survey extends AppCompatActivity {
 
         findIDs();
 
+        ques4 = findViewById(R.id.ques4);
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
@@ -114,6 +116,11 @@ public class Survey extends AppCompatActivity {
 
     private void apiSaveQuestions(/*String selectedId1, String selectedId2, String selectedId3*/) {
 
+        SharedPreferences sh = getSharedPreferences("share", MODE_PRIVATE);
+
+        String idh1 = sh.getString("id", "");
+
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String user = sharedPreferences.getString("id", "1");
 
@@ -141,7 +148,7 @@ public class Survey extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("userId", "12");
+                map.put("userId", idh1);
                 map.put("q1ID", ques_id.get(0));
                 map.put("q2ID", ques_id.get(1));
                 map.put("q3ID", ques_id.get(2));

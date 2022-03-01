@@ -1,7 +1,9 @@
 package com.app.yuru.ui.transition
 
 import android.app.*
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -524,6 +526,11 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
 
     private fun apiVideos(duration: String, trait: String) {
+
+        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
         val url = "https://app.whyuru.com/api/web/getAllWakeUpVideosByFilter"
         val process = ProgressDialog(context)
         process.setCancelable(false)
@@ -576,6 +583,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
                 val params = HashMap<String, String>()
                 params.put("duration", duration)
                 params.put("trait", trait)
+                params.put("userId", ids1.toString());
+
                 return params
             }
         }

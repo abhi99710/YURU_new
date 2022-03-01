@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -73,6 +74,11 @@ public class EditJournal extends AppCompatActivity {
 
     private void apiEditJournal(String ids) {
 
+
+        SharedPreferences sh = getSharedPreferences("share", MODE_PRIVATE);
+
+        String idh1 = sh.getString("id", "");
+
         String url = APIVolley.Companion.getEditJournal();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
@@ -97,7 +103,7 @@ public class EditJournal extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("user_id","1");
+                map.put("user_id",idh1);
                 map.put("title",jour_title.getText().toString());
                 map.put("id",ids);
 

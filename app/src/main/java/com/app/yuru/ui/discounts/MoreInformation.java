@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -203,6 +204,10 @@ public class MoreInformation extends AppCompatActivity {
 
     void apiMoreInformation(){
 
+        SharedPreferences sh = getSharedPreferences("share", MODE_PRIVATE);
+
+        String idh1 = sh.getString("id", "");
+
         String url = APIVolley.Companion.getUpdateProfile();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url , response -> {
@@ -224,7 +229,7 @@ public class MoreInformation extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams()  {
                 Map<String, String> map = new HashMap<>();
-                map.put("user_id", "1");
+                map.put("user_id", idh1);
                 map.put("gender", apiGenderVar);
                 map.put("language_code", apiLangVar);
                 map.put("age_floor", apiAgeVarfloor);

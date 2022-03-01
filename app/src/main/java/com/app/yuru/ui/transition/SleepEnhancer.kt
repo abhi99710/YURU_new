@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -92,7 +93,10 @@ class SleepEnhancer : Fragment() {
 
         rightArraow_sleep = view.findViewById(R.id.rightArraow_sleep)
         rightArraow_sleep.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, SleepEnhancer2()).commit()
+            requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.framwQts,
+                SleepEnhancer2()
+            ).commit()
         }
 
         leftArrow_sleep = view.findViewById(R.id.leftArrow_sleep)
@@ -409,6 +413,10 @@ class SleepEnhancer : Fragment() {
         showAdd2.visibility = View.VISIBLE
     }
     private fun apiVideos() {
+        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
         val url = "https://app.whyuru.com/api/web/getAllSleepEnhancerMaster"
         val process = ProgressDialog(context)
         process.setCancelable(false)
@@ -416,7 +424,7 @@ class SleepEnhancer : Fragment() {
         process.show()
 
         val stringRequest = object : StringRequest(
-            Method.GET, url,
+            Method.POST, url,
             Response.Listener { response ->
                 try {
                     process.dismiss()
@@ -440,7 +448,7 @@ class SleepEnhancer : Fragment() {
                         fileURL.add(jsonObject1.getString("fileURL"))
                         isActive.add(jsonObject1.getString("isActive"))
 
-                        if(isActive.equals("1")){
+                        if (isActive.equals("1")) {
                             urlL = jsonObject1.getString("isActive")
                         }
                     }
@@ -454,6 +462,14 @@ class SleepEnhancer : Fragment() {
                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
                 }
             }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String> {
+                    val params = HashMap<String, String>()
+                    params.put("userId", ids1.toString());
+
+                    return params
+                }
+
         }
         requestQueue = Volley.newRequestQueue(context)
         requestQueue?.add(stringRequest)

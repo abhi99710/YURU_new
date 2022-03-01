@@ -3,7 +3,9 @@ package com.app.yuru.ui.coupons;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
@@ -72,7 +74,11 @@ public class DiscountCode extends AppCompatActivity {
     /*------ getting coupon code and save it locally ------*/
     private void apiGetCoupon() {
 
-        String url = APIVolley.Companion.getGenerateCode()+"?user_id="+"1";
+        SharedPreferences sh = getSharedPreferences("share", Context.MODE_PRIVATE);
+
+        String idh1 = sh.getString("id", "");
+
+        String url = APIVolley.Companion.getGenerateCode()+"?user_id="+idh1;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
             try {
@@ -103,6 +109,10 @@ public class DiscountCode extends AppCompatActivity {
     private void apiSenderMail(String s){
         String url = APIVolley.Companion.getSendemail();
 
+        SharedPreferences sh = getApplicationContext().getSharedPreferences("share", Context.MODE_PRIVATE);
+
+        String idh1 = sh.getString("id", "");
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             try {
                 JSONObject jsonObject = new JSONObject(response);
@@ -119,7 +129,7 @@ public class DiscountCode extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String , String> ma1 = new HashMap<>();
-                ma1.put("user_id", "1");
+                ma1.put("user_id", idh1);
                 return ma1;
             }
         };

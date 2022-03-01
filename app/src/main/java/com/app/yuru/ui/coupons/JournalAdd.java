@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -66,6 +67,9 @@ public class JournalAdd extends AppCompatActivity {
 
     private void apiAddJournal() {
 
+        SharedPreferences sh = getSharedPreferences("share", MODE_PRIVATE);
+
+        String ids1 = sh.getString("id", "1");
 
         String url = APIVolley.Companion.getAddJournal();
 
@@ -91,7 +95,7 @@ public class JournalAdd extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("user_id","1");
+                map.put("user_id",ids1);
                 map.put("title",jour_title.getText().toString());
 
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

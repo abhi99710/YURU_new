@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -126,6 +127,10 @@ public class CalenderV extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     void getDateList(){
 
+        SharedPreferences sh = getSharedPreferences("share", MODE_PRIVATE);
+
+        String ids1 = sh.getString("id", "1");
+
         String url = "https://app.whyuru.com/api/getSavedDateListByUser";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
@@ -158,7 +163,7 @@ public class CalenderV extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<>();
-                map.put("userId", "12");
+                map.put("userId", ids1);
                 return map;
             }
         };

@@ -7,8 +7,8 @@ import android.app.PendingIntent
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
-import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -29,9 +29,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.app.yuru.R
-import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 import org.json.JSONException
@@ -52,6 +50,9 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private lateinit var center2: ImageView
     private lateinit var save_sleep_enhancer_2: TextView
 
+    var player: SimpleExoPlayer? = null
+
+
     private lateinit var o_option: ImageView
     private lateinit var e_option: ImageView
     private lateinit var c_option: ImageView
@@ -64,8 +65,8 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private var right_1_count = 0  //count for right click for image 1
     private var left_2_count = 0  //count for left click for image 2
     private var right_2_count = 0  //count for right click for image 2
-    private var answerForLeft = 225  // real time answer for image 1 button clicks
-    private var annserForRight = 315  // real time answer for image 1 button clicks
+    private var answerForLeft = 0  // real time answer for image 1 button clicks
+    private var annserForRight = 0  // real time answer for image 1 button clicks
     private var toXdelta1 =
         0.0f  // saves the position to which the first imageview slides right side
     private var toXdelta2 =
@@ -76,8 +77,8 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
         0.0f  // saves the position to which the second imageview slides left side
     private var countClicked = 0
 
-    private lateinit var resetBtn2 : TextView
-    private lateinit var showOptionSelect : ImageView
+    private lateinit var resetBtn2: TextView
+    private lateinit var showOptionSelect: ImageView
 
     private var id45: MutableList<String> = ArrayList()
     private var traint45: MutableList<String> = ArrayList()
@@ -89,14 +90,24 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private lateinit var showAns: TextView
     private lateinit var showAdd2: TextView
     private lateinit var showAdd1: TextView
-    private lateinit var sleVideo : VideoView
-    private lateinit var showOptionCLickRight : ImageView
+    private lateinit var sleVideo: VideoView
+    private lateinit var showOptionCLickRight: ImageView
 
-    private lateinit var playerView1 : PlayerView
-    private lateinit var clExoPlayer : ConstraintLayout
-    private lateinit var closebtndialog1 : ImageView
+    private lateinit var playerView1: PlayerView
+    private lateinit var clExoPlayer: ConstraintLayout
+    private lateinit var closebtndialog1: ImageView
 
-    private var newUrl : String = ""
+    private var isEngagedO = false
+    private var isEngagedC = false
+
+    private var isEngagedE = false
+
+    private var isEngagedA = false
+
+    private var isEngagedN = false
+
+
+    private var newUrl: String = ""
 
     private var requestQueue: RequestQueue? = null
 
@@ -142,7 +153,6 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
         apiVideos("45sec", "O")
 
 
-
         // bottom left side imageview click managed here
         bottom_1.setOnClickListener {
 //            showDialog("Openness")
@@ -173,14 +183,21 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
         o_option.setOnClickListener {
 
 //           val o =  o_option.drawable
-            showDialog("Openness")
 
-            if (countClicked == 0) {
-                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
-                countClicked = 1
+            if (isEngagedO == false) {
+                showDialog("Openness")
+
+                isEngagedO = true
+                if (countClicked == 0) {
+                    bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
+                    countClicked = 1
+                } else {
+                    bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
+                    countClicked = 0
+                }
             } else {
-                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_o))
-                countClicked = 0
+
+                Toast.makeText(context, "Already used", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -189,14 +206,21 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 
 //            val o =  e_option.drawable
 
-            showDialog("Extraversion")
 
-            if (countClicked == 0) {
-                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
-                countClicked = 1
+            if (isEngagedE == false) {
+                showDialog("Extraversion")
+
+                isEngagedE = true
+                if (countClicked == 0) {
+                    bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
+                    countClicked = 1
+                } else {
+                    bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
+                    countClicked = 0
+                }
             } else {
-                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_e))
-                countClicked = 0
+
+                Toast.makeText(context, "Already used", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -204,14 +228,21 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 
 //            val o =  c_option.drawable
 
-            showDialog("Conscientiousness")
 
-            if (countClicked == 0) {
-                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
-                countClicked = 1
+            if (isEngagedC == false) {
+                showDialog("Conscientiousness")
+
+                isEngagedC = true
+                if (countClicked == 0) {
+                    bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
+                    countClicked = 1
+                } else {
+                    bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
+                    countClicked = 0
+                }
             } else {
-                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_c))
-                countClicked = 0
+                Toast.makeText(context, "Already used", Toast.LENGTH_SHORT).show()
+
             }
         }
 
@@ -220,30 +251,45 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 
 //            val o =  a1Option.drawable
 
-            showDialog("Agreeableness")
 
-            if (countClicked == 0) {
-                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
-                countClicked = 1
+            if (isEngagedA == false) {
+                showDialog("Agreeableness")
+
+                isEngagedA = true
+                if (countClicked == 0) {
+                    bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
+                    countClicked = 1
+                } else {
+                    bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
+                    countClicked = 0
+                }
             } else {
-                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_a))
-                countClicked = 0
+                Toast.makeText(context, "Already used", Toast.LENGTH_SHORT).show()
+
             }
         }
 
         n1option.setOnClickListener {
 
-            val o =  n1option.drawable
-
-            showDialog("Neuroticism")
+            val o = n1option.drawable
 
 
-            if (countClicked == 0) {
-                bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
-                countClicked = 1
+
+
+            if (isEngagedN == false) {
+                showDialog("Neuroticism")
+                isEngagedN = true
+                if (countClicked == 0) {
+
+                    bottom_1.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
+                    countClicked = 1
+                } else {
+                    bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
+                    countClicked = 0
+                }
             } else {
-                bottom2.setImageDrawable(resources.getDrawable(R.drawable.setting_n))
-                countClicked = 0
+                Toast.makeText(context, "Already used", Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -418,6 +464,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
         showAns2 = view.findViewById(R.id.showAns2S2)
     }
 
+
     private fun showDialog(title: String) {
         val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
         if (dialog != null) {
@@ -439,6 +486,10 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
             closebtndialog1 = dialog.findViewById(R.id.closebtndialog1)
             closebtndialog1.setOnClickListener {
                 clExoPlayer.visibility = View.INVISIBLE
+                playerView1.onPause()
+                playerView1.setKeepContentOnPlayerReset(true)
+                player?.pause()
+
             }
 
 
@@ -447,7 +498,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 
             val logo: ImageView = dialog.findViewById(R.id.logo)
 
-            when(title){
+            when (title) {
                 "Extraversion" -> {
                     traits = "E"
                     logo.setImageResource(R.drawable.setting_e)
@@ -524,6 +575,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
             val closebtndialog = dialog.findViewById<ImageView>(R.id.closebtndialog)
             closebtndialog.setOnClickListener {
                 dialog.dismiss()
+                player?.pause()
             }
         }
 
@@ -531,7 +583,6 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     }
 
     private fun click() {
-        var player: SimpleExoPlayer? = null
 
         if (!newUrl.equals("")) {
             clExoPlayer.visibility = View.VISIBLE
@@ -585,6 +636,14 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     }
 
     private fun apiVideos(duration: String, trait: String) {
+
+        val sh: SharedPreferences = requireActivity().getSharedPreferences(
+            "share",
+            Context.MODE_PRIVATE
+        )
+
+        val ids1 = sh.getString("id", "")
+
         val url = "https://app.whyuru.com/api/web/getAllEveningProgram"
         val process = ProgressDialog(context)
         process.setCancelable(false)
@@ -633,6 +692,8 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
                 val params = HashMap<String, String>()
                 params.put("duration", duration)
                 params.put("trait", trait)
+                params.put("userId", ids1.toString());
+
                 return params
             }
         }
@@ -641,7 +702,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     }
 
 
-    fun hideOptions(){
+    fun hideOptions() {
         showAns.visibility = View.INVISIBLE
         bottom_1.visibility = View.INVISIBLE
         arrowLeft1.visibility = View.INVISIBLE
@@ -650,7 +711,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 
     }
 
-    fun hideOptionRight(){
+    fun hideOptionRight() {
         showAns2.visibility = View.INVISIBLE
         bottom2.visibility = View.INVISIBLE
         arrowLeft2.visibility = View.INVISIBLE
@@ -658,7 +719,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
         showAdd2.visibility = View.INVISIBLE
     }
 
-    fun showOptions(){
+    fun showOptions() {
         showAns.visibility = View.VISIBLE
         bottom_1.visibility = View.VISIBLE
         arrowLeft1.visibility = View.VISIBLE
@@ -667,7 +728,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 
     }
 
-    fun showOptionRight(){
+    fun showOptionRight() {
         showAns2.visibility = View.VISIBLE
         bottom2.visibility = View.VISIBLE
         arrowLeft2.visibility = View.VISIBLE

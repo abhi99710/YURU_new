@@ -25,6 +25,9 @@ class SignUpFragment : BaseFragmentBinding<FragmentSignupBinding>() {
     override fun setupView(binding: FragmentSignupBinding) {
         binding.btnSignUp.setOnClickListener {
             val fullName = binding.edtName.trimString()
+
+
+
             val email = binding.edtEmail.trimString()
             val password = binding.edtPassword.trimString()
             when {
