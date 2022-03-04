@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -62,10 +63,16 @@ public class CalenderV extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
         Button thanks = findViewById(R.id.Thanks);
         thanks.setOnClickListener(v->{
 //            getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new TransitionToSleep()).commit();
-            startActivity(new Intent(this, TransitionActivity.class));
+            Intent intent = new Intent(this, MainRocket.class);
+            intent.putExtra("first_rocket", "cal");
+            startActivity(intent);
         });
 
 

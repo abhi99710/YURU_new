@@ -22,6 +22,8 @@ public class RocketTake extends AppCompatActivity {
 
 //        skipLogin = findViewById(R.id.skipLogin);
 
+
+
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(this, CalenderV.class);
 //            intent.putExtra("nameLogin", nameLogin);

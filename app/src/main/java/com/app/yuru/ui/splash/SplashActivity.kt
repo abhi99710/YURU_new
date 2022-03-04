@@ -12,6 +12,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
 import com.app.yuru.ui.coupons.DiscountCode
+import com.app.yuru.ui.discounts.MainRocket
 import com.app.yuru.ui.transition.TransitionActivity
 import java.util.concurrent.TimeUnit
 
@@ -33,7 +34,9 @@ class SplashActivity : AppCompatActivity() {
             val idh1 = sh.getString("id", "")
             if(!idh1.toString().equals("")){
                 startActivity(Intent(this, TransitionActivity::class.java))
-//                startActivity(Intent(this, DiscountCode::class.java))
+//               Intent(this, MainRocket::class.java)
+//                intent.putExtra("first_rocket", "latest")
+//                startActivity(intent)
             }else{
                 startActivity(Intent(this, Splash2::class.java))
             }

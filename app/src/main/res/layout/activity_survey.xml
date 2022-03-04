@@ -56,7 +56,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="test question ans"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -143,7 +143,7 @@
 
                         <RadioButton
                             android:id="@+id/rb1Q1"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="1"
                             app:layout_constraintTop_toTopOf="parent"
@@ -154,7 +154,7 @@
 
                         <RadioButton
                             android:id="@+id/rb2Q1"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:text="2"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -165,7 +165,7 @@
 
                         <RadioButton
                             android:id="@+id/rb3Q1"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:text="3"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -176,7 +176,7 @@
 
                         <RadioButton
                             android:id="@+id/rb4Q1"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:text="4"
                             android:layout_height="@dimen/_20sdp"
                             app:layout_constraintTop_toTopOf="parent"
@@ -187,7 +187,7 @@
 
                         <RadioButton
                             android:id="@+id/rb5Q1"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:text="5"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -231,7 +231,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="test question ans"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -318,7 +318,7 @@
 
                         <RadioButton
                             android:id="@+id/rb1Q2"
-                            android:layout_width="25dp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="25dp"
                             android:text="1"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -329,7 +329,7 @@
 
                         <RadioButton
                             android:id="@+id/rb2Q2"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             android:text="2"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -340,7 +340,7 @@
 
                         <RadioButton
                             android:id="@+id/rb3Q2"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_height="@dimen/_20sdp"
@@ -351,7 +351,7 @@
 
                         <RadioButton
                             android:id="@+id/rb4Q2"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:text="4"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -362,7 +362,7 @@
 
                         <RadioButton
                             android:id="@+id/rb5Q2"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:layout_height="@dimen/_20sdp"
@@ -404,7 +404,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="test question ans"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -492,7 +492,7 @@
 
                         <RadioButton
                             android:id="@+id/rb1Q3"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="1"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -503,7 +503,7 @@
 
                         <RadioButton
                             android:id="@+id/rb2Q3"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="2"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -514,7 +514,7 @@
 
                         <RadioButton
                             android:id="@+id/rb3Q3"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="3"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -525,7 +525,7 @@
 
                         <RadioButton
                             android:id="@+id/rb4Q3"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="4"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -536,7 +536,7 @@
 
                         <RadioButton
                             android:id="@+id/rb5Q3"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="5"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -578,7 +578,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="test question ans"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -665,7 +665,7 @@
 
                         <RadioButton
                             android:id="@+id/rb1Q4"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="1"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -676,7 +676,7 @@
 
                         <RadioButton
                             android:id="@+id/rb2Q4"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="2"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -687,7 +687,7 @@
 
                         <RadioButton
                             android:id="@+id/rb3Q4"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="3"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -698,7 +698,7 @@
 
                         <RadioButton
                             android:id="@+id/rb4Q4"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="4"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -709,7 +709,7 @@
 
                         <RadioButton
                             android:id="@+id/rb5Q4"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="5"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -750,7 +750,7 @@
                     android:layout_marginEnd="8dp"
                     android:text="test question ans"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -837,7 +837,7 @@
 
                         <RadioButton
                             android:id="@+id/rb1Q5"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="1"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -848,7 +848,7 @@
 
                         <RadioButton
                             android:id="@+id/rb2Q5"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="2"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -859,7 +859,7 @@
 
                         <RadioButton
                             android:id="@+id/rb3Q5"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="3"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -870,7 +870,7 @@
 
                         <RadioButton
                             android:id="@+id/rb4Q5"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="4"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -881,7 +881,7 @@
 
                         <RadioButton
                             android:id="@+id/rb5Q5"
-                            android:layout_width="@dimen/_20sdp"
+                            android:layout_width="@dimen/_22sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:text="5"
                             app:layout_constraintBottom_toBottomOf="parent"

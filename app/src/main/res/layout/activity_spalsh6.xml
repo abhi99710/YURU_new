@@ -6,10 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.splash.Spalsh6">
 
-    <VideoView
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/playerView_sp6"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/splash6mp4"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:resize_mode="fit"
+        app:show_buffering="when_playing"
+        app:use_artwork="false" />
 
     <ImageView
         android:id="@+id/splash_next_btn6"
@@ -18,7 +25,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="64dp"
         android:background="@drawable/discount_rightarrow"
-        app:layout_constraintBottom_toBottomOf="@+id/splash6mp4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

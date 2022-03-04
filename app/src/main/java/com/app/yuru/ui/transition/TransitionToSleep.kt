@@ -26,6 +26,10 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import com.app.yuru.corescheduler.utils.Constants
+import com.app.yuru.ui.library.LibraryModules
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.PlayerView
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -59,7 +63,14 @@ class TransitionToSleep : Fragment(), ClickPosition {
     private lateinit var sleep_female: TextView
     private lateinit var tts_vids: VideoView
 
+    private lateinit var playerView1: PlayerView
+    private lateinit var clExoPlayer: ConstraintLayout
+    private lateinit var closebtndialog1: ImageView
+    private var newUrl: String = ""
+
     var position = 0
+
+    lateinit var explore : TextView
 
     var isGenderCLick = "male"
 
@@ -78,6 +89,10 @@ class TransitionToSleep : Fragment(), ClickPosition {
         checkOnline()
 
 
+        explore = view.findViewById(R.id.explore)
+        explore.setOnClickListener {
+            startActivity(Intent(context, LibraryModules::class.java))
+        }
 
 //        (activity as AppCompatActivity).supportActionBar?.title = "Get to Sleep"
 //        (activity as AppCompatActivity).supportActionBar?.setHomeButtonEnabled(true)
@@ -93,6 +108,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
         male_tts_cl = view.findViewById(R.id.male_tts_cl)
         female_tts_cl = view.findViewById(R.id.female_tts_cl)
 
+        playerView1 = view.findViewById(R.id.playerViewtts)
 
 
         videoPlay()
@@ -324,11 +340,9 @@ class TransitionToSleep : Fragment(), ClickPosition {
 
     private fun checkOnline() {
 
-        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences(
-            "share",
-            Context.MODE_PRIVATE
-        )
-        val sharedNameValue : String? = sharedPreferences.getString("id", "12")
+        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
 
         val url = "http://app.whyuru.com/api/web/checkForLogged"
 
@@ -361,7 +375,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("userId", "12")
+                params.put("userId", ids1.toString())
 
                 return params
             }
@@ -373,5 +387,24 @@ class TransitionToSleep : Fragment(), ClickPosition {
     override fun clickPos(pos: Int) {
         position = pos
     }
+
+//    private fun click() {
+//
+//        if (!newUrl.equals("")) {
+//            clExoPlayer.visibility = View.VISIBLE
+//        }
+//
+//        val mediaItem: MediaItem = newUrl.let { MediaItem.fromUri(it) }
+//        player = SimpleExoPlayer.Builder(requireContext()).build().also {
+//            playerView1.player = it
+//            // Set the media item to be played.
+//            it.setMediaItem(mediaItem)
+//            // Prepare the player.
+//            it.prepare()
+//            // Start the playback.
+//            it.play()
+//
+//        }
+//    }
 
 }

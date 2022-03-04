@@ -20,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
+import com.app.yuru.ui.discounts.MainRocket;
 import com.app.yuru.ui.discounts.Survey;
 import com.app.yuru.utility.apivolley.APIVolley;
 
@@ -83,7 +84,8 @@ public class JournalAdd extends AppCompatActivity {
 
                     Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(this, Survey.class);
+                    Intent intent = new Intent(this, MainRocket.class);
+                    intent.putExtra("first_rocket", "journal");
                     startActivity(intent);
                 }
             } catch (JSONException e) {

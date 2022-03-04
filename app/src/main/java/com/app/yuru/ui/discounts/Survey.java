@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -45,6 +46,10 @@ public class Survey extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         findIDs();
 
@@ -132,7 +137,7 @@ public class Survey extends AppCompatActivity {
                 if(jsonObject.getBoolean("valid")){
                     JSONObject jsonObject1 = jsonObject.getJSONObject("result");
 
-                    Intent intent = new Intent(this, RocketTake.class);
+                    Intent intent = new Intent(this, CalenderV.class);
                     intent.putExtra("videoURL", jsonObject1.getString("videoURL"));
                     startActivity(intent);
                     

@@ -24,6 +24,7 @@ import com.app.yuru.R
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import com.app.yuru.corescheduler.utils.Constants
 import com.app.yuru.ui.coupons.Journals
+import com.app.yuru.ui.discounts.MainRocket
 import com.squareup.picasso.Picasso
 import org.json.JSONException
 import org.json.JSONObject
@@ -368,7 +369,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
         save_wakeup.setOnClickListener {
 
-            val intent = Intent(context, Journals::class.java)
+            val intent = Intent(context, MainRocket::class.java)
+            intent.putExtra("first_rocket","wakeup");
             startActivity(intent)
         }
 

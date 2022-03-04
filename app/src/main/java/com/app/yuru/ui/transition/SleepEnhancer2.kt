@@ -96,6 +96,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private lateinit var playerView1: PlayerView
     private lateinit var clExoPlayer: ConstraintLayout
     private lateinit var closebtndialog1: ImageView
+    private var newUrl: String = ""
 
     private var isEngagedO = false
     private var isEngagedC = false
@@ -107,7 +108,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private var isEngagedN = false
 
 
-    private var newUrl: String = ""
+
 
     private var requestQueue: RequestQueue? = null
 
