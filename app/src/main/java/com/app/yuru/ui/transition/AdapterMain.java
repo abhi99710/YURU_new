@@ -22,6 +22,9 @@ import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity;
 import com.app.yuru.corescheduler.utils.Constants;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -40,9 +43,10 @@ public class AdapterMain extends BaseAdapter {
     final List<String> duration;
     final List<String> thumb;
     final List<String> fileURL;
+    ClickInterface clickInterface;
 
     public AdapterMain(Context context, List<String> id, List<String> fileName,
-                       List<String> traits, List<String> duration, List<String> thumb, List<String> fileURL) {
+                       List<String> traits, List<String> duration, List<String> thumb, List<String> fileURL, ClickInterface clickInterface) {
         this.context = context;
         this.id = id;
         this.fileName = fileName;
@@ -50,6 +54,7 @@ public class AdapterMain extends BaseAdapter {
         this.duration = duration;
         this.thumb = thumb;
         this.fileURL = fileURL;
+        this.clickInterface = clickInterface;
     }
 
     @Override
@@ -92,7 +97,7 @@ public class AdapterMain extends BaseAdapter {
 //
 //        );
 
-        Picasso.get().load(thumb.get(position)).fit().noFade().centerCrop().into(videoView);
+        Picasso.get().load("https://media.giphy.com/media/WoWpouO164dBS/giphy.gif").fit().noFade().centerCrop().into(videoView);
 
 
         return convertView;

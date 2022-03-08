@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -39,6 +40,8 @@ public class MainRocket extends AppCompatActivity {
         clRocketBlast = findViewById(R.id.clRocketBlast);
 
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         String frstRckt = getIntent().getStringExtra("first_rocket");  // from wakeup save click
 
@@ -92,14 +95,14 @@ public class MainRocket extends AppCompatActivity {
 
 
         rockettop.setOnClickListener(v->{
-            TranslateAnimation animation = new TranslateAnimation(010f, 0f, 50f, 30f);
-            animation.setDuration(2000);
+            TranslateAnimation animation = new TranslateAnimation(010f, 0f, 50f, -30f);
+            animation.setDuration(5000);
             animation.setFillAfter(true);
             rockettop.setAnimation(animation);
 
             new Handler().postDelayed(() -> {
                 startActivity(new Intent(MainRocket.this, Journals.class));
-            },2000);
+            },5000);
         });
 
         rocketmiddle.setOnClickListener(v->{
@@ -119,10 +122,10 @@ public class MainRocket extends AppCompatActivity {
             rocketVideo.requestFocus();
             rocketVideo.start();
 
-            TranslateAnimation animation = new TranslateAnimation(010f, 0f, 50f, 30f);
-            animation.setDuration(2000);
-            animation.setFillAfter(true);
-            rocketmiddle.setAnimation(animation);
+            TranslateAnimation animation1 = new TranslateAnimation(010f, 0f, 50f, 30f);
+            animation1.setDuration(2000);
+            animation1.setFillAfter(true);
+            rocketmiddle.setAnimation(animation1);
 
             new Handler().postDelayed(() -> {
                 rocketVideo.setVisibility(View.INVISIBLE);
@@ -131,11 +134,11 @@ public class MainRocket extends AppCompatActivity {
         });
 
         rocketbottom.setOnClickListener(v->{
-            TranslateAnimation animation = new TranslateAnimation(010f, 0f, 50f, 30f);
-            animation.setDuration(2000);
-            animation.setFillAfter(true);
-            rocketbottom.setAnimation(animation);
-            rochetFog.setAnimation(animation);
+            TranslateAnimation animation2 = new TranslateAnimation(010f, 0f, 50f, 30f);
+            animation2.setDuration(2000);
+            animation2.setFillAfter(true);
+            rocketbottom.setAnimation(animation2);
+            rochetFog.setAnimation(animation2);
 
             new Handler().postDelayed(() -> {
                 startActivity(new Intent(MainRocket.this, Survey.class));

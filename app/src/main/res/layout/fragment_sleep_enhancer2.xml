@@ -258,7 +258,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/sleep_bell"
+                    android:src="@drawable/white_gear"
                     app:layout_constraintEnd_toEndOf="@+id/arrowRight1_sl2"
                     app:layout_constraintStart_toStartOf="@+id/arrowLeft1_sl2"
                     app:layout_constraintTop_toBottomOf="@+id/arrowLeft1_sl2" />
@@ -267,7 +267,7 @@
                     android:id="@+id/showOptionCLickRight2"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/sleep_bell"
+                    android:src="@drawable/white_gear"
                     app:layout_constraintBottom_toBottomOf="@+id/showOptionSelect"
                     app:layout_constraintEnd_toEndOf="@+id/arrowRight2_sl2"
                     app:layout_constraintStart_toStartOf="@+id/arrowLeft2_sl2"

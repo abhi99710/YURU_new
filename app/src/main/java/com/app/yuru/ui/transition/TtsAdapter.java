@@ -30,9 +30,10 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
     final List<String> thumb;
     final List<String> fileURL;
     ClickPosition clickPosition;
+    ClickInterface clickInterface;
 
-    public TtsAdapter(Context context, List<String> idParent, List<String> fileName,
-                      List<String> gender, List<String> languages, List<String> duration, List<String> thumb, List<String> fileURL, ClickPosition clickPosition) {
+    public TtsAdapter(Context context, List<String> idParent, List<String> fileName, List<String> gender, List<String> languages,
+                      List<String> duration, List<String> thumb, List<String> fileURL, ClickPosition clickPosition, ClickInterface clickInterface) {
         this.context = context;
         this.idParent = idParent;
         this.fileName = fileName;
@@ -42,6 +43,7 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
         this.thumb = thumb;
         this.fileURL = fileURL;
         this.clickPosition = clickPosition;
+        this.clickInterface = clickInterface;
     }
 
     @NonNull
@@ -57,9 +59,10 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
         holder.tts_videoview.setOnClickListener(v -> {
             clickPosition.clickPos(position);
-            Intent intent = new Intent(context, VideoActivity.class);
-            intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
-            context.startActivity(intent);
+            clickInterface.urlGet(fileURL.get(position));
+//            Intent intent = new Intent(context, VideoActivity.class);
+//            intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
+//            context.startActivity(intent);
         });
 
 //        Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg")

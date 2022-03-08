@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
 
-                <ImageView
+                <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/gridIMageView"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_80sdp"

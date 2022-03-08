@@ -99,10 +99,6 @@ class Splash3 : AppCompatActivity() {
 
     private fun click() {
 
-//        if (!newUrl?.equals("")!!) {
-////            clExoPlayer.visibility = View.VISIBLE
-//        }
-
         val mediaItem: MediaItem = newUrl.let { MediaItem.fromUri(it) }
         player = SimpleExoPlayer.Builder(this).build().also {
             playerView1.player = it

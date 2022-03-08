@@ -14,6 +14,8 @@ import android.view.Window
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -23,8 +25,10 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import com.app.yuru.corescheduler.utils.Constants
-import com.app.yuru.ui.coupons.Journals
 import com.app.yuru.ui.discounts.MainRocket
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.PlayerView
 import com.squareup.picasso.Picasso
 import org.json.JSONException
 import org.json.JSONObject
@@ -32,7 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
+class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInterface {
 
 
     var wakeuprecy: GridView? = null
@@ -64,10 +68,10 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
     private var traits: MutableList<String> = ArrayList()
     private var fileName: MutableList<String> = ArrayList()
 
-    private lateinit var cl_wakeup_female : ConstraintLayout
-    private lateinit var cl_wakeup_male : ConstraintLayout
+    private lateinit var cl_wakeup_female: ConstraintLayout
+    private lateinit var cl_wakeup_male: ConstraintLayout
 
-    private lateinit var wake_up_video : VideoView
+    private lateinit var wake_up_video: VideoView
 
 //    private var
 
@@ -75,17 +79,37 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
     private var clickedGender = ""
 
-    private lateinit var e_new : ImageView
-    private lateinit var a_new : ImageView
-    private lateinit var n_new : ImageView
-    private lateinit var o_new : ImageView
-    private lateinit var c_new : ImageView
+    private lateinit var e_new: ImageView
+    private lateinit var a_new: ImageView
+    private lateinit var n_new: ImageView
+    private lateinit var o_new: ImageView
+    private lateinit var c_new: ImageView
+
+    private lateinit var playerView11: PlayerView
+    private lateinit var clExoPlayer: ConstraintLayout
+    private lateinit var closebtndialog1: ImageView
+    private var newUrl1: String = ""
+
+    private var id45: MutableList<String> = ArrayList()
+    private var traint45: MutableList<String> = ArrayList()
+    private var duration45: MutableList<String> = ArrayList()
+    private var thumb45: MutableList<String> = ArrayList()
+    private var url45: MutableList<String> = ArrayList()
 
     var day = 0
     var month: Int = 0
     var year: Int = 0
 
-    private lateinit var progressDialog2 : ProgressDialog
+    private lateinit var playerView1: PlayerView
+    var player: SimpleExoPlayer? = null
+    var newUrl: String = ""
+    var isFull: String = ""
+
+    lateinit var closeID: ImageView
+
+    lateinit var exo_fullscreen_icon: ImageView
+
+    private lateinit var progressDialog2: ProgressDialog
 
 
     override fun onCreateView(
@@ -98,26 +122,55 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         cl_wakeup_male = view.findViewById(R.id.cl_wakeup_male)
         cl_wakeup_female = view.findViewById(R.id.cl_wakeup_female)
 
+        exo_fullscreen_icon = view.findViewById(R.id.exo_fullscreen_icon)
+        exo_fullscreen_icon.setOnClickListener {
+            if (isFull.equals("yes")) {
+                player?.pause()
+                closeID.visibility = View.INVISIBLE
+                playerView1.visibility = View.INVISIBLE
+                exo_fullscreen_icon.visibility = View.INVISIBLE
+
+                val intent = Intent(context, VideoActivity::class.java)
+                intent.putExtra(
+                    Constants.VIDEO_LINK,
+                    newUrl
+                )
+                requireContext().startActivity(intent)
+            }
+        }
+
+        playerView1 = view.findViewById(R.id.playerViewwakeup)
+        closeID = view.findViewById(R.id.closeIDwakeup)
+
         findIds(view)
 
-        val dayOfAlarm : TextView = view.findViewById(R.id.dayOfAlarm)
+
+        closeID.setOnClickListener {
+            player?.pause()
+            closeID.visibility = View.INVISIBLE
+            playerView1.visibility = View.INVISIBLE
+            exo_fullscreen_icon.visibility = View.INVISIBLE
+            isFull = "no"
+        }
+
+        val dayOfAlarm: TextView = view.findViewById(R.id.dayOfAlarm)
         dayOfAlarm.setOnClickListener {
 
 
-            val dialog =  Dialog(requireContext())
+            val dialog = Dialog(requireContext())
             if (dialog != null) {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setCancelable(true)
                 dialog.setContentView(R.layout.dialogshow_options)
                 dialog.show()
 
-                var back_dialog_wake : ImageView = dialog.findViewById(R.id.back_dialog_wake)
+                var back_dialog_wake: ImageView = dialog.findViewById(R.id.back_dialog_wake)
                 back_dialog_wake.setOnClickListener {
                     dialog.dismiss()
                 }
 
-                val dialog_ok : TextView = dialog.findViewById<TextView>(R.id.dialog_ok)
-                dialog_ok.setOnClickListener{
+                val dialog_ok: TextView = dialog.findViewById<TextView>(R.id.dialog_ok)
+                dialog_ok.setOnClickListener {
                     dialog.dismiss()
                 }
 
@@ -160,8 +213,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
             year = calendar.get(Calendar.YEAR)
 
 
-           val mHour = calendar.get(Calendar.HOUR_OF_DAY);
-          val mMinute = calendar.get(Calendar.MINUTE);
+            val mHour = calendar.get(Calendar.HOUR_OF_DAY);
+            val mMinute = calendar.get(Calendar.MINUTE);
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 calendar.set(Calendar.HOUR_OF_DAY, hour)
                 calendar.set(Calendar.MINUTE, minute)
@@ -179,7 +232,6 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
 
             }
-
 
 
         }
@@ -370,7 +422,7 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         save_wakeup.setOnClickListener {
 
             val intent = Intent(context, MainRocket::class.java)
-            intent.putExtra("first_rocket","wakeup");
+            intent.putExtra("first_rocket", "wakeup");
             startActivity(intent)
         }
 
@@ -391,8 +443,11 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         o_new.setOnClickListener({
             if (clickedGender.equals("45sec")) {
                 apiVideos("45sec", "O")
+                showDialog("O","45sec")
             } else {
                 apiVideos("90sec", "O")
+                showDialog("O","90sec")
+
             }
             e_new.setImageResource(R.drawable.setting_o)
             o_new.setImageResource(R.drawable.setting_a)
@@ -402,10 +457,14 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         })
 
         c_new.setOnClickListener {
-            if(clickedGender.equals("45sec")){
+            if (clickedGender.equals("45sec")) {
                 apiVideos("45sec", "C")
-            }else{
+                showDialog("C","45sec")
+
+            } else {
                 apiVideos("90sec", "C")
+                showDialog("C","90sec")
+
             }
             e_new.setImageResource(R.drawable.setting_c)
             o_new.setImageResource(R.drawable.setting_n)
@@ -415,10 +474,14 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         }
 
         e_new.setOnClickListener {
-            if(clickedGender.equals("45sec")){
+            if (clickedGender.equals("45sec")) {
                 apiVideos("45sec", "E")
-            }else{
+                showDialog("E","45sec")
+
+            } else {
                 apiVideos("90sec", "E")
+                showDialog("E","90sec")
+
             }
             e_new.setImageResource(R.drawable.setting_e)
             o_new.setImageResource(R.drawable.setting_o)
@@ -428,10 +491,14 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         }
 
         a_new.setOnClickListener {
-            if(clickedGender.equals("45sec")){
+            if (clickedGender.equals("45sec")) {
                 apiVideos("45sec", "A")
-            }else{
+                showDialog("A","45sec")
+
+            } else {
                 apiVideos("90sec", "A")
+                showDialog("A","90sec")
+
             }
             e_new.setImageResource(R.drawable.setting_a)
             o_new.setImageResource(R.drawable.setting_c)
@@ -441,10 +508,14 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         }
 
         n_new.setOnClickListener {
-            if(clickedGender.equals("45sec")){
+            if (clickedGender.equals("45sec")) {
                 apiVideos("45sec", "N")
-            }else{
+                showDialog("N","45sec")
+
+            } else {
                 apiVideos("90sec", "N")
+                showDialog("N","90sec")
+
             }
             e_new.setImageResource(R.drawable.setting_n)
             o_new.setImageResource(R.drawable.setting_e)
@@ -529,7 +600,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
 
     private fun apiVideos(duration: String, trait: String) {
 
-        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
 
         val ids1 = sh.getString("id", "")
 
@@ -602,7 +674,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
             traits,
             durationL,
             thumb,
-            fileURL
+            fileURL,
+            this
         )
         wakeuprecy?.adapter = adapterMain
 
@@ -636,7 +709,8 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         val ctlr = MediaController(context)
         ctlr.setMediaPlayer(wake_up_video)
 
-        val uri =  Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
+        val uri =
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
         wake_up_video.setVideoURI(uri);
         wake_up_video.start()
 
@@ -685,7 +759,13 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         requestQueue.add(stringRequest)
     }
 
-    private fun idCLickDialog(url1: String, thumb: String, sub1: String, sub2: String, sub3: String) {
+    private fun idCLickDialog(
+        url1: String,
+        thumb: String,
+        sub1: String,
+        sub2: String,
+        sub3: String
+    ) {
         val dialog = Dialog(requireContext())
         //                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false)
@@ -696,35 +776,57 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         val image4 = dialog.findViewById<ImageView>(R.id.imageView14)
 
         Picasso.get().load(thumb).centerCrop().noFade().fit().into(image4)
+        Picasso.get().load(thumb).centerCrop().noFade().fit().into(image1)
+        Picasso.get().load(thumb).centerCrop().noFade().fit().into(image2)
+        Picasso.get().load(thumb).centerCrop().noFade().fit().into(image3)
 
         image1.setOnClickListener {
 
-            val intent = Intent(context, VideoActivity::class.java)
-            intent.putExtra(
-                Constants.VIDEO_LINK,
-                sub1
-            )
-            requireContext().startActivity(intent)
+            newUrl = sub1
+            playerView1.visibility = View.VISIBLE
+            closeID.visibility = View.VISIBLE
+            exo_fullscreen_icon.visibility = View.VISIBLE
+
+            click()
+            dialog.dismiss()
+//            if(isFull.equals("yes")) {
+//                val intent = Intent(context, VideoActivity::class.java)
+//                intent.putExtra(
+//                    Constants.VIDEO_LINK,
+//                    sub1
+//                )
+//                requireContext().startActivity(intent)
+//            }
         }
 
         image2.setOnClickListener {
 
-            val intent = Intent(context, VideoActivity::class.java)
-            intent.putExtra(
-                Constants.VIDEO_LINK,
-                sub2
-            )
-            requireContext().startActivity(intent)
+            newUrl = sub2
+            playerView1.visibility = View.VISIBLE
+            closeID.visibility = View.VISIBLE
+            exo_fullscreen_icon.visibility = View.VISIBLE
+            click()
+            dialog.dismiss()
+//            if(isFull.equals("yes")) {
+//                val intent = Intent(context, VideoActivity::class.java)
+//                intent.putExtra(
+//                    Constants.VIDEO_LINK,
+//                    sub2
+//                )
+//                requireContext().startActivity(intent)
+//            }
         }
 
         image3.setOnClickListener {
 
-            val intent = Intent(context, VideoActivity::class.java)
-            intent.putExtra(
-                Constants.VIDEO_LINK,
-                sub3
-            )
-            requireContext().startActivity(intent)
+            newUrl = sub3
+            playerView1.visibility = View.VISIBLE
+            closeID.visibility = View.VISIBLE
+            exo_fullscreen_icon.visibility = View.VISIBLE
+
+            dialog.dismiss()
+            click()
+
         }
 
         image4.setOnClickListener {
@@ -742,6 +844,230 @@ class WakeUpProgram : Fragment() , TimePickerDialog.OnTimeSetListener{
         dialog.show()
     }
 
+    override fun urlGet(url: String?) {
+        newUrl = url.toString()
+        newUrl1 = url.toString()
+        playerView1.visibility = View.VISIBLE
+        closeID.visibility = View.VISIBLE
+        exo_fullscreen_icon.visibility = View.VISIBLE
+        isFull = "yes"
+        clExoPlayer.visibility = View.VISIBLE
+        click()
+    }
+
+    private fun click() {
+
+        val mediaItem: MediaItem = newUrl.let { MediaItem.fromUri(it) }
+        player = SimpleExoPlayer.Builder(requireContext()).build().also {
+            playerView1.player = it
+
+//            playerView1.hideController()
+//            playerView1.setControllerVisibilityListener {
+//                if(it == View.VISIBLE){
+//                    playerView1.hideController()
+//                }
+//            }
+
+//            playerView1.setF
+            it.setMediaItem(mediaItem)
+            // Prepare the player.
+            it.prepare()
+            // Start the playback.
+            it.play()
+
+            player?.volume = 10f
+
+        }
+
+
+    }
+
+
+    private fun apiVideosLast(duration: String, trait: String) {
+
+        val sh: SharedPreferences = requireActivity().getSharedPreferences(
+            "share",
+            Context.MODE_PRIVATE
+        )
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/getAllEveningProgram"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+                    val obj = JSONObject(response)
+                    var jsonObject = obj.getJSONObject("result")
+                    val jsonArray = jsonObject.getJSONArray("data")
+
+                    id45.clear()
+                    url45.clear()
+                    duration45.clear()
+                    traint45.clear()
+                    thumb45.clear()
+
+                    for (i in 0 until jsonArray.length()) {
+
+                        var jsonObject1 = jsonArray.getJSONObject(i)
+
+                        id45.add(jsonObject1.getString("id"))
+                        url45.add(jsonObject1.getString("fileURL"))
+                        thumb45.add(jsonObject1.getString("thumb"))
+                        duration45.add(jsonObject1.getString("duration"))
+                        traint45.add(jsonObject1.getString("traits"))
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("duration", duration)
+                params.put("trait", trait)
+                params.put("userId", ids1.toString());
+
+                return params
+            }
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    private fun showDialog(title: String, gender: String) {
+        val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
+        if (dialog != null) {
+            var traits = "O"
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.dialogtransition)
+            dialog.show()
+
+            apiVideosLast(gender, title)
+
+            val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
+
+            val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
+            dialog_title.text = title
+
+            playerView1 = dialog.findViewById(R.id.playerView1)
+
+
+            clExoPlayer = dialog.findViewById(R.id.clExoPlayer)
+            closebtndialog1 = dialog.findViewById(R.id.closebtndialog1)
+            closebtndialog1.setOnClickListener {
+                clExoPlayer.visibility = View.INVISIBLE
+                playerView1.onPause()
+                playerView1.setKeepContentOnPlayerReset(true)
+                player?.pause()
+
+            }
+
+
+            click()
+
+
+            val logo: ImageView = dialog.findViewById(R.id.logo)
+
+//            when (title) {
+//                "Extraversion" -> {
+//                    traits = "E"
+//                    logo.setImageResource(R.drawable.setting_e)
+//                    dialog_title.setTextColor(Color.parseColor("#FF0000"))
+//                }
+//                "Agreeableness" -> {
+//                    traits = "A"
+//                    logo.setImageResource(R.drawable.setting_a)
+//                    dialog_title.setTextColor(Color.parseColor("#F9CA14"))
+//
+//
+//                }
+//
+//                "Neuroticism" -> {
+//                    traits = "N"
+//                    logo.setImageResource(R.drawable.setting_n)
+//                    dialog_title.setTextColor(Color.parseColor("#808080"))
+//
+//
+//                }
+//                "Openness" -> {
+//                    traits = "O"
+//                    logo.setImageResource(R.drawable.setting_o)
+//                    dialog_title.setTextColor(Color.parseColor("#008000"))
+//
+//
+//                }
+//                "Conscientiousness" -> {
+//                    traits = "C"
+//                    logo.setImageResource(R.drawable.setting_c)
+//                    dialog_title.setTextColor(Color.parseColor("#0000FF"))
+//
+//
+//                }
+//            }
+//            logo.setImageDrawable(iview)
+
+            val cl90: ConstraintLayout = dialog.findViewById(R.id.cl90)
+            val cl45: ConstraintLayout = dialog.findViewById(R.id.cl45)
+
+            val tv45: TextView = dialog.findViewById(R.id.textView7)
+            val tv90: TextView = dialog.findViewById(R.id.program)
+
+            val adapterSleep = AdapterSleep(
+                requireActivity(),
+                id45,
+                traint45,
+                thumb45,
+                duration45,
+                url45,
+                this
+            )
+
+            cl45.setOnClickListener {
+
+                apiVideos("45sec", traits)
+                tv45.setTextColor(Color.parseColor("#008000"))
+                tv90.setTextColor(Color.BLUE)
+
+            }
+
+            cl90.setOnClickListener {
+
+                tv90.setTextColor(Color.parseColor("#008000"))
+                tv45.setTextColor(Color.BLUE)
+                apiVideos("90sec", traits)
+
+            }
+
+            recyclerView.setHasFixedSize(true)
+            recyclerView.layoutManager = GridLayoutManager(context, 2)
+            recyclerView.adapter = adapterSleep
+
+
+            val closebtndialog = dialog.findViewById<ImageView>(R.id.closebtndialog)
+            closebtndialog.setOnClickListener {
+                dialog.dismiss()
+                player?.pause()
+            }
+        }
+
+
+    }
 }
 
 

@@ -128,7 +128,7 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
         for (i in 0 until count) {
-            val entry = PieEntry(10F * (i + 1), "")
+            val entry = PieEntry(20F * (i + 1), "")
             entry.x = i.toFloat()
             entries.add(entry)
         }

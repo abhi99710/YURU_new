@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -29,6 +30,7 @@ import com.app.yuru.corescheduler.utils.Constants
 import com.app.yuru.ui.library.LibraryModules
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.PlayerView
 import org.json.JSONException
 import org.json.JSONObject
@@ -36,7 +38,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class TransitionToSleep : Fragment(), ClickPosition {
+class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
     lateinit var transition_to_sleep_recy: RecyclerView
     private var requestQueue: RequestQueue? = null
@@ -63,10 +65,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
     private lateinit var sleep_female: TextView
     private lateinit var tts_vids: VideoView
 
-    private lateinit var playerView1: PlayerView
-    private lateinit var clExoPlayer: ConstraintLayout
-    private lateinit var closebtndialog1: ImageView
-    private var newUrl: String = ""
+    lateinit var exo_fullscreen_icon_tts : ImageView
 
     var position = 0
 
@@ -76,6 +75,12 @@ class TransitionToSleep : Fragment(), ClickPosition {
 
     private var userId : Int = 0
 
+    var checkFull = ""
+    private lateinit var playerView1: PlayerView
+    var player: SimpleExoPlayer? = null
+    var newUrl : String = ""
+
+    lateinit var closeID : ImageView
     val handler = Handler(Looper.getMainLooper())
 
 
@@ -88,6 +93,8 @@ class TransitionToSleep : Fragment(), ClickPosition {
 
         checkOnline()
 
+        exo_fullscreen_icon_tts = view.findViewById(R.id.exo_fullscreen_icon_tts)
+
 
         explore = view.findViewById(R.id.explore)
         explore.setOnClickListener {
@@ -96,6 +103,14 @@ class TransitionToSleep : Fragment(), ClickPosition {
 
 //        (activity as AppCompatActivity).supportActionBar?.title = "Get to Sleep"
 //        (activity as AppCompatActivity).supportActionBar?.setHomeButtonEnabled(true)
+
+        closeID = view.findViewById(R.id.closeID)
+        closeID.setOnClickListener {
+            player?.pause()
+            closeID.visibility = View.INVISIBLE
+            playerView1.visibility = View.INVISIBLE
+            exo_fullscreen_icon_tts.visibility = View.INVISIBLE
+        }
 
 
 
@@ -113,6 +128,21 @@ class TransitionToSleep : Fragment(), ClickPosition {
 
         videoPlay()
 
+        exo_fullscreen_icon_tts.setOnClickListener {
+            if(checkFull.equals("yes")){
+                player?.pause()
+                closeID.visibility = View.INVISIBLE
+                playerView1.visibility = View.INVISIBLE
+                exo_fullscreen_icon_tts.visibility = View.INVISIBLE
+
+                val intent = Intent(context, VideoActivity::class.java)
+                intent.putExtra(
+                    Constants.VIDEO_LINK,
+                    newUrl
+                )
+                requireContext().startActivity(intent)
+            }
+        }
 
          val runnable = Runnable {
 
@@ -330,6 +360,7 @@ class TransitionToSleep : Fragment(), ClickPosition {
             durationL,
             thumb,
             fileURL,
+            this,
             this
         )
         transition_to_sleep_recy.setHasFixedSize(true)
@@ -388,23 +419,40 @@ class TransitionToSleep : Fragment(), ClickPosition {
         position = pos
     }
 
-//    private fun click() {
-//
-//        if (!newUrl.equals("")) {
-//            clExoPlayer.visibility = View.VISIBLE
-//        }
-//
-//        val mediaItem: MediaItem = newUrl.let { MediaItem.fromUri(it) }
-//        player = SimpleExoPlayer.Builder(requireContext()).build().also {
-//            playerView1.player = it
-//            // Set the media item to be played.
-//            it.setMediaItem(mediaItem)
-//            // Prepare the player.
-//            it.prepare()
-//            // Start the playback.
-//            it.play()
-//
-//        }
-//    }
+    private fun click() {
+
+        val mediaItem: MediaItem = newUrl.let { MediaItem.fromUri(it) }
+        player = SimpleExoPlayer.Builder(requireContext()).build().also {
+            playerView1.player = it
+
+//            playerView1.hideController()
+//            playerView1.setControllerVisibilityListener {
+//                if(it == View.VISIBLE){
+//                    playerView1.hideController()
+//                }
+//            }
+
+            it.setMediaItem(mediaItem)
+            // Prepare the player.
+            it.prepare()
+            // Start the playback.
+            it.play()
+
+            player?.volume  = 10f
+
+        }
+
+
+    }
+
+    override fun urlGet(url: String?) {
+        newUrl = url.toString()
+        playerView1.visibility = View.VISIBLE
+        closeID.visibility = View.VISIBLE
+        exo_fullscreen_icon_tts.visibility = View.VISIBLE
+        click()
+
+        checkFull = "yes"
+    }
 
 }
