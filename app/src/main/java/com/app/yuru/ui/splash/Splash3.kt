@@ -25,7 +25,7 @@ class Splash3 : AppCompatActivity() {
     private lateinit var splash_next_btn : ImageView
     private lateinit var playerView1: PlayerView
     var player: SimpleExoPlayer? = null
-    var newUrl : String = "https://app.whyuru.com/assets/screen_video/screen_1.mp4"
+    var newUrl : String = "https://app.whyuru.com/assets/screen_video/screen_2.mp4"
 
     private val handler = Handler(Looper.getMainLooper())
 

@@ -8,15 +8,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -39,6 +38,7 @@ public class Survey extends AppCompatActivity {
     private ProgressDialog progressDialog;
     int seek1 = 0;
     int seek2 = 0;
+    private Button buttonSubmitSurvey;
     int seek3 = 0;
     int seek4 = 0;
     int seek5 = 0;
@@ -47,19 +47,47 @@ public class Survey extends AppCompatActivity {
 //    private RadioButton rb1Q5, rb2Q5, rb3Q5, rb4Q5, rb5Q5;
 //    private RadioButton radioButton1, radioButton2, radioButton3, radioButton4, radioButton5;
     SeekBar seekBar, seekBar1, seekBar2, seekBar3, seekBar4;
+    private ImageView img1, img2, img3, img4, img5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey1);
+        setContentView(R.layout.activity_survey);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         findIDs();
+
+        img1 = findViewById(R.id.img1);
+        img2 = findViewById(R.id.img2);
+        img3 = findViewById(R.id.img3);
+        img4 = findViewById(R.id.img4);
+        img5 = findViewById(R.id.img5);
+
+
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
+
         apiGetQuestions();
+
         clickable();
-        finalCall();
+
+        buttonSubmitSurvey.setOnClickListener(v->{
+
+                    if(seek1 == 0 && seek2 == 0 && seek3 == 0 && seek4 == 0 && seek5 == 0){
+                        Toast.makeText(this, "Please select range for questions", Toast.LENGTH_SHORT).show();
+                    }else {
+                        finalCall();
+                        startActivity(new Intent(Survey.this, CalenderV.class));
+                        Log.e("error", ""+ seek1 + " ," + seek2 + ", "+ seek3 + ", "+ seek4 + ", "+ seek5);
+                    }
+
+        });
+
+
     }
 
     private void finalCall() {
@@ -120,14 +148,23 @@ public class Survey extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (i <= 20) {
                     seek1 = 1;
+                    img1.setImageResource(R.drawable.verysad);
                 } else if (i > 20 && i <= 40) {
                     seek1 = 2;
+                    img1.setImageResource(R.drawable.lowsad);
+
                 } else if (i > 40 && i <= 60) {
                     seek1 = 3;
+                    img1.setImageResource(R.drawable.average);
+
                 } else if (i > 60 && i <= 80) {
                     seek1 = 4;
+                    img1.setImageResource(R.drawable.lowsat);
+
                 } else {
                     seek1 = 5;
+                    img1.setImageResource(R.drawable.verysat);
+
                 }
             }
 
@@ -147,15 +184,26 @@ public class Survey extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (i <= 20) {
                     seek2 = 1;
+                    img3.setImageResource(R.drawable.verysad);
                 } else if (i > 20 && i <= 40) {
                     seek2 = 2;
+                    img3.setImageResource(R.drawable.lowsad);
+
                 } else if (i > 40 && i <= 60) {
                     seek2 = 3;
+                    img3.setImageResource(R.drawable.average);
+
                 } else if (i > 60 && i <= 80) {
                     seek2 = 4;
+                    img3.setImageResource(R.drawable.lowsat);
+
                 } else {
                     seek2 = 5;
+                    img3.setImageResource(R.drawable.verysat);
+
                 }
+
+
             }
 
             @Override
@@ -175,14 +223,24 @@ public class Survey extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (i <= 20) {
                     seek3 = 1;
+                    img2.setImageResource(R.drawable.verysad);
+
                 } else if (i > 20 && i <= 40) {
                     seek3 = 2;
+                    img2.setImageResource(R.drawable.lowsad);
+
                 } else if (i > 40 && i <= 60) {
                     seek3 = 3;
+                    img2.setImageResource(R.drawable.average);
+
                 } else if (i > 60 && i <= 80) {
                     seek3 = 4;
+                    img2.setImageResource(R.drawable.lowsat);
+
                 } else {
                     seek3 = 5;
+                    img2.setImageResource(R.drawable.verysat);
+
                 }
             }
 
@@ -203,14 +261,19 @@ public class Survey extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (i <= 20) {
                     seek4 = 1;
+                    img4.setImageResource(R.drawable.verysad);
                 } else if (i > 20 && i <= 40) {
                     seek4 = 2;
+                    img4.setImageResource(R.drawable.lowsad);
                 } else if (i > 40 && i <= 60) {
                     seek4 = 3;
+                    img4.setImageResource(R.drawable.average);
                 } else if (i > 60 && i <= 80) {
                     seek4 = 4;
+                    img4.setImageResource(R.drawable.lowsat);
                 } else {
                     seek4 = 5;
+                    img4.setImageResource(R.drawable.verysat);
                 }
             }
 
@@ -231,14 +294,20 @@ public class Survey extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (i <= 20) {
                     seek5 = 1;
+                    img5.setImageResource(R.drawable.verysad);
                 } else if (i > 20 && i <= 40) {
                     seek5 = 2;
+                    img5.setImageResource(R.drawable.lowsad);
                 } else if (i > 40 && i <= 60) {
                     seek5 = 3;
+
+                    img5.setImageResource(R.drawable.average);
                 } else if (i > 60 && i <= 80) {
                     seek5 = 4;
+                    img5.setImageResource(R.drawable.lowsat);
                 } else {
                     seek5 = 5;
+                    img5.setImageResource(R.drawable.verysat);
                 }
             }
 
@@ -300,6 +369,7 @@ public class Survey extends AppCompatActivity {
         ques3 = findViewById(R.id.ques3);
         ques4 = findViewById(R.id.ques4);
         ques5 = findViewById(R.id.ques5);
+        buttonSubmitSurvey = findViewById(R.id.buttonSubmitSurvey);
     }
 
 

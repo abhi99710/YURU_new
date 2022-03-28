@@ -116,7 +116,7 @@ public class AdapterJornals extends RecyclerView.Adapter<AdapterJornals.Myholder
                 Intent intent = new Intent(context, EditJournal.class);
                 intent.putExtra("id", ids.get(getBindingAdapterPosition()));
                 intent.putExtra("title", title.get(getBindingAdapterPosition()));
-                intent.putExtra("desc", description.get(getBindingAdapterPosition()));
+                intent.putExtra("desc", ""+description.get(getBindingAdapterPosition()));
                 intent.putExtra("date", date_time.get(getBindingAdapterPosition()));
 
                 context.startActivity(intent);

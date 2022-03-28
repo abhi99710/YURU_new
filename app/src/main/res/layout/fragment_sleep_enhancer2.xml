@@ -124,7 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_190sdp"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/vector1"
+                    android:background="@drawable/bigbw"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/a1Option" />

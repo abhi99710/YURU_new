@@ -61,7 +61,7 @@ public class CalenderV extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
-        progressDialog.show();
+//        progressDialog.show();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -142,7 +142,7 @@ public class CalenderV extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             try {
-                progressDialog.dismiss();
+//                progressDialog.dismiss();
                 JSONObject jsonObject = new JSONObject(response);
                 JSONObject result = jsonObject.getJSONObject("result");
                 JSONArray jsonArray = result.getJSONArray("dateArr");

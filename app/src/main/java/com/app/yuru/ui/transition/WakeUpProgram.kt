@@ -122,6 +122,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         cl_wakeup_male = view.findViewById(R.id.cl_wakeup_male)
         cl_wakeup_female = view.findViewById(R.id.cl_wakeup_female)
 
+        findIds(view)
+
         exo_fullscreen_icon = view.findViewById(R.id.exo_fullscreen_icon)
         exo_fullscreen_icon.setOnClickListener {
             if (isFull.equals("yes")) {
@@ -142,14 +144,12 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         playerView1 = view.findViewById(R.id.playerViewwakeup)
         closeID = view.findViewById(R.id.closeIDwakeup)
 
-        findIds(view)
-
-
         closeID.setOnClickListener {
             player?.pause()
             closeID.visibility = View.INVISIBLE
             playerView1.visibility = View.INVISIBLE
             exo_fullscreen_icon.visibility = View.INVISIBLE
+//            playerView11.visibility = View.INVISIBLE
             isFull = "no"
         }
 
@@ -242,7 +242,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
         videoPlay()
 
-        apiVideos("45sec", "O")
+        apiVideos("male", "O")
 
         return view
     }
@@ -404,7 +404,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             male.setTextColor(Color.GRAY)
             female.setTextColor(Color.WHITE)
 
-            clickedGender = "90sec"
+            clickedGender = "female"
 
 
         }
@@ -414,16 +414,18 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             female.setTextColor(Color.GRAY)
             male.setTextColor(Color.WHITE)
 
-            clickedGender = "45sec"
+            clickedGender = "male"
 
         }
 
 
         save_wakeup.setOnClickListener {
 
-            val intent = Intent(context, MainRocket::class.java)
-            intent.putExtra("first_rocket", "wakeup");
-            startActivity(intent)
+            Toast.makeText(context, " Saved", Toast.LENGTH_SHORT).show()
+
+//            val intent = Intent(context, MainRocket::class.java)
+//            intent.putExtra("first_rocket", "wakeup");
+//            startActivity(intent)
         }
 
 
@@ -441,12 +443,12 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         /*all gear new setup click listner*/
 
         o_new.setOnClickListener({
-            if (clickedGender.equals("45sec")) {
-                apiVideos("45sec", "O")
-                showDialog("O","45sec")
+            if (clickedGender.equals("male")) {
+                apiVideos("male", "O")
+                showDialog("O","male")
             } else {
-                apiVideos("90sec", "O")
-                showDialog("O","90sec")
+                apiVideos("female", "O")
+                showDialog("O","female")
 
             }
             e_new.setImageResource(R.drawable.setting_o)
@@ -457,13 +459,13 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         })
 
         c_new.setOnClickListener {
-            if (clickedGender.equals("45sec")) {
-                apiVideos("45sec", "C")
-                showDialog("C","45sec")
+            if (clickedGender.equals("male")) {
+                apiVideos("male", "C")
+                showDialog("C","male")
 
             } else {
-                apiVideos("90sec", "C")
-                showDialog("C","90sec")
+                apiVideos("female", "C")
+                showDialog("C","female")
 
             }
             e_new.setImageResource(R.drawable.setting_c)
@@ -474,13 +476,13 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         }
 
         e_new.setOnClickListener {
-            if (clickedGender.equals("45sec")) {
-                apiVideos("45sec", "E")
-                showDialog("E","45sec")
+            if (clickedGender.equals("male")) {
+                apiVideos("male", "E")
+                showDialog("E","male")
 
             } else {
-                apiVideos("90sec", "E")
-                showDialog("E","90sec")
+                apiVideos("female", "E")
+                showDialog("E","female")
 
             }
             e_new.setImageResource(R.drawable.setting_e)
@@ -491,13 +493,13 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         }
 
         a_new.setOnClickListener {
-            if (clickedGender.equals("45sec")) {
-                apiVideos("45sec", "A")
-                showDialog("A","45sec")
+            if (clickedGender.equals("male")) {
+                apiVideos("male", "A")
+                showDialog("A","male")
 
             } else {
-                apiVideos("90sec", "A")
-                showDialog("A","90sec")
+                apiVideos("female", "A")
+                showDialog("A","female")
 
             }
             e_new.setImageResource(R.drawable.setting_a)
@@ -508,13 +510,15 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         }
 
         n_new.setOnClickListener {
-            if (clickedGender.equals("45sec")) {
-                apiVideos("45sec", "N")
-                showDialog("N","45sec")
+            if (clickedGender.equals("male")) {
+                apiVideos("male", "N")
+//                apiVideosLast("45sec", "N")
+                showDialog("N","male")
 
             } else {
-                apiVideos("90sec", "N")
-                showDialog("N","90sec")
+                apiVideos("female", "N")
+                showDialog("N","female")
+//                apiVideosLast("90sec", "N")
 
             }
             e_new.setImageResource(R.drawable.setting_n)
@@ -635,7 +639,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                         id1Male.add(jsonObject1.getString("id"))
                         fileName.add(jsonObject1.getString("fileName"))
                         traits.add(jsonObject1.getString("traits"))
-                        durationL.add(jsonObject1.getString("duration"))
+                        durationL.add(jsonObject1.getString("gender"))
                         thumb.add(jsonObject1.getString("thumb"))
                         fileURL.add(jsonObject1.getString("fileURL"))
 
@@ -655,7 +659,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("duration", duration)
+                params.put("gender", duration)
                 params.put("trait", trait)
                 params.put("userId", ids1.toString());
 
@@ -931,6 +935,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             },
             object : Response.ErrorListener {
                 override fun onErrorResponse(volleyError: VolleyError) {
+                    process.dismiss()
                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
                 }
             }) {
@@ -958,9 +963,23 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             dialog.setContentView(R.layout.dialogtransition)
             dialog.show()
 
-            apiVideosLast(gender, title)
-
             val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
+
+            apiVideosLast("45sec", title)
+            val adapterSleep1 = AdapterSleep(
+                requireActivity(),
+                id45,
+                traint45,
+                thumb45,
+                duration45,
+                url45,
+                this
+            )
+            recyclerView.setHasFixedSize(true)
+            recyclerView.layoutManager = GridLayoutManager(context, 2)
+            recyclerView.adapter = adapterSleep1
+
+
 
             val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
             dialog_title.text = title
@@ -975,6 +994,13 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 playerView1.onPause()
                 playerView1.setKeepContentOnPlayerReset(true)
                 player?.pause()
+//                playerView11.onPause()
+//                playerView11.visibility = View.INVISIBLE
+                exo_fullscreen_icon.visibility = View.INVISIBLE
+                closeID.visibility = View.INVISIBLE
+
+
+
 
             }
 
@@ -984,42 +1010,42 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
             val logo: ImageView = dialog.findViewById(R.id.logo)
 
-//            when (title) {
-//                "Extraversion" -> {
-//                    traits = "E"
-//                    logo.setImageResource(R.drawable.setting_e)
-//                    dialog_title.setTextColor(Color.parseColor("#FF0000"))
-//                }
-//                "Agreeableness" -> {
-//                    traits = "A"
-//                    logo.setImageResource(R.drawable.setting_a)
-//                    dialog_title.setTextColor(Color.parseColor("#F9CA14"))
-//
-//
-//                }
-//
-//                "Neuroticism" -> {
-//                    traits = "N"
-//                    logo.setImageResource(R.drawable.setting_n)
-//                    dialog_title.setTextColor(Color.parseColor("#808080"))
-//
-//
-//                }
-//                "Openness" -> {
-//                    traits = "O"
-//                    logo.setImageResource(R.drawable.setting_o)
-//                    dialog_title.setTextColor(Color.parseColor("#008000"))
-//
-//
-//                }
-//                "Conscientiousness" -> {
-//                    traits = "C"
-//                    logo.setImageResource(R.drawable.setting_c)
-//                    dialog_title.setTextColor(Color.parseColor("#0000FF"))
-//
-//
-//                }
-//            }
+            when (title) {
+                "E" -> {
+                    traits = "E"
+                    logo.setImageResource(R.drawable.setting_e)
+                    dialog_title.setTextColor(Color.parseColor("#FF0000"))
+                }
+                "A" -> {
+                    traits = "A"
+                    logo.setImageResource(R.drawable.setting_a)
+                    dialog_title.setTextColor(Color.parseColor("#F9CA14"))
+
+
+                }
+
+                "N" -> {
+                    traits = "N"
+                    logo.setImageResource(R.drawable.setting_n)
+                    dialog_title.setTextColor(Color.parseColor("#808080"))
+
+
+                }
+                "O" -> {
+                    traits = "O"
+                    logo.setImageResource(R.drawable.setting_o)
+                    dialog_title.setTextColor(Color.parseColor("#008000"))
+
+
+                }
+                "C" -> {
+                    traits = "C"
+                    logo.setImageResource(R.drawable.setting_c)
+                    dialog_title.setTextColor(Color.parseColor("#0000FF"))
+
+
+                }
+            }
 //            logo.setImageDrawable(iview)
 
             val cl90: ConstraintLayout = dialog.findViewById(R.id.cl90)
@@ -1040,7 +1066,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
             cl45.setOnClickListener {
 
-                apiVideos("45sec", traits)
+                apiVideosLast("45dec", traits)
                 tv45.setTextColor(Color.parseColor("#008000"))
                 tv90.setTextColor(Color.BLUE)
 
@@ -1050,7 +1076,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
                 tv90.setTextColor(Color.parseColor("#008000"))
                 tv45.setTextColor(Color.BLUE)
-                apiVideos("90sec", traits)
+                apiVideosLast("90sec", traits)
 
             }
 

@@ -25,7 +25,7 @@ class Splash5 : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var playerView1: PlayerView
     var player: SimpleExoPlayer? = null
-    var newUrl : String = "https://app.whyuru.com/assets/screen_video/screen_3.mp4"
+    var newUrl : String = "https://app.whyuru.com/assets/screen_video/screen_4.mp4"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

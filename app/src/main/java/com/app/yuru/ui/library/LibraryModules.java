@@ -1,6 +1,7 @@
 package com.app.yuru.ui.library;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,16 +11,25 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.app.yuru.R;
+import com.app.yuru.ui.retrofitApi.APIClient;
+import com.app.yuru.ui.retrofitApi.APIInterface;
+import com.app.yuru.ui.retrofitApi.LibraryResponse;
+import com.app.yuru.ui.retrofitApi.Result;
 import com.app.yuru.ui.transition.TransitionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LibraryModules extends AppCompatActivity {
     private ImageView backlibrary;
     private RecyclerView recy_library;
     private List<ModelLibrary> list = new ArrayList<>();
 
+    APIInterface apiInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,56 +39,51 @@ public class LibraryModules extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        apiInterface = APIClient.getAPIClient().create(APIInterface.class);
+
         backlibrary = findViewById(R.id.backlibrary);
         recy_library = findViewById(R.id.recy_library);
 
-        list.add(new ModelLibrary(
-                "1",
-                "5-Minute Meditation You Can Do Anywhere",
-                "Goodful",
-                "05:16",
-                "https://i.ytimg.com/vi/inpok4MKVLM/hqdefault.jpg",
-                "https://www.youtube.com/watch?v=inpok4MKVLM",
-                "https://i.ytimg.com/vi/inpok4MKVLM/hqdefault.jpg",
-                "In just 5 minutes you can reset your day in a positive way.\n" +
-                        "\n" +
-                        "Special thanks to John Davisi for lending us his incredibly soothing voice. "
-        ));
+        apiGetData();
 
-        list.add(new ModelLibrary(
-                "2",
-                "Daily Calm | 10 Minute Mindfulness Meditation | Be Present",
-                "Calm",
-                "10:30",
-                "https://i.ytimg.com/vi/ZToicYcHIOU/hqdefault.jpg",
-                "https://www.youtube.com/watch?v=ZToicYcHIOU",
-                "https://i.ytimg.com/vi/ZToicYcHIOU/hqdefault.jpg",
-                "Tamara Levitt guides this 10 minute Daily Calm mindfulness meditation to powerfully restore and re-connect with the present."
-        ));
-
-        list.add(new ModelLibrary(
-                "3",
-                "5-Minute Meditation You Can Do Anywhere",
-                "Goodful",
-                "05:16",
-                "https://i.ytimg.com/vi/inpok4MKVLM/hqdefault.jpg",
-                "https://www.youtube.com/watch?v=inpok4MKVLM",
-                "https://i.ytimg.com/vi/inpok4MKVLM/hqdefault.jpg",
-                "In just 5 minutes you can reset your day in a positive way.\n" +
-                        "\n" +
-                        "Special thanks to John Davisi for lending us his incredibly soothing voice. "
-        ));
-
-        AdapterLibrary adapterLibrary = new AdapterLibrary(this, list);
-        recy_library.setHasFixedSize(true);
-        recy_library.setLayoutManager(new LinearLayoutManager(this));
-        recy_library.setAdapter(adapterLibrary);
 
         backlibrary.setOnClickListener(v->{
             startActivity(new Intent(LibraryModules.this, TransitionActivity.class));
         });
 
+    }
 
+    void apiGetData(){
+        Call<LibraryResponse> call = apiInterface.getLibraryDetails();
+        call.enqueue(new Callback<LibraryResponse>() {
+            @Override
+            public void onResponse(Call<LibraryResponse> call, Response<LibraryResponse> response) {
 
+                if(response.isSuccessful()){
+                    Result result = response.body().getResult();
+                    for (int i = 0; i <result.getData().size() ; i++) {
+                        list.add(new ModelLibrary(String.valueOf(i),
+                                result.getData().get(i).getAuthorName(),
+                                result.getData().get(i).getAuthorName(),
+                                "05:30",
+                                result.getData().get(i).getThumbnailUrl(),
+                                result.getData().get(i).getMainlink(),
+                                result.getData().get(i).getAuthorUrl(),
+                                result.getData().get(i).getTitle()));
+                    }
+
+                }
+
+                AdapterLibrary adapterLibrary = new AdapterLibrary(LibraryModules.this, list);
+                recy_library.setHasFixedSize(true);
+                recy_library.setLayoutManager(new GridLayoutManager(LibraryModules.this, 3));
+                recy_library.setAdapter(adapterLibrary);
+            }
+
+            @Override
+            public void onFailure(Call<LibraryResponse> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -84,28 +84,44 @@ public class MainRocket extends AppCompatActivity {
             vids_rocketBlast.requestFocus();
             vids_rocketBlast.start();
 
+            new Handler().postDelayed(()->{
+                //Creating MediaController
+                MediaController mediaController1 = new MediaController(this);
+                mediaController1.setAnchorView(vids_rocketBlast);
+
+                //specify the location of media file
+//        Uri uri= Uri.parse(Environment.getExternalStorageDirectory().getPath()+"/media/1.mp4");
+
+                Uri uri1 = Uri.parse("android.resource://" + getPackageName() + "/R.raw/" + R.raw.rocketmp);
+                //Setting MediaController and URI, then starting the videoView
+//        videoLoginAnim.setMediaController(mediaController);
+                vids_rocketBlast.setVideoURI(uri1);
+                vids_rocketBlast.requestFocus();
+                vids_rocketBlast.start();
+            },16000);
+
             new Handler().postDelayed(() -> {
                 startActivity(new Intent(MainRocket.this, TransitionActivity.class));
-
-            },16000);
+                vids_rocketBlast.stopPlayback();
+            },19000);
         }
 
 
 
 
 
-        rockettop.setOnClickListener(v->{
-            TranslateAnimation animation = new TranslateAnimation(010f, 0f, 50f, -30f);
-            animation.setDuration(5000);
+        rocketmiddle.setOnClickListener(v->{
+            TranslateAnimation animation = new TranslateAnimation(010f, 0f, 0f, 50f);
+            animation.setDuration(2000);
             animation.setFillAfter(true);
-            rockettop.setAnimation(animation);
+            rocketmiddle.setAnimation(animation);
+            startActivity(new Intent(MainRocket.this, Journals.class));
 
             new Handler().postDelayed(() -> {
-                startActivity(new Intent(MainRocket.this, Journals.class));
-            },5000);
+            },2000);
         });
 
-        rocketmiddle.setOnClickListener(v->{
+        rockettop.setOnClickListener(v->{
             rocketVideo.setVisibility(View.VISIBLE);
 
             //Creating MediaController
@@ -122,11 +138,16 @@ public class MainRocket extends AppCompatActivity {
             rocketVideo.requestFocus();
             rocketVideo.start();
 
-            TranslateAnimation animation1 = new TranslateAnimation(010f, 0f, 50f, 30f);
+
+            TranslateAnimation animation1 = new TranslateAnimation(010f, 0f, 50f, 0f);
             animation1.setDuration(2000);
             animation1.setFillAfter(true);
-            rocketmiddle.setAnimation(animation1);
+            rockettop.setAnimation(animation1);
 
+            TranslateAnimation animation0 = new TranslateAnimation(-50f, 0f, 50f, 0f);
+            animation1.setDuration(2000);
+            animation1.setFillAfter(true);
+            rocketVideo.setAnimation(animation0);
             new Handler().postDelayed(() -> {
                 rocketVideo.setVisibility(View.INVISIBLE);
             },10000);
@@ -134,15 +155,15 @@ public class MainRocket extends AppCompatActivity {
         });
 
         rocketbottom.setOnClickListener(v->{
-            TranslateAnimation animation2 = new TranslateAnimation(010f, 0f, 50f, 30f);
+            TranslateAnimation animation2 = new TranslateAnimation(010f, 0f, 0f, 50f);
             animation2.setDuration(2000);
             animation2.setFillAfter(true);
             rocketbottom.setAnimation(animation2);
-            rochetFog.setAnimation(animation2);
+//            rochetFog.setAnimation(animation2);
 
             new Handler().postDelayed(() -> {
                 startActivity(new Intent(MainRocket.this, Survey.class));
-            },2000);
+            },3000);
 
         });
     }

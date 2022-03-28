@@ -28,6 +28,8 @@ import com.app.yuru.R
 import com.app.yuru.corescheduler.player.video.ui.VideoActivity
 import com.app.yuru.corescheduler.utils.Constants
 import com.app.yuru.ui.library.LibraryModules
+import com.app.yuru.ui.login.LoginActivity
+import com.app.yuru.utility.apivolley.Global
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
@@ -55,9 +57,10 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
     private var fileURL: MutableList<String> = ArrayList()
 
 
-    private lateinit var male_tts_cl : ConstraintLayout
-    private lateinit var female_tts_cl : ConstraintLayout
+    private lateinit var male_tts_cl: ConstraintLayout
+    private lateinit var female_tts_cl: ConstraintLayout
 
+    private lateinit var logout_tts : TextView
 
     private lateinit var tv45min: TextView
     private lateinit var tv90min: TextView
@@ -65,22 +68,26 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
     private lateinit var sleep_female: TextView
     private lateinit var tts_vids: VideoView
 
-    lateinit var exo_fullscreen_icon_tts : ImageView
+    lateinit var exo_fullscreen_icon_tts: ImageView
 
     var position = 0
 
-    lateinit var explore : TextView
+    lateinit var explore: TextView
 
     var isGenderCLick = "male"
 
-    private var userId : Int = 0
+    private var userId: Int = 0
 
     var checkFull = ""
     private lateinit var playerView1: PlayerView
     var player: SimpleExoPlayer? = null
-    var newUrl : String = ""
+    var newUrl: String = ""
 
-    lateinit var closeID : ImageView
+
+    private lateinit var rightArraow_sleep : ImageView
+    private lateinit var leftArrow_sleep : ImageView
+
+    lateinit var closeID: ImageView
     val handler = Handler(Looper.getMainLooper())
 
 
@@ -93,7 +100,34 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
         checkOnline()
 
+        rightArraow_sleep = view.findViewById(R.id.rightArraow_sleep)
+        rightArraow_sleep.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.framwQts,
+                SleepEnhancer2()
+            ).commit()
+        }
+
+        leftArrow_sleep = view.findViewById(R.id.leftArrow_sleep)
+        leftArrow_sleep.setOnClickListener {
+//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, AnimationOnLeft()).commit()
+            val i = Intent(requireActivity(), AnimationOnLeft::class.java)
+            startActivity(i)
+        }
+
         exo_fullscreen_icon_tts = view.findViewById(R.id.exo_fullscreen_icon_tts)
+
+        logout_tts = view.findViewById(R.id.logout_tts)
+        logout_tts.setOnClickListener {
+            val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+//            Global.ids1 = jsonObject1.getString("id")
+            editor.putString("id", "")
+            editor.apply()
+            editor.commit()
+
+            startActivity(Intent(context, LoginActivity::class.java))
+        }
 
 
         explore = view.findViewById(R.id.explore)
@@ -129,7 +163,7 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
         videoPlay()
 
         exo_fullscreen_icon_tts.setOnClickListener {
-            if(checkFull.equals("yes")){
+            if (checkFull.equals("yes")) {
                 player?.pause()
                 closeID.visibility = View.INVISIBLE
                 playerView1.visibility = View.INVISIBLE
@@ -144,51 +178,51 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             }
         }
 
-         val runnable = Runnable {
+        val runnable = Runnable {
 
-                 val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
-                 if (dialog != null) {
-                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                     dialog.setCancelable(false)
-                     dialog.setContentView(R.layout.dialog_splash)
-                     dialog.show()
+            val dialog = context?.let { Dialog(it, android.R.style.Theme_Holo_Light) }
+            if (dialog != null) {
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog.setCancelable(false)
+                dialog.setContentView(R.layout.dialog_splash)
+                dialog.show()
 
-                     val repeat_dialog_tts: Button = dialog.findViewById(R.id.repeat_dialog_tts)
-                     val sleep_dialog_tts: Button = dialog.findViewById(R.id.sleep_dialog_tts)
+                val repeat_dialog_tts: Button = dialog.findViewById(R.id.repeat_dialog_tts)
+                val sleep_dialog_tts: Button = dialog.findViewById(R.id.sleep_dialog_tts)
 
-                     repeat_dialog_tts.setOnClickListener {
-                         val intent = Intent(context, VideoActivity::class.java)
-                         intent.putExtra(
-                             Constants.VIDEO_LINK,
-                             fileURL.get(position) /*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/
-                         )
-                         startActivity(intent)
-                         dialog.dismiss()
-                     }
+                repeat_dialog_tts.setOnClickListener {
+                    val intent = Intent(context, VideoActivity::class.java)
+                    intent.putExtra(
+                        Constants.VIDEO_LINK,
+                        fileURL.get(position) /*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/
+                    )
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
 
 
-                     sleep_dialog_tts.setOnClickListener {
+                sleep_dialog_tts.setOnClickListener {
 
-                         if(userId.equals(0)){
-                             val fragment = requireActivity().supportFragmentManager.beginTransaction()
-                                 .replace(R.id.framwQts, SleepEnhancerNew())
-                             fragment.addToBackStack(null)
-                             fragment.commit()
+                    if (userId.equals(0)) {
+                        val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.framwQts, SleepEnhancerNew())
+                        fragment.addToBackStack(null)
+                        fragment.commit()
 
-                             dialog.dismiss()
-                         }else{
-                             val fragment = requireActivity().supportFragmentManager.beginTransaction()
-                                 .replace(R.id.framwQts, SleepEnhancer())
-                             fragment.addToBackStack(null)
-                             fragment.commit()
+                        dialog.dismiss()
+                    } else {
+                        val fragment = requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.framwQts, SleepEnhancer())
+                        fragment.addToBackStack(null)
+                        fragment.commit()
 
-                             dialog.dismiss()
-                         }
+                        dialog.dismiss()
+                    }
 
-                     }
+                }
 
-             }
             }
+        }
 
 
         handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(300))
@@ -211,10 +245,9 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             tv90min.setTextColor(Color.GRAY)
             tv45min.setTextColor(Color.WHITE)
 
-            if(isGenderCLick.equals("male")){
+            if (isGenderCLick.equals("male")) {
                 apiVideos("male", "5min")
-            }
-            else{
+            } else {
                 apiVideos("female", "5min")
             }
         }
@@ -224,10 +257,9 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             tv45min.setTextColor(Color.GRAY)
             tv90min.setTextColor(Color.WHITE)
 
-            if(isGenderCLick.equals("male")){
+            if (isGenderCLick.equals("male")) {
                 apiVideos("male", "9min")
-            }
-            else{
+            } else {
                 apiVideos("female", "9min")
             }
         }
@@ -245,7 +277,6 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             sleep_female.setTextColor(Color.WHITE)
 
             isGenderCLick = "female"
-
 
 
         }
@@ -273,7 +304,8 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
         val ctlr = MediaController(context)
         ctlr.setMediaPlayer(tts_vids)
 
-        val uri = Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.transitionvidnew);
+        val uri =
+            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.transitionvidnew);
         tts_vids.setVideoURI(uri);
         tts_vids.start()
 
@@ -283,7 +315,8 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
     private fun apiVideos(gender: String, duration: String) {
 
-        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
 
         val ids1 = sh.getString("id", "")
 
@@ -371,7 +404,8 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
     private fun checkOnline() {
 
-        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
 
         val ids1 = sh.getString("id", "")
 
@@ -438,7 +472,7 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             // Start the playback.
             it.play()
 
-            player?.volume  = 10f
+            player?.volume = 10f
 
         }
 

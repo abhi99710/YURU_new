@@ -2,6 +2,8 @@ package com.app.yuru.ui.library;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.app.yuru.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterLibrary extends RecyclerView.Adapter<AdapterLibrary.Myholder> {
+public class AdapterLibrary extends RecyclerView.Adapter<AdapterLibrary.Myholder> implements Serializable {
 
     private Context context;
     private List<ModelLibrary> list;
@@ -35,22 +39,32 @@ public class AdapterLibrary extends RecyclerView.Adapter<AdapterLibrary.Myholder
     @Override
     public void onBindViewHolder(@NonNull Myholder holder, int position) {
 
-        Picasso.get().load(list.get(position).getAuthorImg()).fit().noFade().centerCrop()
-                .into(holder.circleImageView);
+//        Picasso.get().load(list.get(position).getAuthorImg()).fit().noFade().centerCrop()
+//                .into(holder.imageLibrary);
         Picasso.get().load(list.get(position).getThumb()).fit().noFade().centerCrop()
-                .into(holder.imageViewVideo);
+                .into(holder.imageLibrary);
 
-        holder.duration.setText(list.get(position).getDuration());
-
-        holder.videoname.setText(list.get(position).getNameVideo());
-
-        holder.Description.setText(list.get(position).getDescription());
-
-        holder.playBtn.setOnClickListener(v->{
-            Intent intent = new Intent(context, LibraryPlayVideos.class);
-            intent.putExtra("link", list.get(position).getVideoLink());
+        holder.imageLibrary.setOnClickListener(v->{
+            Intent intent = new Intent(context, LibraryInfo.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putParcelable("data", list);
+//            intent.putExtras(bundle);
+            intent.putExtra("pos",  (Serializable)list);
+            intent.putExtra("newpos", position);
             context.startActivity(intent);
         });
+
+//        holder.duration.setText(list.get(position).getDuration());
+//
+//        holder.videoname.setText(list.get(position).getNameVideo());
+//
+//        holder.Description.setText(list.get(position).getDescription());
+//
+//        holder.playBtn.setOnClickListener(v->{
+//            Intent intent = new Intent(context, LibraryPlayVideos.class);
+//            intent.putExtra("link", list.get(position).getVideoLink());
+//            context.startActivity(intent);
+//        });
     }
 
     @Override
@@ -59,17 +73,11 @@ public class AdapterLibrary extends RecyclerView.Adapter<AdapterLibrary.Myholder
     }
 
     public class Myholder extends RecyclerView.ViewHolder {
-        ImageView imageViewVideo, circleImageView, playBtn;
-        TextView duration, videoname, Description;
+        ImageView imageLibrary;
         public Myholder(@NonNull View itemView) {
             super(itemView);
 
-            imageViewVideo = itemView.findViewById(R.id.imageViewVideo);
-            circleImageView = itemView.findViewById(R.id.circleImageView);
-            playBtn = itemView.findViewById(R.id.playBtn);
-            duration = itemView.findViewById(R.id.duration);
-            videoname = itemView.findViewById(R.id.videoname);
-            Description = itemView.findViewById(R.id.Description);
+            imageLibrary = itemView.findViewById(R.id.imageLibrary);
 
         }
     }

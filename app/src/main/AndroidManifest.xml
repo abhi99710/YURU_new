@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.library.LibraryInfo"></activity>
         <activity android:name=".ui.discounts.MainRocket" />
         <activity android:name=".ui.library.LibraryPlayVideos" />
         <activity android:name=".ui.library.LibraryModules" />

@@ -1,6 +1,8 @@
 package com.app.yuru.ui.library;
 
-public class ModelLibrary {
+import java.io.Serializable;
+
+public class ModelLibrary implements Serializable {
 
     private String id;
     private String nameVideo;

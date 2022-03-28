@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
+import com.app.yuru.ui.discounts.MainRocket;
 import com.app.yuru.utility.apivolley.APIVolley;
 
 import org.json.JSONException;
@@ -34,9 +37,9 @@ import java.util.Map;
 public class EditJournal extends AppCompatActivity {
 
 
-    private TextView jour_title, jour_date_edit;
+    private TextView  jour_date_edit;
     private ImageView jour_save;
-    private EditText jour_content;
+    private EditText jour_title, jour_content;
     private String currentTime;
     private ProgressDialog progressDialog;
     private String ids;
@@ -59,7 +62,14 @@ public class EditJournal extends AppCompatActivity {
         desc = getIntent().getStringExtra("desc");
         currentTime = getIntent().getStringExtra("date");
 
-        jour_content.setText(desc);
+        jour_content.setText(""+desc);
+
+        jour_content.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        jour_content.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        jour_content.setLines(30);
+        jour_content.setHorizontallyScrolling(false);
+
+        jour_content.setSingleLine();
         jour_title.setText(title);
         jour_date_edit.setText(currentTime);
 
@@ -91,7 +101,8 @@ public class EditJournal extends AppCompatActivity {
 
                     Toast.makeText(this, "saved", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(this, JournalList.class);
+                    Intent intent = new Intent(this, MainRocket.class);
+                    intent.putExtra("first_rocket", "journal");
                     startActivity(intent);
                 }
             } catch (JSONException e) {

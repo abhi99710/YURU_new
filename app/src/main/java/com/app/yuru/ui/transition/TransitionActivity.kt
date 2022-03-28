@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.app.yuru.R
 import com.app.yuru.ui.coupons.JournalOptions
 import com.app.yuru.ui.coupons.Journals
+import com.app.yuru.ui.discounts.MainRocket
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class TransitionActivity : AppCompatActivity() {
@@ -35,7 +36,11 @@ class TransitionActivity : AppCompatActivity() {
                 R.id.sleep_nv->setCurrentFragment(SleepEnhancer())
                 R.id.evening_nv->setCurrentFragment(SleepEnhancer2())
                 R.id.wakeup_nv->setCurrentFragment(WakeUpProgram())
-               R.id.journal_nv->startActivity(Intent(this, JournalOptions::class.java))
+               R.id.journal_nv->{
+                   val intent = Intent(this, MainRocket::class.java)
+                   intent.putExtra("first_rocket","tts")
+                   startActivity(intent)
+               }
 
 
 

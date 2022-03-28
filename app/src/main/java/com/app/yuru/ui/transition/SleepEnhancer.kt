@@ -66,8 +66,6 @@ class SleepEnhancer : Fragment() {
 
     private lateinit var tts_vids: VideoView
 
-    private lateinit var rightArraow_sleep : ImageView
-    private lateinit var leftArrow_sleep : ImageView
 
     private lateinit var seekBar1: VerticalSeekBar
     private lateinit var showOptionclick : ImageView
@@ -91,20 +89,7 @@ class SleepEnhancer : Fragment() {
         findIds(view)
 
 
-        rightArraow_sleep = view.findViewById(R.id.rightArraow_sleep)
-        rightArraow_sleep.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction().replace(
-                R.id.framwQts,
-                SleepEnhancer2()
-            ).commit()
-        }
 
-        leftArrow_sleep = view.findViewById(R.id.leftArrow_sleep)
-        leftArrow_sleep.setOnClickListener {
-//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, AnimationOnLeft()).commit()
-                val i = Intent(requireActivity(), AnimationOnLeft::class.java)
-            startActivity(i)
-        }
 
         hideOptions()
         hideOptionRight()

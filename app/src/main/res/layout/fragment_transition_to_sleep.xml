@@ -76,8 +76,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_200sdp"
                         android:layout_marginBottom="32dp"
-                        android:elevation="5dp"
                         android:background="@color/black"
+                        android:elevation="5dp"
                         android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,6 @@
                         />
 
 
-
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageView1"
                         android:layout_width="@dimen/_20sdp"
@@ -116,7 +115,30 @@
                         app:layout_constraintTop_toTopOf="@+id/explore"
                         app:layout_scrollFlags="scroll" />
 
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/logout"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="16dp"
+                        android:elevation="4dp"
+                        android:src="@drawable/ic_baseline_login_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/explore"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/explore"
+                        app:layout_scrollFlags="scroll" />
 
+                    <TextView
+                        android:id="@+id/logout_tts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="Logout"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/logout"
+                        app:layout_constraintStart_toEndOf="@+id/logout"
+                        app:layout_constraintTop_toTopOf="@+id/logout" />
 
                     <TextView
                         android:id="@+id/explore"
@@ -153,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="32dp"
+                        android:layout_marginBottom="70dp"
 
                         android:orientation="horizontal"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -370,7 +392,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/transition_to_sleep_recy"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="250dp"
                         android:layout_marginStart="26dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="8dp"
@@ -380,6 +402,25 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
+                    <ImageView
+                        android:id="@+id/rightArraow_sleep"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginEnd="32dp"
+                        android:background="@drawable/exo_ic_chevron_right"
+                        app:layout_constraintBottom_toBottomOf="@+id/leftArrow_sleep"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/leftArrow_sleep" />
+
+                    <ImageView
+                        android:id="@+id/leftArrow_sleep"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="32dp"
+                        android:src="@drawable/ic_arrow_left"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
