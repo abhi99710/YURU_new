@@ -2,11 +2,13 @@ package com.app.yuru.ui.discounts;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Guideline;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.WindowManager;
@@ -36,6 +38,7 @@ public class Survey extends AppCompatActivity {
     private final List<String> ques_id = new ArrayList<>();
     private TextView ques1, ques2, ques3, ques4, ques5;
     private ProgressDialog progressDialog;
+    private Guideline guideline25, guideline24, guideline23, guideline21, guideline2;
     int seek1 = 0;
     int seek2 = 0;
     private Button buttonSubmitSurvey;
@@ -81,7 +84,7 @@ public class Survey extends AppCompatActivity {
                         Toast.makeText(this, "Please select range for questions", Toast.LENGTH_SHORT).show();
                     }else {
                         finalCall();
-                        startActivity(new Intent(Survey.this, CalenderV.class));
+//                        startActivity(new Intent(Survey.this, CalenderV.class));
                         Log.e("error", ""+ seek1 + " ," + seek2 + ", "+ seek3 + ", "+ seek4 + ", "+ seek5);
                     }
 
@@ -106,10 +109,27 @@ public class Survey extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getBoolean("valid")) {
                     JSONObject jsonObject1 = jsonObject.getJSONObject("result");
+                    JSONObject jsonObject11 = jsonObject1.getJSONObject("ratings");
+                    int a = Integer.parseInt(jsonObject11.getString("rt1"));
+                    int b = Integer.parseInt(jsonObject11.getString("rt2"));
+                    int c = Integer.parseInt(jsonObject11.getString("rt3"));
+                    int d = Integer.parseInt(jsonObject11.getString("rt4"));
+                    int e1 = Integer.parseInt(jsonObject11.getString("rt5"));
+                    guideline2.setGuidelinePercent(a);
+                    guideline21.setGuidelinePercent(b);
+                    guideline23.setGuidelinePercent(c);
+                    guideline24.setGuidelinePercent(d);
+                    guideline25.setGuidelinePercent(e1);
 
-                    Intent intent = new Intent(this, CalenderV.class);
-                    intent.putExtra("videoURL", jsonObject1.getString("videoURL"));
-                    startActivity(intent);
+                    new Handler().postDelayed(()->{
+                        Intent intent = new Intent(this, CalenderV.class);
+                        try {
+                            intent.putExtra("videoURL", jsonObject1.getString("videoURL"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        startActivity(intent);
+                    },3000);
 
                 } else {
                     Toast.makeText(this, "No response from server", Toast.LENGTH_SHORT).show();
@@ -370,6 +390,12 @@ public class Survey extends AppCompatActivity {
         ques4 = findViewById(R.id.ques4);
         ques5 = findViewById(R.id.ques5);
         buttonSubmitSurvey = findViewById(R.id.buttonSubmitSurvey);
+
+        guideline2 = findViewById(R.id.guideline2);
+        guideline21 = findViewById(R.id.guideline21);
+        guideline23 = findViewById(R.id.guideline23);
+        guideline24 = findViewById(R.id.guideline24);
+        guideline25 = findViewById(R.id.guideline25);
     }
 
 

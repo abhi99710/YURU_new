@@ -8,13 +8,17 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
+import com.app.yuru.ui.Intro.IntroScreens
 import com.app.yuru.ui.coupons.DiscountCode
 import com.app.yuru.ui.discounts.MainRocket
+import com.app.yuru.ui.lowvshigh.LowvsHigh
 import com.app.yuru.ui.testResult.TestResultActivity
 import com.app.yuru.ui.transition.TransitionActivity
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : AppCompatActivity() {
@@ -29,18 +33,19 @@ class SplashActivity : AppCompatActivity() {
 //        startActivity(Intent(this, Survey::class.java))
 //        startActivity(Intent(this, CalenderV::class.java))
 
+            Log.e("bb ", Locale.getDefault().getDisplayLanguage())
 
             val sh = applicationContext.getSharedPreferences("share", Context.MODE_PRIVATE)
 
             val idh1 = sh.getString("id", "")
             if(!idh1.toString().equals("")){
                 startActivity(Intent(this, TransitionActivity::class.java))
-//                startActivity(Intent(this, TestResultActivity::class.java))
+//                startActivity(Intent(this, LowvsHigh::class.java))
 //               Intent(this, MainRocket::class.java)
 //                intent.putExtra("first_rocket", "latest")
 //                startActivity(intent)
             }else{
-                startActivity(Intent(this, Splash2::class.java))
+                startActivity(Intent(this, IntroScreens::class.java))
             }
 
         }
@@ -63,4 +68,6 @@ class SplashActivity : AppCompatActivity() {
         super.onPause()
         handler.removeCallbacks(runnable)
     }
+
+
 }

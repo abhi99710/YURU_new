@@ -37,6 +37,8 @@ public class LowvsHigh extends AppCompatActivity {
     private Guideline guideline15;
     final List<ModelLowHigh> modelLowHighs = new ArrayList<>();
     ProgressDialog progressDialog;
+    String body = "";
+    String loworhigh = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +72,20 @@ public class LowvsHigh extends AppCompatActivity {
 
         low_low.setOnClickListener(v->{
             low_low.setBackgroundColor(Color.GREEN);
+            loworhigh = "low";
             low_low.setTextColor(Color.WHITE);
-            desc_min_low.setText(modelLowHighs.get(0).getLow_data_point());
+//            desc_min_low.setText(modelLowHighs.get(0).getLow_data_point());
+            setDataLow();
             high_low.setBackgroundColor(Color.WHITE);
             high_low.setTextColor(Color.BLACK);
         });
 
         high_low.setOnClickListener(v->{
+            loworhigh = "high";
             high_low.setBackgroundColor(Color.GREEN);
             high_low.setTextColor(Color.WHITE);
-            desc_min_low.setText(modelLowHighs.get(0).getHigh_data_point());
+            setData();
+//            desc_min_low.setText(modelLowHighs.get(0).getHigh_data_point());
             low_low.setBackgroundColor(Color.WHITE);
             low_low.setTextColor(Color.BLACK);
         });
@@ -89,10 +95,12 @@ public class LowvsHigh extends AppCompatActivity {
 
     private void fragmentClick() {
         o_option_.setOnClickListener(v->{
+            body = "o";
 //            setFragment(new FirstFragment());
             title_low.setText("Openness");
             desc_low.setText(modelLowHighs.get(0).getQuestion_title());
             guideline15.setGuidelinePercent(.5f);
+            desc_min_low.setText(modelLowHighs.get(0).getLow_data_point());
             tv_percenteage_low.setBackgroundColor(Color.GREEN);
             tv_percenteage_low.setText("50%");
             o_option_.setBackgroundColor(Color.GREEN);
@@ -101,9 +109,11 @@ public class LowvsHigh extends AppCompatActivity {
         });
 
         c_option_.setOnClickListener(v->{
+            body = "c";
 //            setFragment(new CFranment());
             title_low.setText("Conscientiousness");
             desc_low.setText(modelLowHighs.get(1).getQuestion_title());
+            desc_min_low.setText(modelLowHighs.get(1).getLow_data_point());
             guideline15.setGuidelinePercent(.4f);
             tv_percenteage_low.setText("40%");
             tv_percenteage_low.setBackgroundColor(Color.BLUE);
@@ -113,10 +123,12 @@ public class LowvsHigh extends AppCompatActivity {
         });
 
         e_option_.setOnClickListener(v->{
+            body = "e";
 //            setFragment(new E_Fragment());
             title_low.setText("Extraversion");
 
             guideline15.setGuidelinePercent(.7f);
+            desc_min_low.setText(modelLowHighs.get(2).getLow_data_point());
             tv_percenteage_low.setText("70%");
             tv_percenteage_low.setBackgroundColor(Color.RED);
             e_option_.setBackgroundColor(Color.RED);
@@ -133,7 +145,9 @@ public class LowvsHigh extends AppCompatActivity {
 //            setFragment(new A_Fragment());
             title_low.setText("Agreeableness");
 
+            body = "a";
             guideline15.setGuidelinePercent(.4f);
+            desc_min_low.setText(modelLowHighs.get(3).getLow_data_point());
             tv_percenteage_low.setText("40%");
             tv_percenteage_low.setBackgroundColor(Color.YELLOW);
             a_option_.setBackgroundColor(Color.YELLOW);
@@ -150,9 +164,11 @@ public class LowvsHigh extends AppCompatActivity {
 //            setFragment(new N_Fragment());
             title_low.setText("Neuroticism");
 
+            body = "n";
             guideline15.setGuidelinePercent(.2f);
             tv_percenteage_low.setText("20%");
             tv_percenteage_low.setBackgroundColor(Color.BLACK);
+            desc_min_low.setText(modelLowHighs.get(4).getLow_data_point());
             n_option_.setBackgroundColor(Color.BLACK);
             n_option_.setTextColor(Color.WHITE);
             optionBackdround(o_option_, c_option_, e_option_, a_option_);
@@ -225,6 +241,8 @@ public class LowvsHigh extends AppCompatActivity {
                 o_option_.setBackgroundColor(Color.GREEN);
                 o_option_.setTextColor(Color.WHITE);
 
+                setData();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -235,6 +253,45 @@ public class LowvsHigh extends AppCompatActivity {
 
     }
 
+    private void setData() {
+        if (body.equalsIgnoreCase("o")){
+            desc_min_low.setText(modelLowHighs.get(0).getHigh_data_point());
+
+        }else if(body.equalsIgnoreCase("c")){
+            desc_min_low.setText(modelLowHighs.get(1).getHigh_data_point());
+
+
+        }else if(body.equalsIgnoreCase("e")){
+            desc_min_low.setText(modelLowHighs.get(2).getHigh_data_point());
+
+        }else if(body.equalsIgnoreCase("a")){
+            desc_min_low.setText(modelLowHighs.get(3).getHigh_data_point());
+
+        }else if(body.equalsIgnoreCase("n")){
+            desc_min_low.setText(modelLowHighs.get(4).getHigh_data_point());
+
+        }
+
+    }
+    private void setDataLow() {
+        if (body.equalsIgnoreCase("o")) {
+            desc_min_low.setText(modelLowHighs.get(0).getLow_data_point());
+
+        } else if (body.equalsIgnoreCase("c")) {
+            desc_min_low.setText(modelLowHighs.get(1).getLow_data_point());
+
+
+        } else if (body.equalsIgnoreCase("e")) {
+            desc_min_low.setText(modelLowHighs.get(2).getLow_data_point());
+
+        } else if (body.equalsIgnoreCase("a")) {
+            desc_min_low.setText(modelLowHighs.get(3).getLow_data_point());
+
+        } else if (body.equalsIgnoreCase("n")) {
+            desc_min_low.setText(modelLowHighs.get(4).getLow_data_point());
+
+        }
+    }
     void setFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.lowhighframe, fragment).commit();
     }

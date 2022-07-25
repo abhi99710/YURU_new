@@ -34,15 +34,16 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.PlayerView
+import com.google.firebase.analytics.FirebaseAnalytics
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
+class TransitionToSleep : Fragment(), ClickPosition, ClickInterface, ProgramClickPosition {
 
-    lateinit var transition_to_sleep_recy: RecyclerView
+    var transition_to_sleep_recy:  RecyclerView? = null
     private var requestQueue: RequestQueue? = null
     lateinit var skipToProgram: TextView
     lateinit var startTimer: TextView
@@ -78,16 +79,24 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
     private var userId: Int = 0
 
+    var genderSelected = "male"
+    var durationSelected  = "5min"
+    var programSelected = ""
+
     var checkFull = ""
     private lateinit var playerView1: PlayerView
     var player: SimpleExoPlayer? = null
     var newUrl: String = ""
 
 
+    private var idforProgram: MutableList<String> = ArrayList()
+    private var programName: MutableList<String> = ArrayList()
+
     private lateinit var rightArraow_sleep : ImageView
     private lateinit var leftArrow_sleep : ImageView
 
     lateinit var closeID: ImageView
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     val handler = Handler(Looper.getMainLooper())
 
 
@@ -98,7 +107,30 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_transition_to_sleep, container, false)
 
+
+
         checkOnline()
+
+
+        idforProgram.add("1")
+        idforProgram.add("2")
+        idforProgram.add("3")
+        idforProgram.add("4")
+
+        programName.add("Program A")
+        programName.add("Program B")
+        programName.add("Program C")
+        programName.add("Program D")
+
+
+
+        // Obtain the FirebaseAnalytics instance.
+//        firebaseAnalytics = FirebaseAnalytics()
+//        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+//            param(FirebaseAnalytics.Param.ITEM_ID, id)
+//            param(FirebaseAnalytics.Param.ITEM_NAME, name)
+//            param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
+//        }
 
         rightArraow_sleep = view.findViewById(R.id.rightArraow_sleep)
         rightArraow_sleep.setOnClickListener {
@@ -107,6 +139,8 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
                 SleepEnhancer2()
             ).commit()
         }
+
+        saveGetToSleepHits()
 
         leftArrow_sleep = view.findViewById(R.id.leftArrow_sleep)
         leftArrow_sleep.setOnClickListener {
@@ -128,6 +162,8 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
             startActivity(Intent(context, LoginActivity::class.java))
         }
+
+
 
 
         explore = view.findViewById(R.id.explore)
@@ -160,7 +196,7 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
         playerView1 = view.findViewById(R.id.playerViewtts)
 
 
-        videoPlay()
+//        videoPlay()
 
         exo_fullscreen_icon_tts.setOnClickListener {
             if (checkFull.equals("yes")) {
@@ -246,9 +282,15 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             tv45min.setTextColor(Color.WHITE)
 
             if (isGenderCLick.equals("male")) {
-                apiVideos("male", "5min")
+                durationSelected = "5min"
+                genderSelected = "male"
+                adapterNewGet()
+//                apiVideos("male", "5min")
             } else {
-                apiVideos("female", "5min")
+//                apiVideos("female", "5min")
+                durationSelected = "5min"
+                genderSelected = "female"
+                adapterNewGet()
             }
         }
 
@@ -258,9 +300,15 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             tv90min.setTextColor(Color.WHITE)
 
             if (isGenderCLick.equals("male")) {
-                apiVideos("male", "9min")
+//                apiVideos("male", "9min")
+                durationSelected = "9min"
+                genderSelected = "male"
+                adapterNewGet()
             } else {
-                apiVideos("female", "9min")
+//                apiVideos("female", "9min")
+                durationSelected = "9min"
+                genderSelected = "female"
+                adapterNewGet()
             }
         }
         sleep_male.setOnClickListener {
@@ -270,6 +318,7 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
             isGenderCLick = "male"
 
+            genderSelected = "male"
         }
         sleep_female.setOnClickListener {
 
@@ -278,6 +327,8 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
             isGenderCLick = "female"
 
+
+            genderSelected = "female"
 
         }
 
@@ -293,11 +344,27 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             fragment.commit()
         }
 
+        adapterNewGet()
 
-        apiVideos("male", "5min")
+//        apiVideos("male", "5min")
 
+        videoPlay()
         return view
 
+    }
+
+    private fun adapterNewGet(){
+        val transitionToSleepAdapter = NewAdapterGetToSleep(
+            context,
+            programName,
+            idforProgram,
+            genderSelected,
+            durationSelected,
+            this
+        )
+        transition_to_sleep_recy?.setHasFixedSize(true)
+        transition_to_sleep_recy?.layoutManager = GridLayoutManager(context, 2)
+        transition_to_sleep_recy?.adapter = transitionToSleepAdapter
     }
 
     private fun videoPlay() {
@@ -313,7 +380,7 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
     }
 
-    private fun apiVideos(gender: String, duration: String) {
+    private fun apiVideos() {
 
         val sh: SharedPreferences =
             requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
@@ -358,7 +425,17 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
 
                     }
 
-                    adapterConnects()
+                   newUrl = fileURL.get(0)
+
+//                    newUrl = url.toString()
+                    playerView1.visibility = View.VISIBLE
+                    closeID.visibility = View.VISIBLE
+                    exo_fullscreen_icon_tts.visibility = View.VISIBLE
+//                    click()
+
+                    checkFull = "yes"
+                    click()
+//                    adapterConnects()
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -372,9 +449,10 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("gender", gender)
-                params.put("duration", duration)
-                params.put("userId", ids1.toString());
+                params.put("gender", genderSelected)
+                params.put("duration", durationSelected)
+                params.put("userId", ids1.toString())
+                params.put("program", programSelected)
 
                 return params
             }
@@ -396,9 +474,9 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
             this,
             this
         )
-        transition_to_sleep_recy.setHasFixedSize(true)
-        transition_to_sleep_recy.layoutManager = GridLayoutManager(context, 2)
-        transition_to_sleep_recy.adapter = transitionToSleepAdapter
+        transition_to_sleep_recy?.setHasFixedSize(true)
+        transition_to_sleep_recy?.layoutManager = GridLayoutManager(context, 2)
+        transition_to_sleep_recy?.adapter = transitionToSleepAdapter
 
     }
 
@@ -487,6 +565,55 @@ class TransitionToSleep : Fragment(), ClickPosition, ClickInterface {
         click()
 
         checkFull = "yes"
+    }
+
+    private fun saveGetToSleepHits() {
+        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/saveGetToSleepHits"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+
+                    val obj = JSONObject(response)
+//                    var jsonObject = obj.getJSONObject("result")
+//                    val jsonArray = jsonObject.getJSONArray("data")
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userId", ids1.toString());
+                params.put("getToSleepID", "1")
+                return params
+            }
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    override fun clickIdForprogram(id: String?) {
+        programSelected = id.toString()
+        apiVideos()
     }
 
 }

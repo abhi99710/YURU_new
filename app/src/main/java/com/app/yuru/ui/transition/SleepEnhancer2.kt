@@ -12,12 +12,14 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.TranslateAnimation
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,7 +39,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-class SleepEnhancer2 : Fragment(), ClickInterface {
+class SleepEnhancer2 : Fragment(), ClickInterface,LongPressSleep2 {
 
 
     private lateinit var bottom_1: ImageView
@@ -49,6 +51,8 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private lateinit var center1: ImageView
     private lateinit var center2: ImageView
     private lateinit var save_sleep_enhancer_2: TextView
+
+    var urlToSetAlarm = ""
 
     var player: SimpleExoPlayer? = null
 
@@ -65,8 +69,8 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private var right_1_count = 0  //count for right click for image 1
     private var left_2_count = 0  //count for left click for image 2
     private var right_2_count = 0  //count for right click for image 2
-    private var answerForLeft = 0  // real time answer for image 1 button clicks
-    private var annserForRight = 0  // real time answer for image 1 button clicks
+    private var answerForLeft = 225  // real time answer for image 1 button clicks
+    private var annserForRight = 315  // real time answer for image 1 button clicks
     private var toXdelta1 =
         0.0f  // saves the position to which the first imageview slides right side
     private var toXdelta2 =
@@ -85,6 +89,9 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private var duration45: MutableList<String> = ArrayList()
     private var thumb45: MutableList<String> = ArrayList()
     private var url45: MutableList<String> = ArrayList()
+
+    var showSetAlarmLeft = 0
+    var showSetAlarmRight = 0
 
     private lateinit var showAns2: TextView
     private lateinit var showAns: TextView
@@ -108,8 +115,6 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
     private var isEngagedN = false
 
 
-
-
     private var requestQueue: RequestQueue? = null
 
     override fun onCreateView(
@@ -129,6 +134,8 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
         hideOptions()
         hideOptionRight()
 
+        saveEveningProgramHits()
+
         resetBtn2 = view.findViewById(R.id.resetBtn2)
         resetBtn2.setOnClickListener {
 //            showOptions()
@@ -143,12 +150,16 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 //            hideOptions()
             showOptions()
             showOptionSelect.visibility = View.INVISIBLE
+
+            showSetAlarmLeft = 1
         }
 
         showOptionCLickRight = view.findViewById(R.id.showOptionCLickRight2)
         showOptionCLickRight.setOnClickListener {
             showOptionRight()
             showOptionCLickRight.visibility = View.INVISIBLE
+
+            showSetAlarmRight = 1
         }
 
         apiVideos("45sec", "O")
@@ -164,8 +175,21 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 
         // save button click listener
         save_sleep_enhancer_2.setOnClickListener {
-            go(answerForLeft)
-            go(annserForRight)
+
+            if(showSetAlarmLeft == 1){
+                answerForLeft = 6
+                Log.e("515", "Left set"+answerForLeft+"-"+annserForRight)
+
+                go(answerForLeft)
+            }
+
+            if(showSetAlarmRight == 1){
+                annserForRight = 8
+                Log.e("515", "Right set"+answerForLeft+"-"+annserForRight)
+
+                go(annserForRight)
+            }
+
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.framwQts, WakeUpProgram())
             fragment.addToBackStack(null)
@@ -348,7 +372,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
                 left_2_count--
                 annserForRight -= 1
                 negXdelta2 -= 20
-                showAdd2.setText("(" + left_2_count + ")")
+                showAdd2.text = "(" + left_2_count + ")"
                 if (left_2_count < 0)
                     showAdd2.setTextColor(Color.RED)
                 else
@@ -475,10 +499,12 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
             dialog.setContentView(R.layout.dialogtransition)
             dialog.show()
 
-            val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
+            val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep)
 
             val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
             dialog_title.text = title
+
+            val cardFocus : CardView = dialog.findViewById(R.id.cardFocus)
 
             playerView1 = dialog.findViewById(R.id.playerView1)
 
@@ -491,10 +517,13 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
                 playerView1.setKeepContentOnPlayerReset(true)
                 player?.pause()
 
+                cardFocus.alpha = 1.0f
+
             }
 
 
             click()
+            cardFocus.alpha = 0.7f
 
 
             val logo: ImageView = dialog.findViewById(R.id.logo)
@@ -549,6 +578,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
                 thumb45,
                 duration45,
                 url45,
+                this,
                 this
             )
 
@@ -599,6 +629,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
             // Start the playback.
             it.play()
 
+
         }
 
 
@@ -617,6 +648,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
             val intent = Intent(context, MyReceiver::class.java)
             intent.putExtra("REQUEST_CODE", requestCode)
             intent.putExtra("fragment", "sleep_enhancer_2")
+            intent.putExtra("url", urlToSetAlarm)
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 
@@ -693,7 +725,7 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
                 val params = HashMap<String, String>()
                 params.put("duration", duration)
                 params.put("trait", trait)
-                params.put("userId", ids1.toString());
+                params.put("userId", ids1.toString())
 
                 return params
             }
@@ -742,9 +774,9 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
         ctlr.setMediaPlayer(sleVideo)
 
         val uri =
-            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.sl2);
+            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.sl2)
 
-        sleVideo.setVideoURI(uri);
+        sleVideo.setVideoURI(uri)
         sleVideo.start()
 
         sleVideo.setOnPreparedListener({ mp -> mp.isLooping = true })
@@ -770,4 +802,53 @@ class SleepEnhancer2 : Fragment(), ClickInterface {
 //        player?.release()
 //        player = null
 //    }
+
+    private fun saveEveningProgramHits() {
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/saveEveningProgramHits"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+
+                    val obj = JSONObject(response)
+//                    var jsonObject = obj.getJSONObject("result")
+//                    val jsonArray = jsonObject.getJSONArray("data")
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userId", ids1.toString())
+                params.put("eveningProgramID", "1")
+                return params
+            }
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    override fun longPressId(urlLong: String?) {
+       urlToSetAlarm = urlLong.toString()
+    }
 }

@@ -1,6 +1,8 @@
 package com.app.yuru.ui.testResult
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -36,6 +38,11 @@ import java.util.*
 @AndroidEntryPoint
 class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
     private var requestQueue: RequestQueue? = null
+    var oneAnswer  = 0
+    var twoAnswer  = 0
+    var threeAnswer  = 0
+    var fourAnswer  = 0
+    var fiveAnswer  = 0
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTestResultsBinding
         get() = FragmentTestResultsBinding::inflate
@@ -43,9 +50,11 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
     override fun setupView(binding: FragmentTestResultsBinding) {
 
 
+        apiGetCoupon()
+
         binding.btnProceed.setOnClickListener {
 
-//            apiGetCoupon()
+
             Toast.makeText(context, "Discount sent please wait for a while.", Toast.LENGTH_SHORT).show()
             startActivity(Intent(context, DiscountCode::class.java))
         }
@@ -76,11 +85,16 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
         binding.pieChart.isHighlightPerTapEnabled = true
 
         binding.pieChart.legend.isEnabled = false
-        setData(5, 10F)
+//        setData(5, 10F)
     }
 
-  /*  private fun apiGetCoupon() {
-        val url  = "https://promask.com.co/yuru/api/login"
+    private fun apiGetCoupon() {
+
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+        val url  = "https://app.whyuru.com/api/web/getRatings"
 
         val stringRequest = object : StringRequest(
             Method.POST, url,
@@ -88,14 +102,24 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
                 try {
                     val obj = JSONObject(response)
 //                    progressDialog.dismiss()
-                    var jsonObject = obj.getJSONObject("result")
-                    var jsonObject1 = jsonObject.getJSONObject("data")
+//                    val obj = JSONObject(response)
+                    var jsonObject = obj.getBoolean("valid")
+                    var jsonObject1 = obj.getJSONObject("result")
 
-                    if(jsonObject.getString("message").equals("You have successfully logged In")) {
-                        var intent = Intent(context, GetStartedActivity::class.java)
-                        intent.putExtra("nameLogin", jsonObject1.getString("full_name"))
-                        startActivity(intent)
-                        Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
+                    if(jsonObject) {
+                        var jsonObject2 = jsonObject1.getJSONObject("data")
+                        oneAnswer = jsonObject2.getInt("1")
+                        twoAnswer = jsonObject2.getInt("2")
+                        threeAnswer = jsonObject2.getInt("3")
+                        fourAnswer = jsonObject2.getInt("4")
+                        fiveAnswer = jsonObject2.getInt("5")
+
+
+                        setData(5,10f)
+//                        var intent = Intent(context, GetStartedActivity::class.java)
+//                        intent.putExtra("nameLogin", jsonObject1.getString("full_name"))
+//                        startActivity(intent)
+//                        Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()
 
                     }
                     else{
@@ -114,25 +138,35 @@ class TestResultFragment : BaseFragmentBinding<FragmentTestResultsBinding>() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-
+                params.put("userID", ids1.toString())
                 return params
             }
         }
         requestQueue = Volley.newRequestQueue(context)
         requestQueue?.add(stringRequest)
-    }*/
+    }
 
     private fun setData(count: Int, range: Float) {
         val entries = ArrayList<PieEntry>()
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (i in 0 until count) {
-            val entry = PieEntry(20F * (i + 1), "")
-            entry.x = i.toFloat()
-            entries.add(entry)
-        }
-        val dataSet = PieDataSet(entries, "Election Results")
+//        val x = 10f
+//        for (i in 0 until count) {
+            val entry = PieEntry(oneAnswer.toFloat(), "")
+        entries.add(entry)
+        val entry1 = PieEntry(twoAnswer.toFloat(), "")
+        entries.add(entry1)
+        val entry2 = PieEntry(threeAnswer.toFloat(), "")
+        entries.add(entry2)
+        val entry3 = PieEntry(fourAnswer.toFloat(), "")
+        entries.add(entry3)
+        val entry4 = PieEntry(fiveAnswer.toFloat(), "")
+        entries.add(entry4)
+//            entry.x = i.toFloat()
+//            entries.add(entry)
+//        }
+        val dataSet = PieDataSet(entries, "Selected Results")
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
         binding.pieChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {

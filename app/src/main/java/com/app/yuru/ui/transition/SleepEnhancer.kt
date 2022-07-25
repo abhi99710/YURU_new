@@ -13,6 +13,7 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,6 +71,8 @@ class SleepEnhancer : Fragment() {
     private lateinit var seekBar1: VerticalSeekBar
     private lateinit var showOptionclick : ImageView
     private lateinit var showOptionCLickRight : ImageView
+    var showSetAlarmLeft = 0
+    var showSetAlarmRight = 0
 
     private var id45: MutableList<String> = ArrayList()
     private var fileName: MutableList<String> = ArrayList()
@@ -96,6 +99,8 @@ class SleepEnhancer : Fragment() {
 
         apiVideos()
 
+        saveSleepEnhancerHits()
+
         resetBtn = view.findViewById(R.id.resetBtn)
         resetBtn.setOnClickListener {
             hideOptions()
@@ -109,22 +114,43 @@ class SleepEnhancer : Fragment() {
         showOptionclick.setOnClickListener {
             showOptions()
             showOptionclick.visibility = View.INVISIBLE
+            showSetAlarmLeft = 1
         }
 
         showOptionCLickRight = view.findViewById(R.id.showOptionCLickRight)
         showOptionCLickRight.setOnClickListener {
             showOptionRight()
             showOptionCLickRight.visibility = View.INVISIBLE
+            showSetAlarmRight = 1
         }
 
 
         save_sleep_enhancer.setOnClickListener {
-            go(answerForLeft)
-            go(annserForRight)
+//            answerForLeft = 1
+//            annserForRight = 2
+
+
+            if(showSetAlarmLeft == 1){
+                answerForLeft = 2
+             Log.e("515", "Left set"+answerForLeft+"-"+annserForRight)
+
+                go(answerForLeft)
+            }
+
+             if(showSetAlarmRight == 1){
+                 annserForRight = 4
+                 Log.e("515", "Right set"+answerForLeft+"-"+annserForRight)
+
+                go(annserForRight)
+            }
+
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.framwQts, SleepEnhancer2())
             fragment.addToBackStack(null)
             fragment.commit()
+
+
+
         }
         // this method is used for transition of image
         transitionClickListner()
@@ -334,6 +360,8 @@ class SleepEnhancer : Fragment() {
             val intent = Intent(context, MyReceiver::class.java)
             intent.putExtra("REQUEST_CODE", requestCode)
             intent.putExtra("fragment", "sleep1")
+            intent.putExtra("url",urlL)
+
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
             val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
@@ -436,7 +464,9 @@ class SleepEnhancer : Fragment() {
                         if (isActive.equals("1")) {
                             urlL = jsonObject1.getString("isActive")
                         }
+
                     }
+                    urlL = fileURL[0]
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -454,6 +484,50 @@ class SleepEnhancer : Fragment() {
 
                     return params
                 }
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    private fun saveSleepEnhancerHits() {
+        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/saveSleepEnhancerHits"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+
+                    val obj = JSONObject(response)
+//                    var jsonObject = obj.getJSONObject("result")
+//                    val jsonArray = jsonObject.getJSONArray("data")
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userId", ids1.toString());
+                params.put("sleepEnhancerID", "1")
+                return params
+            }
 
         }
         requestQueue = Volley.newRequestQueue(context)

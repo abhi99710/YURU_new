@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "49067248182",
+    "project_id": "yuru-eeef6",
+    "storage_bucket": "yuru-eeef6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49067248182:android:b7e797e7ee76d15a9fe697",
+        "android_client_info": {
+          "package_name": "com.app.yuru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49067248182-n8k9u97hs8bq84k1umdlpg48q3tdj309.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.yuru",
+            "certificate_hash": "39cd9959e457fb6b594a3b7c001b73687b6f08f2"
+          }
+        },
+        {
+          "client_id": "49067248182-cm6i4t4p3k6r60fi77m56rh02ou5e1lv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ-slattzyNihioMpjwfhK9ZoMqxk-oFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49067248182-cm6i4t4p3k6r60fi77m56rh02ou5e1lv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

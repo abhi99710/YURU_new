@@ -9,6 +9,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_grid_adapter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"
@@ -49,6 +50,7 @@
                     android:layout_gravity="center"
                     android:contentDescription="TODO"
                     android:elevation="100dp"
+
                     android:background="@drawable/back__"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -2,10 +2,12 @@ package com.app.yuru.ui.transition;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,9 +29,10 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
     final List<String> duration;
     final List<String> url;
     ClickInterface clickInterface;
+    LongPressSleep2 longPressSleep2;
 
-    public AdapterSleep(Context context, List<String> ids,  List<String> traint, List<String> thumb, List<String> duration, List<String> url,
-                        ClickInterface clickInterface) {
+    public AdapterSleep(Context context, List<String> ids, List<String> traint, List<String> thumb,
+                        List<String> duration, List<String> url, ClickInterface clickInterface, LongPressSleep2 longPressSleep2) {
         this.context = context;
         this.ids = ids;
         this.traint = traint;
@@ -37,6 +40,7 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
         this.duration = duration;
         this.url = url;
         this.clickInterface = clickInterface;
+        this.longPressSleep2 = longPressSleep2;
     }
 
     @NonNull
@@ -50,7 +54,7 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
 
-        Picasso.get().load("https://i.pinimg.com/originals/e9/37/ec/e937ece4a014308c3e3685ff2dc4f751.jpg").fit().into(holder.sleep_videoview);
+        Picasso.get().load(thumb.get(position)).fit().into(holder.sleep_videoview);
 
         holder.sleep_videoview.setOnClickListener(v->
         {
@@ -59,6 +63,15 @@ public class AdapterSleep extends RecyclerView.Adapter<AdapterSleep.MyHolder> {
 //            Intent intent = new Intent(context, VideoActivity.class);
 //            intent.putExtra(Constants.VIDEO_LINK, url.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
 //            context.startActivity(intent);
+        });
+
+        holder.sleep_videoview.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(context, "Selected", Toast.LENGTH_SHORT).show();
+                longPressSleep2.longPressId(url.get(position));
+                return true;
+            }
         });
     }
 
