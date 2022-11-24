@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley
 import com.app.yuru.R
 import com.app.yuru.coreandroid.base.BaseFragmentBinding
 import com.app.yuru.databinding.FragmentLoginBinding
+import com.app.yuru.ui.coupons.DiscountCode
 import com.app.yuru.ui.coupons.Journals
 
 import com.app.yuru.ui.getStarted.GetStartedActivity
@@ -50,6 +51,12 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
             progressDialog.setCancelable(false)
 //            progressDialog.show()
 
+        }
+
+        val sh = context?.getSharedPreferences("share", Context.MODE_PRIVATE)
+        val idh1 = sh?.getString("id", "")
+        if(!idh1!!.equals("") ){
+            startActivity(Intent(context, TransitionActivity::class.java))
         }
 
         binding.tvForgotPassword.setOnClickListener {
@@ -96,7 +103,7 @@ class LoginFragment : BaseFragmentBinding<FragmentLoginBinding>() {
                     var jsonObject1 = jsonObject.getJSONObject("data")
 
                      if(jsonObject.getString("message").equals("You have successfully logged In")) {
-                        var intent = Intent(context, AnimLogin::class.java)
+                        var intent = Intent(context, DiscountCode::class.java)
                          intent.putExtra("nameLogin", jsonObject1.getString("full_name"))
                          startActivity(intent)
                          Toast.makeText(context, "Login", Toast.LENGTH_SHORT).show()

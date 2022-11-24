@@ -1,5 +1,7 @@
 package com.app.yuru.ui.Intro;
 
+import android.view.MotionEvent;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,4 +38,8 @@ public class IntroAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 5;
     }
+
+
+
+
 }

@@ -12,6 +12,7 @@ class TestResultActivity : BaseActivityBinding<ActivityTestResultBinding>() {
 
     override fun setupView(binding: ActivityTestResultBinding) {
 
+        val ids = intent.getStringExtra("user-token")
 
     }
 }

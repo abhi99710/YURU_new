@@ -23,7 +23,7 @@ class TransitionActivity : AppCompatActivity() {
         val firstFragment= TransitionToSleep()
         val secondFragment=SleepEnhancer()
         val thirdFragment=SleepEnhancer2()
-        val fourthFragment=SubliminalProgram()
+
         val fifthFragment = WakeUpProgram()
         setCurrentFragment(firstFragment)
 

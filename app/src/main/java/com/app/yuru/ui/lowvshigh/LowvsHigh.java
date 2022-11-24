@@ -8,7 +8,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,6 +21,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.app.yuru.R;
+import com.app.yuru.ui.login.AnimLogin;
+import com.app.yuru.ui.splash.PermissionActivity;
 import com.app.yuru.ui.transition.TransitionActivity;
 import com.app.yuru.utility.apivolley.APIVolley;
 
@@ -90,7 +94,14 @@ public class LowvsHigh extends AppCompatActivity {
             low_low.setTextColor(Color.BLACK);
         });
 
-        btn_low.setOnClickListener(v-> startActivity(new Intent(this, TransitionActivity.class)));
+        btn_low.setOnClickListener(v-> {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+//                startActivity(new Intent(this, AnimLogin.class));
+//            }else{
+                startActivity(new Intent(this, AnimLogin.class));
+//            }
+
+        });
     }
 
     private void fragmentClick() {

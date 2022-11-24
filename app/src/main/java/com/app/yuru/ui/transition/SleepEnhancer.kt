@@ -43,7 +43,7 @@ class SleepEnhancer : Fragment() {
     lateinit var arrowRight2: ImageView
     lateinit var center1: ImageView
     lateinit var center2: ImageView
-    lateinit var resetBtn : TextView
+    lateinit var resetBtn: TextView
     lateinit var save_sleep_enhancer: TextView
     private var left_1_count = 0   //count for left click for image 1
     private var right_1_count = 0  //count for right click for image 1
@@ -67,10 +67,13 @@ class SleepEnhancer : Fragment() {
 
     private lateinit var tts_vids: VideoView
 
+    var firstAlarm = ""
+    var secondAlarm = ""
+
 
     private lateinit var seekBar1: VerticalSeekBar
-    private lateinit var showOptionclick : ImageView
-    private lateinit var showOptionCLickRight : ImageView
+    private lateinit var showOptionclick: ImageView
+    private lateinit var showOptionCLickRight: ImageView
     var showSetAlarmLeft = 0
     var showSetAlarmRight = 0
 
@@ -81,6 +84,9 @@ class SleepEnhancer : Fragment() {
 
     private var requestQueue: RequestQueue? = null
     private var urlL = ""
+    private var currentVolume = 0
+    private lateinit var audioManager: AudioManager
+    private var seekbarPosition = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,20 +98,34 @@ class SleepEnhancer : Fragment() {
         findIds(view)
 
 
-
-
         hideOptions()
         hideOptionRight()
 
         apiVideos()
 
+        getState()
+
         saveSleepEnhancerHits()
+
+        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val newVolume = sharedPreferences.getString("Volume_Sleep_Enhancer", "100")
+        currentVolume = Integer.parseInt(newVolume)
+
+        seekBar1.max = 100
+
+
+        seekBar1.progress = currentVolume
+
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, 0)
+
 
         resetBtn = view.findViewById(R.id.resetBtn)
         resetBtn.setOnClickListener {
             hideOptions()
             hideOptionRight()
 
+            answerForLeft = 0
+            annserForRight = 0
             showOptionCLickRight.visibility = View.VISIBLE
             showOptionclick.visibility = View.VISIBLE
         }
@@ -126,29 +146,60 @@ class SleepEnhancer : Fragment() {
 
 
         save_sleep_enhancer.setOnClickListener {
-//            answerForLeft = 1
-//            annserForRight = 2
+//            answerForLeft = 2
+//            annserForRight = 5
+
+            SaveState()
 
 
-            if(showSetAlarmLeft == 1){
-                answerForLeft = 2
-             Log.e("515", "Left set"+answerForLeft+"-"+annserForRight)
 
-                go(answerForLeft)
+
+            if (showSetAlarmLeft == 1) {
+                val sharedPreferences: SharedPreferences =
+                    requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+//                    Global.ids1 = jsonObject1.getString("id")
+                editor.putString("se_time1", "" + answerForLeft)
+//                editor.putString("se_time2", "" + annserForRight)
+                editor.putString("se_url", "" + urlL)
+                editor.apply()
+                editor.commit()
+//                answerForLeft = 1
+                Log.e("515", "Left set" + answerForLeft + "-" + annserForRight)
+
+//                go(answerForLeft)
+//                SaveState()
             }
 
-             if(showSetAlarmRight == 1){
-                 annserForRight = 4
-                 Log.e("515", "Right set"+answerForLeft+"-"+annserForRight)
+            if (showSetAlarmRight == 1) {
 
-                go(annserForRight)
+                val sharedPreferences: SharedPreferences =
+                    requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+//                    Global.ids1 = jsonObject1.getString("id")
+//                editor.putString("se_time1", "" + answerForLeft)
+                editor.putString("se_time2", "" + annserForRight)
+                editor.putString("se_url", "" + urlL)
+                editor.apply()
+                editor.commit()
+//                 annserForRight = 4
+                Log.e("515", "Right set" + answerForLeft + "-" + annserForRight)
+
+//                go(annserForRight)
+//                SaveState()
             }
+
+//            val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+//            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+////                    Global.ids1 = jsonObject1.getString("id")
+//            editor.putString("Volume_Sleep_Enhancer", ""+ seekbarPosition)
+//            editor.apply()
+//            editor.commit()
 
             val fragment = requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.framwQts, SleepEnhancer2())
             fragment.addToBackStack(null)
             fragment.commit()
-
 
 
         }
@@ -157,21 +208,68 @@ class SleepEnhancer : Fragment() {
         try {
             val mediaPlayer = MediaPlayer()
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            val audioManager: AudioManager =
-                (context?.getSystemService(requireContext().toString()) as AudioManager?)!!
-            seekBar1.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC))
-            seekBar1.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC))
-            seekBar1.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0)
+
+            seekBar1.max = 100
+            seekBar1.setOnSeekBarChangeListener(object  : OnSeekBarChangeListener{
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
+                ) {
+//                    Toast.makeText(context, "0000000" + 1, Toast.LENGTH_SHORT).show()
+                    seekBar1.progress = progress
+
+
+
+                    val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+//                    Global.ids1 = jsonObject1.getString("id")
+                    editor.putString("Volume_Sleep_Enhancer", ""+ progress)
+                    editor.apply()
+                    editor.commit()
                 }
 
-                override fun onStartTrackingTouch(seekBar: SeekBar) {}
-                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+                }
+
             })
+
+//            seekBar1.max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+//            seekBar1.progress = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+//            seekBar1.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+//                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+//
+//                    seekbarPosition = i
+//
+//                    audioManager =
+//                        (context?.getSystemService(requireContext().toString()) as AudioManager?)!!
+//                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0)
+//
+//                    Toast.makeText(context, "0000000"+i, Toast.LENGTH_SHORT).show()
+//
+//                    val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+//                    val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+////                    Global.ids1 = jsonObject1.getString("id")
+//                    editor.putString("Volume_Sleep_Enhancer", ""+i)
+//                    editor.apply()
+//                    editor.commit()
+//                }
+//
+//                override fun onStartTrackingTouch(seekBar: SeekBar) {
+//
+//                    Toast.makeText(context, "0000000", Toast.LENGTH_SHORT).show()
+//                }
+//                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+//            })
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
 
         return view
 
@@ -182,9 +280,12 @@ class SleepEnhancer : Fragment() {
     private fun transitionClickListner() {
         // right arrow for first image slide
         arrowRight1.setOnClickListener {
-            if (right_1_count < 5) {
-                right_1_count++
-                answerForLeft += 1
+            showSetAlarmLeft = 1
+
+            left_1_count = 0
+            if (right_1_count <= 10) {
+                right_1_count+=5
+                answerForLeft += 5
                 showAdd1.text = "(+$right_1_count)"
                 if (right_1_count > 0)
                     showAdd1.setTextColor(Color.GREEN)
@@ -203,9 +304,13 @@ class SleepEnhancer : Fragment() {
 
         // left arrow for first image slide
         arrowLeft1.setOnClickListener {
-            if (left_1_count > -5) {
-                left_1_count--
-                answerForLeft -= 1
+
+            right_1_count = 0
+
+            showSetAlarmLeft = 1
+            if (left_1_count >= -10) {
+                left_1_count-=5
+                answerForLeft -= 5
                 if (left_1_count < 0) {
                     showAdd1.setTextColor(Color.RED)
                     showAdd1.text = "(" + left_1_count + ")"
@@ -226,9 +331,13 @@ class SleepEnhancer : Fragment() {
 
         // left arrow for second image slide
         arrowLeft2.setOnClickListener {
-            if (left_2_count > -5) {
-                left_2_count--
-                annserForRight -= 1
+
+            right_2_count = 0
+
+            showSetAlarmRight = 1
+            if (left_2_count >= -10) {
+                left_2_count-=5
+                annserForRight -= 5
                 showAdd2.text = "(" + left_2_count + ")"
                 if (left_2_count < 0)
                     showAdd2.setTextColor(Color.RED)
@@ -247,9 +356,13 @@ class SleepEnhancer : Fragment() {
 
         // right arrow for second image slide
         arrowRight2.setOnClickListener {
-            if (right_2_count < 5) {
-                right_2_count++
-                annserForRight += 1
+
+            left_2_count = 0
+
+            showSetAlarmRight = 1
+            if (right_2_count <= 10) {
+                right_2_count+=5
+                annserForRight += 5
                 showAdd2.text = "(+$right_2_count)"
                 if (right_2_count > 0)
                     showAdd2.setTextColor(Color.GREEN)
@@ -336,7 +449,7 @@ class SleepEnhancer : Fragment() {
         center2 = view.findViewById(R.id.center2)
         save_sleep_enhancer = view.findViewById(R.id.save_sleep_enhancer)
 
-        seekBar1 = view.findViewById(R.id.seekBar1)
+        seekBar1 = view.findViewById(R.id.seekBar111)
 
         showAdd1 = view.findViewById(R.id.showAdd1)
         showAdd2 = view.findViewById(R.id.showAdd2)
@@ -348,49 +461,58 @@ class SleepEnhancer : Fragment() {
     }
 
 
-    private fun 
-            go(ans: Int) {
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-        val calendar = Calendar.getInstance()
-        val calList: MutableList<Calendar> = ArrayList()
-        calList.add(calendar)
-        for (calItem in calList) {
-            calItem.add(Calendar.MINUTE, ans)
-            val requestCode = (calendar.timeInMillis / 1000).toInt()
-            val intent = Intent(context, MyReceiver::class.java)
-            intent.putExtra("REQUEST_CODE", requestCode)
-            intent.putExtra("fragment", "sleep1")
-            intent.putExtra("url",urlL)
-
-            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
-            val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                alarmManager?.setExactAndAllowWhileIdle(
-                    AlarmManager.RTC_WAKEUP,
-                    calItem.timeInMillis,
-                    pi
-                )
-            } else {
-                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-            }
-            Toast.makeText(context, "Alarm has been set ", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    private fun
+//            go(ans: Int) {
+//        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+//        val calendar = Calendar.getInstance()
+//        val calList: MutableList<Calendar> = ArrayList()
+//        calList.add(calendar)
+//        for (calItem in calList) {
+//            calItem.add(Calendar.MINUTE, ans)
+//            val requestCode = (calendar.timeInMillis / 1000).toInt()
+//            val intent = Intent(context, MyReceiver::class.java)
+//            intent.putExtra("REQUEST_CODE", requestCode)
+//            intent.putExtra("fragment", "sleep1")
+//            intent.putExtra("url", urlL)
+//
+//            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+//            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+//            val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                alarmManager?.setExactAndAllowWhileIdle(
+//                    AlarmManager.RTC_WAKEUP,
+//                    calItem.timeInMillis,
+//                    pi
+//                )
+//
+////                alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP,
+////                    calItem.timeInMillis,
+////                    24*60*60*1000,
+////                    pi)
+//            } else {
+//                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+//                alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP,
+//                    calItem.timeInMillis,
+//                    24*60*60*1000,
+//                    pi)
+//            }
+//            Toast.makeText(context, "Alarm has been set ", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     private fun videoPlay() {
         val ctlr = MediaController(context)
 
         val uri =
-            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.eveningvideo);
-        tts_vids.setVideoURI(uri);
+            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.eveningvideo)
+        tts_vids.setVideoURI(uri)
         tts_vids.start()
 
 
         tts_vids.setOnPreparedListener({ mp -> mp.isLooping = true })
     }
 
-    fun hideOptions(){
+    fun hideOptions() {
         showAns.visibility = View.INVISIBLE
         bottom_1.visibility = View.INVISIBLE
         arrowLeft1.visibility = View.INVISIBLE
@@ -399,7 +521,7 @@ class SleepEnhancer : Fragment() {
 
     }
 
-    fun hideOptionRight(){
+    fun hideOptionRight() {
         showAns2.visibility = View.INVISIBLE
         bottom2.visibility = View.INVISIBLE
 
@@ -408,7 +530,7 @@ class SleepEnhancer : Fragment() {
         showAdd2.visibility = View.INVISIBLE
     }
 
-    fun showOptions(){
+    fun showOptions() {
         showAns.visibility = View.VISIBLE
         bottom_1.visibility = View.VISIBLE
         arrowRight1.visibility = View.VISIBLE
@@ -418,15 +540,17 @@ class SleepEnhancer : Fragment() {
 
     }
 
-    fun showOptionRight(){
+    fun showOptionRight() {
         showAns2.visibility = View.VISIBLE
         bottom2.visibility = View.VISIBLE
         arrowLeft2.visibility = View.VISIBLE
         arrowRight2.visibility = View.VISIBLE
         showAdd2.visibility = View.VISIBLE
     }
+
     private fun apiVideos() {
-        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
 
         val ids1 = sh.getString("id", "")
 
@@ -477,13 +601,13 @@ class SleepEnhancer : Fragment() {
                     Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
                 }
             }) {
-                @Throws(AuthFailureError::class)
-                override fun getParams(): Map<String, String> {
-                    val params = HashMap<String, String>()
-                    params.put("userId", ids1.toString());
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userId", ids1.toString())
 
-                    return params
-                }
+                return params
+            }
 
         }
         requestQueue = Volley.newRequestQueue(context)
@@ -491,7 +615,8 @@ class SleepEnhancer : Fragment() {
     }
 
     private fun saveSleepEnhancerHits() {
-        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
 
         val ids1 = sh.getString("id", "")
 
@@ -524,8 +649,120 @@ class SleepEnhancer : Fragment() {
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("userId", ids1.toString());
+                params.put("userId", ids1.toString())
                 params.put("sleepEnhancerID", "1")
+                return params
+            }
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    private fun SaveState() {
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/sleepEnhancerSaver"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+
+                    val obj = JSONObject(response)
+                    var jsonObject = obj.getJSONObject("result")
+//                    Toast.makeText(
+//                        requireContext(),
+//                        jsonObject.getString("message"),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userID", ids1.toString())
+                params.put("firstAlarm", "" + answerForLeft)
+
+                params.put("secondAlarm", "" + annserForRight)
+                return params
+            }
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    private fun getState() {
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/getSleepEnhancerSaved?userID=" + ids1
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.GET, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+
+                    val obj = JSONObject(response)
+                    if (!obj.getString("status").equals("NOK")) {
+                        var jsonObject = obj.getJSONObject("result")
+                        var data = jsonObject.getJSONObject("data")
+
+                        firstAlarm = data.getString("firstAlarm")
+                        secondAlarm = data.getString("secondAlarm")
+
+                        showAns.text = firstAlarm
+                        showAns2.text = secondAlarm
+
+                        annserForRight = Integer.parseInt(secondAlarm)
+                        answerForLeft = Integer.parseInt(firstAlarm)
+
+                        showOptionCLickRight.visibility = View.INVISIBLE
+                        showOptionclick.visibility = View.INVISIBLE
+
+                        showOptions()
+                        showOptionRight()
+
+                    }
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userId", ids1.toString())
                 return params
             }
 

@@ -20,7 +20,7 @@
             android:configChanges="screenSize|keyboard|orientation|density|locale"
             android:exported="false"
             android:inheritShowWhenLocked="true"
-            android:screenOrientation="sensorLandscape"
+            android:screenOrientation="sensorPortrait"
             android:showWhenLocked="true"
             android:turnScreenOn="true"
             tools:ignore="UnusedAttribute" />

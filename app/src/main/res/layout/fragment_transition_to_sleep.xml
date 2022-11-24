@@ -60,7 +60,7 @@
                     android:layout_margin="5dp"
                     android:background="@color/transparent">
 
-                    <ImageView
+                 <!--   <ImageView
                         android:id="@+id/closeID"
                         android:layout_width="17dp"
                         android:layout_height="18dp"
@@ -100,7 +100,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/playerViewtts"
                         app:layout_constraintEnd_toEndOf="@id/playerViewtts"
 
-                        />
+                        />-->
 
 
                     <de.hdodenhof.circleimageview.CircleImageView

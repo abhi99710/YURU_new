@@ -8,11 +8,13 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
+import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,14 +38,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInterface, LongPressSleep2 {
+class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInterface,
+    LongPressSleep2 {
 
 
     var wakeuprecy: GridView? = null
     private var requestQueue: RequestQueue? = null
-    val _mcurrentTime = Calendar.getInstance()
-    var hours: Int = 0
-    val minutes = 0
+    val sec = 0
+    var hours = 0
+    var minutes = 0
 
     private lateinit var o_option: TextView
     private lateinit var c_option: TextView
@@ -72,12 +75,14 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
     private lateinit var cl_wakeup_male: ConstraintLayout
 
     private lateinit var wake_up_video: VideoView
+    private lateinit var dayOfAlarm: TextView
 
 //    private var
 
     private val alarmTimePicker: TimePicker? = null
 
     private var clickedGender = "Male"
+    private var clickedVideoTime = "45sec"
 
     private lateinit var e_new: ImageView
     private lateinit var a_new: ImageView
@@ -102,17 +107,28 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
     private lateinit var playerView1: PlayerView
     var player: SimpleExoPlayer? = null
-    var newUrl: String = ""
+    var newUrl: String = "0"
     var isFull: String = ""
 
     lateinit var closeID: ImageView
 
-     var timeNew :Int = 5
+    var timeNew: Int = 5
+    var choosedTraits = "O"
+    private var clickedUrl = "0"
+    private var videoType = "sub"
+    private var chooseWakeupVideotime = ""
+    private var chooseRepeatDays = ""
+
+    private var clickedImageUrl = ""
 
     lateinit var exo_fullscreen_icon: ImageView
 
     private lateinit var progressDialog2: ProgressDialog
 
+    private lateinit var recyclerView: RecyclerView
+
+    private var choosedProgram = ""
+    private var choosedUrl = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,7 +144,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 //        showDialog("O","male")
 //        apiVideos("male", "O")
 
-     setData()
+        setData()
+
 
         exo_fullscreen_icon = view.findViewById(R.id.exo_fullscreen_icon)
         exo_fullscreen_icon.setOnClickListener {
@@ -147,11 +164,14 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             }
         }
 
-        apiVideosLast("45sec", "O")
+//        apiVideosLast("45sec", "O")
 
         savewakeUpHits()
 
-        go(timeNew - 45 /*currentTimeToLong().toInt()*/)
+        getWakeUpDataSaver()
+
+        getWakeupForProgram()
+//        go(timeNew - 45 /*currentTimeToLong().toInt()*/)
 
 
         playerView1 = view.findViewById(R.id.playerViewwakeup)
@@ -166,7 +186,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             isFull = "no"
         }
 
-        val dayOfAlarm: TextView = view.findViewById(R.id.dayOfAlarm)
+         dayOfAlarm = view.findViewById(R.id.dayOfAlarm)
         dayOfAlarm.setOnClickListener {
 
 
@@ -226,8 +246,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             year = calendar.get(Calendar.YEAR)
 
 
-            val mHour = calendar.get(Calendar.HOUR_OF_DAY);
-            val mMinute = calendar.get(Calendar.MINUTE);
+            val mHour = calendar.get(Calendar.HOUR_OF_DAY)
+            val mMinute = calendar.get(Calendar.MINUTE)
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 calendar.set(Calendar.HOUR_OF_DAY, hour)
                 calendar.set(Calendar.MINUTE, minute)
@@ -236,15 +256,22 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 var timeX = SimpleDateFormat("HH:mm").format(calendar.time)
 //                timeNew = Integer.parseInt(timeX)
 
+                hours = hour
+                minutes = minute
                 timeNew = toMins(timeX)
+
+
 
 //                currentTimeToLong()
 
 //                go(timeNew - currentTimeToLong().toInt())
             }
 
+
+
             time_tv.setOnClickListener {
                 TimePickerDialog.THEME_DEVICE_DEFAULT_DARK
+
                 TimePickerDialog(
                     context, R.style.MyTimePickerDialogTheme, timeSetListener, calendar.get(
                         Calendar.HOUR_OF_DAY
@@ -273,28 +300,28 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         fileName.add("Program1")
         traits.add("")
         durationL.add("")
-        thumb.add("")
+        thumb.add("https://app.whyuru.com/assets/uploads/wakeUp/screen_1665407723.png")
         fileURL.add("Program 1")
 
         id1Male.add("2")
         fileName.add("Program2")
         traits.add("")
         durationL.add("")
-        thumb.add("")
+        thumb.add("https://app.whyuru.com/assets/uploads/wakeUp/screen_1665407868.png")
         fileURL.add("Program 2")
 
         id1Male.add("3")
         fileName.add("Program3")
         traits.add("")
         durationL.add("")
-        thumb.add("")
+        thumb.add("https://app.whyuru.com/assets/uploads/wakeUp/screen_1665407774.png")
         fileURL.add("Program 3")
 
         id1Male.add("4")
         fileName.add("Program4")
         traits.add("")
         durationL.add("")
-        thumb.add("")
+        thumb.add("https://app.whyuru.com/assets/uploads/wakeUp/screen_1665407845.png")
         fileURL.add("Program 4")
         adapterConnects()
     }
@@ -338,6 +365,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 never.isChecked = false
 
                 dayOfAlarm.text = "everyday"
+                chooseRepeatDays = "everyday"
             }
         }
 
@@ -353,6 +381,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 everyDay.isChecked = false
                 never.isChecked = true
                 dayOfAlarm.text = "never"
+                chooseRepeatDays = "never"
 
             }
         }
@@ -367,6 +396,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                     showval1 = showval1 + ",sun "
                 }
                 dayOfAlarm.text = showval1
+                chooseRepeatDays = showval
             }
         }
 
@@ -382,6 +412,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 }
 
                 dayOfAlarm.text = showval1
+                chooseRepeatDays = showval
             }
         }
 
@@ -397,6 +428,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 }
 
                 dayOfAlarm.text = showval1
+                chooseRepeatDays = showval
             }
         }
 
@@ -412,6 +444,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 }
 
                 dayOfAlarm.text = showval1
+                chooseRepeatDays = showval
             }
         }
 
@@ -427,6 +460,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 }
 
                 dayOfAlarm.text = showval1
+                chooseRepeatDays = showval
             }
         }
 
@@ -442,6 +476,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 }
 
                 dayOfAlarm.text = showval1
+                chooseRepeatDays = showval
             }
         }
 
@@ -457,6 +492,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 }
 
                 dayOfAlarm.text = showval1
+                chooseRepeatDays = showval
             }
         }
     }
@@ -485,8 +521,63 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
         save_wakeup.setOnClickListener {
 
-            Toast.makeText(context, " Saved", Toast.LENGTH_SHORT).show()
-            go(timeNew - currentTimeToLong().toInt())
+            wakeUpDataSaver()
+
+            var minute_new = ((hours * 60 ) + minutes)*60*1000
+//            go( minute_new , clickedUrl)
+
+            // setting first alarm
+            val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, hours)
+            calendar.set(Calendar.MINUTE, minutes)
+            calendar.set(Calendar.SECOND, 0)
+
+            val requestCode = (calendar.timeInMillis / 1000).toInt()
+            val intent = Intent(context, MyReceiver::class.java)
+            intent.putExtra("REQUEST_CODE", requestCode)
+            intent.putExtra("fragment", "wakeup")
+            intent.putExtra("url", clickedUrl)
+            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+
+            val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
+
+            alarmManager?.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                pi
+            )
+
+            // setting second alarm
+            val alarmManager1 = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+            val calendar1 = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, hours)
+            calendar.set(Calendar.MINUTE, minutes - 4)
+            calendar.set(Calendar.SECOND, 0)
+
+            val requestCode1 = (calendar.timeInMillis / 1000).toInt()
+            val intent1 = Intent(context, MyReceiver::class.java)
+            intent1.putExtra("REQUEST_CODE", requestCode1)
+            intent1.putExtra("fragment", "wakeup")
+            intent1.putExtra("url", choosedUrl)
+            intent1.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+            intent1.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
+
+            val pi1 = PendingIntent.getBroadcast(context, requestCode1, intent1, 0)
+
+            alarmManager1?.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                pi1
+            )
+
+
+//            var sleep2alarm = (timeNew) - (  currentTimeToLong().toInt()/(1000*60))
+//            Log.e("time", ""+ timeNew + "  **  " + (TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis())).toInt() + " ** " + sleep2alarm)
+//                        Toast.makeText(context, " "+ sleep2alarm + " " + timeNew +  "--" + , Toast.LENGTH_SHORT).show()
+
+//            go((((hours * 60 ) + minutes)-1)*60*1000, newUrl)
 
 //            val intent = Intent(context, MainRocket::class.java)
 //            intent.putExtra("first_rocket", "wakeup");
@@ -504,94 +595,145 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             pm_tv.setBackgroundColor(Color.TRANSPARENT)
         }
 
-
         /*all gear new setup click listner*/
 
-        o_new.setOnClickListener({
-            if (clickedGender.equals("male")) {
-//                apiVideos("male", "O")
-                showDialog("O", "male")
-            } else {
-//                apiVideos("female", "O")
-                showDialog("O", "female")
+        clickOnO()  // click on icon O
 
-            }
-            e_new.setImageResource(R.drawable.setting_o)
-            o_new.setImageResource(R.drawable.setting_a)
-            c_new.setImageResource(R.drawable.setting_n)
-            a_new.setImageResource(R.drawable.setting_c)
-            n_new.setImageResource(R.drawable.setting_e)
-        })
+        cliclOnC()  // click on icon C
 
-        c_new.setOnClickListener {
-            if (clickedGender.equals("male")) {
-//                apiVideos("male", "C")
-                showDialog("C", "male")
+        cliclOnE()  // click on icon E
 
-            } else {
-//                apiVideos("female", "C")
-                showDialog("C", "female")
+        clickOnA()  // click on icon A
 
-            }
-            e_new.setImageResource(R.drawable.setting_c)
-            o_new.setImageResource(R.drawable.setting_n)
-            c_new.setImageResource(R.drawable.setting_o)
-            a_new.setImageResource(R.drawable.setting_e)
-            n_new.setImageResource(R.drawable.setting_a)
-        }
+        cliclOnN()  // click on icon N
 
-        e_new.setOnClickListener {
-            if (clickedGender.equals("male")) {
-//                apiVideos("male", "E")
-                showDialog("E", "male")
+    }
 
-            } else {
-//                apiVideos("female", "E")
-                showDialog("E", "female")
-
-            }
-            e_new.setImageResource(R.drawable.setting_e)
-            o_new.setImageResource(R.drawable.setting_o)
-            c_new.setImageResource(R.drawable.setting_c)
-            a_new.setImageResource(R.drawable.setting_a)
-            n_new.setImageResource(R.drawable.setting_n)
-        }
-
-        a_new.setOnClickListener {
-            if (clickedGender.equals("male")) {
-//                apiVideos("male", "A")
-                showDialog("A", "male")
-
-            } else {
-//                apiVideos("female", "A")
-                showDialog("A", "female")
-
-            }
-            e_new.setImageResource(R.drawable.setting_a)
-            o_new.setImageResource(R.drawable.setting_c)
-            c_new.setImageResource(R.drawable.setting_e)
-            a_new.setImageResource(R.drawable.setting_n)
-            n_new.setImageResource(R.drawable.setting_o)
-        }
-
+    private fun cliclOnN() {
         n_new.setOnClickListener {
+
+            choosedTraits = "N"
+
             if (clickedGender.equals("male")) {
-//                apiVideos("male", "N")
-//                apiVideosLast("45sec", "N")
+    //                apiVideos("male", "N")
+    //                apiVideosLast("45sec", "N")
                 showDialog("N", "male")
 
             } else {
-//                apiVideos("female", "N")
+    //                apiVideos("female", "N")
                 showDialog("N", "female")
-//                apiVideosLast("90sec", "N")
+    //                apiVideosLast("90sec", "N")
 
             }
-            e_new.setImageResource(R.drawable.setting_n)
-            o_new.setImageResource(R.drawable.setting_e)
-            c_new.setImageResource(R.drawable.setting_a)
-            a_new.setImageResource(R.drawable.setting_o)
-            n_new.setImageResource(R.drawable.setting_c)
+            chnageDimension(   n_new, o_new, c_new ,  e_new, a_new)
+//            e_new.setImageResource(R.drawable.setting_n)
+//            o_new.setImageResource(R.drawable.setting_e)
+//            c_new.setImageResource(R.drawable.setting_a)
+//            a_new.setImageResource(R.drawable.setting_o)
+//            n_new.setImageResource(R.drawable.setting_c)
         }
+    }
+
+    private fun clickOnA() {
+        a_new.setOnClickListener {
+            choosedTraits = "A"
+            if (clickedGender.equals("male")) {
+    //                apiVideos("male", "A")
+                showDialog("A", "male")
+
+            } else {
+    //                apiVideos("female", "A")
+                showDialog("A", "female")
+
+            }
+            chnageDimension(  a_new, n_new, o_new, c_new ,  e_new)
+//            e_new.setImageResource(R.drawable.setting_a)
+//            o_new.setImageResource(R.drawable.setting_c)
+//            c_new.setImageResource(R.drawable.setting_e)
+//            a_new.setImageResource(R.drawable.setting_n)
+//            n_new.setImageResource(R.drawable.setting_o)
+        }
+    }
+
+    private fun cliclOnE() {
+        e_new.setOnClickListener {
+            choosedTraits = "E"
+            if (clickedGender.equals("male")) {
+    //                apiVideos("male", "E")
+                showDialog("E", "male")
+
+            } else {
+    //                apiVideos("female", "E")
+                showDialog("E", "female")
+
+            }
+            chnageDimension(  e_new, a_new, n_new, o_new, c_new )
+//            e_new.setImageResource(R.drawable.setting_e)
+//            o_new.setImageResource(R.drawable.setting_o)
+//            c_new.setImageResource(R.drawable.setting_c)
+//            a_new.setImageResource(R.drawable.setting_a)
+//            n_new.setImageResource(R.drawable.setting_n)
+        }
+    }
+
+    private fun cliclOnC() {
+        c_new.setOnClickListener {
+
+            choosedTraits = "C"
+
+            if (clickedGender.equals("male")) {
+    //                apiVideos("male", "C")
+                showDialog("C", "male")
+
+            } else {
+    //                apiVideos("female", "C")
+                showDialog("C", "female")
+
+            }
+
+            chnageDimension( c_new, e_new, a_new, n_new, o_new )
+//            e_new.setImageResource(R.drawable.setting_c)
+//            o_new.setImageResource(R.drawable.setting_n)
+//            c_new.setImageResource(R.drawable.setting_o)
+//            a_new.setImageResource(R.drawable.setting_e)
+//            n_new.setImageResource(R.drawable.setting_a)
+        }
+    }
+
+    private fun clickOnO() {
+        o_new.setOnClickListener({
+
+            choosedTraits = "O"
+            if (clickedGender.equals("male")) {
+                //                apiVideos("male", "O")
+                showDialog("O", "male")
+            } else {
+                //                apiVideos("female", "O")
+                showDialog("O", "female")
+
+            }
+
+            chnageDimension(o_new, c_new, e_new, a_new, n_new)
+
+            //            e_new.setImageResource(R.drawable.setting_o)
+//            o_new.setImageResource(R.drawable.setting_a)
+//            c_new.setImageResource(R.drawable.setting_n)
+//            a_new.setImageResource(R.drawable.setting_c)
+//            n_new.setImageResource(R.drawable.setting_e)
+        })
+    }
+
+    private fun chnageDimension(imageView : ImageView, imageView1 : ImageView, imageView2 : ImageView, imageView3 : ImageView, imageView4 : ImageView){
+        val layoutParams = LinearLayout.LayoutParams(200, 200)
+        layoutParams.marginStart = 40
+        imageView.setLayoutParams(layoutParams)
+
+        val layoutParams1 = LinearLayout.LayoutParams(150, 150)
+        layoutParams1.marginStart = 40
+        imageView1.setLayoutParams(layoutParams1)
+        imageView2.setLayoutParams(layoutParams1)
+        imageView3.setLayoutParams(layoutParams1)
+        imageView4.setLayoutParams(layoutParams1)
 
     }
 
@@ -620,23 +762,28 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         a_new = view.findViewById(R.id.a_new)
         n_new = view.findViewById(R.id.n_new)
     }
-    private fun go(hike: Int) {
+
+    private fun go(min: Int, url: String) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
         val calendar = Calendar.getInstance()
         val calList: MutableList<Calendar> = ArrayList()
         calList.add(calendar)
         for (calItem in calList) {
-            calItem.add(Calendar.MINUTE, hike)
+
+            calItem.add(Calendar.MINUTE, min)
+
 
             val requestCode = (calendar.timeInMillis / 1000).toInt()
             val intent = Intent(context, MyReceiver::class.java)
             intent.putExtra("REQUEST_CODE", requestCode)
             intent.putExtra("fragment", "wakeup")
-            intent.putExtra("url", newUrl)
+            intent.putExtra("url", url)
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
 
             val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
+
+            Log.e("time1", "" + calItem.timeInMillis)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 alarmManager?.setExactAndAllowWhileIdle(
@@ -644,57 +791,22 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                     calItem.timeInMillis,
                     pi
                 )
+
+//                alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP,
+//                    calItem.timeInMillis,
+//                    24*60*60*1000,
+//                    pi)
             } else {
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
+//                alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP,
+//                    calItem.timeInMillis,
+//                    24*60*60*1000,
+//                    pi)
             }
             Toast.makeText(context, "Alarm has been set", Toast.LENGTH_SHORT)
                 .show()
         }
     }
-
-//    private fun go() {
-//
-//        val SimpleDateFormat = SimpleDateFormat("HH:mm:ss")
-//
-//        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-//        val calendar = Calendar.getInstance()
-//        val calList: MutableList<Calendar> = ArrayList()
-//
-//        for (i in 0..4) {
-//            calList.add(calendar)
-//        }
-//
-//        val stringBuilder = ""
-//
-//        for (calItem in calList) {
-//            calItem.add(Calendar.SECOND, 10)
-//
-//            val requestCode = (calendar.timeInMillis / 1000).toInt()
-//            val intent = Intent(context, MyReceiver::class.java)
-//            intent.putExtra("REQUEST_CODE", requestCode)
-//            intent.putExtra("fragment", "wakeup")
-//            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-//            intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
-//
-//            val pi = PendingIntent.getBroadcast(context, requestCode, intent, 0)
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                alarmManager?.setExactAndAllowWhileIdle(
-//                    AlarmManager.RTC_WAKEUP,
-//                    calItem.timeInMillis,
-//                    pi
-//                )
-//            } else {
-//                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calItem.timeInMillis, pi)
-//            }
-//
-//
-//
-//            Toast.makeText(context, "Alarm has been set : \n " + stringBuilder, Toast.LENGTH_SHORT)
-//                .show()
-//
-//        }
-//    }
 
     private fun apiVideos(duration: String, trait: String) {
 
@@ -736,12 +848,12 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                         thumb.add(jsonObject1.getString("thumb"))
                         fileURL.add(jsonObject1.getString("fileURL"))
 
-         /*               id1Male.add(jsonObject1.getString("id"))
-                        fileName.add(jsonObject1.getString("fileName"))
-                        traits.add(jsonObject1.getString("traits"))
-                        durationL.add(jsonObject1.getString("gender"))
-                        thumb.add(jsonObject1.getString("thumb"))
-                        fileURL.add(jsonObject1.getString("fileURL"))*/
+                        /*               id1Male.add(jsonObject1.getString("id"))
+                                       fileName.add(jsonObject1.getString("fileName"))
+                                       traits.add(jsonObject1.getString("traits"))
+                                       durationL.add(jsonObject1.getString("gender"))
+                                       thumb.add(jsonObject1.getString("thumb"))
+                                       fileURL.add(jsonObject1.getString("fileURL"))*/
 
                     }
 
@@ -761,7 +873,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 val params = HashMap<String, String>()
                 params.put("gender", duration)
                 params.put("trait", trait)
-                params.put("userId", ids1.toString());
+                params.put("userId", ids1.toString())
 
                 return params
             }
@@ -779,7 +891,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             durationL,
             thumb,
             fileURL,
-            this
+            this,
+            choosedProgram
         )
         wakeuprecy?.adapter = adapterMain
 
@@ -791,6 +904,18 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             progressDialog2.setCancelable(false)
             progressDialog2.setMessage("Loading...")
             progressDialog2.show()
+
+            choosedProgram = fileName.get(position)
+            val sharedPreferences: SharedPreferences =
+                requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+//                    Global.ids1 = jsonObject1.getString("id")
+            editor.putString("wakeup_choosedProgram", "" + choosedProgram)
+//                editor.putString("se_time2", "" + annserForRight)
+
+            editor.apply()
+            editor.commit()
+
 //            val intent = Intent(context, VideoActivity::class.java)
 //                intent.putExtra(
 //                    Constants.VIDEO_LINK,
@@ -814,8 +939,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         ctlr.setMediaPlayer(wake_up_video)
 
         val uri =
-            Uri.parse("android.resource://" + context?.getPackageName() + "/R.raw/" + R.raw.moonset);
-        wake_up_video.setVideoURI(uri);
+            Uri.parse("android.resource://" + context?.packageName + "/R.raw/" + R.raw.moonset)
+        wake_up_video.setVideoURI(uri)
         wake_up_video.start()
 
         wake_up_video.setOnPreparedListener({ mp -> mp.isLooping = true })
@@ -844,13 +969,17 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
 
                     for (i in 0 until jsonArray.length()) {
-                        var jsonObject2 = jsonArray.getJSONObject(i)
-                        idCLickDialog(
-                            fileUrl, jsonObject2.getString("thumb1"), jsonObject2.getString(
-                                "sub1URL"
-                            ),
-                            jsonObject2.getString("sub2URL"), jsonObject2.getString("sub3URL")
-                        )
+                        if (i == 0) {
+                            var jsonObject2 = jsonArray.getJSONObject(i)
+
+                            // open dialog on main videos on wakeup
+                            idCLickDialog(
+                                fileUrl, jsonObject2.getString("thumb1"), jsonObject2.getString(
+                                    "sub1URL"
+                                ),
+                                jsonObject2.getString("sub2URL"), jsonObject2.getString("sub3URL")
+                            )
+                        }
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -866,7 +995,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             }) {
             override fun getParams(): Map<String, String>? {
                 val map: MutableMap<String, String> = HashMap()
-                map.put("program", fileUrl)
+                map.put("program", fileUrl)  // name of file
                 map.put("gender", clickedGender)
                 map.put("userID", ids1.toString())
                 return map
@@ -897,8 +1026,12 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         Picasso.get().load(thumb).centerCrop().noFade().fit().into(image2)
         Picasso.get().load(thumb).centerCrop().noFade().fit().into(image3)
 
+        clickedImageUrl = thumb
+
         image1.setOnClickListener {
 
+            clickedUrl = sub1
+            videoType = "sub"
             newUrl = sub1
             playerView1.visibility = View.VISIBLE
             closeID.visibility = View.VISIBLE
@@ -917,6 +1050,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         }
 
         image2.setOnClickListener {
+            clickedUrl = sub2
+            videoType = "sub"
 
             newUrl = sub2
             playerView1.visibility = View.VISIBLE
@@ -936,6 +1071,9 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
         image3.setOnClickListener {
 
+            clickedUrl = sub3
+            videoType = "sub"
+
             newUrl = sub3
             playerView1.visibility = View.VISIBLE
             closeID.visibility = View.VISIBLE
@@ -947,6 +1085,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         }
 
         image4.setOnClickListener {
+            clickedUrl = url1
+            videoType = "main"
 
             val intent = Intent(context, VideoActivity::class.java)
             intent.putExtra(
@@ -961,7 +1101,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         dialog.show()
     }
 
-    override fun urlGet(url: String?) {
+    override fun urlGet(url: String?, imageUrl: String) {
         newUrl = url.toString()
         newUrl1 = url.toString()
         playerView1.visibility = View.VISIBLE
@@ -970,6 +1110,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         isFull = "yes"
         clExoPlayer.visibility = View.VISIBLE
         click()
+
+//        clickedImageUrl = imageUrl
     }
 
     private fun click() {
@@ -1042,6 +1184,21 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
 
                     }
 
+                    val adapterSleep1 = AdapterSleep(
+                        requireActivity(),
+                        id45,
+                        traint45,
+                        thumb45,
+                        duration45,
+                        url45,
+                        this,
+                        this,
+                        "o"
+                    )
+                    recyclerView.setHasFixedSize(true)
+                    recyclerView.layoutManager = GridLayoutManager(context, 2)
+                    recyclerView.adapter = adapterSleep1
+
 //                    showDialog("O", "male")
 
                 } catch (e: JSONException) {
@@ -1060,7 +1217,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 val params = HashMap<String, String>()
                 params.put("duration", duration)
                 params.put("trait", trait)
-                params.put("userId", ids1.toString());
+                params.put("userId", ids1.toString())
 
                 return params
             }
@@ -1078,7 +1235,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             dialog.setContentView(R.layout.dialogtransition)
             dialog.show()
 
-            val recyclerView: RecyclerView = dialog.findViewById(R.id.recyclerNewSleep);
+             recyclerView = dialog.findViewById(R.id.recyclerNewSleep)
 
             apiVideosLast("45sec", title)
             val adapterSleep1 = AdapterSleep(
@@ -1089,12 +1246,12 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 duration45,
                 url45,
                 this,
-                this
+                this,
+                "o"
             )
             recyclerView.setHasFixedSize(true)
             recyclerView.layoutManager = GridLayoutManager(context, 2)
             recyclerView.adapter = adapterSleep1
-
 
 
             val dialog_title: TextView = dialog.findViewById(R.id.dialog_title)
@@ -1116,8 +1273,6 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 closeID.visibility = View.INVISIBLE
 
 
-
-
             }
 
 
@@ -1131,20 +1286,22 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                     traits = "E"
                     logo.setImageResource(R.drawable.setting_e)
                     dialog_title.setTextColor(Color.parseColor("#FF0000"))
+                    apiVideosLast("45dec", "E")
+
                 }
                 "A" -> {
                     traits = "A"
                     logo.setImageResource(R.drawable.setting_a)
                     dialog_title.setTextColor(Color.parseColor("#F9CA14"))
 
-
+                    apiVideosLast("45dec", "A")
                 }
 
                 "N" -> {
                     traits = "N"
                     logo.setImageResource(R.drawable.setting_n)
                     dialog_title.setTextColor(Color.parseColor("#808080"))
-
+                    apiVideosLast("45dec", "N")
 
                 }
                 "O" -> {
@@ -1152,13 +1309,13 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                     logo.setImageResource(R.drawable.setting_o)
                     dialog_title.setTextColor(Color.parseColor("#008000"))
 
-
+                    apiVideosLast("45dec", "O")
                 }
                 "C" -> {
                     traits = "C"
                     logo.setImageResource(R.drawable.setting_c)
                     dialog_title.setTextColor(Color.parseColor("#0000FF"))
-
+                    apiVideosLast("45dec", "C")
 
                 }
             }
@@ -1178,11 +1335,13 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
                 duration45,
                 url45,
                 this,
-                this
+                this,
+                "o"
             )
 
             cl45.setOnClickListener {
 
+                clickedVideoTime = "45sec"
                 apiVideosLast("45dec", traits)
                 tv45.setTextColor(Color.parseColor("#008000"))
                 tv90.setTextColor(Color.BLUE)
@@ -1190,6 +1349,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             }
 
             cl90.setOnClickListener {
+
+                clickedVideoTime = "90sec"
 
                 tv90.setTextColor(Color.parseColor("#008000"))
                 tv45.setTextColor(Color.BLUE)
@@ -1211,7 +1372,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
     }
 
     private fun savewakeUpHits() {
-        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
 
         val ids1 = sh.getString("id", "")
 
@@ -1244,7 +1406,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("userId", ids1.toString());
+                params.put("userId", ids1.toString())
                 params.put("wakeUpID", "1")
                 return params
             }
@@ -1255,7 +1417,8 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
     }
 
     private fun savewakeUp_subpartHits() {
-        val sh: SharedPreferences = requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
 
         val ids1 = sh.getString("id", "")
 
@@ -1288,7 +1451,7 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
             @Throws(AuthFailureError::class)
             override fun getParams(): Map<String, String> {
                 val params = HashMap<String, String>()
-                params.put("userId", ids1.toString());
+                params.put("userId", ids1.toString())
                 params.put("wu_subPartID", "1")
                 return params
             }
@@ -1298,8 +1461,229 @@ class WakeUpProgram : Fragment(), TimePickerDialog.OnTimeSetListener, ClickInter
         requestQueue?.add(stringRequest)
     }
 
-    override fun longPressId(urlLong: String?) {
-        TODO("Not yet implemented")
+    private fun wakeUpDataSaver() {
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/wakeUpDataSaver"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+        process.show()
+
+        var checkTest = time_tv.text as String
+
+        val stringRequest = object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                try {
+                    process.dismiss()
+
+                    val obj = JSONObject(response)
+                    if (obj.getBoolean("valid")) {
+                        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Not 1 Saved", Toast.LENGTH_SHORT).show()
+
+                    }
+//                    var jsonObject = obj.getJSONObject("result")
+//                    val jsonArray = jsonObject.getJSONArray("data")
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userId", ids1.toString())
+                params.put("traits", choosedTraits)
+                params.put("gender", clickedGender)
+                params.put("repeatDay", dayOfAlarm.text as String)
+                params.put("videoId", newUrl)
+                params.put("videoURL", clickedImageUrl)
+                params.put("time1", clickedVideoTime)
+                params.put("videoType", videoType)
+                params.put("time2", checkTest)
+
+                return params
+            }
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    private fun getWakeUpDataSaver() {
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/getWakeUpSaved?userID="+ids1
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+//        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.GET, url,
+            Response.Listener { response ->
+                try {
+//                    process.dismiss()
+
+                    val obj = JSONObject(response)
+                    if (obj.getBoolean("valid")) {
+//                        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                        val result = obj.getJSONObject("result")
+                        val data = result.getJSONObject("data")
+                        time_tv.text = data.getString("time2")
+                        dayOfAlarm.text = data.getString("repeatDay")
+
+                        val traitClickedLast = data.getString("traits")
+                        when (traitClickedLast) {
+                            "O" -> {
+                                chnageDimension( o_new, c_new,  e_new, a_new, n_new)
+//                                e_new.setImageResource(R.drawable.setting_o)
+//                                o_new.setImageResource(R.drawable.setting_a)
+//                                c_new.setImageResource(R.drawable.setting_n)
+//                                a_new.setImageResource(R.drawable.setting_c)
+//                                n_new.setImageResource(R.drawable.setting_e)
+                            }
+                            "C" -> {
+                                chnageDimension(c_new,  e_new, a_new, n_new, o_new)
+//                                e_new.setImageResource(R.drawable.setting_c)
+//                                o_new.setImageResource(R.drawable.setting_n)
+//                                c_new.setImageResource(R.drawable.setting_o)
+//                                a_new.setImageResource(R.drawable.setting_e)
+//                                n_new.setImageResource(R.drawable.setting_a)
+                            }
+                            "E" -> {
+                                chnageDimension( e_new, a_new, n_new, o_new, c_new)
+//                                e_new.setImageResource(R.drawable.setting_e)
+//                                o_new.setImageResource(R.drawable.setting_o)
+//                                c_new.setImageResource(R.drawable.setting_c)
+//                                a_new.setImageResource(R.drawable.setting_a)
+//                                n_new.setImageResource(R.drawable.setting_n)
+                            }
+                            "A" -> {
+                                chnageDimension(  a_new, n_new, o_new, c_new ,  e_new)
+//                                e_new.setImageResource(R.drawable.setting_a)
+//                                o_new.setImageResource(R.drawable.setting_c)
+//                                c_new.setImageResource(R.drawable.setting_e)
+//                                a_new.setImageResource(R.drawable.setting_n)
+//                                n_new.setImageResource(R.drawable.setting_o)
+                            }
+                            "N" -> {
+                                chnageDimension(   n_new, o_new, c_new ,  e_new, a_new)
+//                                e_new.setImageResource(R.drawable.setting_n)
+//                                o_new.setImageResource(R.drawable.setting_e)
+//                                c_new.setImageResource(R.drawable.setting_a)
+//                                a_new.setImageResource(R.drawable.setting_o)
+//                                n_new.setImageResource(R.drawable.setting_c)
+                            }
+                        }
+                    } else {
+                        Toast.makeText(context, "Not Saved", Toast.LENGTH_SHORT).show()
+
+                    }
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener {
+                override fun onErrorResponse(volleyError: VolleyError) {
+                    Toast.makeText(context, volleyError.message, Toast.LENGTH_LONG).show()
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): Map<String, String> {
+                val params = HashMap<String, String>()
+                params.put("userID", ids1.toString());
+                return params
+            }
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
+    }
+
+    override fun longPressId(urlLong: String?, tr: String) {
+        newUrl = urlLong as String
+        choosedUrl = urlLong as String
+    }
+
+    private fun getWakeupForProgram() {
+        val sh: SharedPreferences =
+            requireActivity().getSharedPreferences("share", Context.MODE_PRIVATE)
+
+        val ids1 = sh.getString("id", "")
+
+        val url = "https://app.whyuru.com/api/web/wakeUp_program"
+        val process = ProgressDialog(context)
+        process.setCancelable(false)
+        process.setMessage("Loading...")
+//        process.show()
+
+        val stringRequest = object : StringRequest(
+            Method.GET, url,
+            Response.Listener { response ->
+                try {
+//                    process.dismiss()
+
+
+                    val obj = JSONObject(response)
+                    if (obj.getBoolean("valid")) {
+//                        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                        val result = obj.getJSONObject("result")
+                        val url_images = result.getString("url")
+                        val data = result.getJSONArray("data")
+
+                        thumb.clear()
+                        for (i in 0 until data.length()) {
+                            val jsonObject = data.getJSONObject(i)
+//                            thumb.add(url_images + "screen_1665215396.png"/*jsonObject.getString("imgName")*/)
+
+                            thumb.add(
+                                "https://app.whyuru.com/assets/uploads/wakeUp/" + jsonObject.getString(
+                                    "imgName"
+                                )
+                            )
+//                            Toast.makeText(context, url_images + jsonObject.getString("imgName"), Toast.LENGTH_SHORT).show()
+                        }
+                        adapterConnects()
+//                        dayOfAlarm.text = data.getString("repeatDay")
+                    } else {
+                        Toast.makeText(context, "Not Saved", Toast.LENGTH_SHORT).show()
+
+                    }
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { volleyError ->
+                Toast.makeText(
+                    context,
+                    volleyError.message,
+                    Toast.LENGTH_LONG
+                ).show()
+            }) {
+
+        }
+        requestQueue = Volley.newRequestQueue(context)
+        requestQueue?.add(stringRequest)
     }
 }
 

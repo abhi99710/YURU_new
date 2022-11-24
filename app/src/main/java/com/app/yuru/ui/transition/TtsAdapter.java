@@ -59,7 +59,7 @@ public class TtsAdapter extends RecyclerView.Adapter<TtsAdapter.Myholder> {
 
         holder.tts_videoview.setOnClickListener(v -> {
             clickPosition.clickPos(position);
-            clickInterface.urlGet(fileURL.get(position));
+            clickInterface.urlGet(fileURL.get(position), "");
 //            Intent intent = new Intent(context, VideoActivity.class);
 //            intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position)/*"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"*/);
 //            context.startActivity(intent);

@@ -27,7 +27,7 @@ interface YuruApiService {
         @Query("category_id") category_id: String
     ) : QuestionsResponse
 
-    @FormUrlEncoded
+
     @POST("submitrating")
     suspend fun submitrating(
         @Field("user_id") user_id: String,

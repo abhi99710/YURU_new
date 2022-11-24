@@ -1,6 +1,5 @@
 package com.app.yuru.ui.Intro
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -15,8 +14,9 @@ import android.widget.VideoView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app.yuru.R
-import com.app.yuru.ui.splash.Splash4
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 
@@ -42,35 +42,29 @@ class SecondScreen : Fragment() {
         viewPager = requireActivity().findViewById(R.id.viewPager1)
 
 
-//        newUrl = intent.getStringExtra("screen3")
-
         splash_next_btn = view.findViewById(R.id.splash_next_btn3)
         splash_next_btn.setOnClickListener {
 //            startActivity(Intent(context, Splash4::class.java))
             player?.pause()
             player?.playWhenReady = false
-            viewPager.setCurrentItem(2)
             playerView1.onPause()
+            viewPager.setCurrentItem(2)
+
 
         }
 
 
         playerView1 = view.findViewById(R.id.playerView_sp3)
 
-
-//        clExoPlayer = findViewById(R.id.clExoPlayer)
-//        closebtndialog1 = findViewById(R.id.closebtndialog1)
-//        closebtndialog1.setOnClickListener {
-//            clExoPlayer.visibility = View.INVISIBLE
-//            playerView1.onPause()
-//            playerView1.setKeepContentOnPlayerReset(true)
-//            player?.pause()
-//
-//        }
-
-
         click()
-        //        videoPlay()
+
+        player?.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+                    viewPager.setCurrentItem(2)
+                }
+            }
+        })
 
         return view
     }
@@ -145,4 +139,6 @@ class SecondScreen : Fragment() {
 
 
     }
+
+
 }

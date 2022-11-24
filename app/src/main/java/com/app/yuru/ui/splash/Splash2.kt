@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit
 class Splash2 : AppCompatActivity() {
 
     private lateinit var tts_vids: VideoView
-    private lateinit var skipSplash: Button
+//    private lateinit var skipSplash: Button
     private lateinit var splash_next_btn: ImageView
     private var requestQueue: RequestQueue? = null
     private val handler = Handler(Looper.getMainLooper())
@@ -48,11 +48,11 @@ class Splash2 : AppCompatActivity() {
         }
 
         tts_vids = findViewById(R.id.tts_vids)
-        skipSplash = findViewById(R.id.skipSplash)
+//        skipSplash = findViewById(R.id.skipSplash)
 
-        skipSplash.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+//        skipSplash.setOnClickListener {
+//            startActivity(Intent(this, LoginActivity::class.java))
+//        }
 
 //        checkOnline()
 

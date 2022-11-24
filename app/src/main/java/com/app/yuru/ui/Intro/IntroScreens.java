@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -19,6 +20,9 @@ public class IntroScreens extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro_screens);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
@@ -28,11 +32,16 @@ public class IntroScreens extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager1);
 
+//        viewPager.setPagingEnabled
+
+
+//        viewPager.setS
+
         IntroAdapter introScreens = new IntroAdapter(getSupportFragmentManager());
         viewPager.setAdapter(introScreens);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.setupWithViewPager(viewPager, true);
+//        tabLayout.setupWithViewPager(viewPager, true);
 //        dotsIndicator = (DotsIndicator) findViewById(R.id.dots_indicator);
 //        dotsIndicator.setViewPager(viewPager);
 

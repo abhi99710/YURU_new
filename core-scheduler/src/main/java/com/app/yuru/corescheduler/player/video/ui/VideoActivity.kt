@@ -1,6 +1,7 @@
 package com.app.yuru.corescheduler.player.video.ui
 
 import android.app.KeyguardManager
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.corescheduler.databinding.ActivityVideoBinding
 import com.app.yuru.corescheduler.utils.Constants
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 
 
@@ -68,6 +70,17 @@ class VideoActivity : AppCompatActivity() {
             // Start the playback.
             it.play()
         }
+
+        player?.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+
+//                    finish()
+//                    finishAffinity()
+//                    System.exit(0);
+                }
+            }
+        })
     }
 
     override fun onStart() {
@@ -78,6 +91,9 @@ class VideoActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         player?.pause()
+//        finish()
+//        finishAffinity()
+//        System.exit(0);
     }
 
     override fun onDestroy() {

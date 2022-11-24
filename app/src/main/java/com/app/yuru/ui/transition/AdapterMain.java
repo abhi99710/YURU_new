@@ -3,6 +3,7 @@ package com.app.yuru.ui.transition;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -44,9 +46,10 @@ public class AdapterMain extends BaseAdapter {
     final List<String> thumb;
     final List<String> fileURL;
     ClickInterface clickInterface;
+    final String choosedProgram;
 
-    public AdapterMain(Context context, List<String> id, List<String> fileName,
-                       List<String> traits, List<String> duration, List<String> thumb, List<String> fileURL, ClickInterface clickInterface) {
+    public AdapterMain(Context context, List<String> id, List<String> fileName, List<String> traits, List<String> duration, List<String> thumb,
+                       List<String> fileURL, ClickInterface clickInterface, String choosedProgram) {
         this.context = context;
         this.id = id;
         this.fileName = fileName;
@@ -55,6 +58,7 @@ public class AdapterMain extends BaseAdapter {
         this.thumb = thumb;
         this.fileURL = fileURL;
         this.clickInterface = clickInterface;
+        this.choosedProgram = choosedProgram;
     }
 
     @Override
@@ -84,27 +88,34 @@ public class AdapterMain extends BaseAdapter {
         ImageView videoView = convertView.findViewById(R.id.gridIMageView);
 
 
+        ImageView forground_check = convertView.findViewById(R.id.forground_check);
+
+         SharedPreferences sharedPreferences =
+                context.getSharedPreferences("share", Context.MODE_PRIVATE);
+//                    Global.ids1 = jsonObject1.getString("id")
+        String x =  sharedPreferences.getString("wakeup_choosedProgram", "");
+        if( fileName.get(position).equalsIgnoreCase(x)){
+            forground_check.setVisibility(View.VISIBLE);
+
+        }
+//        else {
+//            forground_check.setVisibility(View.INVISIBLE);
+//        }
 //        cardsub.setOnClickListener(v -> {
 //
-//                    Intent intent = new Intent(context, VideoActivity.class);
-//                    intent.putExtra(Constants.VIDEO_LINK, fileURL.get(position));
-//                    context.startActivity(intent);
-////
-////            apiListVideos(id.get(position));
-////                    idCLickDialog();
-////
+//            clickInterface.urlGet(fileURL.get(position), thumb.get(position));
+//
 //                }
 //
 //        );
 
-        Picasso.get().load("https://media.giphy.com/media/WoWpouO164dBS/giphy.gif").fit().noFade().centerCrop().into(videoView);
-
+        try {
+            Picasso.get().load(thumb.get(position)).fit().noFade().centerCrop().into(videoView);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         return convertView;
     }
-
-
-
-
 
 }

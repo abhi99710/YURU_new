@@ -2,6 +2,7 @@ package com.app.yuru.ui.transition;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,7 +19,7 @@ public class AnimationOnLeft extends AppCompatActivity {
         setContentView(R.layout.activity_animation_on_left);
 
 
-        new Handler().postDelayed(() -> getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new SleepEnhancerNew()).commit(),6000);
+
 
         VideoView rocketVideo = findViewById(R.id.rocketVideo1);
         //Creating MediaController
@@ -35,5 +36,11 @@ public class AnimationOnLeft extends AppCompatActivity {
         rocketVideo.requestFocus();
         rocketVideo.start();
 
+        rocketVideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.framwQts, new SleepEnhancer2()).commit();
+            }
+        });
     }
 }

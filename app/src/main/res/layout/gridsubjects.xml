@@ -20,6 +20,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/forground_check"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/bottom_home"
+            android:layout_marginTop="8dp"
+            android:visibility="invisible"
+            android:elevation="5dp"
+            android:background="@drawable/happynew"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,29 +64,21 @@
                     android:contentDescription="TODO"
                     android:elevation="100dp"
 
-                    android:background="@drawable/back__"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-              <!--  <ImageButton
-                    android:id="@+id/female_videos"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/female"
-                    app:layout_constraintBottom_toTopOf="@+id/male_videos"
-                    app:layout_constraintStart_toStartOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/male_videos"
-                    android:layout_width="@dimen/_20sdp"
-                    android:background="@drawable/male"
-                    android:layout_height="@dimen/_25sdp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/guideline4" />-->
+                <!--
+                               <ImageButton
+                                   android:id="@+id/male_videos"
+                                   android:layout_width="@dimen/_20sdp"
+                                   android:background="@drawable/male"
+                                   android:layout_height="@dimen/_25sdp"
+                                   android:layout_marginTop="8dp"
+                                   app:layout_constraintStart_toStartOf="parent"
+                                   app:layout_constraintTop_toTopOf="@+id/guideline4" />-->
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline4"

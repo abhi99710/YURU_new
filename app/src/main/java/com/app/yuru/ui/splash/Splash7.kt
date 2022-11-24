@@ -12,6 +12,7 @@ import android.widget.MediaController
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.app.yuru.R
+import com.app.yuru.ui.login.AnimLogin
 import com.app.yuru.ui.login.LoginActivity
 import java.util.concurrent.TimeUnit
 
@@ -31,7 +32,7 @@ class Splash7 : AppCompatActivity() {
 
         splash_next_btn = findViewById(R.id.splash_next_btn7)
         splash_next_btn.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, AnimLogin::class.java))
         }
 
 

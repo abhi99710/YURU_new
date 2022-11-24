@@ -11,8 +11,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.yuru.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class NewAdapterGetToSleep extends RecyclerView.Adapter<NewAdapterGetToSleep.Myholder> {
     Context context;
@@ -21,14 +24,17 @@ public class NewAdapterGetToSleep extends RecyclerView.Adapter<NewAdapterGetToSl
     String gender;
     String duration;
     ProgramClickPosition programClickPosition;
+    List<String> programPic;
 
-    public NewAdapterGetToSleep(Context context, List<String> programId, List<String> programName, String gender, String duration, ProgramClickPosition programClickPosition) {
+    public NewAdapterGetToSleep(Context context, List<String> programId, List<String> programName,
+                                String gender, String duration, ProgramClickPosition programClickPosition, List<String> programPic) {
         this.context = context;
         this.programId = programId;
         this.programName = programName;
         this.gender = gender;
         this.duration = duration;
         this.programClickPosition = programClickPosition;
+        this.programPic = programPic;
     }
 
     @NonNull
@@ -49,8 +55,10 @@ public class NewAdapterGetToSleep extends RecyclerView.Adapter<NewAdapterGetToSl
 //            intent.putExtra("duration", duration);
 //            context.startActivity(intent);
 
-            programClickPosition.clickIdForprogram(programId.get(position));
+            programClickPosition.clickIdForprogram(programId.get(position), position);
         });
+
+        Picasso.get().load(programPic.get(position)).fit().centerCrop().into(holder.gridIMageView);
 
     }
 
@@ -61,10 +69,12 @@ public class NewAdapterGetToSleep extends RecyclerView.Adapter<NewAdapterGetToSl
 
     public class Myholder extends RecyclerView.ViewHolder {
         ConstraintLayout cl_grid_adapter;
+        GifImageView gridIMageView;
         public Myholder(@NonNull View itemView) {
             super(itemView);
 
             cl_grid_adapter = itemView.findViewById(R.id.cl_grid_adapter);
+            gridIMageView = itemView.findViewById(R.id.gridIMageView);
         }
     }
 }

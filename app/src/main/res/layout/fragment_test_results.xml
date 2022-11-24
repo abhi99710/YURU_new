@@ -38,13 +38,33 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.github.mikephil.charting.charts.PieChart
+           <!--  <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginStart="21dp"
                 android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/bg_result_chart_background"
                 app:layout_constraintDimensionRatio="H,1:0.8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/lblHeader" /> -->
+
+            <com.neo.arcchartview.ArcChartView
+                android:id="@+id/arc_chart_view"
+                android:layout_width="327dp"
+                android:layout_height="297dp"
+                app:acv_icon_size="20dp"
+                app:acv_lines_count="5"
+                app:acv_lines_space="0dp"
+                app:acv_lines_width="20dp"
+                app:acv_mid_start_extra_offset="8dp"
+                app:acv_sections_count="5"
+                app:acv_sections_space="0dp"
+                app:layout_constraintDimensionRatio="H,1:0.8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/lblHeader" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -55,7 +75,7 @@
                 android:gravity="center"
                 android:text="@string/test_result_desc"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintTop_toBottomOf="@id/pieChart"
+                app:layout_constraintTop_toBottomOf="@id/arc_chart_view"
                 app:lineHeight="@dimen/_21sdp" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -63,7 +83,7 @@
                 android:layout_width="@dimen/_190sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:text="@string/closure_look"
+                android:text="Closer Look"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDesc" />

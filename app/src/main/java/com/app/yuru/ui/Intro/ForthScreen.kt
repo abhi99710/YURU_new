@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager
 import com.app.yuru.R
 import com.app.yuru.ui.splash.Spalsh6
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 import java.util.concurrent.TimeUnit
@@ -46,6 +47,7 @@ class ForthScreen : Fragment() {
 //            startActivity(Intent(this, Spalsh6::class.java))
             player?.pause()
             player?.playWhenReady = false
+            playerView1?.onPause()
             viewPager.currentItem = 4
 
         }
@@ -56,6 +58,13 @@ class ForthScreen : Fragment() {
 
         click()
 
+        player?.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+                    viewPager.setCurrentItem(4)
+                }
+            }
+        })
 
         return view
     }

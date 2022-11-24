@@ -26,16 +26,12 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 //        Toast.makeText(context, "Alarm Ringing...", Toast.LENGTH_SHORT).show();
         int requestCode = intent.getIntExtra("REQUEST_CODE", -1);
+        String data = intent.getStringExtra("fragment");
+        Toast.makeText(context, ""+ data, Toast.LENGTH_SHORT);
 
         if (intent.getStringExtra("fragment").equalsIgnoreCase("sleep1")) {
 
-//            Intent i = new Intent(context, VideoActivity.class);
-//            //TODO pass URL
-//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            i.putExtra(Constants.VIDEO_LINK, intent.getStringExtra("url"));
-//            context.startActivity(i);
-
-
+            Toast.makeText(context, "triggered", Toast.LENGTH_SHORT).show();
 
 //            MediaPlayer mMediaPlayer = MediaPlayer.create(context, R.raw.sleep1);
 //            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -43,18 +39,10 @@ public class MyReceiver extends BroadcastReceiver {
 //            mMediaPlayer.start();
 
             MediaPlayer mediaPlayer = new MediaPlayer();
-
-            // below line is use to set the audio
-            // stream type for our media player.
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-            // below line is use to set our
-            // url to our media player.
             try {
                 String url = intent.getStringExtra("url");
                 mediaPlayer.setDataSource(url);
-                // below line is use to prepare
-                // and start our media player.
                 mediaPlayer.prepare();
                 mediaPlayer.start();
 
@@ -69,14 +57,6 @@ public class MyReceiver extends BroadcastReceiver {
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra(Constants.VIDEO_LINK, intent.getStringExtra("url"));
                 context.startActivity(i);
-
-             /*   String url = intent.getStringExtra("url");
-//                MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.whatsapp);
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                //TODO set URL
-                mediaPlayer.setDataSource(url);
-                mediaPlayer.prepare();
-                mediaPlayer.start();*/
 
                 ComponentName comp = new ComponentName(context.getPackageName(),
                         MyReceiver.class.getName());

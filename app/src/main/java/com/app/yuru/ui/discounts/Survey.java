@@ -380,7 +380,7 @@ public class Survey extends AppCompatActivity {
 
     private void findIDs() {
         seekBar = findViewById(R.id.seekBar);
-        seekBar1 = findViewById(R.id.seekBar1);
+        seekBar1 = findViewById(R.id.seekBar11);
         seekBar2 = findViewById(R.id.seekBar2);
         seekBar3 = findViewById(R.id.seekBar3);
         seekBar4 = findViewById(R.id.seekBar4);

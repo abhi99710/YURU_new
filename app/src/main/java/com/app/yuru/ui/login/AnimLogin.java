@@ -3,6 +3,7 @@ package com.app.yuru.ui.login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,17 +26,17 @@ public class AnimLogin extends AppCompatActivity {
         String nameLogin = getIntent().getStringExtra("nameLogin");
 
         skipLogin.setOnClickListener(v->{
-            Intent intent = new Intent(this, GetStartedActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             intent.putExtra("nameLogin", nameLogin);
             startActivity(intent);
         });
 
 
-        new Handler().postDelayed(() -> {
-             Intent intent = new Intent(this, GetStartedActivity.class);
-             intent.putExtra("nameLogin", nameLogin);
-             startActivity(intent);
-        },16000);
+//        new Handler().postDelayed(() -> {
+//             Intent intent = new Intent(this, LoginActivity.class);
+//             intent.putExtra("nameLogin", nameLogin);
+//             startActivity(intent);
+//        },16000);
 
         VideoView videoLoginAnim = findViewById(R.id.videoLoginAnim);
         //Creating MediaController
@@ -51,6 +52,12 @@ public class AnimLogin extends AppCompatActivity {
         videoLoginAnim.setVideoURI(uri);
         videoLoginAnim.requestFocus();
         videoLoginAnim.start();
+
+        videoLoginAnim.setOnCompletionListener(mp -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("nameLogin", nameLogin);
+            startActivity(intent);
+        });
 
     }
 }

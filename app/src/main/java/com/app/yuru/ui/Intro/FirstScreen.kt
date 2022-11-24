@@ -22,7 +22,7 @@ import com.app.yuru.ui.splash.Splash3
 
 class FirstScreen : Fragment() {
 
-    private lateinit var tts_vids: VideoView
+  /*  private lateinit var tts_vids: VideoView
     private lateinit var skipSplash: Button
     private lateinit var splash_next_btn: ImageView
     private var requestQueue: RequestQueue? = null
@@ -58,6 +58,13 @@ class FirstScreen : Fragment() {
 
         videoPlay()
 
+        tts_vids.setOnCompletionListener({
+            tts_vids.pause()
+            tts_vids.stopPlayback()
+
+            viewPager.setCurrentItem(1)
+        })
+
         return view
     }
 
@@ -86,7 +93,14 @@ class FirstScreen : Fragment() {
     private val runnable = Runnable {
 //        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.framwQts, SecondScreen()).commit()
 //        context.finish()
-        viewPager.setCurrentItem(1)
+
+        tts_vids.setOnCompletionListener({
+            tts_vids.pause()
+            tts_vids.stopPlayback()
+
+            viewPager.setCurrentItem(1)
+        })
+
     }
 
     override fun onResume() {
@@ -100,7 +114,7 @@ class FirstScreen : Fragment() {
         tts_vids.pause()
 
     }
-
+*/
     /* private fun checkOnline() {
 
          val sh: SharedPreferences =

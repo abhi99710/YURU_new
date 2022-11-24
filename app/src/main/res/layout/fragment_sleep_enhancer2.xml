@@ -135,6 +135,7 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="56dp"
                     android:background="@drawable/gearback"
+
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/showAnsS2" />
 
@@ -179,6 +180,7 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginEnd="64dp"
+
                     android:background="@drawable/gearback"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/showAns2S2" />
@@ -201,15 +203,16 @@
 
                 <com.app.yuru.ui.transition.VerticalSeekBar
                     android:id="@+id/seekBar2"
-                    android:layout_width="14dp"
+                    android:layout_width="18dp"
                     android:layout_height="200dp"
-                    android:layout_marginEnd="0dp"
                     android:layout_marginBottom="8dp"
-                    android:background="#fff"
+                    android:background="#11ffffff"
+                    android:thumb="@drawable/ic_baseline_volume_up_24"
                     android:scrollIndicators="top"
                     android:scrollbarSize="@dimen/_20sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toStartOf="@+id/arrowLeft2_sl2"
+                    app:layout_constraintStart_toEndOf="@+id/arrowRight1_sl2" />
 
                 <TextView
                     android:id="@+id/showAnsS2"

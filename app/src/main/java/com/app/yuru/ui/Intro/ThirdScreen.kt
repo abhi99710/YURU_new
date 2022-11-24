@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app.yuru.R
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 import java.util.concurrent.TimeUnit
@@ -55,6 +56,14 @@ class ThirdScreen : Fragment() {
         click()
 //        videoPlay()
 
+        player?.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+                    viewPager.setCurrentItem(3)
+                }
+            }
+        })
+
         return view
     }
 
@@ -64,10 +73,8 @@ class ThirdScreen : Fragment() {
 //        requireActivity().supportFragmentManager.beginTransaction()
         player?.pause()
         player?.playWhenReady = false
-        viewPager.currentItem = 3
         playerView1.onPause()
-
-
+        viewPager.currentItem = 3
 //            .replace(R.id.framwQts, ForthScreen()).commit()
 
     }

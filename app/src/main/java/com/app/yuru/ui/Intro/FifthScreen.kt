@@ -13,9 +13,12 @@ import android.widget.VideoView
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.app.yuru.R
+import com.app.yuru.ui.getStarted.GetStartedActivity
+import com.app.yuru.ui.login.AnimLogin
 import com.app.yuru.ui.login.LoginActivity
 import com.app.yuru.ui.splash.Splash7
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 import java.util.concurrent.TimeUnit
@@ -49,7 +52,8 @@ class FifthScreen : Fragment() {
         splash_next_btn.setOnClickListener {
             player?.pause()
             player?.playWhenReady = false
-            startActivity(Intent(context, LoginActivity::class.java))
+            playerView1?.onPause()
+            startActivity(Intent(context, GetStartedActivity::class.java))
 //            viewPager.currentItem = 5
 
 
@@ -59,13 +63,23 @@ class FifthScreen : Fragment() {
 
         click()
 
+        player?.addListener(object : Player.EventListener {
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_ENDED) {
+//                    viewPager.setCurrentItem(5)
+                    startActivity(Intent(context, GetStartedActivity::class.java))
+                }
+            }
+        })
+
         return view
     }
 
     private val runnable = Runnable {
         player?.pause()
         player?.playWhenReady = false
-        startActivity(Intent(context, LoginActivity::class.java))
+        playerView1?.onPause()
+        startActivity(Intent(context, GetStartedActivity::class.java))
 
 //        finish()
 //        viewPager.currentItem = 5
